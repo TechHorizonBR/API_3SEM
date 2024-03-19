@@ -1,4 +1,4 @@
 package com.api.nextschema.NextSchema.entity;
 
-public class Upload {
+public class Entity {
 }
