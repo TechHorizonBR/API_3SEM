@@ -139,19 +139,18 @@ width="60"></a>
 <span id="backlog">
      
 ## Product Backlog 📜
-(Em Desenvolvimento)
-<!--
+
 Product Backlog | Prioridade | Status
 --- | --- | ---
-Carregamento do arquivo CSV | 1 | ✅
-Validação dados do orientador | 2 | ✅
-Registro de notas e feedbacks | 3 | ✅
-Cadastro de entregas | 4 | ✅
-Geração de relatório de alunos aptos a defesa | 5 | ✅
-Geração de relatório de notas dos alunos | 6 | ✅
-Geração de relatório de acompanhamento de entregas | 7 | ✅
-Geração de relatório para certificado de orientador | 8 | ✅
--->
+Carregamento do arquivo CSV | 1 | 
+Personalização de esquema de banco de dados | 2 | 
+Visualização dos esquemas de banco de dados | 3 | 
+Especificação e Mapeamento de chaves do esquema | 4 | 
+Análise e Definição de Relacionamentos | 5 | 
+Geração de Dashboards quantitativos | 6 | 
+Exportação de Configuração YAML | 7 | 
+Gestão de Usuários Administradores e clientes | 8 | 
+Histórico de Auditorias | 9 | 
 
 <span id="userstory">
      
