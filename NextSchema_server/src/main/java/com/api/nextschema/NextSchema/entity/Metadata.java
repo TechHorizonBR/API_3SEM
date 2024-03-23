@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Usuario {
+public class Metadata {
     private String nome_arquivo;
     private String email;
 
@@ -22,5 +22,9 @@ public class Usuario {
     public Metadata(String nome_arquivo, Integer id) {
         this.nome_arquivo = nome_arquivo;
         this.id = id;
+    }
+
+    public Metadata() {
+
     }
 }
