@@ -1,6 +1,5 @@
 package com.api.nextschema.NextSchema.entity;
 
-import com.api.nextschema.NextSchema.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,15 +11,21 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Metadata {
-    private String nome_arquivo;
+    private String nomeArquivo;
     private String email;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    public Metadata(String nome_arquivo, Integer id) {
-        this.nome_arquivo = nome_arquivo;
+    public Metadata(String nomeArquivo, Integer id) {
+        this.nomeArquivo = nomeArquivo;
+        this.id = id;
+    }
+
+    public Metadata(String nomeArquivo, String email, Integer id) {
+        this.nomeArquivo = nomeArquivo;
+        this.email = email;
         this.id = id;
     }
 
