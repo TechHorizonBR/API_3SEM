@@ -4,8 +4,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NextSchema - LZ Upload</title>
     <link rel="icon" href="/Front-end/img/logoo.ico">
+    <link rel="stylesheet" href="/Front-end/CSS/lz_upload.css">
 </head>
 <body>
-    
+    <header>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Incluir CSS do Head na pagina -->
+        <link rel="stylesheet" href="head.css">
+        <title>Head</title>
+    </header>
+    <div class="header">
+        <img src="/Front-end/img/logoo.ico" alt="NSLogo">
+        <img src="/Front-end/img/DomRocK.png" alt="DRLogo" id="DRLogo">
+    </div>
+    <main>
+        <div class="primeira-linha">
+            <a href="#" class="flecha-voltar">&#8592;</a>
+            <p class="tipo-de-acesso">LZ - Upload</p>
+        </div>
+        <div class="upload">
+            <label for="arquivo" class="botao-upload">
+                <span class="texto-botao">Arraste o arquivo ou selecione-o aqui</span>
+                <input type="file" id="arquivo" class="input-arquivo" style="display: none;">
+                <br>
+                <img src="/Front-end/img/logoCSV.png" alt="icone" class="icone-botao">
+            </label>
+        </div>
+    </main>
 </body>
 </html>
