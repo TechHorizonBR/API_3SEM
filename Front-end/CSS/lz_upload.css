@@ -1,3 +1,7 @@
+html,body{
+    margin: 0;
+}
+
 .header {
     background-color: #006A8F;
     width: 100%;
