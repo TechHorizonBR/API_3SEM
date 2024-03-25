@@ -1,5 +1,4 @@
-<!-- ![1](https://github.com/TechHorizonBR/API_2_Sem/assets/123211025/95f5264f-f49b-4184-8f06-664f84392bb1) -->
-(Em Desenvolvimento)
+![Readme TechHorizon 2S](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/24ff0b54-ad83-4fd7-ac95-a0615af5eb21)
 <div align=center>
      <a href="#sobre">Sobre |</a>
      <a href="#equipe">Contribuidores |</a>
@@ -140,8 +139,8 @@ width="60"></a>
      
 ## Product Backlog 📜
 
-Product Backlog | Prioridade | Status
---- | --- | ---
+Product Backlog | Prioridade |
+--- | --- |
 Carregamento do arquivo CSV | 1 | 
 Personalização de esquema de banco de dados | 2 | 
 Visualização dos esquemas de banco de dados | 3 | 
@@ -159,22 +158,24 @@ Histórico de Auditorias | 9 |
 <details>
 
 <summary>Clique aqui para visualizar</summary>
-(Em Desenvolvimento)
-<!--
-User stories | Prioridade Item Backlog 
---- | --- 
-Como professor, necessito que o sistema seja capaz de ler arquivos no formato CSV para iniciar a avaliação. | 1
-Como professor, necessito que os dados dos alunos sejam armazenados de forma persistente para que eu possa consultá-los em qualquer momento. | 1
-Como professor, gostaria que o sistema permitisse o armazenamento dos detalhes do TG (tipo, problema a ser tratado, etc.) para referência futura e análise dos projetos dos alunos. | 1
-Como professor, necessito que o sistema valide o nome do professor, para que eu possa corrigir erros caso o aluno o digite incorretamente. | 2
-Como professor, necessito que seja possível atribuir uma nota e fornecer feedback para cada entrega do aluno, para que eu possa consultá-los no futuro. | 3
-Como professor, necessito que o sistema permita inserir o número necessário de entregas para cada turma de TG, a fim de realizar as avaliações. | 4
-Como professor, necessito que o sistema seja capaz de identificar se o aluno está matriculado no TG1, TG2 ou em ambos, a fim de definir a abordagem de avaliação adequada. | 4
-Como professor, necessito que o sistema possa gerar uma lista de alunos aptos para a defesa do projeto, a fim de facilitar o processo de certificação. | 5
-Como professor, necessito que o sistema permita o fechamento do semestre e o transporte de notas, para facilitar o processo de aprovação dos alunos. | 6
-Como professor, gostaria que o sistema destacasse os alunos que não estão entregando as atividades, para que eu possa identificar e abordar problemas nas entregas. | 7
-Como professor, necessito que o sistema possa gerar um relatório para certificação do orientador cujo todos os alunos realizaram ao menos uma entrega | 8
--->
+
+User stories | Prioridade Item Backlog | Status
+--- | --- | --- 
+Como usuário Landing Zone, desejo acessar o sistema e realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 |
+Como usuário Landing Zone, após o upload, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 |
+Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 2 |
+Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio de banco de dados com o objetivo de compreender a estrutura e organização do esquema armazenado. | 3 |
+Como usuário Bronze, desejo visualizar o esquema de banco de dados do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 3 |
+Como usuário Silver, desejo  visualizar o esquema de banco de dados do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 3 |
+Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 4 |
+Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 4 |
+Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anterios com a finalidade de analisar os dados de melhor forma. | 5 |
+Como usuário Silver, desejo de definir os relacionamentos de uma ou mais fonte dados com a finalidade de gerar significado ao plano de negócio. | 5 |
+Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito de plano de negócios e processos de cada cliente para analisar os resultados produzidos. | 6 |
+Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio com a finalidade de processamento em sistemas externos. | 7 |
+Como usuário administrador, desejo ter a permissão de criar usuários nas categorias Landing Zone, Bronze e Silver, para garantir que os usuários tenham acesso ao sistema e acesso aos diferentes estágios de processamento dos dados.| 8 |
+Como usuário preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 9 |
+
 
 </details>
 
@@ -233,7 +234,7 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 <span id="docs">
 
 ## Documentação 📜
-(Em Desenvolvimento)
+(Links em Desenvolvimento)
 <!--
 - <a href="https://github.com/TechHorizonBR/API_2_Sem/blob/Sprint3/Docs/MER_Conceitual.PNG">Modelagem de Dados</a>
 - <a href="https://github.com/TechHorizonBR/API_2_Sem/blob/Sprint3/Docs/DiagramaDeClasse.png">Diagrama de Classes</a>
@@ -243,11 +244,9 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 - <a href="https://github.com/TechHorizonBR/API_2_Sem/blob/Sprint4/Docs/Manual%20de%20Uso%20-%20TGSync.docx" download>Manual de Uso - TGSync</a>
 -->
 
-
 <span id="tecnologias">
 
 ## Tecnologias Utilizadas 💻
-<!--
-![Readme TechHorizon 2S](https://github.com/TechHorizonBR/API_2_Sem/assets/123211025/48f2020a-d873-4a0b-a818-d29c20157787)
--->
+![Readme TechHorizon 2S (1)](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/e687e1ab-dc5d-4742-9a8f-9f52e160af15)
+
 (Em Desenvolvimento)
