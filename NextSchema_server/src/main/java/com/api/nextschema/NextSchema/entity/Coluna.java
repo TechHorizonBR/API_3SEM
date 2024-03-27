@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 public class Coluna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +25,6 @@ public class Coluna {
     private String restricao;
     @Column(name = "descricao")
     private String descricao;
-
+    @ManyToOne
+    private Metadata metadata;
 }
