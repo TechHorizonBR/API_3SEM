@@ -33,6 +33,9 @@ public class ColunaController {
         colunaService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Coluna> getById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(colunaService.buscarPorId(id));
+    }
 
 }
