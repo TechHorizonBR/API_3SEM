@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.entity.Coluna;
+import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.service.ColunaService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,10 @@ public class ColunaController {
     @GetMapping("/{id}")
     public ResponseEntity<Coluna> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(colunaService.buscarPorId(id));
+    }
+    @GetMapping("/metadata")
+    public ResponseEntity<Coluna> getByMetadata(@RequestBody Metadata metadata){
+        return ResponseEntity.ok().body(colunaService.buscarPorMetadata(metadata));
     }
 
 }
