@@ -14,7 +14,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class ColunaService {
     private final ColunaRepository colunaRepository;
 
