@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html,body{
+    margin: 0;
+}
+
+.header {
+    background-color: #006A8F;
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+#DRLogo{
+    margin: 0 1vw;
+    max-width: 100%;
+    height: auto;
+}
+
+
+.flecha-voltar {
+    color: #000000;
+    text-decoration: none; /* Tira o sublinhado */
+    font-size: 70px;
+    margin-left: 20px;
+}
+
+.tipo-de-acesso {
+    float: right;
+    font-size: 30px;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-family: "Inter", sans-serif;
+}
+
+.upload {
+    margin-top: 8vh;
+    text-align: center;
+}
+
+.botao-upload {
+    background-color: #c7c7c7;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='15' ry='15' stroke='%236E797DFF' stroke-width='5' stroke-dasharray='15%2c20' stroke-dashoffset='28' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 15px;
+    padding: 30px 80px;
+    font-size: 45px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
+.icone-botao {
+    width: 40vh;
+    vertical-align: middle;
+    margin-top: 20px;
+}
+
+.texto-botao {
+    font-size: 5vh;
+    vertical-align: middle;
+    font-family: "Inter", sans-serif;
+}
+
