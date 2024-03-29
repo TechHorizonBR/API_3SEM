@@ -12,12 +12,18 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
-    @GetMapping(value = "/{id}")
+    //@GetMapping(value = "/{id}")
     UsuarioDTO getUsuarioById(@PathVariable Long id){
         return usuarioService.findById(id);
     }
     @GetMapping
     List<UsuarioDTO>  getAllUsuario(){
         return usuarioService.findAll();
+    }
+
+    @GetMapping(value ="/{nome}")
+    List<UsuarioDTO> getByNome(@PathVariable String nome){
+
+        return usuarioService.findByName(nome);
     }
 }

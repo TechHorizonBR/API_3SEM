@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.projection.UsuarioProjection;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,15 @@ public class UsuarioService {
     {
         List <Usuario> result = usuarioRepository.findAll();
         List <UsuarioDTO> dto = result.stream().map(UsuarioDTO::new).toList();
-
         return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UsuarioDTO> findByName(String nome){
+        List<UsuarioProjection> result = usuarioRepository.findUsuarioByNome(nome);
+
+        List <UsuarioDTO> dto = result.stream().map(x -> new UsuarioDTO(x)).toList();
+
+        return  dto;
     }
 }
