@@ -22,8 +22,8 @@ public class Historico {
     @Column(name = "log")
     private String log;
     @ManyToOne
-    private Usuario id_usuario;
+    private Usuario usuario;
     @ManyToOne
-    private Metadata id_metadata;
+    private Metadata metadata;
 
 }

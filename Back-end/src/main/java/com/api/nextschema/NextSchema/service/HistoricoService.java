@@ -30,10 +30,10 @@ public class HistoricoService {
     }
     @Transactional(readOnly = true)
     public List<Historico> buscarPorUsuario(Usuario usuario){
-        return historicoRepository.findByUser(usuario);
+        return historicoRepository.findByUser(usuario.getId());
     }
     @Transactional
     public List<Historico> buscarPorMetada(Metadata metadata){
-        return historicoRepository.findByMetada(metadata);
+        return historicoRepository.findByMetada(metadata.getId());
     }
 }
