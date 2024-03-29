@@ -1,7 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
-import com.api.nextschema.NextSchema.projection.UsuarioProjection;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,13 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
     @Transactional(readOnly = true)
-    public UsuarioDTO findById(Long id){
-        Usuario result = usuarioRepository.findById(id).get(); //tratar exception no caso de nao existir
-        UsuarioDTO dto = new UsuarioDTO(result);
-
-        return dto;
+    public Usuario findById(Long id){
+        try {
+            return usuarioRepository.findById(id).get();
+        }
+        catch (Exception e){
+            return null;
+        }
     }
     @Transactional(readOnly = true)
     public List<UsuarioDTO> findAll()
@@ -32,11 +33,17 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public List<UsuarioDTO> findByName(String nome){
-        List<UsuarioProjection> result = usuarioRepository.findUsuarioByNome(nome);
+    public UsuarioDTO findUsuarioByEmail(String email){
+        Usuario result = usuarioRepository.findUsuarioByEmail(email);
+        return new UsuarioDTO(result);
+    }
 
-        List <UsuarioDTO> dto = result.stream().map(x -> new UsuarioDTO(x)).toList();
+    public Usuario criarUsuario(Usuario usuario){
+        return usuarioRepository.save(usuario);
+    }
 
-        return  dto;
+    public Object deletarUsuario(Usuario usuario){
+        usuarioRepository.deleteById(usuario.getId());
+        return usuario;
     }
 }

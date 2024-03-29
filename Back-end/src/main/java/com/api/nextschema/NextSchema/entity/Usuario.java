@@ -1,10 +1,7 @@
 package com.api.nextschema.NextSchema.entity;
 
 import com.api.nextschema.NextSchema.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +13,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
+
     private String nome;
-    private Role role;
+    @Column(name = "usu_role")
+    private Role roleUsuario;
+    @Column(name = "email", unique = true)
     private String email;
     private String senha;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "nome='" + nome + '\'' +
+                ", roleUsuario=" + roleUsuario +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
