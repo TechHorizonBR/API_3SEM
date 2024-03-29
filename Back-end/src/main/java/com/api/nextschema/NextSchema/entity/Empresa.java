@@ -1,27 +1,26 @@
 package com.api.nextschema.NextSchema.entity;
 
-import com.api.nextschema.NextSchema.enums.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+import java.time.LocalDateTime;
+@Table(name = "empresa")
+@Entity
 @Getter
 @Setter
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
-
-    private String nome;
-    @Column(name = "usu_role")
-    private Role roleUsuario;
-    @Column(name = "email", unique = true)
-    private String email;
-    private String senha;
+@NoArgsConstructor
+public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "nome")
+    private String nome;
+    @Column(name = "cnpj", unique = true, length = 14)
+    private String cnpj;
 }
