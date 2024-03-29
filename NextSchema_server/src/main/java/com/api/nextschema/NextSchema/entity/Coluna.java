@@ -28,3 +28,4 @@ public class Coluna {
     @ManyToOne
     private Metadata metadata;
 }
+
