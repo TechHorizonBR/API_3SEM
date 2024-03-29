@@ -26,7 +26,7 @@ public class UsuarioService {
     public List<UsuarioDTO> findAll()
     {
         List <Usuario> result = usuarioRepository.findAll();
-        List <UsuarioDTO> dto = result.stream().map(x -> new UsuarioDTO(x)).toList();
+        List <UsuarioDTO> dto = result.stream().map(UsuarioDTO::new).toList();
 
         return dto;
     }
