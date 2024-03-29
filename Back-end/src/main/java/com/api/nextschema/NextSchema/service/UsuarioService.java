@@ -1,8 +1,8 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.dto.UsuarioDTO;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
+import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
