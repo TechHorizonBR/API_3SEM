@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class UsuarioDTO {
     private String senha;
 
     public UsuarioDTO(Usuario usuario) {
-        //   BeanUtils.copyProperties(usuario, this);
+        BeanUtils.copyProperties(usuario, this);
+
     }
 }
