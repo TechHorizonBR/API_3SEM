@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Front-end/media/images/logoo.ico">
+    <link rel="stylesheet" href="/Front-end/Styles/lz_personalizacao.css">
+    <script src="/Front-end/Scripts/lz_personalizacao.js" defer></script>
+    <title>NextSchema - Personalização de Esquema</title>
+</head>
+<body>
+    <div class="header">
+        <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NSLogo" width="250">
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Acessos</a>
+                    <ul>
+                        <li><a href="#">Landing Zone</a></li>
+                        <!-- <li><a href="#">Bronze</a></li>
+                        <li><a href="#">Silver</a></li> -->
+                    </ul>
+                </li>
+                <li><a href="#">Ações</a>
+                    <ul>
+                        <li><a href="#">Importar CSV</a></li>
+                        <li><a href="#">Visualizar Esquema</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- <div id="user">
+            <p>Identificação do usuário</p>
+            <p>Empresa</p>
+        </div> -->
+    </div>
+    <div id="title">
+        Personalização de Esquemas
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Selecionar</th>
+                <th scope="col">Nome da Coluna</th>
+                <th scope="col">Tipo de Dado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" id="checkbox"></td>
+                <td><input type="text" class="inputs" id="input-text"></td>
+                <td>
+                    <select class="inputs" id="select">
+                        <option value="string">Texto</option>
+                        <option value="float">Número decimal</option>
+                        <option value="int">Número inteiro</option>
+                        <option value="boolean">Verdadeiro/Falso</option>
+                        <option value="char">Caracter Único (Ex: M ou F)</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="button-container">
+        <button class="button" id="back">Voltar</button>
+        <button class="button" id="save">Salvar</button>
+    </div>
+</body>
+</html>
