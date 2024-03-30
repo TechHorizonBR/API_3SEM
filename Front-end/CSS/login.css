@@ -16,3 +16,55 @@ html,body{
     max-width: 100%;
     height: auto;
 }
+
+.fundo{
+    background-color: #006A8F;
+    margin-top: 8%;
+    margin-left: 30%;
+    border-radius: 15px;
+    width: 400px;
+}
+
+.login-header{
+    text-align: center;
+    height: 30px;
+    background-color: #153243;
+    border-radius: 15px;
+    padding: 30px;
+    color: white;
+}
+
+.login-texto {
+    text-align: center;
+    color: white;
+    border-radius: 15px;
+}
+
+.login-campos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.login-campos input[type="text"],
+.login-campos input[type="password"],
+.login-campos button {
+    padding: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 15px;
+}
+
+.login-campos input {
+    border: none;
+    width: 70%;
+}
+
+.login-campos button {
+    background-color: #153247;
+    color: white;
+    width: 120px;
+    border-color:#00b4f1 ;
+}
