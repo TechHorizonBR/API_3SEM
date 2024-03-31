@@ -37,7 +37,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao salvar, email já cadastrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao salvar. " + e.getMessage());
         }
     }
 
@@ -53,13 +53,25 @@ public class UsuarioController {
     }
 
     @PatchMapping(value = "/{idUsuario}")
-    ResponseEntity<String> atualizarUsuario(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioDTO){
+    ResponseEntity<String> atualizarSenha(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioNovaSenha){
         try{
-            usuarioService.atualizarSenha(idUsuario, usuarioDTO.getSenha());
+            usuarioService.atualizarSenha(idUsuario, usuarioNovaSenha.getSenha());
             return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
+        }
+    }
+
+    @PutMapping
+    ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuarioNovosDados){
+        try{
+            Usuario usuario = new Usuario(usuarioNovosDados);
+            usuarioService.atualizarUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.OK).body("Cadastro atualizado com sucesso");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
         }
     }
 }
