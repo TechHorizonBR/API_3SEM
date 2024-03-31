@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Optional;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -22,4 +24,5 @@ public class UsuarioDTO {
     public UsuarioDTO(Usuario usuario) {
         BeanUtils.copyProperties(usuario, this);
     }
+
 }

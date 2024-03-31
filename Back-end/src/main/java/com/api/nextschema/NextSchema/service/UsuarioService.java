@@ -4,12 +4,9 @@ import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +17,13 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
     @Transactional(readOnly = true)
-    public Usuario findById(Long id){
-        try {
-            return usuarioRepository.findById(id).get();
+    public Optional<Usuario> findById(Long id){
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+        if (usuarioOptional.isEmpty()){
+            throw new EntityNotFoundException("Usuáio não encontrado.");
         }
-        catch (Exception e){
-            return null;
-        }
+        return usuarioRepository.findById(id);
+
     }
     @Transactional(readOnly = true)
     public List<UsuarioDTO> findAll()
@@ -42,11 +39,12 @@ public class UsuarioService {
         return new UsuarioDTO(result);
     }
 
-    public Object criarUsuario(Usuario usuario){
-        var optionalUsuario = usuarioRepository.findUsuarioByEmail(usuario.getEmail());
+    public Object criarUsuario(UsuarioDTO usuarioDTO){
+        var optionalUsuario = usuarioRepository.findUsuarioByEmail(usuarioDTO.getEmail());
         if (optionalUsuario != null){
             throw new EntityNotFoundException("Usuário já cadastrado.");
         }
+        Usuario usuario = new Usuario(usuarioDTO);
         return usuarioRepository.save(usuario);
     }
 

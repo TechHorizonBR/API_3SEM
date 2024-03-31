@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping( value ="/usuarios")
@@ -17,23 +17,38 @@ public class UsuarioController {
     UsuarioService usuarioService;
     @GetMapping(value = "/{id}")
     ResponseEntity<Object> getUsuarioById(@PathVariable Long id){
-        UsuarioDTO dto = new UsuarioDTO(usuarioService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        try {
+            Optional<Usuario> usuario = usuarioService.findById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(usuario);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuário. " + e.getMessage());
+        }
     }
     @GetMapping
-    List<UsuarioDTO>  getAllUsuario(){
-        return usuarioService.findAll();
+    ResponseEntity<Object> getAllUsuario(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
+        }
     }
 
     @GetMapping(value ="/procurar")
     ResponseEntity<Object> getByNome(@RequestBody UsuarioDTO usuarioDTO){
+        try {
         UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(dto);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao procurar usuário. " + e.getMessage());
+        }
     }
     @PostMapping
-    ResponseEntity<Object> createUser(@RequestBody Usuario usuario){
+    ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
         try{
-            usuarioService.criarUsuario(usuario);
+            usuarioService.criarUsuario(usuarioDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
         }
         catch (Exception e){
@@ -69,6 +84,7 @@ public class UsuarioController {
             Usuario usuario = new Usuario(usuarioNovosDados);
             usuarioService.atualizarUsuario(usuario);
             return ResponseEntity.status(HttpStatus.OK).body("Cadastro atualizado com sucesso");
+
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
