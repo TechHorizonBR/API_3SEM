@@ -36,10 +36,10 @@ public class UsuarioController {
     }
 
     @GetMapping(value ="/procurar")
-    ResponseEntity<Object> getByNome(@RequestBody UsuarioDTO usuarioDTO){
+    ResponseEntity<Object> getByEmail(@RequestBody UsuarioDTO usuarioDTO){
         try {
-        UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+            UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao procurar usuário. " + e.getMessage());

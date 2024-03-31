@@ -29,49 +29,48 @@ public class UsuarioService {
     public List<UsuarioDTO> findAll()
     {
         List <Usuario> result = usuarioRepository.findAll();
-        List <UsuarioDTO> dto = result.stream().map(UsuarioDTO::new).toList();
-        return dto;
+        return result.stream().map(UsuarioDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO findUsuarioByEmail(String email){
-        Usuario result = usuarioRepository.findUsuarioByEmail(email);
-        return new UsuarioDTO(result);
+    public UsuarioDTO findUsuarioByEmail(String email) {
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
+
+        return new UsuarioDTO(usuario);
     }
 
-    public Object criarUsuario(UsuarioDTO usuarioDTO){
-        var optionalUsuario = usuarioRepository.findUsuarioByEmail(usuarioDTO.getEmail());
-        if (optionalUsuario != null){
-            throw new EntityNotFoundException("Usuário já cadastrado.");
-        }
-        Usuario usuario = new Usuario(usuarioDTO);
-        return usuarioRepository.save(usuario);
+
+    public void criarUsuario(UsuarioDTO usuarioDTO) {
+        usuarioRepository.findUsuarioByEmail(usuarioDTO.getEmail())
+                .ifPresent(u -> {
+                    throw new EntityNotFoundException("Já existe um usuário com este email");
+                });
+
+        Usuario novoUsuario = new Usuario(usuarioDTO);
+        usuarioRepository.save(novoUsuario);
     }
+
 
     public void deletarUsuario(Long idUsuario){
-        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (!usuario.isPresent()){
-            throw new EntityNotFoundException("Usuário com ID " + idUsuario + " não encontrado." );
-        }
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
 
-        usuarioRepository.deleteById(idUsuario);
+        usuarioRepository.deleteById(usuario.getId());
     }
     @Transactional
     public void atualizarSenha(Long id, String novaSenha){
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-        if(optionalUsuario.isEmpty()){
-            throw new EntityNotFoundException("Usuário não existe");
-        }
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        usuarioRepository.atualizarSenha(id, novaSenha);
+        usuarioRepository.atualizarSenha(usuario.getId(), novaSenha);
     }
 
     @Transactional
     public void atualizarUsuario(Usuario usuario){
-        Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuario.getId());
-        if (optionalUsuario.isEmpty()){
-            throw new EntityNotFoundException("Usuário não existe");
-        }
+        Usuario user = usuarioRepository.findById(usuario.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+
         usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome(), usuario.getRoleUsuario());
     }
 }
