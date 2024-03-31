@@ -2,6 +2,7 @@
 
 html,body{
     margin: 0;
+    position: relative;
 }
 
 .header {
@@ -9,8 +10,9 @@ html,body{
     width: 100%;
     height: 6vh;
     display: flex;
+    position: absolute;
     justify-content: space-between;
-    flex-wrap: nowrap;
+    z-index: 3;
 }
 
 #DRLogo{
@@ -36,8 +38,11 @@ html,body{
 }
 
 .upload {
-    margin-top: 8vh;
     text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .botao-upload {
@@ -47,15 +52,21 @@ html,body{
     padding: 30px 80px;
     font-size: 45px;
     cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-
+    display: inline-flex;
+    /* vertical-align: middle; */
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto 20vw;
 }
 
 .icone-botao {
-    width: 40vh;
-    vertical-align: middle;
-    margin-top: 20px;
+    /* width: 10vh; */
+    max-width: 250px;
+    /* vertical-align: middle; */
+    /* margin-top: 20px; */
 }
 
 .texto-botao {
@@ -64,3 +75,63 @@ html,body{
     font-family: "Inter", sans-serif;
 }
 
+.back_prompt{
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.9px);
+    -webkit-backdrop-filter: blur(2.9px);
+    position: absolute;
+    width: 100%;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.prompt{
+    background-color: white;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
+    /* border: 2px; */
+    /* border-color: black; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btns{
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.prompt_text{
+    font-family: "Inter", sans-serif;
+}
+
+.btn_p{
+    width: 72px;
+    height: 40px;
+    font-size: larger;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+#btn_yes{
+    background-color: #46fd18;
+}
+
+#btn_no{
+    background-color: #ff1c1c;
+}
