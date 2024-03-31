@@ -19,4 +19,6 @@ public class Metadata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    private Usuario usuario;
 }
