@@ -34,21 +34,32 @@ public class UsuarioController {
     ResponseEntity<Object> createUser(@RequestBody Usuario usuario){
         try{
             usuarioService.criarUsuario(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(usuarioService.criarUsuario(usuario));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao salvar, email já cadastrado.");
         }
     }
 
     @DeleteMapping
-    ResponseEntity<Object> deleteUsuario(@RequestBody Usuario usuario){
+    ResponseEntity<String> deleteUsuario(@RequestBody Usuario usuario){
         try {
-                usuarioService.deletarUsuario(usuario);
-                return  ResponseEntity.status(HttpStatus.OK).body("Usuario deletado!");
+            usuarioService.deletarUsuario(usuario.getId());
+            return  ResponseEntity.status(HttpStatus.OK).body("Usuario deletado!");
         }
         catch (Exception e) {
-            return ResponseEntity.badRequest().body("Falha para deletar");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Falha ao excluir, usuário com id " + usuario.getId()+" não encontrado!");
+        }
+    }
+
+    @PatchMapping(value = "/{idUsuario}")
+    ResponseEntity<String> atualizarUsuario(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioDTO){
+        try{
+            usuarioService.atualizarSenha(idUsuario, usuarioDTO.getSenha());
+            return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }
