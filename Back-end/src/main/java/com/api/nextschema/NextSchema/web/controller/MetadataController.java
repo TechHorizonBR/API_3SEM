@@ -1,6 +1,4 @@
 package com.api.nextschema.NextSchema.web.controller;
-
-import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.MetadataService;
