@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 html,body{
     margin: 0;
+}
+
+main{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
 }
 
 .header {
@@ -9,6 +19,7 @@ html,body{
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
+    position: absolute;
 }
 
 #DRLogo{
@@ -19,19 +30,21 @@ html,body{
 
 .fundo{
     background-color: #006A8F;
-    margin-top: 8%;
-    margin-left: 30%;
+    /* margin-top: 8%; */
+    /* margin-left: 30%; */
     border-radius: 15px;
     width: 400px;
+    display: grid;
 }
 
 .login-header{
     text-align: center;
-    height: 30px;
+    /* height: 30px; */
     background-color: #153243;
     border-radius: 15px;
-    padding: 30px;
+    /* padding: 30px; */
     color: white;
+    /* height: 100px; */
 }
 
 .login-texto {
@@ -55,6 +68,7 @@ html,body{
     margin-bottom: 10px;
     outline: none;
     border-radius: 15px;
+    margin: 20px 0;
 }
 
 .login-campos input {
@@ -66,5 +80,6 @@ html,body{
     background-color: #153247;
     color: white;
     width: 120px;
-    border-color:#00b4f1 ;
+    border: 1px solid #00b4f1;
+    cursor: pointer;
 }
