@@ -17,16 +17,25 @@ html,body{
 
 /* Header */
 .header {
-    background-color: var(--header-color);
     display: flex;
-    flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 10px 20px;
+    background-color: var(--header-color)
+}
+
+#NS-logo {
+    width: 100px;
+    height: auto;
+}
+
+#DomRocK-logo {
+    width: 200px;
+    height: auto;
 }
 
 /* Menu visível */
 nav ul.menu {
-    list-style: none;
     font-weight: bold;
 }
 
@@ -63,10 +72,6 @@ nav ul.menu ul li:hover {
     background-color: #555;
 }
 
-/* #user {
-
-} */
-
 #title {
     color: var(--title-color);
     font-weight: bold;
@@ -78,11 +83,12 @@ nav ul.menu ul li:hover {
 table {
     margin: 0 auto;
     width: 70%;
+
 }
 
 th {
     height: 70px;
-    background-color: var(--btn-color);
+    background-color: #006A8F;
 }
 
 td {
