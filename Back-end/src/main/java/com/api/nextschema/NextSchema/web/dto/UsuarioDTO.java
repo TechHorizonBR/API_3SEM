@@ -20,6 +20,7 @@ public class UsuarioDTO {
     private Role roleUsuario;
     private String email;
     private String senha;
+    private Long idEmpresa;
 
     public UsuarioDTO(Usuario usuario) {
         BeanUtils.copyProperties(usuario, this);
