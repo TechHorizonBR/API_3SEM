@@ -45,6 +45,17 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao procurar usuário. " + e.getMessage());
         }
     }
+
+    @GetMapping(value ="/empresa/{idEmpresa}")
+    ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
+        try {
+            List<Usuario> listUsuarios =  usuarioService.findUsuarioByEmpresa(idEmpresa);
+            return ResponseEntity.status(HttpStatus.OK).body(listUsuarios);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
+        }
+    }
     @PostMapping
     ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
         try{

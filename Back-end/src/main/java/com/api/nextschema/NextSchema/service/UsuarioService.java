@@ -73,4 +73,13 @@ public class UsuarioService {
 
         usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome(), usuario.getRoleUsuario());
     }
+
+    public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){
+        List<Usuario> listUsers = usuarioRepository.findUsuarioByIdEmpresa(idEmpresa);
+
+        if(listUsers.isEmpty())
+            throw new EntityNotFoundException("Empresas sem usuários cadastrados");
+
+        return listUsers;
+    }
 }

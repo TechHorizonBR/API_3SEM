@@ -25,6 +25,8 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
+    private Long idEmpresa;
 
     public Usuario(UsuarioDTO usuarioNovosDados) {
         BeanUtils.copyProperties(usuarioNovosDados, this);

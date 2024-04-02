@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findUsuarioByEmail(String email);
+
+    List<Usuario> findUsuarioByIdEmpresa(Long id);
 
     @Modifying
     @Query("UPDATE Usuario u SET u.senha = :senha where u.id = :id")
@@ -18,4 +21,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query("UPDATE Usuario u SET u.email = :email, u.nome = :nome, u.roleUsuario = :role WHERE u.id = :id")
     void atualizarUsuario(Long id, String email, String nome, Role role);
+
+
 }
