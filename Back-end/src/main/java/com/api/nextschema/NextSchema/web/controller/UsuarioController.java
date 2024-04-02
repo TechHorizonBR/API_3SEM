@@ -26,7 +26,7 @@ public class UsuarioController {
         }
     }
     @GetMapping
-    ResponseEntity<Object> getAllUsuario(){
+    public ResponseEntity<Object> getAllUsuario(){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
         }
@@ -36,7 +36,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value ="/procurar")
-    ResponseEntity<Object> getByEmail(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<Object> getByEmail(@RequestBody UsuarioDTO usuarioDTO){
         try {
             UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
             return ResponseEntity.status(HttpStatus.OK).body(dto);
@@ -47,7 +47,7 @@ public class UsuarioController {
     }
 
     @GetMapping(value ="/empresa/{idEmpresa}")
-    ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
+    public ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
         try {
             List<Usuario> listUsuarios =  usuarioService.findUsuarioByEmpresa(idEmpresa);
             return ResponseEntity.status(HttpStatus.OK).body(listUsuarios);
@@ -57,7 +57,7 @@ public class UsuarioController {
         }
     }
     @PostMapping
-    ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
         try{
             usuarioService.criarUsuario(usuarioDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
@@ -68,7 +68,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping
-    ResponseEntity<String> deleteUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<String> deleteUsuario(@RequestBody Usuario usuario){
         try {
             usuarioService.deletarUsuario(usuario.getId());
             return  ResponseEntity.status(HttpStatus.OK).body("Usuario deletado!");
@@ -79,7 +79,7 @@ public class UsuarioController {
     }
 
     @PatchMapping(value = "/{idUsuario}")
-    ResponseEntity<String> atualizarSenha(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioNovaSenha){
+    public ResponseEntity<String> atualizarSenha(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioNovaSenha){
         try{
             usuarioService.atualizarSenha(idUsuario, usuarioNovaSenha.getSenha());
             return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
@@ -90,7 +90,7 @@ public class UsuarioController {
     }
 
     @PutMapping
-    ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuarioNovosDados){
+    public ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuarioNovosDados){
         try{
             Usuario usuario = new Usuario(usuarioNovosDados);
             usuarioService.atualizarUsuario(usuario);
