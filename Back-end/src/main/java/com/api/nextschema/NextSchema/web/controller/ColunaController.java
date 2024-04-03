@@ -20,17 +20,17 @@ public class ColunaController {
     private final ColunaService colunaService;
 
     @PostMapping
-    public ResponseEntity<Coluna> createColuna(@RequestBody Coluna coluna){
+    public ResponseEntity<Coluna> create(@RequestBody Coluna coluna){
         Coluna newColuna = colunaService.criarColuna(coluna);
         return ResponseEntity.ok().body(newColuna);
 
     }
     @GetMapping
-    public ResponseEntity<List<Coluna>> getAllColunas(){
+    public ResponseEntity<List<Coluna>> getAll(){
         return ResponseEntity.ok().body(colunaService.buscarColunas());
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteColuna(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         colunaService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
