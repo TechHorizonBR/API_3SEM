@@ -26,7 +26,7 @@ public class ColunaController {
 
     }
     @GetMapping
-    public ResponseEntity<List<Coluna>> getAllColunas(){
+    public ResponseEntity<List<Coluna>> getAll(){
         return ResponseEntity.ok().body(colunaService.buscarColunas());
     }
     @DeleteMapping("/{id}")
