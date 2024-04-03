@@ -30,8 +30,6 @@ main{
 
 .fundo{
     background-color: #006A8F;
-    /* margin-top: 8%; */
-    /* margin-left: 30%; */
     border-radius: 15px;
     width: 400px;
     display: grid;
@@ -39,12 +37,9 @@ main{
 
 .login-header{
     text-align: center;
-    /* height: 30px; */
     background-color: #153243;
     border-radius: 15px;
-    /* padding: 30px; */
     color: white;
-    /* height: 100px; */
 }
 
 .login-texto {
@@ -73,6 +68,15 @@ main{
 
 .login-campos input {
     border: none;
+    width: 80%;
+}
+
+.campo-email{
+    border: none;
+    width: 70%;
+}
+
+.campo-senha{
     width: 70%;
 }
 
