@@ -20,7 +20,7 @@ public class ColunaController {
     private final ColunaService colunaService;
 
     @PostMapping
-    public ResponseEntity<Coluna> createColuna(@RequestBody Coluna coluna){
+    public ResponseEntity<Coluna> create(@RequestBody Coluna coluna){
         Coluna newColuna = colunaService.criarColuna(coluna);
         return ResponseEntity.ok().body(newColuna);
 
