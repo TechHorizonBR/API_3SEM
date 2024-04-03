@@ -2,7 +2,9 @@ package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.UsuarioService;
+import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
+import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +48,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping(value ="/empresa/{idEmpresa}")
+   /* @GetMapping(value ="/empresa/{idEmpresa}")
     public ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
         try {
             List<Usuario> listUsuarios =  usuarioService.findUsuarioByEmpresa(idEmpresa);
@@ -55,16 +57,12 @@ public class UsuarioController {
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
         }
-    }
+    }*/
+
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
-        try{
-            usuarioService.criarUsuario(usuarioDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao salvar. " + e.getMessage());
-        }
+    public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
     }
 
     @DeleteMapping
