@@ -4,7 +4,11 @@ import com.api.nextschema.NextSchema.entity.Historico;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.HistoricoService;
+import com.api.nextschema.NextSchema.web.dto.HistoricoCreateDto;
+import com.api.nextschema.NextSchema.web.dto.HistoricoResponseDto;
+import com.api.nextschema.NextSchema.web.dto.mapper.HistoricoMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,8 +24,9 @@ public class HistoricoController {
     private final HistoricoService historicoService;
 
     @PostMapping
-    public ResponseEntity<Historico> create(@RequestBody  Historico historico){
-        return ResponseEntity.status(HttpStatus.CREATED).body(historicoService.criar(historico));
+    public ResponseEntity<HistoricoResponseDto> create(@RequestBody  HistoricoCreateDto dto){
+        Historico historico = historicoService.criar(HistoricoMapper.toHistorico(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(HistoricoMapper.toDto(historico));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Historico> getById(@PathVariable Long id){
