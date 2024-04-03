@@ -12,7 +12,13 @@ async function sendCSV(file){
             }
         });
 
+        //Adicionar no LocalStorage
         console.log(res.data);
+        localStorage.setItem('cabecalho', res.data[0]);
+        for(let x = 1; x < res.data.length; x++){
+            localStorage.setItem(`dados${x}`, res.data[x]);
+        }
+        window.location.href = "lz_personalizacao.html";
     }catch(err){
         console.error(err);
     }
@@ -20,7 +26,6 @@ async function sendCSV(file){
 
 let arquivo = document.getElementById("arquivo");
 arquivo.addEventListener("change", () => {
-    console.log("CHEGASTES");
     arquivoSelec = arquivo.files[0];
     arquivo.value = "";
     newPrompt();
@@ -44,13 +49,14 @@ function newPrompt(){
     document.body.insertAdjacentHTML('beforeend', pmp);
 
     let prompt_csv = document.getElementById("back_prompt");
-    let button_yes = document.getElementById("btn_yes").addEventListener("click", ()=>{
+    document.getElementById("btn_yes").addEventListener("click", ()=>{
         cabecalho = true;
         prompt_csv.remove();
         sendCSV(arquivoSelec);
     })
 
-    let button_no = document.getElementById("btn_no").addEventListener("click", ()=>{
+    document.getElementById("btn_no").addEventListener("click", ()=>{
+        cabecalho = false;
         prompt_csv.remove();
         sendCSV(arquivoSelec);
     })
