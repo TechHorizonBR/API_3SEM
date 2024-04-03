@@ -1,4 +1,4 @@
-package com.api.nextschema.NextSchema.web.dto.mapper;
+package com.api.nextschema.NextSchema.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
