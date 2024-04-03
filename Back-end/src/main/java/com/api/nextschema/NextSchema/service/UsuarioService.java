@@ -3,7 +3,10 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
+import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
+import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
+import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,14 +44,11 @@ public class UsuarioService {
     }
 
 
-    public void criarUsuario(UsuarioDTO usuarioDTO) {
-        usuarioRepository.findUsuarioByEmail(usuarioDTO.getEmail())
-                .ifPresent(u -> {
-                    throw new EntityNotFoundException("Já existe um usuário com este email");
-                });
+    public UsuarioResponseDTO criarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
+        Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
+        Usuario usuario = usuarioRepository.save(novoUsuario);
 
-        Usuario novoUsuario = new Usuario(usuarioDTO);
-        usuarioRepository.save(novoUsuario);
+        return  UsuarioMapper.toResponseDTO(usuario);
     }
 
 
@@ -74,12 +74,12 @@ public class UsuarioService {
         usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome(), usuario.getRoleUsuario());
     }
 
-    public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){
+   /* public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){
         List<Usuario> listUsers = usuarioRepository.findUsuarioByIdEmpresa(idEmpresa);
 
         if(listUsers.isEmpty())
             throw new EntityNotFoundException("Empresas sem usuários cadastrados");
 
         return listUsers;
-    }
+    }*/
 }

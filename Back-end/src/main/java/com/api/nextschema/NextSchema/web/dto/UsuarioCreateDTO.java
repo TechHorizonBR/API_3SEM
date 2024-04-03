@@ -1,28 +1,20 @@
 package com.api.nextschema.NextSchema.web.dto;
 
-import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
-
-import java.util.Optional;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class UsuarioDTO {
-    private  Long id;
+public class UsuarioCreateDTO {
     private String nome;
     private Role roleUsuario;
     private String email;
     private String senha;
-
-    public UsuarioDTO(Usuario usuario) {
-        BeanUtils.copyProperties(usuario, this);
-    }
 
 }
