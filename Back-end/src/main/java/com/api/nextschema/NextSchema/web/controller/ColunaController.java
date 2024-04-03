@@ -30,7 +30,7 @@ public class ColunaController {
         return ResponseEntity.ok().body(colunaService.buscarColunas());
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteColuna(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         colunaService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
