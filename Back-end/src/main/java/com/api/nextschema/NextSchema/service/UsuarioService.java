@@ -10,6 +10,9 @@ import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,19 +23,26 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
     @Transactional(readOnly = true)
-    public Optional<Usuario> findById(Long id){
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
-        if (usuarioOptional.isEmpty()){
-            throw new EntityNotFoundException("Usuáio não encontrado.");
-        }
-        return usuarioRepository.findById(id);
-
+    public Optional<UsuarioDTO> findById(Long id){
+            return Optional.ofNullable((UsuarioMapper.toUsuarioDTO(usuarioRepository.findById(id))));
     }
     @Transactional(readOnly = true)
-    public List<UsuarioDTO> findAll()
-    {
-        List <Usuario> result = usuarioRepository.findAll();
-        return result.stream().map(UsuarioDTO::new).toList();
+    public List<UsuarioResponseDTO> findAll()
+    {/*
+        List <Usuario> listUsuario = usuarioRepository.findAll();
+        List<UsuarioResponseDTO> listDTO = new ArrayList<>();
+
+        for(Usuario user: listUsuario){
+           listDTO.add(UsuarioMapper.toResponseDTO(user));
+        }
+
+        return listDTO;
+*/    List<Usuario> listUsuario = usuarioRepository.findAll();
+
+        return listUsuario.stream()
+                .map(UsuarioMapper::toResponseDTO)
+                .collect(Collectors.toList());
+
     }
 
     @Transactional(readOnly = true)

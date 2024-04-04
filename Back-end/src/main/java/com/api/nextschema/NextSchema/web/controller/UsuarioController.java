@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,24 +18,13 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
-    @GetMapping(value = "/{id}")
-    ResponseEntity<Object> getUsuarioById(@PathVariable Long id){
-        try {
-            Optional<Usuario> usuario = usuarioService.findById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(usuario);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuário. " + e.getMessage());
-        }
+    @GetMapping(value = "procurar/{id}")
+    public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
+            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
     @GetMapping
-    public ResponseEntity<Object> getAllUsuario(){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
-        }
+    public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuario(){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
     }
 
     @GetMapping(value ="/procurar")
