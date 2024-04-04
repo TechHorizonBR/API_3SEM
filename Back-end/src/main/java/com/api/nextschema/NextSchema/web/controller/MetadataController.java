@@ -12,21 +12,21 @@ import java.util.List;
 @Controller
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/metadata")
+@RequestMapping("/metadatas")
 public class MetadataController {
     private final MetadataService metadataService;
 
     @PostMapping
-    public ResponseEntity<Metadata> createMetadata(@RequestBody Metadata metadada){
+    public ResponseEntity<Metadata> create(@RequestBody Metadata metadada){
         Metadata newMetadata = metadataService.criarMetadata(metadada);
         return ResponseEntity.ok().body(newMetadata);
     }
     @GetMapping
-    public ResponseEntity<List<Metadata>> GetAllMetadata(){
+    public ResponseEntity<List<Metadata>> getAll(){
         return ResponseEntity.ok().body(metadataService.buscarMetadata());
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMetadata(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         metadataService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
