@@ -3,6 +3,7 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
+import com.api.nextschema.NextSchema.web.dto.UsuarioAlterarSenhaDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
@@ -10,6 +11,8 @@ import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import java.util.ArrayList;
@@ -24,25 +27,15 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
     @Transactional(readOnly = true)
     public Optional<UsuarioDTO> findById(Long id){
-            return Optional.ofNullable((UsuarioMapper.toUsuarioDTO(usuarioRepository.findById(id))));
+        return Optional.ofNullable((UsuarioMapper.toUsuarioDTO(usuarioRepository.findById(id))));
     }
     @Transactional(readOnly = true)
-    public List<UsuarioResponseDTO> findAll()
-    {/*
-        List <Usuario> listUsuario = usuarioRepository.findAll();
-        List<UsuarioResponseDTO> listDTO = new ArrayList<>();
-
-        for(Usuario user: listUsuario){
-           listDTO.add(UsuarioMapper.toResponseDTO(user));
-        }
-
-        return listDTO;
-*/    List<Usuario> listUsuario = usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> findAll() {
+        List<Usuario> listUsuario = usuarioRepository.findAll();
 
         return listUsuario.stream()
                 .map(UsuarioMapper::toResponseDTO)
                 .collect(Collectors.toList());
-
     }
 
     @Transactional(readOnly = true)
@@ -69,11 +62,18 @@ public class UsuarioService {
         usuarioRepository.deleteById(usuario.getId());
     }
     @Transactional
-    public void atualizarSenha(Long id, String novaSenha){
-        Usuario usuario = usuarioRepository.findById(id)
+    public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+        Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        usuarioRepository.atualizarSenha(usuario.getId(), novaSenha);
+        if(!Objects.equals(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())){
+            throw new EntityNotFoundException("Senha inválida!");
+        }
+        if(!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())){
+            throw new EntityNotFoundException("Senhas divergentes");
+        }
+        usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
+
     }
 
     @Transactional

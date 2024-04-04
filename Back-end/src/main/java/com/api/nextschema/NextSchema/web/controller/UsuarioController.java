@@ -2,9 +2,7 @@ package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.UsuarioService;
-import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
-import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
-import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
+import com.api.nextschema.NextSchema.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +26,8 @@ public class UsuarioController {
     }
 
     @GetMapping(value ="/procurar")
-    public ResponseEntity<Object> getByEmail(@RequestBody UsuarioDTO usuarioDTO){
-        try {
-            UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao procurar usuário. " + e.getMessage());
-        }
+    public ResponseEntity<UsuarioDTO> getByEmail(@RequestBody UsuarioBuscaEmailDTO usuarioBuscaEmailDTO ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioByEmail(usuarioBuscaEmailDTO.getEmail()));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -56,25 +48,16 @@ public class UsuarioController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteUsuario(@RequestBody Usuario usuario){
-        try {
-            usuarioService.deletarUsuario(usuario.getId());
-            return  ResponseEntity.status(HttpStatus.OK).body("Usuario deletado!");
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Falha ao excluir, usuário com id " + usuario.getId()+" não encontrado!");
-        }
+    public ResponseEntity<Void> deleteUsuario(@RequestBody UsuarioBuscaIdDTO usuarioBuscaIdDTO){
+        usuarioService.deletarUsuario(usuarioBuscaIdDTO.getId());
+        return  ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PatchMapping(value = "/{idUsuario}")
-    public ResponseEntity<String> atualizarSenha(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioNovaSenha){
-        try{
-            usuarioService.atualizarSenha(idUsuario, usuarioNovaSenha.getSenha());
-            return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
-        }
+    @PatchMapping
+    public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+            usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
     @PutMapping
