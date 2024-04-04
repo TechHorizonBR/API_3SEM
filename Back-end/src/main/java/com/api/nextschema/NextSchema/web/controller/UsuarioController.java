@@ -1,6 +1,5 @@
 package com.api.nextschema.NextSchema.web.controller;
 
-import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,15 +60,8 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuarioNovosDados){
-        try{
-            Usuario usuario = new Usuario(usuarioNovosDados);
-            usuarioService.atualizarUsuario(usuario);
-            return ResponseEntity.status(HttpStatus.OK).body("Cadastro atualizado com sucesso");
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
 
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarUsuario(usuarioAtualizaDadosDTO));
     }
 }

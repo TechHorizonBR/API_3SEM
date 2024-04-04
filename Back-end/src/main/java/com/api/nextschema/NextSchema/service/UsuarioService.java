@@ -3,10 +3,7 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
-import com.api.nextschema.NextSchema.web.dto.UsuarioAlterarSenhaDTO;
-import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
-import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
-import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
+import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +22,12 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
     @Transactional(readOnly = true)
-    public Optional<UsuarioDTO> findById(Long id){
+    public Optional<UsuarioDTO> findById(Long id) {
         return Optional.ofNullable((UsuarioMapper.toUsuarioDTO(usuarioRepository.findById(id))));
     }
+
     @Transactional(readOnly = true)
     public List<UsuarioResponseDTO> findAll() {
         List<Usuario> listUsuario = usuarioRepository.findAll();
@@ -51,37 +50,38 @@ public class UsuarioService {
         Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
         Usuario usuario = usuarioRepository.save(novoUsuario);
 
-        return  UsuarioMapper.toResponseDTO(usuario);
+        return UsuarioMapper.toResponseDTO(usuario);
     }
 
 
-    public void deletarUsuario(Long idUsuario){
+    public void deletarUsuario(Long idUsuario) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
 
         usuarioRepository.deleteById(usuario.getId());
     }
+
     @Transactional
-    public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+    public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO) {
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        if(!Objects.equals(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())){
+        if (!Objects.equals(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())) {
             throw new EntityNotFoundException("Senha inválida!");
         }
-        if(!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())){
+        if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
             throw new EntityNotFoundException("Senhas divergentes");
         }
         usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
-
     }
 
     @Transactional
-    public void atualizarUsuario(Usuario usuario){
-        Usuario user = usuarioRepository.findById(usuario.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+    public UsuarioResponseDTO atualizarUsuario(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
 
-        usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome(), usuario.getRoleUsuario());
+        usuarioRepository.atualizarUsuario(usuarioAtualizaDadosDTO.getId(), usuarioAtualizaDadosDTO.getEmail(), usuarioAtualizaDadosDTO.getNome(), usuarioAtualizaDadosDTO.getRoleUsuario());
+        Usuario usuario = usuarioRepository.findById(usuarioAtualizaDadosDTO.getId()).get();
+
+        return UsuarioMapper.toResponseDTO(usuario);
     }
 
    /* public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){

@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.web.dto.mapper;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.web.dto.UsuarioAtualizaDadosDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
 import com.api.nextschema.NextSchema.web.dto.UsuarioResponseDTO;
@@ -31,5 +32,10 @@ public class UsuarioMapper {
         return new ModelMapper()
                 .map(usuario, UsuarioDTO.class);
 
+    }
+
+    public static Usuario toUsuario (UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
+        return new ModelMapper()
+                .map(usuarioAtualizaDadosDTO, Usuario.class);
     }
 }
