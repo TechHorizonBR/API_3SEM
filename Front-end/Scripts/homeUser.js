@@ -13,12 +13,7 @@ var empresas = [
     "Proxima Systems Inc. & Co. Innovations",
     "Quantum Dynamics Technologies Solutions",
     "AvantGarde Innovations Group Holdings",
-    "Nexus Solutions Worldwide Enterprises",
-    "Pioneering Technologies Ltd. Solutions",
-    "Zenith Enterprises International Services",
-    "Infinite Innovations Solutions Group",
-    "Elite Solutions Group Ltda. Holdings",
-    "Apex Corporation Holdings Inc."
+    "Nexus Solutions Worldwide Enterprises"
 ];
 
 // Função para preencher a tabela com as empresas
@@ -26,13 +21,24 @@ function preencherTabelaEmpresas() {
     var tabelaBody = document.querySelector("#tabelaEmpresas tbody");
 
     empresas.forEach(function(empresa) {
-        var row = tabelaBody.insertRow(); // Inserir uma nova linha na tabela
-        var cell = row.insertCell(); // Inserir uma nova célula na linha
-        cell.textContent = empresa; // Adicionar o nome da empresa à célula
+        var btn = document.createElement("button");
+        btn.textContent = "Acessar";
+        var row = tabelaBody.insertRow();
+        var cell1 = row.insertCell();
+        cell1.textContent = empresa;
+        cell1.id = "cl_emp";
+        var cell2 = row.insertCell();
+        cell2.id = "cl_btn";
+        cell2.appendChild(btn);
     });
 }
 
-// Chamar a função para preencher a tabela quando a página carregar
 window.onload = function() {
     preencherTabelaEmpresas();
 };
+
+
+
+document.getElementById("botaoUpload").addEventListener("click", ()=>{
+    window.location.href = "lz_upload.html";
+})

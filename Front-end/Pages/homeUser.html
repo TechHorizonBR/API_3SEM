@@ -1,34 +1,47 @@
 <!DOCTYPE html>
-<br lang="pt-Br">
+<!-- <br lang="pt-Br"> -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/Front-end/media/images/logoo.ico">
+    <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
     <link rel="stylesheet" type="text/css" href="/Front-end/Styles/homeUser.css">
     <title>NextSchema - Home</title>
 </head>
 <body>
-    <header>
-    <div class="header">
-        <img src="/Front-end/media/images/logoo.ico" alt="NSLogo">
-        <img src="/Front-end/media/images/DomRocK.png" alt="DRLogo" id="DRLogo">
+<div class="header">
+        <img src="/Front-end/media/images/logo.png" alt="NS-logo" id="NS-logo">
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Acessos</a>
+                    <ul>
+                        <li><a href="#">Landing Zone</a></li>
+                        <!-- <li><a href="#">Bronze</a></li>
+                        <li><a href="#">Silver</a></li> -->
+                    </ul>
+                </li>
+                <li><a href="#">Ações</a>
+                    <ul>
+                        <li><a href="#">Importar CSV</a></li>
+                        <li><a href="#">Visualizar Esquema</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <img src="/Front-end/media/images/DomRocK.png" alt="DomRocK-logo" id="DomRocK-logo">
     </div>
-    </header>
-
-    <div>
-        <button id="botaoUpload" onclick="upload()">UPLOAD</button>
-    </divlass=>
-        <div class="container">
-            <table id="tabelaEmpresas">
-                <tbody>
-                    <!-- As empresas serão preenchidas aqui pelo JavaScript -->
-                </tbody>
-            </table>
-        </div>
-        <div>
+    <div class="screen">
+            <div class="container">
+                <table class="tabelaEmpresas" id="tabelaEmpresas">
+                    <tbody>
+                        <!-- As empresas serão preenchidas aqui pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
             <button id="botaoUpload" onclick="upload()">UPLOAD</button>
-        </divlass=>
+        </div>
     </div>
+    
 </body>
 
 <script src="/Front-end/Scripts/homeUser.js"></script>

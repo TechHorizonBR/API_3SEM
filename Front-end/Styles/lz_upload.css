@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
-html,body{
+html,
+body {
     margin: 0;
     position: relative;
 }
 
 .header {
-    background-color: #006A8F;
+    background-color: #006a8f;
     width: 100%;
     height: 6vh;
     display: flex;
@@ -15,12 +16,11 @@ html,body{
     z-index: 3;
 }
 
-#DRLogo{
+#DRLogo {
     margin: 0 1vw;
     max-width: 100%;
     height: auto;
 }
-
 
 .flecha-voltar {
     color: #000000;
@@ -46,7 +46,7 @@ html,body{
 }
 
 .botao-upload {
-    background-color: #c7c7c7;
+    background-color: #ebe8e8;
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='15' ry='15' stroke='%236E797DFF' stroke-width='5' stroke-dasharray='15%2c20' stroke-dashoffset='28' stroke-linecap='square'/%3e%3c/svg%3e");
     border-radius: 15px;
     padding: 30px 80px;
@@ -60,6 +60,11 @@ html,body{
     align-items: center;
     flex-wrap: wrap;
     margin: auto 20vw;
+    transition: background-color 0.3s ease;
+}
+
+.botao-upload:hover{
+    background-color: #c7c7c7;
 }
 
 .icone-botao {
@@ -75,7 +80,7 @@ html,body{
     font-family: "Inter", sans-serif;
 }
 
-.back_prompt{
+.back_prompt {
     height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
@@ -92,7 +97,7 @@ html,body{
     align-items: center;
 }
 
-.prompt{
+.prompt {
     background-color: white;
     width: 38vw;
     height: 27vh;
@@ -105,7 +110,7 @@ html,body{
     flex-direction: column;
 }
 
-.btns{
+.btns {
     display: flex;
     align-content: center;
     justify-content: space-evenly;
@@ -114,11 +119,11 @@ html,body{
     width: 100%;
 }
 
-.prompt_text{
+.prompt_text {
     font-family: "Inter", sans-serif;
 }
 
-.btn_p{
+.btn_p {
     width: 72px;
     height: 40px;
     font-size: larger;
@@ -128,10 +133,25 @@ html,body{
     cursor: pointer;
 }
 
-#btn_yes{
+#btn_yes {
     background-color: #46fd18;
 }
 
-#btn_no{
+#btn_no {
     background-color: #ff1c1c;
+}
+
+.prompt {
+    animation: popupAppear 0.5s normal;
+}
+
+@keyframes popupAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

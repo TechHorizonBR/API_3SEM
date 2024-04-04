@@ -21,7 +21,8 @@ html,body{
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: var(--header-color)
+    background-color: var(--header-color);
+    position: absolute;
 }
 
 #NS-logo {
