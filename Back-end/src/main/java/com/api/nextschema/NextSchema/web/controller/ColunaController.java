@@ -4,7 +4,11 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.service.ColunaService;
 
+import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +24,15 @@ public class ColunaController {
     private final ColunaService colunaService;
 
     @PostMapping
-    public ResponseEntity<Coluna> create(@RequestBody Coluna coluna){
-        Coluna newColuna = colunaService.criarColuna(coluna);
-        return ResponseEntity.ok().body(newColuna);
+    public ResponseEntity<ColunaResponseDto> create(@RequestBody ColunaCreateDto createDto){
+        Coluna newColuna = colunaService.criarColuna(ColunaMapper.toColuna(createDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ColunaMapper.toDto(newColuna));
 
     }
     @GetMapping
-    public ResponseEntity<List<Coluna>> getAll(){
-        return ResponseEntity.ok().body(colunaService.buscarColunas());
+    public ResponseEntity<List<ColunaResponseDto>> getAll(){
+        List<Coluna> colunas = colunaService.buscarColunas();
+        return ResponseEntity.ok(ColunaMapper.toListDto(colunas));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

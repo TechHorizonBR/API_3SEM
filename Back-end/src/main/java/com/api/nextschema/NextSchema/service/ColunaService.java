@@ -17,9 +17,12 @@ import java.util.List;
 public class ColunaService {
     private final ColunaRepository colunaRepository;
 
+    @Transactional
     public Coluna criarColuna(Coluna coluna){
+
         return colunaRepository.save(coluna);
     }
+    @Transactional
     public List<Coluna> buscarColunas(){
         return colunaRepository.findAll();
     }

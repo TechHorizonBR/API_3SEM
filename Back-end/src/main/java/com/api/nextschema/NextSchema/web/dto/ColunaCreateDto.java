@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class ColunaCreateDTO {
+public class ColunaCreateDto {
     private String nome;
     private String tipo;
     private String descricao;
