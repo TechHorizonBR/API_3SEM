@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.dto;
 
+import com.api.nextschema.NextSchema.entity.Metadata;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,5 +12,5 @@ public class ColunaCreateDto {
     private String tipo;
     private String descricao;
     private String restricao;
-
+    private Metadata metadata;
 }

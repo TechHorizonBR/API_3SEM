@@ -27,22 +27,25 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> create(@RequestBody ColunaCreateDto createDto){
         Coluna newColuna = colunaService.criarColuna(ColunaMapper.toColuna(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(ColunaMapper.toDto(newColuna));
-
     }
+
     @GetMapping
     public ResponseEntity<List<ColunaResponseDto>> getAll(){
         List<Coluna> colunas = colunaService.buscarColunas();
         return ResponseEntity.ok(ColunaMapper.toListDto(colunas));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         colunaService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Coluna> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(colunaService.buscarPorId(id));
     }
+
     @GetMapping("/metadata")
     public ResponseEntity<Coluna> getByMetadata(@RequestBody Metadata metadata){
         return ResponseEntity.ok().body(colunaService.buscarPorMetadata(metadata));
