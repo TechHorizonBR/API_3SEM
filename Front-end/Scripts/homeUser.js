@@ -33,8 +33,23 @@ function preencherTabelaEmpresas() {
     });
 }
 
+function getAllMetadatasporUsuario(url){
+    fetch(url,{
+        method:"get",
+        mode: "cors",
+        headers: {
+            'Content-type': 'application/json'
+        }
+    })
+    .then(response => {return response.json()})
+    .then(data => {
+        console.log(data)
+    })
+}
+
 window.onload = function() {
     preencherTabelaEmpresas();
+    getAllMetadatasporUsuario("http://localhost:8080/metadata")
 };
 
 
