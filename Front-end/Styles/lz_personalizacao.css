@@ -97,11 +97,26 @@ td {
 }
 
 .inputs {
-    border: #757575;
+    border: none;
     width: 100%;
     height: 50px;
     font-size: medium;
+    text-indent: 10px;
+    outline: none;
 }
+
+.desc_input {
+    border: none;
+    width: 99%;
+    height: 50px;
+    font-size: medium;
+    resize: none;
+    outline: none;
+    padding-block: 1px;
+    padding-inline: 2px;
+}
+
+
 
 #select {
     cursor: pointer;
