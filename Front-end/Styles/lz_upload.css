@@ -124,22 +124,28 @@ body {
 }
 
 .btn_p {
-    width: 72px;
+    /* width: 72px; */
+    min-width: 72px;
     height: 40px;
     font-size: larger;
     border-radius: 5px;
     border: none;
     color: #fff;
     cursor: pointer;
+    background-color: #006a8f;
 }
 
-#btn_yes {
+/* #btn_yes {
     background-color: #46fd18;
 }
 
 #btn_no {
     background-color: #ff1c1c;
 }
+
+#btn_cont{
+    background-color: #006a8f;
+} */
 
 .prompt {
     animation: popupAppear 0.5s normal;
@@ -154,4 +160,14 @@ body {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.input_data{
+    border: none;
+    outline: none;
+    background-color: #c1c1c1;
+    height: 30px;
+    width: 200px;
+    border-radius: 12px;
+    padding: 5px;
 }
