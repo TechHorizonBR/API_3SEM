@@ -32,9 +32,30 @@ function preencherTabelaEmpresas() {
         cell2.appendChild(btn);
     });
 }
+let user = {
+    id: 1, 
+    nome: 'Jhony',
+    email: 'jhony@email.com',
+    senha: '123'
+}
+function getAllMetadatasporUsuario(url){
+    fetch(url,{
+        method:"post",
+        mode: "cors",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => {return response.json()})
+    .then(data => {
+        console.log(data)
+    })
+}
 
 window.onload = function() {
     preencherTabelaEmpresas();
+    getAllMetadatasporUsuario("http://localhost:8080/metadata/usuario")
 };
 
 

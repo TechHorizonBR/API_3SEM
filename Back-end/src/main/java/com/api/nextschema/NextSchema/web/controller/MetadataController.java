@@ -13,12 +13,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/metadata")
+@CrossOrigin("*")
 public class MetadataController {
     private final MetadataService metadataService;
 
     @PostMapping
     public ResponseEntity<Metadata> createMetadata(@RequestBody Metadata metadada){
         Metadata newMetadata = metadataService.criarMetadata(metadada);
+
         return ResponseEntity.ok().body(newMetadata);
     }
     @GetMapping
@@ -34,7 +36,7 @@ public class MetadataController {
     public ResponseEntity<Metadata> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(metadataService.buscarPorId(id));
     }
-    @GetMapping("/usuario")
+    @PostMapping("/usuario")
     public ResponseEntity<Metadata> getByUsuario(@RequestBody Usuario usuario){
         return ResponseEntity.ok().body(metadataService.buscarPorUsuario(usuario));
     }
