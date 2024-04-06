@@ -47,9 +47,9 @@ public class ColunaController {
         return ResponseEntity.ok().body(colunaService.buscarPorId(id));
     }
 
-    @GetMapping("/metadata")
-    public ResponseEntity<Coluna> getByMetadata(@RequestBody Metadata metadata){
-        return ResponseEntity.ok().body(colunaService.buscarPorMetadata(metadata));
+    @PostMapping("/metadata")
+    public ResponseEntity<ColunaResponseDto> getByMetadata(@RequestBody Metadata metadata) {
+        return ResponseEntity.ok().body(ColunaMapper.toDto(colunaService.buscarPorMetadata(metadata)));
     }
 
 }

@@ -1,8 +1,10 @@
 package com.api.nextschema.NextSchema.web.dto.mapper;
 
 import com.api.nextschema.NextSchema.entity.Coluna;
+import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
