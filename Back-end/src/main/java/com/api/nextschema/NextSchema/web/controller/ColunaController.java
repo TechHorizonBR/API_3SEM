@@ -19,6 +19,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/colunas")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 
 public class ColunaController {
     private final ColunaService colunaService;
