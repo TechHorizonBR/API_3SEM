@@ -13,6 +13,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/metadatas")
+@CrossOrigin("*")
+
 public class MetadataController {
     private final MetadataService metadataService;
 
