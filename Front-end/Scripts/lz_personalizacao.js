@@ -1,15 +1,18 @@
+let dados = ["nome;coluna"]
+
+// Carregar elementos da página
 window.onload = () => {
-    let dados = localStorage.getItem("cabecalho");
-    dados = dados.split(";");
+    //let dados = localStorage.getItem("cabecalho");
+    dados = dados[0].split(";")
 
     let table = document.getElementById("body_dados");
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <tr>
-          <td><input type="checkbox" id="checkbox"></td>
-          <td><input type="text" class="inputs" id="input-text" value="${dados[x]}"></td>
+          <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
+          <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
           <td>
-              <select class="inputs" id="select">
+              <select class="inputs select-custom" id="select${x}">
                   <option value="string">Texto</option>
                   <option value="float">Número decimal</option>
                   <option value="int">Número inteiro</option>
@@ -17,7 +20,7 @@ window.onload = () => {
                   <option value="char">Caracter Único (Ex: M ou F)</option>
               </select>
           </td>
-          <td><textarea name="desc" id="desc" class="desc_input" cols="30" rows="1" maxlength="100"></textarea></td>
+          <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
@@ -27,50 +30,52 @@ window.onload = () => {
 const backButton = document.querySelector("#back");
 const saveButton = document.querySelector("#save");
 
+let checkBoxesValues = [];
+let inputsTextsValues = [];
+let selectsValues = [];
+let descValues = [];
+
+
 // Eventos
+// backButton.addEventListener("click", function () {
+//     window.location.href = "Front-end/Pages/lz_upload.html";
+// });
+
 saveButton.addEventListener("click", function () {
-    let checkboxValue = document.querySelector("#checkbox").checked;
-    let inputTextValue = document.querySelector("#input-text").value;
-    let selectValue = document.querySelector("#select").value;
-
-    if(checkboxValue === true){
-      checkboxValue = "NOT NULL";
-    }else{
-      checkboxValue = null;
-    }
-    console.log(checkboxValue);
-    console.log(inputTextValue);
-    console.log(selectValue);
-
-    sendData(checkboxValue, inputTextValue, selectValue)
-});
-
-backButton.addEventListener("click", function () {
-    updateInput();
+    getData();
+    sendData();
 });
 
 // Funções
+function getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
+    for(let y = 0; y < dados.length; y++){
+        checkBoxesValues = document.getElementById(`checkbox${y}`)
+        inputsTextsValues = document.getElementById(`input-text${y}`)
+        selectsValues = document.getElementById(`select${y}`)
+        descValues = document.getElementById(`desc${y}`)
 
-function sendData(checkboxValue, inputTextValue, selectValue) {
-    fetch("http://localhost:8080/colunas", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            checkbox: checkboxValue,
-            inputText: inputTextValue,
-            select: selectValue,
-        }),
-    })
-        .then((response) => {
-            if (response.ok) {
-                console.log("Deu bom!!!");
-            } else {
-                console.error("Deu ruim :(");
-            }
-        })
-        .catch((error) => {
-            console.error("Erro: ", error);
-        });
+    }
+}
+
+
+async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
+    try{
+        let newColuna = {
+            nome: checkBoxesValues,
+            tipo: inputsTextsValues,
+            restricao: selectsValues,
+            descricao: descValues
+        }
+
+        let response = await axios.post("http://localhost:8080/colunas", newColuna);
+        console.log(response);
+        if(response.status === 200){
+            window.location.href = "Front-end/Pages/homeUser.html";
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+
+    }catch(error){
+        console.error(error);
+    }
 }
