@@ -13,11 +13,11 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Metadata {
-    @Column(name = "nome")
-    private String nome;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "nome")
+    private String nome;
     @ManyToOne
     private Usuario usuario;
 }
