@@ -1,0 +1,105 @@
+
+body, html {
+    background-color: white;
+    margin: 0;
+    color: white;
+}
+
+th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+
+}
+
+th{
+    height: 70px;
+    background-color: #006A8F
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+    margin-bottom: 5%;
+    table-layout: fixed;
+    text-align: center;
+}
+
+.tela{
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+html,body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   
+}
+
+#btn_continuar {
+    cursor: pointer;
+    border: none;
+    background-color: var(--btn-color);
+    color: #ffffff;
+    border-radius: 25px;
+    height: 50px;
+    width: 12%;
+    font-size: large;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+#btn_yalm {
+    cursor: pointer;
+    border: none;
+    background-color: var(--btn-color);
+    color: #ffffff;
+    border-radius: 25px;
+    height: 50px;
+    width: 12%;
+    font-size: large;
+    text-align: center;
+    font-weight: bold;
+}
+
+buton_contain{
+margin-top: 5%;
+display: flex;
+justify-content: space-around;
+}
+
+.conj_check {
+    display: inline-block;
+}
+
+.tab_check {
+    border: none;
+    width: 30px;
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--header-color);
+    position: absolute;
+    width: 100%;
+}
+
+#NS-logo {
+    width: 100px;
+    height: auto;
+}
+
+#DomRocK-logo {
+    width: 200px;
+    height: auto;
+
+}
