@@ -53,6 +53,31 @@ function getAllMetadatasporUsuario(url){
     })
 }
 
+const metadataList = [
+    { name: "Dom Rock", value: "CEO" },
+    { name: "John Doe", value: "Developer" },
+    { name: "Jane Smith", value: "Designer" },
+    { name: "Jane Smith", value: "Designer" },
+    { name: "Jane Smith", value: "Designer" },
+    { name: "Jane Smith", value: "Designer" }, 
+    { name: "Jane Smith", value: "Designer" },
+    { name: "Jane Smith", value: "Designer" },
+    { name: "Jane Smith", value: "Designer" }
+];
+const metadataContainer = document.getElementById("metadataContainer");
+      
+metadataList.forEach(metadata => {
+    const boxElement = document.createElement("div");
+    boxElement.classList.add("box");
+
+    const nameElement = document.createElement("h1");
+    nameElement.textContent = metadata.name;
+    nameElement.classList.add("name-metadata");
+    boxElement.appendChild(nameElement);
+    metadataContainer.appendChild(boxElement);
+});
+
+
 window.onload = function() {
     preencherTabelaEmpresas();
     getAllMetadatasporUsuario("http://localhost:8080/metadata/usuario")
