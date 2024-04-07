@@ -1,14 +1,18 @@
 package com.api.nextschema.NextSchema.web.dto.mapper;
 
 import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.repository.Meta;
 
 @NoArgsConstructor
 public class MetadataMapper {
-    public static Metadata toMetadata(MetadataResponseDto metadataResponseDto){
-        return new ModelMapper().map(metadataResponseDto, Metadata.class);
+    public static MetadataResponseDto toDto(MetadataCreateDto metadata){
+        return new ModelMapper().map(metadata, MetadataResponseDto.class);
+    }
+
+    public static Metadata toMetadata (MetadataCreateDto metadataCreateDto){
+        return new ModelMapper().map(metadataCreateDto, Metadata.class);
     }
 }

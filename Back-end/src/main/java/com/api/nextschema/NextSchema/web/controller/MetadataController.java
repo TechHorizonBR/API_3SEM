@@ -2,6 +2,9 @@ package com.api.nextschema.NextSchema.web.controller;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.MetadataService;
+import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
+import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
+import com.api.nextschema.NextSchema.web.dto.mapper.MetadataMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,13 +22,13 @@ public class MetadataController {
     private final MetadataService metadataService;
 
     @PostMapping
-    public ResponseEntity<Metadata> create(@RequestBody Metadata metadada){
-        Metadata newMetadata = metadataService.criarMetadata(metadada);
-        return ResponseEntity.ok().body(newMetadata);
+    public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
+        Metadata metadata = metadataService.criarMetadata(MetadataMapper.toMetadata(metadadaCreateDto));
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadadaCreateDto));
     }
     @GetMapping
     public ResponseEntity<List<Metadata>> getAll(){
-        return ResponseEntity.ok().body(metadataService.buscarMetadata());
+        return ResponseEntity.ok(metadataService.buscarMetadata());
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
