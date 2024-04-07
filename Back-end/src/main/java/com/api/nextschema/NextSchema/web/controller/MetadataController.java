@@ -37,7 +37,7 @@ public class MetadataController {
         return ResponseEntity.ok().body(metadataService.buscarPorId(id));
     }
     @PostMapping("/usuario")
-    public ResponseEntity<Metadata> getByUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<List<Metadata>> getByUsuario(@RequestBody Usuario usuario){
         return ResponseEntity.ok().body(metadataService.buscarPorUsuario(usuario));
     }
 }
