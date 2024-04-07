@@ -87,3 +87,48 @@ main{
     border: 1px solid #00b4f1;
     cursor: pointer;
 }
+
+.box-blue{
+    background-color: #159FCC;
+}
+.box{
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin: 0;
+    padding: 10em 1000em 10em 30em
+}
+.container-boxes{
+    margin-top: 7em;
+}
+#img-logo{
+    width: 80%;
+    margin-top: 4em;
+}
+.container-login{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+}
+.btn-sub{
+    background-color: #159FCC;
+    color: #fff;
+    border: none;
+    padding: 1em 3em 1em 3em;
+    border-radius: 10px;
+    margin: 1.5em
+}
+.btn-sub:hover{
+    background-color: white;
+    color: #159FCC;
+    border: solid 1px #159FCC;
+    cursor: pointer
+}
+.fields{
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+    width: 70%;
+    padding: 0.5em 0.9em 0.5em 1em;
+    border-radius: 1em;
+    outline: none;
+}
