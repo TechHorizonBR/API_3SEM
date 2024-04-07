@@ -4,90 +4,6 @@ html,body{
     margin: 0;
 }
 
-main{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Inter", sans-serif;
-}
-
-.header {
-    background-color: #006A8F;
-    width: 100%;
-    height: 6vh;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    position: absolute;
-}
-
-#DRLogo{
-    margin: 0 1vw;
-    max-width: 100%;
-    height: auto;
-}
-
-.fundo{
-    background-color: #006A8F;
-    border-radius: 15px;
-    width: 400px;
-    display: grid;
-}
-
-.login-header{
-    text-align: center;
-    background-color: #153243;
-    border-radius: 15px;
-    color: white;
-}
-
-.login-texto {
-    text-align: center;
-    color: white;
-    border-radius: 15px;
-}
-
-.login-campos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.login-campos input[type="text"],
-.login-campos input[type="password"],
-.login-campos button {
-    padding: 10px;
-    margin-bottom: 10px;
-    outline: none;
-    border-radius: 15px;
-    margin: 20px 0;
-}
-
-.login-campos input {
-    border: none;
-    width: 80%;
-}
-
-.campo-email{
-    border: none;
-    width: 70%;
-}
-
-.campo-senha{
-    width: 70%;
-}
-
-.login-campos button {
-    background-color: #153247;
-    color: white;
-    width: 120px;
-    border: 1px solid #00b4f1;
-    cursor: pointer;
-}
-
 .box-blue{
     background-color: #159FCC;
 }
@@ -102,7 +18,7 @@ main{
 }
 #img-logo{
     width: 80%;
-    margin-top: 4em;
+    margin-top: 4.8em;
 }
 .container-login{
     align-items: center;
@@ -116,13 +32,15 @@ main{
     border: none;
     padding: 1em 3em 1em 3em;
     border-radius: 10px;
-    margin: 1.5em
+    margin: 1.5em;
+    outline: none;
 }
 .btn-sub:hover{
     background-color: white;
     color: #159FCC;
     border: solid 1px #159FCC;
-    cursor: pointer
+    cursor: pointer;
+    outline: none;
 }
 .fields{
     border: none;

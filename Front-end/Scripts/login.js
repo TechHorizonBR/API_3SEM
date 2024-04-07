@@ -14,8 +14,8 @@
 
         function logar(){
             document.getElementById("botaoEntrar").onclick = function(){
-                var textoEmail = document.getElementById("textoEmail").value
-                var textoSenha = document.getElementById("textoSenha").value
+                var textoEmail = document.getElementById("username").value
+                var textoSenha = document.getElementById("password").value
 
                 if (textoEmail.trim() === "" && textoSenha.trim() === ""){
                     alert("Por favor, preencha os campos.")
@@ -26,14 +26,12 @@
                     alert("Por favor, insira a Senha.");
                     return; 
                 } else if(textoEmail == "admin" && textoSenha == "admin"){
-                    alert("Sucesso!")
                         location.href = "homeAdmin.html"
-                    } else if (textoEmail == "user" && textoSenha == "user" ) {
-                    alert("Sucesso!")
+                    } else if (textoEmail == "user@email.com" && textoSenha == "user" ) {
                         location.href = "homeUser.html"
                     }else{
                     alert("Login inválido!")
-                        location.href = "login.html"
+                        location.href = "index.html"
                 }
             }
         }
