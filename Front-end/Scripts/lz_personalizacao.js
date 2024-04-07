@@ -1,8 +1,8 @@
-let dados = ["nome;coluna"]
+let dados = ["teste; teste"]
 
 // Carregar elementos da página
 window.onload = () => {
-    //let dados = localStorage.getItem("cabecalho");
+    // let dados = localStorage.getItem("cabecalho");
     dados = dados[0].split(";")
 
     let table = document.getElementById("body_dados");
@@ -35,40 +35,36 @@ let inputsTextsValues = [];
 let selectsValues = [];
 let descValues = [];
 
-
 // Eventos
-// backButton.addEventListener("click", function () {
-//     window.location.href = "Front-end/Pages/lz_upload.html";
-// });
-
 saveButton.addEventListener("click", function () {
-    getData();
-    sendData();
+    getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues);
 });
 
 // Funções
 function getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
     for(let y = 0; y < dados.length; y++){
-        checkBoxesValues = document.getElementById(`checkbox${y}`)
-        inputsTextsValues = document.getElementById(`input-text${y}`)
-        selectsValues = document.getElementById(`select${y}`)
-        descValues = document.getElementById(`desc${y}`)
-
+        checkBoxesValues.push(document.getElementById(`checkbox${y}`).checked);
+        inputsTextsValues.push(document.getElementById(`input-text${y}`).value);
+        selectsValues.push(document.getElementById(`select${y}`).value);
+        descValues.push(document.getElementById(`desc${y}`).value);
     }
+
+    sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues)
 }
 
 
 async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
     try{
         let newColuna = {
-            nome: checkBoxesValues,
-            tipo: inputsTextsValues,
-            restricao: selectsValues,
+            nome: inputsTextsValues,
+            tipo: selectsValues,
+            restricao: checkBoxesValues,
             descricao: descValues
         }
 
         let response = await axios.post("http://localhost:8080/colunas", newColuna);
         console.log(response);
+
         if(response.status === 200){
             window.location.href = "Front-end/Pages/homeUser.html";
         }else{
@@ -76,6 +72,7 @@ async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, desc
         }
 
     }catch(error){
+        console.log('Deu ruim')
         console.error(error);
     }
 }
