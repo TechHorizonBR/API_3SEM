@@ -35,6 +35,11 @@ public class EmpresaController {
     public ResponseEntity<Empresa> getbyCNPJ(@RequestBody String cnpj){
         return ResponseEntity.ok().body(empresaService.buscarCNPJ(cnpj));
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        empresaService.deleteId(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
 
