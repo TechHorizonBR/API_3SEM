@@ -1,9 +1,8 @@
 :root {
-    --bg-color: #F1F1F1;
-    --header-color: #006A8F;
+    --bg-color: #F8F8F8;
+    --header-color: #159FCC;
     --text-color: #FFF;
-    --btn-color: #00B4F0;
-    --title-color: #757575;
+    --title-color: #303030;
 }
 
 *{margin: 0; padding: 0;}
@@ -16,7 +15,7 @@ html,body{
 }
 
 /* Header */
-.header {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,13 +24,23 @@ html,body{
 }
 
 #NS-logo {
-    width: 100px;
+    width: 250px;
     height: auto;
 }
 
-#DomRocK-logo {
-    width: 200px;
-    height: auto;
+#left {
+    display: flex;
+    align-items: center;
+}
+
+#user-icon {
+    margin: 10%;
+}
+
+#user-identification {
+    display: flex;
+    align-items: center;
+    margin-right: 3%;
 }
 
 /* Menu visível */
@@ -76,24 +85,57 @@ nav ul.menu ul li:hover {
     color: var(--title-color);
     font-weight: bold;
     font-size: larger;
-    text-align: center;
-    margin: 3%;
+    margin: 5%;
+}
+
+#question:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+#question-input {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    font-size: medium;
+    background-color: #ffffff;
+    padding: 100%;
+    width: 500px;
+    border: #159FCC;
+    border-radius: 10px;
+}
+
+.icon-container:hover #question-input {
+display: block;
+}
+
+#table-background {
+    margin: 5%;
+    padding: 2%;
+    background-color: var(--bg-color);
+    box-shadow: 10px 10px 8px #b3b3b3;
 }
 
 table {
     margin: 0 auto;
-    width: 70%;
-
+    width: 100%;
 }
 
 th {
     height: 70px;
-    background-color: #006A8F;
+    background-color: var(--header-color);
 }
 
-td {
+#body_dados {
     height: 50px;
     color: var(--title-color);
+    border-color: var(--title-color);
 }
 
 .inputs {
@@ -116,23 +158,27 @@ td {
     padding-inline: 2px;
 }
 
-
-
-#select {
+.checkbox-custom{
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
-#checkbox {
-    cursor: pointer;
+.checkbox-container {
+    display: flex;
+    margin-top: 8%;
+    justify-content: center;
 }
+
 
 /* botões */
 .button {
     cursor: pointer;
     border: none;
-    background-color: var(--btn-color);
+    background-color: var(--header-color);
     color: #ffffff;
-    border-radius: 25px;
+    border-radius: 15px;
     height: 50px;
     width: 12%;
     font-size: large;
@@ -141,7 +187,12 @@ td {
 }
 
 .button-container {
-    margin-top: 5%;
+    margin: 5%;
     display: flex;
     justify-content: space-around;
+    transform: scale(1.2);
+}
+
+#save:hover {
+    transform: scale(1.05);
 }
