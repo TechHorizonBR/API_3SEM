@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Visualizar Esquemas</title>
-        <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
-        <link rel="stylesheet" href="/Front-end/Styles/lz_resultado.css">
+        <link rel="stylesheet" href="/Front-end/Pages/head/head.css" />
+        <link rel="stylesheet" href="/Front-end/Styles/lz_resultado.css" />
     </head>
     <body>
-        <div class="header">
-            <img src="/Front-end/media/images/logo.png" alt="NS-logo" id="NS-logo">
+        <header>
+            <img
+                src="/Front-end/media/images/logo.png"
+                alt="NS-logo"
+                id="NS-logo"
+            />
             <nav>
                 <ul class="menu">
                     <li>
@@ -33,36 +37,38 @@
                     </li>
                 </ul>
             </nav>
-            <img src="/Front-end/media/images/DomRocK.png" alt="DomRocK-logo" id="DomRocK-logo">
-        </div>
-        <div class="tela">
-            <div id="title">
-                Visualização de "Nome Metadata"
+            <img
+                src="/Front-end/media/images/DomRocK.png"
+                alt="DomRocK-logo"
+                id="DomRocK-logo"
+            />
+        </header>
+        <main>
+                <div id="title">Visualização do metadata x</div>
+                <div class="center">
+                    <div id="table-background">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Obrigatório</th>
+                                    <th scope="col">Nome da Coluna</th>
+                                    <th scope="col">Tipo de Dado</th>
+                                    <th scope="col">Descrição</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body_dados">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <table id="tabela">
-                <thead>
-                    <tr>
-                        <th class="tab_check"></th>
-                        <th>Id</th>
-                        <th>Requisicao</th>
-                        <th>Body</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="tab_check"></td>
-                    </tr>
-                    <tr>
-                        <td class="tab_check"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <div class="button_contain"></div>
-        <button id="btn_continuar">Continuar</button>
-        <button id="btn_yalm">YALM</button>
-    </div>
-</body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/Front-end/Scripts/lz_resultado.js"></script>
+            <div class="all_buttons">
+                <button class="btn_table" id="btn_yalm">YALM</button>
+                <button class="btn_table" id="btn_continuar">Continuar</button>
+            </div>
+        </main>
+    </body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/Front-end/Scripts/lz_resultado.js"></script>
 </html>

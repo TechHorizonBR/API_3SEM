@@ -9,11 +9,12 @@ async function teste() {
     }
 }
 
-teste()
-console.log("oi")
+teste();
 
 function popularTabela(dados_Json) {
     let tabela = document.getElementById('tabela').getElementsByTagName('tbody')[0];
+    let titulo = document.getElementById("title");
+    titulo.innerHTML = "Visualização do metadata " + dados.titulo;
 
     for (let x = 0; x < dados_Json.length; x++) {
         let linha = tabela.insertRow();
