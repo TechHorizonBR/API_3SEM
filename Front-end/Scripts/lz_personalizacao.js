@@ -30,16 +30,16 @@ const saveButton = document.querySelector("#save");
 
 // Eventos
 saveButton.addEventListener("click", function () {
-    getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues);
+    getData();
 });
 
 // Funções
-function getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
+function getData() {
     for(let y = 0; y < dados.length; y++){
-        checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
-        inputsTextsValues = document.getElementById(`input-text${y}`).value;
-        selectsValues = document.getElementById(`select${y}`).value;
-        descValues = document.getElementById(`desc${y}`).value;
+        let checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
+        let inputsTextsValues = document.getElementById(`input-text${y}`).value;
+        let selectsValues = document.getElementById(`select${y}`).value;
+        let descValues = document.getElementById(`desc${y}`).value;
 
         sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues)
     }
