@@ -4,6 +4,8 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ColunaRepository extends JpaRepository<Coluna, Long>{
-    Coluna findColunaByMetadata(Metadata metadata);
+    List<Coluna> findColunaByMetadata(Metadata metadata);
 }

@@ -39,7 +39,7 @@ public class ColunaController {
         return ResponseEntity.ok().body(colunaService.buscarPorId(id));
     }
     @GetMapping("/metadata")
-    public ResponseEntity<Coluna> getByMetadata(@RequestBody Metadata metadata){
+    public ResponseEntity<List<Coluna>> getByMetadata(@RequestBody Metadata metadata){
         return ResponseEntity.ok().body(colunaService.buscarPorMetadata(metadata));
     }
 
