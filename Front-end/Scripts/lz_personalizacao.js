@@ -1,8 +1,6 @@
-let dados = ["teste; teste"]
-
 // Carregar elementos da página
 window.onload = () => {
-    // let dados = localStorage.getItem("cabecalho");
+    let dados = localStorage.getItem("cabecalho");
     dados = dados[0].split(";")
 
     let table = document.getElementById("body_dados");
@@ -30,11 +28,6 @@ window.onload = () => {
 const backButton = document.querySelector("#back");
 const saveButton = document.querySelector("#save");
 
-let checkBoxesValues = [];
-let inputsTextsValues = [];
-let selectsValues = [];
-let descValues = [];
-
 // Eventos
 saveButton.addEventListener("click", function () {
     getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues);
@@ -43,13 +36,14 @@ saveButton.addEventListener("click", function () {
 // Funções
 function getData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
     for(let y = 0; y < dados.length; y++){
-        checkBoxesValues.push(document.getElementById(`checkbox${y}`).checked);
-        inputsTextsValues.push(document.getElementById(`input-text${y}`).value);
-        selectsValues.push(document.getElementById(`select${y}`).value);
-        descValues.push(document.getElementById(`desc${y}`).value);
+        checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
+        inputsTextsValues = document.getElementById(`input-text${y}`).value;
+        selectsValues = document.getElementById(`select${y}`).value;
+        descValues = document.getElementById(`desc${y}`).value;
+
+        sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues)
     }
 
-    sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues)
 }
 
 
