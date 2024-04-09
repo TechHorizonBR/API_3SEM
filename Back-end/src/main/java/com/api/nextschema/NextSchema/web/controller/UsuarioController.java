@@ -20,7 +20,7 @@ public class UsuarioController {
     UsuarioService usuarioService;
     @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
-            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuario(){
@@ -45,7 +45,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -56,8 +56,8 @@ public class UsuarioController {
 
     @PatchMapping
     public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
-            usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
@@ -65,5 +65,10 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarUsuario(usuarioAtualizaDadosDTO));
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.loginUsuario(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }

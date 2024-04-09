@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +81,15 @@ public class UsuarioService {
 
         return UsuarioMapper.toResponseDTO(usuario);
     }
+
+    public UsuarioResponseDTO loginUsuario(String email, String senha) {
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email).get();
+        if(usuario.getSenha().equals(senha)) {
+            return UsuarioMapper.toResponseDTO(usuario);
+        }
+        return null;
+    }
+
 
    /* public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){
         List<Usuario> listUsers = usuarioRepository.findUsuarioByIdEmpresa(idEmpresa);
