@@ -5,19 +5,20 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping( value ="/usuarios")
 @CrossOrigin("*")
-
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
-    @GetMapping(value = "procurar/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
             return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
@@ -26,9 +27,9 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
     }
 
-    @GetMapping(value ="/procurar")
-    public ResponseEntity<UsuarioDTO> getByEmail(@RequestBody UsuarioBuscaEmailDTO usuarioBuscaEmailDTO ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioByEmail(usuarioBuscaEmailDTO.getEmail()));
+    @GetMapping(value ="/{email}")
+    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioByEmail(email));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -44,13 +45,12 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
-
             return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUsuario(@RequestBody UsuarioBuscaIdDTO usuarioBuscaIdDTO){
-        usuarioService.deletarUsuario(usuarioBuscaIdDTO.getId());
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id){
+        usuarioService.deletarUsuario(id);
         return  ResponseEntity.status(HttpStatus.OK).build();
     }
 
