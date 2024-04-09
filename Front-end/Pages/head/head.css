@@ -1,39 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 :root {
-    --bg-color: #F1F1F1;
-    --header-color: #006A8F;
+    --bg-color: #F8F8F8;
+    --header-color: #159FCC;
     --text-color: #FFF;
-    --btn-color: #00B4F0;
-    --title-color: #757575;
+    --title-color: #303030;
 }
 
-*{margin: 0; padding: 0;}
+/* *{margin: 0; padding: 0;} */
 
 html,body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    /* font-size: 20px; */
     background-color: var(--bg-color);
-    color: var(--text-color)
+    font-family: "Inter", sans-serif;
+    /* color: var(--text-color) */
+    margin: 0;
+    padding: 0;
 }
 
 /* Header */
-.header {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     background-color: var(--header-color);
-    position: absolute;
+    /* position: absolute; */
+    width: 100%;
+    height: 100px;
+    color: var(--text-color);
+}
+
+#left{
+    display: flex;
+    align-items: center;
+}
+
+#user-identification{
+    display: flex;
+    align-items: center;
+    /* width: 100%; */
+    width: 200px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+#user-icon{
+    margin: 10%;
+}
+
+.username{
+    /* width: 100%; */
+    word-wrap: break-word;
+    width: 100px;
 }
 
 #NS-logo {
-    width: 100px;
+    width: 250px;
     height: auto;
 }
 
-#DomRocK-logo {
-    width: 200px;
-    height: auto;
-}
 
 /* Menu visível */
 nav ul.menu {
@@ -59,6 +86,7 @@ nav ul.menu ul {
     top: 100%;
     left: 0;
     background-color: var(--title-color);
+    padding: 0;
 }
 
 nav ul.menu ul li {
@@ -71,4 +99,15 @@ nav ul.menu li:hover ul {
 
 nav ul.menu ul li:hover {
     background-color: #555;
+}
+
+.left_part{
+    display: flex;
+    align-items: center;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.right_part{
+
 }

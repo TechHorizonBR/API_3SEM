@@ -1,17 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
+:root {
+    --bg-color: #F8F8F8;
+    --header-color: #159FCC;
+    --text-color: #FFF;
+    --title-color: #303030;
+}
+
 html,body{
     margin: 0;
     font-family: "Inter", sans-serif;
     overflow-x: hidden;
 }
+
+#title {
+    color: var(--title-color);
+    font-weight: bold;
+    font-size: larger;
+    margin: 5%;
+}
+
 .title{
     color: #000;
 }
 .container{
     display: flex;
-    margin: -3em 0 0 10em;   
+    /* margin: -3em 0 0 10em; */
     flex-wrap: wrap;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 }
 .name-metadata{
     color:#000;
@@ -29,5 +47,38 @@ html,body{
     cursor: pointer;
     transform: scale(1.1);
     transition: 0.9s;
+}
 
+#title {
+    color: var(--title-color);
+    font-weight: bold;
+    font-size: larger;
+    margin: 5%;
+}
+
+#question:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+#question-input {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    font-size: medium;
+    background-color: #ffffff;
+    padding: 100%;
+    width: 500px;
+    border: #159FCC;
+    border-radius: 10px;
+}
+
+.icon-container:hover #question-input {
+display: block;
 }

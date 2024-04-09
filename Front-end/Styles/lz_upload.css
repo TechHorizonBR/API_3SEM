@@ -6,7 +6,7 @@ body {
     position: relative;
 }
 
-.header {
+/* .header {
     background-color: #006a8f;
     width: 100%;
     height: 6vh;
@@ -14,7 +14,7 @@ body {
     position: absolute;
     justify-content: space-between;
     z-index: 3;
-}
+} */
 
 #DRLogo {
     margin: 0 1vw;
@@ -39,15 +39,17 @@ body {
 
 .upload {
     text-align: center;
-    height: 100vh;
+    height: calc(100vh - 100px);
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     justify-content: center;
 }
 
 .botao-upload {
     background-color: #ebe8e8;
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='15' ry='15' stroke='%236E797DFF' stroke-width='5' stroke-dasharray='15%2c20' stroke-dashoffset='28' stroke-linecap='square'/%3e%3c/svg%3e");
+    -webkit-box-shadow: 0px 0px 49px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 49px -11px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 49px -11px rgba(0,0,0,0.75);
     border-radius: 15px;
     padding: 30px 80px;
     font-size: 45px;
@@ -69,7 +71,7 @@ body {
 
 .icone-botao {
     /* width: 10vh; */
-    max-width: 250px;
+    max-width: 140px;
     /* vertical-align: middle; */
     /* margin-top: 20px; */
 }

@@ -5,87 +5,29 @@
     --title-color: #303030;
 }
 
-*{margin: 0; padding: 0;}
+/* *{margin: 0; padding: 0;} */
 
-html,body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color)
-}
 
-/* Header */
-header {
+main{
+    /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
+    height: calc(100vh - 100px);
+    margin: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: var(--header-color)
-}
-
-#NS-logo {
-    width: 250px;
-    height: auto;
-}
-
-#left {
-    display: flex;
-    align-items: center;
-}
-
-#user-icon {
-    margin: 10%;
-}
-
-#user-identification {
-    display: flex;
-    align-items: center;
-    margin-right: 3%;
-}
-
-/* Menu visível */
-nav ul.menu {
-    font-weight: bold;
-}
-
-nav ul.menu li {
-    display: inline-block;
-    position: relative;
-}
-
-nav ul.menu li a {
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: var(--text-color);
-}
-
-/* Menu suspenso */
-nav ul.menu ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: var(--title-color);
-}
-
-nav ul.menu ul li {
-    display: block;
-}
-
-nav ul.menu li:hover ul {
-    display: block;
-}
-
-nav ul.menu ul li:hover {
-    background-color: #555;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: nowrap;
 }
 
 #title {
     color: var(--title-color);
     font-weight: bold;
     font-size: larger;
-    margin: 5%;
+    /* height: 100px; */
+    margin-left: 50px;
+    display: flex;
+    /* margin: 5%; */
+    align-items: center;
 }
 
 #question:hover{
@@ -96,6 +38,7 @@ nav ul.menu ul li:hover {
 .icon-container {
     position: relative;
     display: inline-block;
+    margin-left: 20px;
 }
 
 #question-input {
@@ -116,10 +59,13 @@ display: block;
 }
 
 #table-background {
-    margin: 5%;
     padding: 2%;
     background-color: var(--bg-color);
     box-shadow: 10px 10px 8px #b3b3b3;
+    height: 300px;
+    overflow-y: auto;
+    width: 80%;
+    margin: 0 auto;
 }
 
 table {
@@ -130,6 +76,7 @@ table {
 th {
     height: 70px;
     background-color: var(--header-color);
+    color: var(--text-color);
 }
 
 #body_dados {
@@ -187,10 +134,10 @@ th {
 }
 
 .button-container {
-    margin: 5%;
+    /* margin: 5%; */
     display: flex;
     justify-content: space-around;
-    transform: scale(1.2);
+    /* transform: scale(1.2); */
 }
 
 #save:hover {

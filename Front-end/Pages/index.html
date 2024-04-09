@@ -12,25 +12,23 @@
 </head>
 <body>
 
-    <div class="container container-boxes">
-        <div class="row justify-content-center ">
-          <div class="col-md-6 box box-blue">
+        <div class="login_box">
+          <div class="left">
             <img src="../media/images/logo_nextschema_branco.png" alt="" id="img-logo">
           </div>
         
-          <div class="col-md-6 box">
+          <div class="right">
             <div class="container-login">
                 <h1>Login</h1>
                 <h5>Faça login para continuar</h5>
-                <br>
-                <input type="email" name="username" id="username" class="fields" placeholder="E-mail"><br>
-                <br>
-                <input type="password" name="password" id="password" class="fields" placeholder="Senha"><br>
+                <div class="text_boxes">
+                  <input type="email" name="username" id="username" class="fields" placeholder="E-mail"><br>
+                  <input type="password" name="password" id="password" class="fields" placeholder="Senha"><br>
+                </div>
                 <button class="btn-sub" id="botaoEntrar" onclick="logar(); return false">ENTRAR</button>
             </div>
           </div>
         </div>
-      </div>
 <script src="/Front-end/Scripts/login.js"></script>
 
 </body>

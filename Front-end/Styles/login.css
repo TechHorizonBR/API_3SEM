@@ -3,28 +3,68 @@
 html,body{
     margin: 0;
 }
-
-.box-blue{
-    background-color: #159FCC;
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
-.box{
+
+.login_box{
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     border-radius: 8px;
     margin: 0;
-    padding: 10em 1000em 10em 30em
+    /* padding: 10em 1000em 10em 30em; */
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 70vh;
 }
+
+.left{
+    background-color: #159FCC;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.right{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
 .container-boxes{
     margin-top: 7em;
 }
-#img-logo{
-    width: 80%;
-    margin-top: 4.8em;
-}
+
 .container-login{
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
+.text_boxes{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90%;
+    margin-top: 20px;
 }
 .btn-sub{
     background-color: #159FCC;
