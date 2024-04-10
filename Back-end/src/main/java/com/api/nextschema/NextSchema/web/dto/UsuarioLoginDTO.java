@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmpresaBuscarCnpjDTO {
-    private String cnpj;
+public class UsuarioLoginDTO {
+    private String email;
+    private String senha;
 }

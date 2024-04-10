@@ -5,30 +5,31 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping( value ="/usuarios")
 @CrossOrigin("*")
-
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
-    @GetMapping(value = "procurar/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
-            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuario(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
     }
 
-    @GetMapping(value ="/procurar")
-    public ResponseEntity<UsuarioDTO> getByEmail(@RequestBody UsuarioBuscaEmailDTO usuarioBuscaEmailDTO ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioByEmail(usuarioBuscaEmailDTO.getEmail()));
+    @GetMapping(value ="/{email}")
+    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -44,26 +45,30 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUsuario(@RequestBody UsuarioBuscaIdDTO usuarioBuscaIdDTO){
-        usuarioService.deletarUsuario(usuarioBuscaIdDTO.getId());
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id){
+        usuarioService.deletarUsuario(id);
         return  ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PatchMapping
     public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
-            usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
-            return ResponseEntity.status(HttpStatus.OK).build();
+        usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
+    public ResponseEntity<UsuarioResponseDTO> atualizarDados(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
 
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarUsuario(usuarioAtualizaDadosDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarDados(usuarioAtualizaDadosDTO));
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.login(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }

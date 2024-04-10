@@ -2,14 +2,13 @@ package com.api.nextschema.NextSchema.repository;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.enums.Role;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findUsuarioByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
 
     @Modifying
     @Query("UPDATE Usuario u SET u.senha = :senha where u.id = :id")
