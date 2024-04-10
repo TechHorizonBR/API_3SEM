@@ -29,7 +29,7 @@ public class UsuarioController {
 
     @GetMapping(value ="/{email}")
     public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findUsuarioByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -45,7 +45,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuarioCreateDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -62,13 +62,13 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
+    public ResponseEntity<UsuarioResponseDTO> atualizarDados(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
 
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarUsuario(usuarioAtualizaDadosDTO));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarDados(usuarioAtualizaDadosDTO));
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.loginUsuario(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.login(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }
