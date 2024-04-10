@@ -59,16 +59,10 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(ColunaMapper.toDto(colunaService.buscarPorId(id)));
     }
-<<<<<<< HEAD
-    @GetMapping("/metadata")
-    public ResponseEntity<List<Coluna>> getByMetadata(@RequestBody Metadata metadata){
-        return ResponseEntity.ok().body(colunaService.buscarPorMetadata(metadata));
-=======
 
     @PostMapping("/metadata")
     public ResponseEntity<List<ColunaResponseDto>> getByMetadata(@RequestBody Metadata metadata) {
         return ResponseEntity.ok().body(ColunaMapper.toListDto(colunaService.buscarPorMetadata(metadata)));
->>>>>>> dev-back
     }
 
 }

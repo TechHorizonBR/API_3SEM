@@ -15,28 +15,15 @@ import java.util.List;
 @Controller
 @RestController
 @RequiredArgsConstructor
-<<<<<<< HEAD
 @RequestMapping("/metadata")
 @CrossOrigin("*")
-=======
-@RequestMapping("/metadatas")
-@CrossOrigin("*")
-
->>>>>>> dev-back
 public class MetadataController {
     private final MetadataService metadataService;
 
     @PostMapping
-<<<<<<< HEAD
-    public ResponseEntity<Metadata> createMetadata(@RequestBody Metadata metadada){
-        Metadata newMetadata = metadataService.criarMetadata(metadada);
-
-        return ResponseEntity.ok().body(newMetadata);
-=======
     public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
         Metadata metadata = metadataService.create(MetadataMapper.toMetadata(metadadaCreateDto));
         return ResponseEntity.ok().body(MetadataMapper.toDto(metadadaCreateDto));
->>>>>>> dev-back
     }
     @GetMapping
     public ResponseEntity<List<Metadata>> getAll(){
@@ -51,14 +38,9 @@ public class MetadataController {
     public ResponseEntity<Metadata> getById(@PathVariable Long id) {
         return ResponseEntity.ok().body(metadataService.findbyId(id));
     }
-<<<<<<< HEAD
+
     @PostMapping("/usuario")
     public ResponseEntity<List<Metadata>> getByUsuario(@RequestBody Usuario usuario){
         return ResponseEntity.ok().body(metadataService.buscarPorUsuario(usuario));
-=======
-    @GetMapping("/usuario")
-    public ResponseEntity<Metadata> getByUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(metadataService.findbyUsuario(usuario));
->>>>>>> dev-back
     }
 }

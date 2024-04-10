@@ -25,11 +25,7 @@ public class MetadataService {
         return metadataRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
-<<<<<<< HEAD
     public List<Metadata> buscarPorUsuario(Usuario usuario){
-=======
-    public Metadata findbyUsuario(Usuario usuario){
->>>>>>> dev-back
         try {
             return metadataRepository.findMetadataByUsuario(usuario);
         }
