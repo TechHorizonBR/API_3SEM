@@ -141,10 +141,10 @@ width="60"></a>
 
 Epico | User stories | Prioridade | Status
 --- | --- | --- | --- 
-Carregamento do arquivo CSV | Como usuário Landing Zone, desejo acessar o sistema e realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 |
-Personalização de esquema de banco de dados | Como usuário Landing Zone, após o upload, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 |
-Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 2 |
-Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio de banco de dados com o objetivo de compreender a estrutura e organização do esquema armazenado. | 3 |
+Carregamento do arquivo CSV | Como usuário Landing Zone, desejo acessar o sistema e realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
+Personalização de esquema de banco de dados | Como usuário Landing Zone, após o upload, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
+Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 2 | ✅
+Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio de banco de dados com o objetivo de compreender a estrutura e organização do esquema armazenado. | 3 | ✅
 Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema de banco de dados do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 3 |
 Visualização dos esquemas de banco de dados | Como usuário Silver, desejo  visualizar o esquema de banco de dados do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 3 |
 Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 4 |
