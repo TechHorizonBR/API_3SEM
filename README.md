@@ -143,19 +143,18 @@ Epico | User stories | Prioridade | Status
 --- | --- | --- | --- 
 Carregamento do arquivo CSV | Como usuário Landing Zone, desejo acessar o sistema e realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
 Personalização de esquema de banco de dados | Como usuário Landing Zone, após o upload, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
-Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 2 | ✅
-Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio de banco de dados com o objetivo de compreender a estrutura e organização do esquema armazenado. | 3 | ✅
-Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema de banco de dados do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 3 |
-Visualização dos esquemas de banco de dados | Como usuário Silver, desejo  visualizar o esquema de banco de dados do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 3 |
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 4 |
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 4 |
-Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anterios com a finalidade de analisar os dados de melhor forma. | 5 |
-Análise e Definição de Relacionamentos | Como usuário Silver, desejo de definir os relacionamentos de uma ou mais fonte dados com a finalidade de gerar significado ao plano de negócio. | 5 |
-Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito de plano de negócios e processos de cada cliente para analisar os resultados produzidos. | 6 |
-Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio com a finalidade de processamento em sistemas externos. | 7 |
-Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a permissão de criar usuários nas categorias Landing Zone, Bronze e Silver, para garantir que os usuários tenham acesso ao sistema e acesso aos diferentes estágios de processamento dos dados.| 8 |
-Histórico de Auditorias | Como usuário preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 9 |
-
+Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
+Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio de banco de dados com o objetivo de compreender a estrutura e organização do esquema armazenado. | 4 | ✅
+Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a permissão de criar usuários nas categorias Landing Zone, Bronze e Silver, para garantir que os usuários tenham acesso ao sistema e acesso aos diferentes estágios de processamento dos dados.| 5 | ➖
+Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ➖
+Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ➖
+Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema de banco de dados do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ➖
+Análise e Definição de Relacionamentos | Como usuário Silver, desejo de definir os relacionamentos de uma ou mais fonte dados com a finalidade de gerar significado ao plano de negócio. | 9 | ➖
+Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anterios com a finalidade de analisar os dados de melhor forma. | 10 | ➖
+Visualização dos esquemas de banco de dados | Como usuário Silver, desejo  visualizar o esquema de banco de dados do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 11 | ➖
+Histórico de Auditorias | Como usuário preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 12 | ➖
+Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito de plano de negócios e processos de cada cliente para analisar os resultados produzidos. | 13 | ➖
+Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio com a finalidade de processamento em sistemas externos. | 14 | ➖
 
 <span id="cronograma">
 
