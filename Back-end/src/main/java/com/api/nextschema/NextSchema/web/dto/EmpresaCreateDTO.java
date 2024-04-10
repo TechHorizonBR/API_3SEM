@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmpresaCreateDTO {
-    private Long id;
     private String cnpj;
     private String nome;
 }
