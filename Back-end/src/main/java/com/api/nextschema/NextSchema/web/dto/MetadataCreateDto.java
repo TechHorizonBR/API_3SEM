@@ -14,5 +14,5 @@ import lombok.Setter;
 public class MetadataCreateDto {
 
     private String nome;
-    private UsuarioDTO usuarioDTO;
+    private Usuario usuario;
 }
