@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/colunas")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-
 public class ColunaController {
     private final ColunaService colunaService;
 
@@ -43,13 +42,13 @@ public class ColunaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coluna> getById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(colunaService.buscarPorId(id));
+    public ResponseEntity<ColunaResponseDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(ColunaMapper.toDto(colunaService.buscarPorId(id)));
     }
 
     @PostMapping("/metadata")
-    public ResponseEntity<ColunaResponseDto> getByMetadata(@RequestBody Metadata metadata) {
-        return ResponseEntity.ok().body(ColunaMapper.toDto(colunaService.buscarPorMetadata(metadata)));
+    public ResponseEntity<List<ColunaResponseDto>> getByMetadata(@RequestBody Metadata metadata) {
+        return ResponseEntity.ok().body(ColunaMapper.toListDto(colunaService.buscarPorMetadata(metadata)));
     }
 
 }

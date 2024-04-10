@@ -36,15 +36,15 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO findUsuarioByEmail(String email) {
-        Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
+    public UsuarioDTO findByEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
 
         return new UsuarioDTO(usuario);
     }
 
 
-    public UsuarioResponseDTO criarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
+    public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
         Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
         Usuario usuario = usuarioRepository.save(novoUsuario);
 
@@ -74,7 +74,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public UsuarioResponseDTO atualizarUsuario(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
+    public UsuarioResponseDTO atualizarDados(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
 
         usuarioRepository.atualizarUsuario(usuarioAtualizaDadosDTO.getId(), usuarioAtualizaDadosDTO.getEmail(), usuarioAtualizaDadosDTO.getNome(), usuarioAtualizaDadosDTO.getRoleUsuario());
         Usuario usuario = usuarioRepository.findById(usuarioAtualizaDadosDTO.getId()).get();
@@ -82,8 +82,9 @@ public class UsuarioService {
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
-    public UsuarioResponseDTO loginUsuario(String email, String senha) {
-        Usuario usuario = usuarioRepository.findUsuarioByEmail(email).get();
+    public UsuarioResponseDTO login(String email, String senha) {
+        Usuario usuario = usuarioRepository.findByEmail(email).get();
+
         if(usuario.getSenha().equals(senha)) {
             return UsuarioMapper.toResponseDTO(usuario);
         }

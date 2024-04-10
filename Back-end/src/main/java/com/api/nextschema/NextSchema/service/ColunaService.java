@@ -34,9 +34,9 @@ public class ColunaService {
         return colunaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
-    public Coluna buscarPorMetadata(Metadata metadata){
+    public List<Coluna> buscarPorMetadata(Metadata metadata){
         try {
-            return colunaRepository.findColunaByMetadata(metadata);
+            return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
             throw new EntityNotFoundException("Entidade não encontrada");
