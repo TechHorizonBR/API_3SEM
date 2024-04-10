@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Metadata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "nome")
     private String nome;
     @ManyToOne

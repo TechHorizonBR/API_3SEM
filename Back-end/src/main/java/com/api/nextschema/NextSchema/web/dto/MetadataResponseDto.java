@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MetadataResponseDto {
+    private Long id;
     private String nome;
 }
