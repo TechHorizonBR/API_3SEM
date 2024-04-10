@@ -7,5 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ColunaRepository extends JpaRepository<Coluna, Long>{
+<<<<<<< HEAD
     List<Coluna> findColunaByMetadata(Metadata metadata);
+=======
+    List<Coluna> findColunasByMetadata(Metadata metadata);
+>>>>>>> dev-back
 }

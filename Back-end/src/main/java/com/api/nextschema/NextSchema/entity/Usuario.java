@@ -15,17 +15,17 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
-
+    @Column(name = "usu_nome")
     private String nome;
     @Column(name = "usu_role")
     private Role roleUsuario;
     @Column(name = "email", unique = true)
     private String email;
+    @Column(name = "usu_senha")
     private String senha;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     public Usuario(UsuarioDTO usuarioNovosDados) {
         BeanUtils.copyProperties(usuarioNovosDados, this);
     }

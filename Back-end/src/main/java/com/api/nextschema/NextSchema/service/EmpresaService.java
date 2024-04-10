@@ -21,5 +21,7 @@ public class EmpresaService {
 
     public Empresa buscarCNPJ(String cnpj) {return empresaRepository.findbyCNPJ(cnpj);}
 
+    public void deleteId(Long id){ empresaRepository.deleteById(id);}
+
 
 }

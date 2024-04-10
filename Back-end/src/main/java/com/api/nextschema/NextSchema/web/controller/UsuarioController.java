@@ -1,93 +1,74 @@
 package com.api.nextschema.NextSchema.web.controller;
 
-import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.UsuarioService;
-import com.api.nextschema.NextSchema.web.dto.UsuarioDTO;
+import com.api.nextschema.NextSchema.web.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping( value ="/usuarios")
+@CrossOrigin("*")
 public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
     @GetMapping(value = "/{id}")
-    ResponseEntity<Object> getUsuarioById(@PathVariable Long id){
-        try {
-            Optional<Usuario> usuario = usuarioService.findById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(usuario);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuário. " + e.getMessage());
-        }
+    public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
     }
     @GetMapping
-    ResponseEntity<Object> getAllUsuario(){
+    public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuario(){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
+    }
+
+    @GetMapping(value ="/{email}")
+    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
+    }
+
+   /* @GetMapping(value ="/empresa/{idEmpresa}")
+    public ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
+            List<Usuario> listUsuarios =  usuarioService.findUsuarioByEmpresa(idEmpresa);
+            return ResponseEntity.status(HttpStatus.OK).body(listUsuarios);
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
         }
-    }
+    }*/
 
-    @GetMapping(value ="/procurar")
-    ResponseEntity<Object> getByEmail(@RequestBody UsuarioDTO usuarioDTO){
-        try {
-            UsuarioDTO dto = usuarioService.findUsuarioByEmail(usuarioDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao procurar usuário. " + e.getMessage());
-        }
-    }
     @PostMapping
-    ResponseEntity<Object> createUser(@RequestBody UsuarioDTO usuarioDTO){
-        try{
-            usuarioService.criarUsuario(usuarioDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário cadastrado com sucesso.");
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao salvar. " + e.getMessage());
-        }
+    public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
-    @DeleteMapping
-    ResponseEntity<String> deleteUsuario(@RequestBody Usuario usuario){
-        try {
-            usuarioService.deletarUsuario(usuario.getId());
-            return  ResponseEntity.status(HttpStatus.OK).body("Usuario deletado!");
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Falha ao excluir, usuário com id " + usuario.getId()+" não encontrado!");
-        }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id){
+        usuarioService.deletarUsuario(id);
+        return  ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PatchMapping(value = "/{idUsuario}")
-    ResponseEntity<String> atualizarSenha(@PathVariable Long idUsuario, @RequestBody UsuarioDTO usuarioNovaSenha){
-        try{
-            usuarioService.atualizarSenha(idUsuario, usuarioNovaSenha.getSenha());
-            return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
-        }
+    @PatchMapping
+    public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+        usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
+        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 
     @PutMapping
-    ResponseEntity<String> atualizarUsuario(@RequestBody UsuarioDTO usuarioNovosDados){
-        try{
-            Usuario usuario = new Usuario(usuarioNovosDados);
-            usuarioService.atualizarUsuario(usuario);
-            return ResponseEntity.status(HttpStatus.OK).body("Cadastro atualizado com sucesso");
+    public ResponseEntity<UsuarioResponseDTO> atualizarDados(@RequestBody UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO){
 
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao atualizar usuario. " + e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarDados(usuarioAtualizaDadosDTO));
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.login(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }

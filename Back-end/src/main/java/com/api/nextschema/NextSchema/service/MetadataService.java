@@ -13,19 +13,23 @@ import java.util.List;
 @AllArgsConstructor
 public class MetadataService {
     private final MetadataRepository metadataRepository;
-    public Metadata criarMetadata(Metadata metadata){
+    public Metadata create(Metadata metadata){
         return metadataRepository.save(metadata);
     }
-    public List<Metadata> buscarMetadata(){
+    public List<Metadata> find(){
         return metadataRepository.findAll();
     }
-    public void deleteporId(Long id){ metadataRepository.deleteById(id);}
+    public void deletebyId(Long id){ metadataRepository.deleteById(id);}
     @Transactional(readOnly = true)
-    public Metadata buscarPorId(Long id){
+    public Metadata findbyId(Long id){
         return metadataRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
+<<<<<<< HEAD
     public List<Metadata> buscarPorUsuario(Usuario usuario){
+=======
+    public Metadata findbyUsuario(Usuario usuario){
+>>>>>>> dev-back
         try {
             return metadataRepository.findMetadataByUsuario(usuario);
         }

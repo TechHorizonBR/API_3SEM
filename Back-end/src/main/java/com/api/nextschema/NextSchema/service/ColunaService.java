@@ -17,9 +17,12 @@ import java.util.List;
 public class ColunaService {
     private final ColunaRepository colunaRepository;
 
+    @Transactional
     public Coluna criarColuna(Coluna coluna){
+
         return colunaRepository.save(coluna);
     }
+    @Transactional
     public List<Coluna> buscarColunas(){
         return colunaRepository.findAll();
     }
@@ -33,7 +36,7 @@ public class ColunaService {
     @Transactional(readOnly = true)
     public List<Coluna> buscarPorMetadata(Metadata metadata){
         try {
-            return colunaRepository.findColunaByMetadata(metadata);
+            return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
             throw new EntityNotFoundException("Entidade não encontrada");
