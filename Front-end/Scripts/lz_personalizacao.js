@@ -1,7 +1,31 @@
 // Carregar elementos da página
 window.onload = () => {
-    let dados = localStorage.getItem("cabecalho");
-    dados = dados[0].split(";")
+    generateTable(dados)
+};
+
+// Seleção de elementos
+const backButton = document.querySelector("#back");
+const saveButton = document.querySelector("#save");
+let dados = localStorage.getItem("cabecalho");
+let metadata = localStorage.getItem("metadata_id");
+metadata = parseInt(metadata);
+
+console.log(metadata)
+
+// Eventos
+saveButton.addEventListener("click", function () {
+    getData(dados);
+});
+
+// Funções
+function generateTable(dados){
+    let dados_string = dados.toString();
+
+    if(dados_string.includes(",")){
+        dados = dados.split(",")
+    }else{
+        dados = dados.split(";")
+    }
 
     let table = document.getElementById("body_dados");
     for (let x = 0; x < dados.length; x++) {
@@ -22,51 +46,42 @@ window.onload = () => {
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
-};
+}
 
-// Seleção de elementos
-const backButton = document.querySelector("#back");
-const saveButton = document.querySelector("#save");
-
-// Eventos
-saveButton.addEventListener("click", function () {
-    getData();
-});
-
-// Funções
-function getData() {
+function getData(dados) {
     for(let y = 0; y < dados.length; y++){
         let checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
         let inputsTextsValues = document.getElementById(`input-text${y}`).value;
         let selectsValues = document.getElementById(`select${y}`).value;
         let descValues = document.getElementById(`desc${y}`).value;
 
-        sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues)
+        sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, metadata)
     }
 
 }
 
-
-async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues) {
+async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, metadata) {
     try{
         let newColuna = {
             nome: inputsTextsValues,
             tipo: selectsValues,
-            restricao: checkBoxesValues,
-            descricao: descValues
+            restricao: checkBoxesValues.toString(),
+            descricao: descValues,
+            metadata: {
+                id: metadata
+            }
         }
-
+        console.log(newColuna)
         let response = await axios.post("http://localhost:8080/colunas", newColuna);
         console.log(response);
 
         if(response.status === 200){
-            window.location.href = "Front-end/Pages/homeUser.html";
+            window.location.href = "homeUser.html";
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
         }
 
     }catch(error){
-        console.log('Deu ruim')
         console.error(error);
     }
 }
