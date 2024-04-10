@@ -24,11 +24,12 @@ public class MetadataController {
     @PostMapping
     public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
         Metadata metadata = metadataService.create(MetadataMapper.toMetadata(metadadaCreateDto));
-        return ResponseEntity.ok().body(MetadataMapper.toDto(metadadaCreateDto));
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
     @GetMapping
-    public ResponseEntity<List<Metadata>> getAll(){
-        return ResponseEntity.ok(metadataService.find());
+    public ResponseEntity<List<MetadataResponseDto>> getAll(){
+       List<Metadata> metadatas = metadataService.find();
+        return ResponseEntity.ok().body(MetadataMapper.toListDto(metadatas));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
