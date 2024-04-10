@@ -37,11 +37,13 @@ public class MetadataController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Metadata> getById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(metadataService.findbyId(id));
+    public ResponseEntity<MetadataResponseDto> getById(@PathVariable Long id) {
+        Metadata metadata = metadataService.findbyId(id);
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
     @GetMapping("/usuario")
-    public ResponseEntity<Metadata> getByUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(metadataService.findbyUsuario(usuario));
+    public ResponseEntity<MetadataResponseDto> getByUsuario(@RequestBody Usuario usuario){
+        Metadata metadata = metadataService.findbyUsuario(usuario);
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
 }
