@@ -23,7 +23,7 @@ public class MetadataController {
     @PostMapping
     public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
         Metadata metadata = metadataService.create(MetadataMapper.toMetadata(metadadaCreateDto));
-        return ResponseEntity.ok().body(MetadataMapper.toDto(metadadaCreateDto));
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
     @GetMapping
     public ResponseEntity<List<Metadata>> getAll(){

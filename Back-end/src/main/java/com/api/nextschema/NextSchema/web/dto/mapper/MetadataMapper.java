@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 
 @NoArgsConstructor
 public class MetadataMapper {
-    public static MetadataResponseDto toDto(MetadataCreateDto metadata){
+    public static MetadataResponseDto toDto(Metadata metadata){
         return new ModelMapper().map(metadata, MetadataResponseDto.class);
     }
 

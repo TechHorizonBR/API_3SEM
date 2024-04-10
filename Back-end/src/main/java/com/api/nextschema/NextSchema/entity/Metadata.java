@@ -8,10 +8,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "metadata")
+@Entity
 public class Metadata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
