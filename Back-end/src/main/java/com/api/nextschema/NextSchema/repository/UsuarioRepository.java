@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByEmail(String email);
+
+    Optional<Usuario> findUsuarioByEmail(String email);
 
     @Modifying
     @Query("UPDATE Usuario u SET u.senha = :senha where u.id = :id")
