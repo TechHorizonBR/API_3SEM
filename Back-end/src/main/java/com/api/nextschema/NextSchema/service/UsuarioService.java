@@ -37,7 +37,7 @@ public class UsuarioService {
 
     @Transactional(readOnly = true)
     public UsuarioDTO findByEmail(String email) {
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
 
         return new UsuarioDTO(usuario);
@@ -83,8 +83,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO login(String email, String senha) {
-        Usuario usuario = usuarioRepository.findByEmail(email).get();
-
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email).get();
         if(usuario.getSenha().equals(senha)) {
             return UsuarioMapper.toResponseDTO(usuario);
         }

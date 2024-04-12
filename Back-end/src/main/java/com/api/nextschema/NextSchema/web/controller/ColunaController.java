@@ -6,8 +6,10 @@ import com.api.nextschema.NextSchema.service.ColunaService;
 
 import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,5 +67,22 @@ public class ColunaController {
     public ResponseEntity<List<ColunaResponseDto>> getByMetadata(@RequestBody Metadata metadata) {
         return ResponseEntity.ok().body(ColunaMapper.toListDto(colunaService.buscarPorMetadata(metadata)));
     }
-
+    @Operation(
+            summary = "Atualizar uma lista de colunas",
+            description = "Recurso criado para atualizar colunas",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Colunas atualizadas com sucesso.",
+                        content = @Content(mediaType = "application/json",
+                        array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class))))
+            }
+    )
+    @PutMapping("/update")
+    public ResponseEntity<List<ColunaResponseDto>> updateColunas(@RequestBody List<ColunaUpdateDto> colunasDto){
+        List<Coluna> listColunasAtualizadas = new ArrayList<>();
+        for(ColunaUpdateDto coluna : colunasDto) {
+            Coluna colunaAtualizada = colunaService.atualizarColuna(coluna);
+            listColunasAtualizadas.add(colunaAtualizada);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toListDto(listColunasAtualizadas));
+    }
 }

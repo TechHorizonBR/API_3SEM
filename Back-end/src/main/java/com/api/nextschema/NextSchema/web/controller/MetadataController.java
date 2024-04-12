@@ -26,8 +26,9 @@ public class MetadataController {
         return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
     @GetMapping
-    public ResponseEntity<List<Metadata>> getAll(){
-        return ResponseEntity.ok(metadataService.find());
+    public ResponseEntity<List<MetadataResponseDto>> getAll(){
+       List<Metadata> metadatas = metadataService.find();
+        return ResponseEntity.ok().body(MetadataMapper.toListDto(metadatas));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -35,12 +36,12 @@ public class MetadataController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Metadata> getById(@PathVariable Long id) {
-        return ResponseEntity.ok().body(metadataService.findbyId(id));
+    public ResponseEntity<MetadataResponseDto> getById(@PathVariable Long id) {
+        Metadata metadata = metadataService.findbyId(id);
+        return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
-
     @PostMapping("/usuario")
-    public ResponseEntity<List<Metadata>> getByUsuario(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(metadataService.buscarPorUsuario(usuario));
+    public ResponseEntity<List<MetadataResponseDto>> getByUsuario(@RequestBody Usuario usuario) {
+        return ResponseEntity.ok().body(MetadataMapper.toListDto(metadataService.buscarPorUsuario(usuario)));
     }
 }
