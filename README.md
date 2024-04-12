@@ -179,10 +179,11 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 <details>
      
 <summary>Sprint 1</summary>
-  
-</details>
 
 ![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/208ea577-53a0-47ea-a8e2-aaab1ced6d30)
+
+</details>
+
 
 <details>
      
