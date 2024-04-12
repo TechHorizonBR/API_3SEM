@@ -9,10 +9,9 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class ColunaResponseDto {
+    private Long id;
     private String nome;
     private String tipo;
     private String descricao;
     private String restricao;
-    private Metadata metadata;
-
 }

@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,9 @@ public class ColunaMapper {
     public static List<ColunaResponseDto> toListDto(List<Coluna> colunas){
         return colunas.stream().map(coluna -> toDto(coluna)).collect(Collectors.toList());
 
+    }
+    public static Coluna toColuna(ColunaUpdateDto dto){
+        return new ModelMapper().map(dto, Coluna.class);
     }
 
 }

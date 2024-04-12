@@ -1,6 +1,5 @@
 package com.api.nextschema.NextSchema.web.dto;
 
-import com.api.nextschema.NextSchema.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class MetadataCreateDto {
-
+public class ColunaUpdateDto {
+    private Long id;
     private String nome;
-    private Usuario usuario;
+    private String tipo;
+    private String descricao;
+    private String restricao;
 }
