@@ -26,6 +26,7 @@ async function sendMetadata(){
 
         // console.log(res);
         // console.log(res.data);
+        console.log("DATA EM UPLOAD:",res.data);
         localStorage.setItem("metadata_id", res.data.id);
         if(res.status === 200){
             reqSuccess.mdReq = true;

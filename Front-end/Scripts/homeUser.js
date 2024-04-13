@@ -17,30 +17,33 @@ function getAllMetadatasporUsuario(url) {
     .then(response => {return response.json()})
     .then(data => {
         console.log(data)
-        if (data == []){
-            console.log("Vazia")
-        }
         const metadataContainer = document.getElementById("metadataContainer");
-      
-        for (const key in data) {
-            if (Object.hasOwnProperty.call(data, key)) {
-                const metadata = data[key];
-    
-                const boxElement = document.createElement("div");
+        if (data.length === 0){
+            console.log("Vazia")
+            const vazio = document.createElement("h1");
+            vazio.innerHTML = "Não há metadatas cadastrados. </br> Realize um upload para cadastrar."
+            metadataContainer.appendChild(vazio);
+        }else{
+            for (const key in data) {
+                if (Object.hasOwnProperty.call(data, key)) {
+                    const metadata = data[key];
         
-                boxElement.classList.add("box");
-    
-                const nameElement = document.createElement("h1");
-                nameElement.textContent = metadata.nome;
-                nameElement.classList.add("name-metadata");
-                const idElement = document.createElement("p")
-                idElement.textContent = metadata.id
-                idElement.classList.add("id-metadata")
-                idElement.style.display = "none"
-                boxElement.appendChild(idElement);
-    
-                boxElement.appendChild(nameElement);
-                metadataContainer.appendChild(boxElement);
+                    const boxElement = document.createElement("div");
+            
+                    boxElement.classList.add("box");
+        
+                    const nameElement = document.createElement("h1");
+                    nameElement.textContent = metadata.nome;
+                    nameElement.classList.add("name-metadata");
+                    const idElement = document.createElement("p")
+                    idElement.textContent = metadata.id
+                    idElement.classList.add("id-metadata")
+                    idElement.style.display = "none"
+                    boxElement.appendChild(idElement);
+        
+                    boxElement.appendChild(nameElement);
+                    metadataContainer.appendChild(boxElement);
+                }
             }
         }
     });
@@ -49,6 +52,7 @@ document.addEventListener("click", function(event) {
 
     if (event.target.classList.contains("box")) {
         const metadata = {
+            name: event.target.querySelector(".name-metadata").textContent,
             id: event.target.querySelector(".id-metadata").textContent
         };
         localStorage.setItem("metadata", JSON.stringify(metadata));
