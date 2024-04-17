@@ -1,10 +1,8 @@
-// Carregar elementos da página
 window.onload = () => {
     separatorCSV()
     generateTable()
 };
 
-// Seleção de elementos
 const saveButton = document.querySelector("#save");
 
 let dados = localStorage.getItem("cabecalho");
@@ -14,12 +12,10 @@ id_metadata = parseInt(id_metadata);
 
 let allResquests = 0;
 
-// Eventos
 saveButton.addEventListener("click", function () {
     getData(dados);
 });
 
-// Funções
 function separatorCSV(){
     let dados_string = dados.toString();
 

@@ -5,9 +5,6 @@
     --title-color: #303030;
 }
 
-/* *{margin: 0; padding: 0;} */
-
-
 main{
     /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
     height: calc(100vh - 100px);
@@ -23,10 +20,8 @@ main{
     color: var(--title-color);
     font-weight: bold;
     font-size: larger;
-    /* height: 100px; */
     margin-left: 50px;
     display: flex;
-    /* margin: 5%; */
     align-items: center;
 }
 
@@ -134,10 +129,8 @@ th {
 }
 
 .button-container {
-    /* margin: 5%; */
     display: flex;
     justify-content: space-around;
-    /* transform: scale(1.2); */
 }
 
 #save:hover {
@@ -167,8 +160,6 @@ th {
     width: 38vw;
     height: 27vh;
     border-radius: 10px;
-    /* border: 2px; */
-    /* border-color: black; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
