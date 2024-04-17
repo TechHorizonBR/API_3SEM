@@ -13,4 +13,5 @@ public class ColunaCreateDto {
     private String descricao;
     private String restricao;
     private Metadata metadata;
+    private Boolean chavePrimaria;
 }
