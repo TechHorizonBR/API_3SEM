@@ -14,7 +14,9 @@
 	<name>NextSchema</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>21.0.2</java.version>
+		<maven.compiler.source>21.0.2</maven.compiler.source>
+		<maven.compiler.target>21.0.2</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
