@@ -6,6 +6,7 @@ import com.api.nextschema.NextSchema.service.ColunaService;
 
 import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
 import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -84,5 +85,10 @@ public class ColunaController {
             listColunasAtualizadas.add(colunaAtualizada);
         }
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toListDto(listColunasAtualizadas));
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<ColunaResponseDto> updateChavePrimaria(@RequestBody ColunaUpdateChavePrimariaDTO colunaUpdateChavePrimariaDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarChavePrimaria(colunaUpdateChavePrimariaDTO)));
     }
 }
