@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+    --bg-color: #F8F8F8;
+    --header-color: #001233;
+    --text-color: #FFF;
+    --title-color: #303030;
+}
+
+/* *{margin: 0; padding: 0;} */
+
+html,body{
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    /* font-size: 20px; */
+    background-color: var(--bg-color);
+    font-family: "Inter", sans-serif;
+    /* color: var(--text-color) */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 10px 20px; */
+    background-color: var(--header-color);
+    /* position: absolute; */
+    width: 100%;
+    height: 100px;
+    color: var(--text-color);
+}
+
+#left{
+    display: flex;
+    align-items: center;
+}
+
+#user-identification{
+    display: flex;
+    align-items: center;
+    /* width: 100%; */
+    width: 200px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+#user-icon{
+    margin: 10%;
+}
+
+.username{
+    /* width: 100%; */
+    word-wrap: break-word;
+    width: 100px;
+}
+
+#NS-logo {
+    width: 250px;
+    height: auto;
+}
+
+
+/* Menu visível */
+nav ul.menu {
+    font-weight: bold;
+}
+
+nav ul.menu li {
+    display: inline-block;
+    position: relative;
+}
+
+nav ul.menu li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/* Menu suspenso */
+nav ul.menu ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--title-color);
+    padding: 0;
+}
+
+nav ul.menu ul li {
+    display: block;
+}
+
+nav ul.menu li:hover ul {
+    display: block;
+}
+
+nav ul.menu ul li:hover {
+    background-color: #555;
+}
+
+.left_part{
+    display: flex;
+    align-items: center;
+    width: 300px;
+    justify-content: space-between;
+}
