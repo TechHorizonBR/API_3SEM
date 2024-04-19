@@ -2,6 +2,7 @@ package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
+import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -22,8 +24,8 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Transactional(readOnly = true)
-    public Optional<UsuarioDTO> findById(Long id) {
-        return Optional.ofNullable((UsuarioMapper.toUsuarioDTO(usuarioRepository.findById(id))));
+    public Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
 
     @Transactional(readOnly = true)
@@ -53,8 +55,7 @@ public class UsuarioService {
 
 
     public void deletarUsuario(Long idUsuario) {
-        Usuario usuario = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
+        Usuario usuario = buscarPorId(idUsuario);
 
         usuarioRepository.deleteById(usuario.getId());
     }
@@ -83,20 +84,13 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO login(String email, String senha) {
-        Usuario usuario = usuarioRepository.findUsuarioByEmail(email).get();
-        if(usuario.getSenha().equals(senha)) {
-            return UsuarioMapper.toResponseDTO(usuario);
+        if(email.isBlank()) throw new NoSuchElementException("Email não pode estar em branco");
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
+                .orElseThrow(() -> new WrongCredentialsException("Email ou senha inválida."));
+
+        if (usuario.getSenha().equals(senha)) {
+            throw new WrongCredentialsException("Email ou senha inválida.");
         }
-        return null;
+        return UsuarioMapper.toResponseDTO(usuario);
     }
-
-
-   /* public List<Usuario> findUsuarioByEmpresa(Long idEmpresa){
-        List<Usuario> listUsers = usuarioRepository.findUsuarioByIdEmpresa(idEmpresa);
-
-        if(listUsers.isEmpty())
-            throw new EntityNotFoundException("Empresas sem usuários cadastrados");
-
-        return listUsers;
-    }*/
 }
