@@ -92,8 +92,9 @@ public class ColunaController {
             summary = "Buscar por metadata.",
             description = "Recurso para buscar uma coluna por metadata.",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso buscado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
+                    @ApiResponse(responseCode = "201", description = "Colunas atualizadas com sucesso.",
+                            content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class))))
             }
     )
     @PostMapping("/metadata")
