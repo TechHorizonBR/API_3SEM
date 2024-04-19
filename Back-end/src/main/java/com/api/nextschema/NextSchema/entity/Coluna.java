@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Coluna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +26,7 @@ public class Coluna {
     private String descricao;
     @ManyToOne
     private Metadata metadata;
+    @Column(name= "chave_primaria")
+    private Boolean chavePrimaria;
 }
 

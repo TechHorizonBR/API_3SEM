@@ -29,5 +29,8 @@ public class ColunaMapper {
         return new ModelMapper().map(dto, Coluna.class);
     }
 
+    public static ColunaResponseDto toResponseDto(Coluna coluna) {
+        return new ModelMapper().map(coluna, ColunaResponseDto.class);
+    }
 }
 
