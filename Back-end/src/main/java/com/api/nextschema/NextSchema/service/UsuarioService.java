@@ -75,14 +75,21 @@ public class UsuarioService {
 
     @Transactional
     public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO) {
+
+        if (usuarioAlterarSenhaDTO.getNovaSenha().isEmpty() || usuarioAlterarSenhaDTO.getNovaSenhaConfirma().isEmpty() || usuarioAlterarSenhaDTO.getSenhaAntiga().isEmpty()) {
+            throw new NoSuchElementException("Campos não podem estar vazios");
+
+        }
+
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        if (!Objects.equals(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())) {
-            throw new EntityNotFoundException("Senha inválida!");
+        if (!usuarioAlterarSenhaDTO.getSenhaAntiga().equals(usuario.getSenha())) {
+            System.out.println(usuario.getSenha() + " " + usuarioAlterarSenhaDTO.getSenhaAntiga() );
+            throw new WrongCredentialsException("Senha inválida!");
         }
         if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
-            throw new EntityNotFoundException("Senhas divergentes");
+            throw new WrongCredentialsException("Senhas divergentes");
         }
         usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
     }
@@ -96,7 +103,7 @@ public class UsuarioService {
         Usuario usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
 
         Usuario user = UsuarioMapper.toUsuario(usuarioAtualizaDadosDTO);
-        usuarioRepository.save(user);
+        usuarioRepository.atualizarUsuario(user.getId(), user.getNome(), user.getEmail(), user.getRoleUsuario());
         usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
         return UsuarioMapper.toResponseDTO(usuario);
     }
