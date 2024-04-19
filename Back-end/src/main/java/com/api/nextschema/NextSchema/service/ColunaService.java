@@ -25,9 +25,11 @@ public class ColunaService {
     }
     @Transactional
     public List<Coluna> buscarColunas(){
+
         return colunaRepository.findAll();
     }
     public void deleteporId(Long id){
+
         colunaRepository.deleteById(id);
     }
     @Transactional(readOnly = true)
@@ -54,4 +56,5 @@ public class ColunaService {
 
         return colunaRepository.save(colunaEncontrada);
     }
+
 }

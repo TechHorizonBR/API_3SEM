@@ -46,6 +46,16 @@ public class ColunaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ColunaMapper.toDto(newColuna));
     }
 
+    @Operation(
+            summary = "Buscar uma coluna.",
+            description = "Recurso para buscar uma coluna.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
+            }
+
+    )
+
     @GetMapping
     public ResponseEntity<List<ColunaResponseDto>> getAll(){
         List<Coluna> colunas = colunaService.buscarColunas();
@@ -85,4 +95,5 @@ public class ColunaController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toListDto(listColunasAtualizadas));
     }
+
 }
