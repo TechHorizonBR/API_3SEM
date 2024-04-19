@@ -20,7 +20,7 @@ public class MetadataService {
     private final UsuarioService usuarioService;
     public Metadata create(Metadata metadata){
         try{
-            Usuario usuario = usuarioService.(metadata.getUsuario().getId());
+            Usuario usuario = usuarioService.buscarPorId(metadata.getUsuario().getId());
             return metadataRepository.save(metadata);
         }catch (DataIntegrityViolationException ex){
             throw new DataViolationException("Todos os campos são obrigatórios.");
