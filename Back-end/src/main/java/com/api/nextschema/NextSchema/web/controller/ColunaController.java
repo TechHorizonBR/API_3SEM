@@ -74,6 +74,14 @@ public class ColunaController {
         colunaService.deleteporId(id);
         return ResponseEntity.noContent().build();
     }
+    @Operation(
+            summary = "Buscar por id.",
+            description = "Recurso para buscar uma coluna por id.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Recurso buscado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
+            }
+    )
 
     @GetMapping("/{id}")
     public ResponseEntity<ColunaResponseDto> getById(@PathVariable Long id) {
