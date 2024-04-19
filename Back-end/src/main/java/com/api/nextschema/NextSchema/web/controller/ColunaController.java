@@ -54,15 +54,21 @@ public class ColunaController {
                     @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
-
     )
-
     @GetMapping
     public ResponseEntity<List<ColunaResponseDto>> getAll(){
         List<Coluna> colunas = colunaService.buscarColunas();
         return ResponseEntity.ok(ColunaMapper.toListDto(colunas));
     }
 
+    @Operation(
+            summary = "Deletar uma coluna.",
+            description = "Recurso para deletar uma coluna.",
+            responses = {
+                    @ApiResponse(responseCode = "204 No Content", description = "Recurso deletado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
+            }
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         colunaService.deleteporId(id);
