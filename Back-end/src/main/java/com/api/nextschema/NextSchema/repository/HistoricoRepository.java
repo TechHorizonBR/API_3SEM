@@ -13,5 +13,5 @@ public interface HistoricoRepository extends JpaRepository<Historico, Long> {
     @Query("SELECT h FROM Historico h WHERE h.usuario.id = :userid")
     List<Historico> findByUser(@Param("userid") Long userid);
     @Query("SELECT h FROM Historico h WHERE h.metadata.id = :metadata_id")
-    List<Historico> findByMetada(@Param("metadata_id") Integer metadataid);
+    List<Historico> findByMetada(@Param("metadata_id") Long metadataid);
 }
