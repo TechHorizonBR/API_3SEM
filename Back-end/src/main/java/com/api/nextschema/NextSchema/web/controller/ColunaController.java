@@ -88,6 +88,14 @@ public class ColunaController {
         return ResponseEntity.ok().body(ColunaMapper.toDto(colunaService.buscarPorId(id)));
     }
 
+    @Operation(
+            summary = "Buscar por metadata.",
+            description = "Recurso para buscar uma coluna por metadata.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Recurso buscado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
+            }
+    )
     @PostMapping("/metadata")
     public ResponseEntity<List<ColunaResponseDto>> getByMetadata(@RequestBody Metadata metadata) {
         return ResponseEntity.ok().body(ColunaMapper.toListDto(colunaService.buscarPorMetadata(metadata)));
