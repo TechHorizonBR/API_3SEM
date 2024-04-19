@@ -2,6 +2,8 @@ package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
+import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
+import com.api.nextschema.NextSchema.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,8 +36,9 @@ public class UsuarioController {
             }
     )
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<UsuarioDTO>> findUsuarioById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(id));
+    public ResponseEntity<UsuarioResponseDTO> findUsuarioById(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                UsuarioMapper.toResponseDTO(usuarioService.buscarPorId(id)));
     }
 
     @Operation(
@@ -136,7 +139,10 @@ public class UsuarioController {
             description = "Recebe um UsuarioLoginDTO, retorna um UsuarioResponseDTO.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Senha atualizada com sucesso.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioLoginDTO.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioLoginDTO.class))),
+                    @ApiResponse(responseCode = "400", description = "Erro: Campo email não pode estar em branco",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+
             }
     )
     @PostMapping(value = "/login")
