@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.exception;
 
+import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,6 +39,14 @@ public class ApiExceptionHandler {
     @ExceptionHandler(WrongCredentialsException.class)
     public ResponseEntity<ErrorMessage> wrongCredentialsException(RuntimeException ex, HttpServletRequest request){
 
+        log.error("API ERROR: ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<ErrorMessage> duplicateEmailException(RuntimeException ex, HttpServletRequest request){
         log.error("API ERROR: ", ex);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

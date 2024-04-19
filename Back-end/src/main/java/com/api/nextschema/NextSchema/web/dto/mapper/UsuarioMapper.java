@@ -5,8 +5,6 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
-import java.util.Optional;
-
 @NoArgsConstructor
 public class UsuarioMapper {
     public static Usuario toUsuario(UsuarioCreateDTO usuarioCreateDTO){
@@ -25,7 +23,7 @@ public class UsuarioMapper {
 
     }
 
-    public static UsuarioDTO toUsuarioDTO(Optional<Usuario> usuario){
+    public static UsuarioDTO toUsuarioDTO(Usuario usuario){
         return new ModelMapper()
                 .map(usuario, UsuarioDTO.class);
 

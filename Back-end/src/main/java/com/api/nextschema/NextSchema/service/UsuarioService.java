@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Optional;
+import java.util.zip.DataFormatException;
 
 
 @Service
@@ -38,19 +40,30 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO findByEmail(String email) {
+    public Usuario findByEmail(String email) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
 
-        return new UsuarioDTO(usuario);
+        return usuario;
+    }
+
+    public boolean buscarPorEmail(String email) {
+        Optional<Usuario> user = usuarioRepository.findUsuarioByEmail(email);
+        return user.isPresent();
     }
 
 
     public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
-        Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
-        Usuario usuario = usuarioRepository.save(novoUsuario);
+        if(buscarPorEmail(usuarioCreateDTO.getEmail()))
+            throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
 
-        return UsuarioMapper.toResponseDTO(usuario);
+
+        Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
+        usuarioRepository.save(novoUsuario);
+
+        return UsuarioMapper.toResponseDTO(
+                findByEmail(usuarioCreateDTO.getEmail())
+        );
     }
 
 
@@ -76,10 +89,15 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponseDTO atualizarDados(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
+        if(usuarioAtualizaDadosDTO.getRoleUsuario() == null || usuarioAtualizaDadosDTO.getNome() == null || usuarioAtualizaDadosDTO.getEmail() == null ) {
+            throw new NoSuchElementException("Não é permitido campos em branco");
+        }
 
-        usuarioRepository.atualizarUsuario(usuarioAtualizaDadosDTO.getId(), usuarioAtualizaDadosDTO.getEmail(), usuarioAtualizaDadosDTO.getNome(), usuarioAtualizaDadosDTO.getRoleUsuario());
-        Usuario usuario = usuarioRepository.findById(usuarioAtualizaDadosDTO.getId()).get();
+        Usuario usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
 
+        Usuario user = UsuarioMapper.toUsuario(usuarioAtualizaDadosDTO);
+        usuarioRepository.save(user);
+        usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
@@ -91,6 +109,7 @@ public class UsuarioService {
         if (usuario.getSenha().equals(senha)) {
             throw new WrongCredentialsException("Email ou senha inválida.");
         }
+
         return UsuarioMapper.toResponseDTO(usuario);
     }
 }
