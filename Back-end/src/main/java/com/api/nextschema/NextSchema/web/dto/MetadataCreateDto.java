@@ -15,9 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class MetadataCreateDto {
-    @NotBlank
-    @Size(min = 6, max = 50)
+    @NotBlank(message = "Nome não pode ser nulo")
+    @Size(min = 6, max = 50, message = "O tamanho de nome não pode ser menor que 6 caracteres e maior que 50 caracteres.")
     private String nome;
-    @NotBlank
+    @NotNull(message = "Usuário não pode ser nulo")
     private Usuario usuario;
 }

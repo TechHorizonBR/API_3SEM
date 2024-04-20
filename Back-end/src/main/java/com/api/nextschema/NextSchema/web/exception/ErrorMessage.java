@@ -40,7 +40,7 @@ public class ErrorMessage {
         this.status = status.value();
         this.statusText = status.getReasonPhrase();
         this.message = message;
-
+        addErrors(result);
     }
 
     public void addErrors(BindingResult result){
