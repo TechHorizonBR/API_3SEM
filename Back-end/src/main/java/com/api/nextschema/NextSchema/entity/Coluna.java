@@ -29,6 +29,6 @@ public class Coluna {
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
     @Column(name = "validado")
-    private Boolean validado = false;
+    private Boolean validado;
 }
 
