@@ -131,4 +131,5 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> updateChavePrimaria(@RequestBody ColunaUpdateChavePrimariaDTO colunaUpdateChavePrimariaDTO){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarChavePrimaria(colunaUpdateChavePrimariaDTO)));
     }
+
 }
