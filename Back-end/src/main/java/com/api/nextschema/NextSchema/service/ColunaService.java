@@ -74,6 +74,7 @@ public class ColunaService {
         Coluna colunaBuscada = buscarPorId(coluna.getId());
         colunaBuscada.setValidado(coluna.getValidado());
         return colunaRepository.save(colunaBuscada);
+
     }
 }
 
