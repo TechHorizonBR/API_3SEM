@@ -21,6 +21,4 @@ public class ColunaCreateDto {
     private Metadata metadata;
     @NotBlank
     private Boolean chavePrimaria;
-    @NotBlank
-    private Boolean validado;
 }
