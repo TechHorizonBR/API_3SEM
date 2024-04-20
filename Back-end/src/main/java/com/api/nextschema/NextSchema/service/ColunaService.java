@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.ColunaRepository;
+import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
 import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
 import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
@@ -68,4 +69,11 @@ public class ColunaService {
         return colunaRepository.save(coluna);
 
     }
+    @Transactional
+    public Coluna validarColuna(Coluna coluna) {
+        Coluna colunaBuscada = buscarPorId(coluna.getId());
+        colunaBuscada.setValidado(coluna.getValidado());
+        return colunaRepository.save(colunaBuscada);
+    }
 }
+
