@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class ColunaController {
             }
     )
     @PostMapping
-    public ResponseEntity<ColunaResponseDto> create(@RequestBody ColunaCreateDto createDto){
+    public ResponseEntity<ColunaResponseDto> create(@Valid @RequestBody ColunaCreateDto createDto){
         Coluna newColuna = colunaService.criarColuna(ColunaMapper.toColuna(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(ColunaMapper.toDto(newColuna));
     }
