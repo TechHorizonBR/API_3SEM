@@ -28,5 +28,7 @@ public class Coluna {
     private Metadata metadata;
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
+    @Column(name = "validado")
+    private Boolean validado;
 }
 
