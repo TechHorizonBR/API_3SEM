@@ -17,6 +17,7 @@ public class ColunaCreateDto {
     private String descricao;
     @NotBlank
     private String restricao;
+    @NotBlank
     private Metadata metadata;
     private Boolean chavePrimaria;
 }
