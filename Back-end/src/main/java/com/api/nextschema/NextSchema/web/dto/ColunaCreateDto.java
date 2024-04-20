@@ -1,6 +1,8 @@
 package com.api.nextschema.NextSchema.web.dto;
 
 import com.api.nextschema.NextSchema.entity.Metadata;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +10,9 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class ColunaCreateDto {
+
+    @NotBlank @Size(min = 1, max = 10)
     private String nome;
-    private String tipo;
     private String descricao;
     private String restricao;
     private Metadata metadata;
