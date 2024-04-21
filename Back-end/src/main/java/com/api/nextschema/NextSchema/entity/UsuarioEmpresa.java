@@ -15,17 +15,8 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 
+
+
 public class UsuarioEmpresa {
 
-    @ManyToOne
-    private Usuario usuario;
-    @ManyToOne
-    private Empresa empresa;
-
-
-
-
 }
-
-
-
