@@ -37,15 +37,18 @@
     </header>
     <main>
         <div class="conteudo">
-            <div class="cadastroEmpresas"></div>
+            <div class="cadastroEmpresas">
                 <h2>Cadastro de Empresa</h2>
+            </div>
             <div class="boxEmpresa">
                 <div class="conteudoTexto">
-                    <input type="text" name="nome" id="nome" class="fields" placeholder="Nome">
-                    <input type="text" name="cnpj" id="cnpj" class="fields" placeholder="CNPJ">
+                    <p>Nome:</p>
+                    <input type="text" name="nome" id="nome" class="fields" >
+                    <p>CNPJ:</p>
+                    <input type="text" name="cnpj" id="cnpj" class="fields" >
                 </div>
                 <div class="buttons">
-                    <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #63E6BE;"></i>
+                    <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #0CF030;"></i>
                     <button class="cadastrarEmpresa" id="cadastrarEMP" onclick="cadastrar(); return false">CADASTRAR</button>
                 </div>
             </div>

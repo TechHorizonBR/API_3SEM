@@ -5,7 +5,7 @@ html,body{
 }
 
 .conteudo{
-    width: 100%;
+    width: 95%;
     height: 100px;
     margin-left: 5%;
     margin-right: 5%;
@@ -14,10 +14,10 @@ html,body{
 }
 
 .boxEmpresa{
-    width: 90%;
+    width: 95%;
     height: 70vh;
     background-color: #fff;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -27,20 +27,22 @@ html,body{
 .conteudoTexto{
     display: flex;
     justify-content: center;
-
+    align-items: center;
+    margin-left: 10px;
+    color: rgb(137, 137, 137);
 }
 
 .fields{
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    margin: 25px;
+    box-shadow: 0 0px 4px rgba(0,0,0,0.1);
+    color: rgb(137, 137, 137);
+    margin: 20px;
     border: 0;
     width: 400px;
     height: 35px;
 }
 
 .cadastrarEmpresa{
-    background-color: #63E6BE;
-    color: #63E6BE;
+    color: #0CF030;
     border: none;
     background-color:#fff;
     cursor: pointer;
@@ -48,16 +50,16 @@ html,body{
 }
 
 .buttons{
-    margin-left: 100px;
     cursor: pointer;
 }
 
 .boxList{
-    width: 90%;
+    color: rgb(137, 137, 137);
+    width: 95%;
     max-height:20em;
-    margin-top: 5%;
+    margin-top: 30px;
     background-color: #fff;
-    box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
     position: static;
