@@ -22,7 +22,6 @@
                     <li><a href="cadastros.html">Cadastros</a></li>
                     
                     <li><a href="#">Dashboards</a></li>
-
                     <li><a href="#">Configurações</a></li>
                 </ul>
             </nav>
@@ -33,17 +32,31 @@
         </div>
     </header>
     <main>
-    <div class="conteudo">
-        <div class="cadastroEmpresas"></div>
-            <h2>Cadastro de Empresa</h2>
-        <div class="boxEmpresa">
-            <div class="conteudoTexto">
-                <input type="text" name="nome" id="nome" class="fields" placeholder="Nome">
-                <input type="text" name="cnpj" id="cnpj" class="fields" placeholder="CNPJ">
+        <div class="conteudo">
+            <div class="cadastroEmpresas"></div>
+                <h2>Cadastro de Empresa</h2>
+            <div class="boxEmpresa">
+                <div class="conteudoTexto">
+                    <input type="text" name="nome" id="nome" class="fields" placeholder="Nome">
+                    <input type="text" name="cnpj" id="cnpj" class="fields" placeholder="CNPJ">
+                </div>
+                <div class="buttons">
+                    <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #63E6BE;"></i>
+                    <button class="cadastrarEmpresa" id="cadastrarEMP" onclick="cadastrar(); return false">CADASTRAR</button>
+                </div>
             </div>
-                <button class="cadastrarEmpresa" id="cadastrarEMP" onclick="cadastrar(); return false">Cadastrar</button>
+            <div class="boxList">
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <div class ="conteudoLista">                    
+                </div>
+            </div>
         </div>
-    </div>
     </main>
 </body>
 </html>
