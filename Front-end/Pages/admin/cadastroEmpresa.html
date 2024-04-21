@@ -7,7 +7,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/Front-end/media/images/logoo.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
-    <title>NextSchema</title>
+    <link rel="stylesheet" href="/Front-end/Styles/admin/cadastroEmpresa.css">
+    <title>NextSchema - Cadastro Empresa</title>
 </head>
 <body>
     <!-- Incluir a Header no Inicio de cada pagina -->
@@ -24,9 +25,7 @@
                             <li><a href="cadastroUsuario.html">Usuário</a></li>
                         </ul>
                     </li>
-                    
                     <li><a href="#">Dashboards</a></li>
-
                     <li><a href="#">Configurações</a></li>
                 </ul>
             </nav>
@@ -36,6 +35,32 @@
             <p></i>ADMINISTRADOR</p>
         </div>
     </header>
-    <!-- // -->
+    <main>
+        <div class="conteudo">
+            <div class="cadastroEmpresas"></div>
+                <h2>Cadastro de Empresa</h2>
+            <div class="boxEmpresa">
+                <div class="conteudoTexto">
+                    <input type="text" name="nome" id="nome" class="fields" placeholder="Nome">
+                    <input type="text" name="cnpj" id="cnpj" class="fields" placeholder="CNPJ">
+                </div>
+                <div class="buttons">
+                    <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #63E6BE;"></i>
+                    <button class="cadastrarEmpresa" id="cadastrarEMP" onclick="cadastrar(); return false">CADASTRAR</button>
+                </div>
+            </div>
+            <div class="boxList">
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <p> teste</p>
+                <div class ="conteudoLista">                    
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
