@@ -67,7 +67,6 @@ public class ColunaService {
         Coluna coluna = buscarPorId(colunaUpdateChavePrimariaDTO.getId());
         coluna.setChavePrimaria(colunaUpdateChavePrimariaDTO.getChavePrimaria());
         return colunaRepository.save(coluna);
-
     }
     @Transactional
     public Coluna validarColuna(Coluna coluna) {

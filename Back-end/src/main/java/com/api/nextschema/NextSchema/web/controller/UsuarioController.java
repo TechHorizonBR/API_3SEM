@@ -12,11 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -31,7 +28,9 @@ public class UsuarioController {
             summary = "Buscar usuário pelo id.",
             description = "Recebe um id pelo path e retorna um objeto Usuario",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso.",
+                            content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "404", description = "Não foi possível localizar o usuário.",
                             content = @Content(mediaType = "application/json"))
             }
     )
@@ -59,6 +58,8 @@ public class UsuarioController {
             description = "Recebe um email pelo Path e retorna um UsuárioDTO",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso.",
+                            content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "404", description = "Não foi possível localizar o usuário.",
                             content = @Content(mediaType = "application/json"))
             }
     )

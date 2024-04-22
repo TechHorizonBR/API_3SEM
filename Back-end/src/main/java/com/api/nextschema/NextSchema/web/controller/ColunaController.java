@@ -123,7 +123,7 @@ public class ColunaController {
             summary = "Atualizar chave primária.",
             description = "Recurso para atualizar uma chave primária.",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso atualizado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Atributo chavePrimaria atualizado com sucesso.",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
