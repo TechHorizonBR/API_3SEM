@@ -8,9 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -37,7 +38,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(WrongCredentialsException.class)
-    public ResponseEntity<ErrorMessage> wrongCredentialsException(RuntimeException ex, HttpServletRequest request){
+    public ResponseEntity<ErrorMessage> wrongCredentialsException(WrongCredentialsException ex, HttpServletRequest request ){
 
         log.error("API ERROR: ", ex);
         return ResponseEntity
@@ -46,13 +47,20 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
     @ExceptionHandler(DuplicateEmailException.class)
-    public ResponseEntity<ErrorMessage> duplicateEmailException(RuntimeException ex, HttpServletRequest request){
+    public ResponseEntity<ErrorMessage> duplicateEmailException(DuplicateEmailException ex, HttpServletRequest request){
         log.error("API ERROR: ", ex);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request, BindingResult result){
+        log.error("API ERROR: ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Campos inválidos.", result));
+    }
 
 }

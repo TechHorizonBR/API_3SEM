@@ -7,18 +7,17 @@ import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Optional;
-import java.util.zip.DataFormatException;
 
-
+@Slf4j
 @Service
 public class UsuarioService {
 
@@ -42,30 +41,26 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Usuario findByEmail(String email) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
+                .orElseThrow(() -> new EntityNotFoundException("Não foi possível localizar um usuário com este e-mail"));
 
         return usuario;
     }
 
-    public boolean buscarPorEmail(String email) {
+    public boolean verificarEmailExistente(String email) {
         Optional<Usuario> user = usuarioRepository.findUsuarioByEmail(email);
         return user.isPresent();
     }
 
 
     public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
-        if(buscarPorEmail(usuarioCreateDTO.getEmail()))
+        if(verificarEmailExistente(usuarioCreateDTO.getEmail()))
             throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
 
-
         Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
-        usuarioRepository.save(novoUsuario);
-
         return UsuarioMapper.toResponseDTO(
-                findByEmail(usuarioCreateDTO.getEmail())
+                usuarioRepository.save(novoUsuario)
         );
     }
-
 
     public void deletarUsuario(Long idUsuario) {
         Usuario usuario = buscarPorId(idUsuario);
@@ -76,16 +71,17 @@ public class UsuarioService {
     @Transactional
     public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO) {
 
-        if (usuarioAlterarSenhaDTO.getNovaSenha().isEmpty() || usuarioAlterarSenhaDTO.getNovaSenhaConfirma().isEmpty() || usuarioAlterarSenhaDTO.getSenhaAntiga().isEmpty()) {
-            throw new NoSuchElementException("Campos não podem estar vazios");
+        log.info("Senha atual: " + usuarioAlterarSenhaDTO.getSenhaAntiga() + " Nova senha: " + usuarioAlterarSenhaDTO.getNovaSenha() + " Nova senha confirma: " + usuarioAlterarSenhaDTO.getNovaSenhaConfirma());
 
-        }
+
+       //if (usuarioAlterarSenhaDTO.getNovaSenha().isEmpty() || usuarioAlterarSenhaDTO.getNovaSenhaConfirma().isEmpty() || usuarioAlterarSenhaDTO.getSenhaAntiga().isEmpty()) {
+       //     throw new NoSuchElementException("Campos não podem estar vazios");
+       // }
 
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
         if (!usuarioAlterarSenhaDTO.getSenhaAntiga().equals(usuario.getSenha())) {
-            System.out.println(usuario.getSenha() + " " + usuarioAlterarSenhaDTO.getSenhaAntiga() );
             throw new WrongCredentialsException("Senha inválida!");
         }
         if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
@@ -109,12 +105,12 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO login(String email, String senha) {
-        if(email.isBlank()) throw new NoSuchElementException("Email não pode estar em branco");
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
-                .orElseThrow(() -> new WrongCredentialsException("Email ou senha inválida."));
+                .orElseThrow(() -> new WrongCredentialsException("Credenciais inválidas."));
 
-        if (usuario.getSenha().equals(senha)) {
-            throw new WrongCredentialsException("Email ou senha inválida.");
+
+        if (!usuario.getSenha().equals(senha)) {
+            throw new WrongCredentialsException("Credenciais inválidas.");
         }
 
         return UsuarioMapper.toResponseDTO(usuario);
