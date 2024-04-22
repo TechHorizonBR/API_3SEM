@@ -1,11 +1,13 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.List;
 
-
+@Slf4j
 @Service
 public class UsuarioService {
 
@@ -36,21 +38,28 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO findByEmail(String email) {
+    public Usuario findByEmail(String email) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este email."));
+                .orElseThrow(() -> new EntityNotFoundException("Não foi possível localizar um usuário com este e-mail"));
 
-        return new UsuarioDTO(usuario);
+        return usuario;
+    }
+
+    public boolean verificarEmailExistente(String email) {
+        Optional<Usuario> user = usuarioRepository.findUsuarioByEmail(email);
+        return user.isPresent();
     }
 
 
     public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
+        if(verificarEmailExistente(usuarioCreateDTO.getEmail()))
+            throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
+
         Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
-        Usuario usuario = usuarioRepository.save(novoUsuario);
-
-        return UsuarioMapper.toResponseDTO(usuario);
+        return UsuarioMapper.toResponseDTO(
+                usuarioRepository.save(novoUsuario)
+        );
     }
-
 
     public void deletarUsuario(Long idUsuario) {
         Usuario usuario = buscarPorId(idUsuario);
@@ -60,35 +69,49 @@ public class UsuarioService {
 
     @Transactional
     public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO) {
+
+        log.info("Senha atual: " + usuarioAlterarSenhaDTO.getSenhaAntiga() + " Nova senha: " + usuarioAlterarSenhaDTO.getNovaSenha() + " Nova senha confirma: " + usuarioAlterarSenhaDTO.getNovaSenhaConfirma());
+
+
+       //if (usuarioAlterarSenhaDTO.getNovaSenha().isEmpty() || usuarioAlterarSenhaDTO.getNovaSenhaConfirma().isEmpty() || usuarioAlterarSenhaDTO.getSenhaAntiga().isEmpty()) {
+       //     throw new NoSuchElementException("Campos não podem estar vazios");
+       // }
+
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        if (!Objects.equals(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())) {
-            throw new EntityNotFoundException("Senha inválida!");
+        if (!usuarioAlterarSenhaDTO.getSenhaAntiga().equals(usuario.getSenha())) {
+            throw new WrongCredentialsException("Senha inválida!");
         }
         if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
-            throw new EntityNotFoundException("Senhas divergentes");
+            throw new WrongCredentialsException("Senhas divergentes");
         }
         usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
     }
 
     @Transactional
     public UsuarioResponseDTO atualizarDados(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
+        if(usuarioAtualizaDadosDTO.getRoleUsuario() == null || usuarioAtualizaDadosDTO.getNome() == null || usuarioAtualizaDadosDTO.getEmail() == null ) {
+            throw new NoSuchElementException("Não é permitido campos em branco");
+        }
 
-        usuarioRepository.atualizarUsuario(usuarioAtualizaDadosDTO.getId(), usuarioAtualizaDadosDTO.getEmail(), usuarioAtualizaDadosDTO.getNome(), usuarioAtualizaDadosDTO.getRoleUsuario());
-        Usuario usuario = usuarioRepository.findById(usuarioAtualizaDadosDTO.getId()).get();
+        Usuario usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
 
+        Usuario user = UsuarioMapper.toUsuario(usuarioAtualizaDadosDTO);
+        usuarioRepository.atualizarUsuario(user.getId(), user.getNome(), user.getEmail(), user.getRoleUsuario());
+        usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
         return UsuarioMapper.toResponseDTO(usuario);
     }
 
     public UsuarioResponseDTO login(String email, String senha) {
-        if(email.isBlank()) throw new NoSuchElementException("Email não pode estar em branco");
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
-                .orElseThrow(() -> new WrongCredentialsException("Email ou senha inválida."));
+                .orElseThrow(() -> new WrongCredentialsException("Credenciais inválidas."));
 
-        if (usuario.getSenha().equals(senha)) {
-            throw new WrongCredentialsException("Email ou senha inválida.");
+
+        if (!usuario.getSenha().equals(senha)) {
+            throw new WrongCredentialsException("Credenciais inválidas.");
         }
+
         return UsuarioMapper.toResponseDTO(usuario);
     }
 }
