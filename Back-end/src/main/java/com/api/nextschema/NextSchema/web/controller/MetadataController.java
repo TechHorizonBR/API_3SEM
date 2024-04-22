@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class MetadataController {
             }
     )
     @PostMapping
-    public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
+    public ResponseEntity<MetadataResponseDto> create(@RequestBody @Valid MetadataCreateDto metadadaCreateDto){
         Metadata metadata = metadataService.create(MetadataMapper.toMetadata(metadadaCreateDto));
         return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }

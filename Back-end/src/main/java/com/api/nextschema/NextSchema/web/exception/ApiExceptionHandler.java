@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -46,6 +48,7 @@ public class ApiExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
+
     @ExceptionHandler(DuplicateEmailException.class)
     public ResponseEntity<ErrorMessage> duplicateEmailException(DuplicateEmailException ex, HttpServletRequest request){
         log.error("API ERROR: ", ex);
