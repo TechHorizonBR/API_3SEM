@@ -9,14 +9,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -64,7 +62,8 @@ public class UsuarioController {
     )
     @GetMapping(value ="/{email}")
     public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -88,7 +87,7 @@ public class UsuarioController {
            }
    )
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
+    public ResponseEntity<UsuarioResponseDTO> createUser(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
@@ -115,7 +114,7 @@ public class UsuarioController {
             }
     )
     @PatchMapping
-    public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+    public ResponseEntity<Void> atualizarSenha(@Valid @RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
         usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -146,7 +145,7 @@ public class UsuarioController {
             }
     )
     @PostMapping(value = "/login")
-    public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
+    public ResponseEntity<UsuarioResponseDTO> login(@Valid @RequestBody UsuarioLoginDTO userLoginDTO){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.login(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }
