@@ -11,10 +11,7 @@ async function sendMetadata(){
         const newMetadata = {
             nome: nomeData,
             usuario:{
-                id:1,
-                nome:"Andre",
-                email:"andre@email.com",
-                senha:"123"
+                id:1
             }
         }
 
@@ -97,8 +94,10 @@ function newPrompt(){
 
     var pmp2 = `
         <div class="prompt" id="prompt">
-            <span class="prompt_text">Digite o nome para o esquema:</span>
+            <span class="prompt_text">Nome do esquema:</span>
             <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
+            <span class="prompt_text">Nome da empresa:</span>
+            <input type="text" class="input_data" id="input_companyname" placeholder="Digite aqui...">
             <div class="btns">
                 <button class="btn_p" id="btn_cont">Próximo</button>
             </div>
