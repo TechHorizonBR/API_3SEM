@@ -1,7 +1,7 @@
 // document.addEventListener("DOMContentLoaded", function() {
     // // Alerta ao abrir a página
     // alert("Bem vindo ao NextSchema!");
-    
+
     // // Função a ser executada quando o botão for clicado
     // document.getElementById("botao-entrar").onclick = function() {
     //     // Captura o valor do campo de e-mail
@@ -10,7 +10,7 @@
     //     console.log(email);
     // };
 
-    
+
 
         function logar(){
             document.getElementById("botaoEntrar").onclick = function(){
@@ -21,19 +21,19 @@
                     alert("Por favor, preencha os campos.")
                 } else if (textoEmail.trim() === "") {
                     alert("Por favor, insira o Email.");
-                    return; 
+                    return;
                 } else if (textoSenha.trim() === "") {
                     alert("Por favor, insira a Senha.");
-                    return; 
+                    return;
                 } else if(textoEmail == "admin" && textoSenha == "admin"){
                         location.href = "homeAdmin.html"
                     } else if (textoEmail == "user@email.com" && textoSenha == "user" ) {
-                        location.href = "homeUser.html"
+                        location.href = "landing_zone/homeUser.html"
                     }else{
                     alert("Login inválido!")
                         location.href = "index.html"
                 }
             }
         }
-    
+
 // });
