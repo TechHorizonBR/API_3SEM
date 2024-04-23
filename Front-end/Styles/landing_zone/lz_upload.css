@@ -101,8 +101,7 @@ body {
 
 .prompt {
     background-color: white;
-    width: 38vw;
-    height: 27vh;
+    padding: 1% 8% ;
     border-radius: 10px;
     /* border: 2px; */
     /* border-color: black; */
@@ -119,10 +118,13 @@ body {
     align-items: center;
     flex-direction: row;
     width: 100%;
+    padding-top: 10%;
 }
 
 .prompt_text {
     font-family: "Inter", sans-serif;
+    padding: 5%;
+    padding-top: 13%;
 }
 
 .btn_p {
