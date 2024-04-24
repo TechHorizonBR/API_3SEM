@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.dto;
 
+import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,4 +21,6 @@ public class MetadataCreateDto {
     private String nome;
     @NotNull(message = "Usuário não pode ser nulo")
     private Usuario usuario;
+    @NotNull(message = "Empresa não pode ser nula")
+    private Empresa empresa;
 }
