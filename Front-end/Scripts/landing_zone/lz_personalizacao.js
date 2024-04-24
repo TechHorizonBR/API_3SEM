@@ -142,7 +142,7 @@ function newFailedPrompt(errors){
     </div>
     `
 
-    var successPrompt = `
+    var failedPrompt = `
         <div class="prompt" id="prompt">
             <span class="prompt_text" id="validate_identification">Valor inválido na(s) coluna(s): ${errors}</span>
             <div id="text_validation">O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
@@ -154,7 +154,7 @@ function newFailedPrompt(errors){
 
     document.body.insertAdjacentHTML('beforeend', back);
     let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', successPrompt);
+    var_back.insertAdjacentHTML('beforeend', failedPrompt);
 
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
