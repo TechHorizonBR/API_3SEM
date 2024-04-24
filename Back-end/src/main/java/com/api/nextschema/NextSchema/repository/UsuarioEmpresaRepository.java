@@ -16,5 +16,20 @@ public interface UsuarioEmpresaRepository extends JpaRepository<Usuario, Long> {
     @Query("UPDATE Usuario u SET u.senha = :senha WHERE u.id = :id")
     void atualizarSenha(Long id, String senha);
 
+    @Modifying
+    @Query("UPDATE Usuario u SET u.email = :email, u.nome = :nome, u.roleUsuario = :role WHERE u.id = :id")
+    void atualizarUsuario(Long id, String email, String nome, Role role);
 
+    void deleteById(Long id);
+
+    // Método para criar um novo usuário
+    Usuario save(Usuario usuario);
+
+    // Método para buscar todos os usuários de uma determinada empresa
+    @Query("SELECT u FROM Usuario u WHERE u.empresa.nome = :nomeEmpresa")
+    List<Usuario> findByEmpresa(String nomeEmpresa);
+
+    // Método para buscar todas as empresas de um usuário específico
+    @Query("SELECT u.empresa.nome FROM Usuario u WHERE u.id = :userId")
+    List<String> findEmpresasByUsuarioId(Long userId);
 }
