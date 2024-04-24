@@ -43,9 +43,12 @@ public class ColunaController {
             }
     )
     @PostMapping
-    public ResponseEntity<ColunaResponseDto> create(@Valid @RequestBody ColunaCreateDto createDto){
-        Coluna newColuna = colunaService.criarColuna(ColunaMapper.toColuna(createDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(ColunaMapper.toDto(newColuna));
+    public ResponseEntity<List<ColunaResponseDto>> create(@Valid @RequestBody List<ColunaCreateDto> createDtos){
+        List<ColunaResponseDto> colunasGravadas = new ArrayList<>();
+        for(ColunaCreateDto coluna :  createDtos){
+            colunasGravadas.add(ColunaMapper.toDto(colunaService.criarColuna(ColunaMapper.toColuna(coluna))));
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(colunasGravadas);
     }
 
     @Operation(
