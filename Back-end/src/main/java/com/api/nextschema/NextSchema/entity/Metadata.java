@@ -21,4 +21,7 @@ public class Metadata {
     @JoinColumn(name = "usuario_id", nullable = false)
     @ManyToOne
     private Usuario usuario;
+    @JoinColumn(name = "empresa_id", nullable = false)
+    @ManyToOne
+    private Empresa empresa;
 }
