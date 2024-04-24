@@ -72,5 +72,39 @@ display: block;
 #filter{
   display: flex;
   justify-content: space-around;
+  margin-top: 5%;
 }
 
+#view-metadata{
+  color: #0CF030;
+  border: none;
+  background-color: #FFF;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#metadatas{
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  align-items: center;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.base-name{
+  color: #6E797D;
+  margin-right: 10%;
+}
+
+.line{
+  display: flex;
+}
+
+#listMetadatas{
+  background-color: #FFF;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
