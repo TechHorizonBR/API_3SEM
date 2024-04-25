@@ -109,6 +109,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+    width: 300px;
 }
 
 .btns {
