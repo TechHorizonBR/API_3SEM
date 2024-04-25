@@ -22,7 +22,4 @@ public class ColunaCreateDto {
     @NotBlank
     private Boolean chavePrimaria;
 
-    public static class ColunaValidadoDto {
-
-    }
 }
