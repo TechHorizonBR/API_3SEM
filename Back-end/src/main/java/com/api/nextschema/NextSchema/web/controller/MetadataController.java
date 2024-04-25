@@ -6,6 +6,7 @@ import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.MetadataMapper;
+import com.api.nextschema.NextSchema.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,7 +49,7 @@ public class MetadataController {
             description = "Lista todos os metadatas existentes",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadatas listados",
-                        content = @Content(mediaType = "application/json", array = @ArraySchema()))
+                        content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MetadataResponseDto.class))))
             }
     )
     @GetMapping
@@ -90,7 +91,7 @@ public class MetadataController {
             description = "Retorna os metadatas por usuário",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadatas do usuário",
-                    content = @Content(mediaType = "apllication/json", array = @ArraySchema()))
+                    content = @Content(mediaType = "apllication/json", array = @ArraySchema(schema = @Schema(implementation = MetadataResponseDto.class))))
             }
     )
     @PostMapping("/usuario")
@@ -98,6 +99,20 @@ public class MetadataController {
         return ResponseEntity.ok().body(MetadataMapper.toListDto(metadataService.buscarPorUsuario(usuario)));
     }
 
+    @Operation(
+            summary = "Buscar metadatas por id de Empresa",
+            description = "Buscar metadatas por id de Empresa",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200", description = "Metadatas por empresa",
+                            content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MetadataResponseDto.class)))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404", description = "Empresa não encontrada",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))
+                    )
+            }
+    )
     @GetMapping("/empresa/{id}")
     public ResponseEntity<List<MetadataResponseDto>> getByEmpresa(@PathVariable Long id){
         List<MetadataResponseDto> metadatas = MetadataMapper.toListDto(metadataService.buscarPorEmpresa(id));
