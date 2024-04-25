@@ -137,6 +137,15 @@ th {
     transform: scale(1.05);
 }
 
+#text_validation{
+    padding: auto;
+    padding-left: 5%;
+}
+
+#validate_identification{
+    padding: auto;
+}
+
 
 .back_prompt {
     height: 100vh;
@@ -156,7 +165,7 @@ th {
 }
 
 .prompt {
-    background-color: white;
+    background-color: #ffffff;
     width: 38vw;
     height: 27vh;
     border-radius: 10px;

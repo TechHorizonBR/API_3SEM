@@ -58,7 +58,7 @@ function eventoAtualizar(){
 
         todosDados.push(newColuna);
     }
-    updateData(todosDados);
+    validation(todosDados);
 }
 
 function popularTabela() {
@@ -204,6 +204,51 @@ function newPrompt(){
 
     document.getElementById("btn_ok").addEventListener("click", () => {
         // document.getElementById("prompt").remove();
+        document.getElementById("back_prompt").remove();
+    });
+}
+
+function validation(todosDados) {
+    const regex = /^[a-zA-Z0-9_]*$/;
+    let errors = [];
+
+    for(let i = 0; i < todosDados.length; i++){
+        inputsTextsValue = document.getElementById(`input-text${i}`).value;
+        if (!regex.test(inputsTextsValue)) {
+            errors.push(inputsTextsValue)
+        }
+    }
+
+    if (errors.length === 0){
+        updateData(todosDados)
+    }else{
+        newFailedPrompt(errors)
+    }
+
+}
+
+function newFailedPrompt(errors){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var failedPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text" id="validate_identification">Valor inválido na(s) coluna(s): ${errors}</span>
+            <div id="text_validation">O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+            <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', failedPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
 }

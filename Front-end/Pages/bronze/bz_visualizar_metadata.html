@@ -15,9 +15,10 @@
             <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NS-logo" id="NS-logo">
             <nav>
                 <ul class="menu">
+                    <li><a href="bz_visualizar_metadata.html">Home</a></li>
                     <li><a href="#">Acessos</a>
                         <ul>
-                            <!-- <li><a href="homeUser.html">Landing Zone</a></li> -->
+                            <li><a href="../landing_zone/homeUser.html">Landing Zone</a></li>
                             <li><a href="bz_visualizar_metadata.html">Bronze</a></li>
                             <!-- <li><a href="#">Silver</a></li> -->
                         </ul>
@@ -25,25 +26,67 @@
                     <li><a href="#">Ações</a>
                         <ul>
                             <li><a href="bz_visualizar_metadata.html">Visualizar Metadatas</a></li>
+                            <li><a href="../index.html">Sair</a></li>
                         </ul>
                     </li>
+                    <li><a href="#">Configurações</a></li>
                 </ul>
             </nav>
         </div>
         <div id="user-identification">
             <i class="fa-regular fa-user" id="user-icon"></i>
-            <p></i>Identificação Empresa</p>
+            <p></i>User <br> Bronze</p>
         </div>
     </header>
     <main>
-        <div id="title">
-            Personalização de Esquemas
-            <div class="icon-container">
-                <i class="fa-regular fa-circle-question" id="question"></i>
-                <p id="question-input"> Nesta estapa é possível selecionar qual metadata gostaria de visualizar ou validar.</p>
+        <div id="filter">
+            <div id="title">
+                Metadatas Disponíveis
+                <div class="icon-container">
+                    <i class="fa-regular fa-circle-question" id="question"></i>
+                    <p id="question-input"> Nesta estapa é possível selecionar o metadata que deseja visualizar ou validar.</p>
+                </div>
+            </div>
+            <div id="select">
+                <div>Empresa</div>
+                <select class="select-custom">
+                    <option value="1">Opção 1</option>
+                    <option value="2">Opção 2</option>
+                    <option value="3">Opção 3</option>
+                    <option value="4">Opção 4</option>
+                </select>
             </div>
         </div>
-
+        <div id="listMetadatas">
+            <div id="metadatas">
+                <div class="line">
+                    <div class="base-name">Base: </div>
+                    <div>Clientes_Financeiros</div>
+                </div>
+                <div class="line">
+                    <div class="base-name">Empresa: </div>
+                    <div>Domrock</div>
+                </div>
+                <div class="viewMetadata">
+                    <i class="fa-solid fa-eye" id="view_eye" style="color: #0CF030"></i>
+                    <button class="cadastrarUsuario" id="view-metadata">VISUALIZAR</button>
+                </div>
+            </div>
+            <div id="metadatas">
+                <div class="line">
+                    <div class="base-name">Base: </div>
+                    <div>Clientes_Financeiros</div>
+                </div>
+                <div class="line">
+                    <div class="base-name">Empresa: </div>
+                    <div>Domrock</div>
+                </div>
+                <div class="viewMetadata">
+                    <i class="fa-solid fa-eye" id="view_eye" style="color: #0CF030"></i>
+                    <button class="cadastrarUsuario" id="view-metadata">VISUALIZAR</button>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

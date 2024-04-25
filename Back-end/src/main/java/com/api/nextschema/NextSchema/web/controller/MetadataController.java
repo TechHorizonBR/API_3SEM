@@ -6,16 +6,18 @@ import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.MetadataMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RestController
@@ -31,11 +33,11 @@ public class MetadataController {
             description = "Cria um novo metadata passando os parâmetros",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Metadata criado!",
-                        content = @Content(mediaType = "application/json"))
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = MetadataResponseDto.class)))
             }
     )
     @PostMapping
-    public ResponseEntity<MetadataResponseDto> create(@RequestBody MetadataCreateDto metadadaCreateDto){
+    public ResponseEntity<MetadataResponseDto> create(@RequestBody @Valid MetadataCreateDto metadadaCreateDto){
         Metadata metadata = metadataService.create(MetadataMapper.toMetadata(metadadaCreateDto));
         return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
@@ -45,7 +47,7 @@ public class MetadataController {
             description = "Lista todos os metadatas existentes",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadatas listados",
-                        content = @Content(mediaType = "application/json"))
+                        content = @Content(mediaType = "application/json", array = @ArraySchema()))
             }
     )
     @GetMapping
@@ -53,13 +55,12 @@ public class MetadataController {
        List<Metadata> metadatas = metadataService.find();
         return ResponseEntity.ok().body(MetadataMapper.toListDto(metadatas));
     }
-
     @Operation(
             summary = "Deletar metadata por id",
             description = "Endpoint para deletar o metadata passando um id",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadata deletado",
-                        content = @Content(mediaType = "application/json"))
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
             }
     )
 
@@ -74,7 +75,7 @@ public class MetadataController {
             description = "Buscar metadata passando um id específico",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadata encontrado",
-                    content = @Content(mediaType = "application/json"))
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MetadataResponseDto.class)))
             }
     )
     @GetMapping("/{id}")
@@ -88,7 +89,7 @@ public class MetadataController {
             description = "Retorna os metadatas por usuário",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Metadatas do usuário",
-                    content = @Content(mediaType = "apllication/json"))
+                    content = @Content(mediaType = "apllication/json", array = @ArraySchema()))
             }
     )
     @PostMapping("/usuario")
