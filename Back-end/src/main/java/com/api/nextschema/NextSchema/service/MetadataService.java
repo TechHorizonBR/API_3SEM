@@ -1,10 +1,10 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.MetadataRepository;
-import com.api.nextschema.NextSchema.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import com.api.nextschema.NextSchema.exception.DataViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,6 +18,7 @@ import java.util.List;
 public class MetadataService {
     private final MetadataRepository metadataRepository;
     private final UsuarioService usuarioService;
+    private final EmpresaService empresaService;
     public Metadata create(Metadata metadata){
         try{
             Usuario usuario = usuarioService.buscarPorId(metadata.getUsuario().getId());
@@ -50,5 +51,8 @@ public class MetadataService {
     }
 
 
-
+    public List<Metadata >buscarPorEmpresa(Long id) {
+        Empresa empresa = empresaService.buscarId(id);
+        return metadataRepository.findByEmpresa(empresa);
+    }
 }

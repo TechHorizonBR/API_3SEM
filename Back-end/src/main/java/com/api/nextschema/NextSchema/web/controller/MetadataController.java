@@ -2,6 +2,7 @@ package com.api.nextschema.NextSchema.web.controller;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.MetadataService;
+import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.MetadataMapper;
@@ -95,5 +96,11 @@ public class MetadataController {
     @PostMapping("/usuario")
     public ResponseEntity<List<MetadataResponseDto>> getByUsuario(@RequestBody Usuario usuario) {
         return ResponseEntity.ok().body(MetadataMapper.toListDto(metadataService.buscarPorUsuario(usuario)));
+    }
+
+    @GetMapping("/empresa/{id}")
+    public ResponseEntity<List<MetadataResponseDto>> getByEmpresa(@PathVariable Long id){
+        List<MetadataResponseDto> metadatas = MetadataMapper.toListDto(metadataService.buscarPorEmpresa(id));
+        return ResponseEntity.ok().body(metadatas);
     }
 }
