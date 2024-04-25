@@ -63,6 +63,7 @@ html,body{
     border: 0;
     width: 400px;
     height: 35px;
+    outline: none;
 }
 
 .conteudoList{
@@ -78,4 +79,10 @@ html,body{
 
 .conteudoList p {
     margin: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .conteudoCadastro{
+        background-color: black;
+    }
 }
