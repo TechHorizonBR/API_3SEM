@@ -69,3 +69,9 @@ html,body{
 .boxList p {
     margin: 10px;
 }
+
+.line{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
