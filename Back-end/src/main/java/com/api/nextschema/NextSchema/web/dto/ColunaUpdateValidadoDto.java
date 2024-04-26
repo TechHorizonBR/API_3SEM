@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.web.dto;
 
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ColunaValidadoDto {
+public class ColunaUpdateValidadoDto {
     private Long id;
-    private Boolean validado;
+    private Validado validado;
 }

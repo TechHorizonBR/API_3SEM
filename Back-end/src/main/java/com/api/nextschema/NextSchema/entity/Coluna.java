@@ -30,6 +30,6 @@ public class Coluna {
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
     @Column(name = "validado")
-    private Validado validado;
+    private Validado validado = Validado.PENDENTE;
 }
 
