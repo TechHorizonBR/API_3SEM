@@ -1,10 +1,14 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Empresa;
+import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
+import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
+import com.api.nextschema.NextSchema.repository.UsuarioRoleAssociationRepository;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,11 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    UsuarioRoleAssociationRepository usuarioRoleAssociationRepository;
+    @Autowired
+    private UsuarioRoleAssociationService usuarioRoleAssociationService;
 
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
@@ -56,10 +65,19 @@ public class UsuarioService {
         if(verificarEmailExistente(usuarioCreateDTO.getEmail()))
             throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
 
-        Usuario novoUsuario = UsuarioMapper.toUsuario(usuarioCreateDTO);
-        return UsuarioMapper.toResponseDTO(
-                usuarioRepository.save(novoUsuario)
-        );
+        List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
+        List<Empresa> empresaList = usuarioCreateDTO.getListEmpresa();
+
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setEmail(usuarioCreateDTO.getEmail());
+        novoUsuario.setNome(usuarioCreateDTO.getNome());
+        novoUsuario.setSenha(usuarioCreateDTO.getSenha());
+
+        novoUsuario = usuarioRepository.save(novoUsuario);
+        usuarioRoleAssociationService.saveAssociation(novoUsuario.getId(), roleList);
+
+
+        return UsuarioMapper.toResponseDTO(novoUsuario);
     }
 
     public void deletarUsuario(Long idUsuario) {
@@ -70,14 +88,6 @@ public class UsuarioService {
 
     @Transactional
     public void atualizarSenha(UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO) {
-
-        log.info("Senha atual: " + usuarioAlterarSenhaDTO.getSenhaAntiga() + " Nova senha: " + usuarioAlterarSenhaDTO.getNovaSenha() + " Nova senha confirma: " + usuarioAlterarSenhaDTO.getNovaSenhaConfirma());
-
-
-       //if (usuarioAlterarSenhaDTO.getNovaSenha().isEmpty() || usuarioAlterarSenhaDTO.getNovaSenhaConfirma().isEmpty() || usuarioAlterarSenhaDTO.getSenhaAntiga().isEmpty()) {
-       //     throw new NoSuchElementException("Campos não podem estar vazios");
-       // }
-
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
@@ -99,7 +109,7 @@ public class UsuarioService {
         Usuario usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
 
         Usuario user = UsuarioMapper.toUsuario(usuarioAtualizaDadosDTO);
-        usuarioRepository.atualizarUsuario(user.getId(), user.getNome(), user.getEmail(), user.getRoleUsuario());
+        usuarioRepository.atualizarUsuario(user.getId(), user.getNome(), user.getEmail());
         usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
         return UsuarioMapper.toResponseDTO(usuario);
     }
