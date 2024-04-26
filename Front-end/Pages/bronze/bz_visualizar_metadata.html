@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
     <link rel="stylesheet" href="/Front-end/Styles/bronze/bz_visualizar_metadata.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>NextSchema - Personalização de Esquema</title>
+    <title>NextSchema - Visualizar Metadatas</title>
 </head>
 <body>
     <header>
@@ -49,12 +49,11 @@
             </div>
             <div id="select">
                 <div>Empresa</div>
-                <select class="select-custom">
-                    <option value="1">Opção 1</option>
-                    <option value="2">Opção 2</option>
-                    <option value="3">Opção 3</option>
-                    <option value="4">Opção 4</option>
+                <select class="select-custom" id="select-filter">
+                    <option value="" disabled selected hidden>Selecionar</option>
+                    <!-- <option class="option" value="1">Opção 1</option> -->
                 </select>
+                <button id="btn-search"><i class="fas fa-search" id="search"></i> </button>
             </div>
         </div>
         <div id="listMetadatas">
@@ -68,7 +67,7 @@
                     <div>Domrock</div>
                 </div>
                 <div class="viewMetadata">
-                    <i class="fa-solid fa-eye" id="view_eye" style="color: #0CF030"></i>
+                    <i class="fa-solid fa-eye" id="view_eye"></i>
                     <button class="cadastrarUsuario" id="view-metadata">VISUALIZAR</button>
                 </div>
             </div>
@@ -82,7 +81,7 @@
                     <div>Domrock</div>
                 </div>
                 <div class="viewMetadata">
-                    <i class="fa-solid fa-eye" id="view_eye" style="color: #0CF030"></i>
+                    <i class="fa-solid fa-eye" id="view_eye"></i>
                     <button class="cadastrarUsuario" id="view-metadata">VISUALIZAR</button>
                 </div>
             </div>
