@@ -81,6 +81,23 @@ html,body{
     margin: 10px;
 }
 
+.line{
+display: flex;
+flex-direction: row;
+justify-content:space-between;
+margin: 0 3%;
+}
+
+.firstPart{
+display: flex;
+flex-direction: column;
+}
+
+.secondPart{
+    display: flex;
+    flex-direction: column;
+}
+
 @media screen and (max-width: 768px) {
     .conteudoCadastro{
         background-color: black;

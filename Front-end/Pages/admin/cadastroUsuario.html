@@ -53,22 +53,19 @@
                     <p>Empresa:</p>
                     <input type="text" name="empresa" id="empresa" class="fields">
                     <p>Permissões:</p>
-                    <input type="text" name="permissao" id="permissao" class="fields">
+                    <input type="text" name="permissao" id="role" class="fields">
                 </div>
                 <div class="l3">
                     <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #0CF030;"></i>
-                    <button class="cadastrarUsuario" id="cadastrarUser" onclick="cadastrar(); return false">CADASTRAR</button>
+                    <button class="cadastrarUsuario" id="cadastrarUser">CADASTRAR</button>
                 </div>
             </div>
-            <div class="conteudoList">
-                <p> teste</p>
-                <p> teste</p>
-                <p> teste</p>
-                <p> teste</p>
-                <p> teste</p>
-                <p> teste</p>
+            <div class="conteudoList" id="body_dados">
+                
             </div>
         </div>
     </main>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/Front-end/Scripts/admin/cadastroUsuario.js"></script>
 </html>
