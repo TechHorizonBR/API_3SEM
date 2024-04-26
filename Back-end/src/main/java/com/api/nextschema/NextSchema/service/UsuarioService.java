@@ -66,7 +66,8 @@ public class UsuarioService {
             throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
 
         List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
-        List<Empresa> empresaList = usuarioCreateDTO.getListEmpresa();
+        List<Long> empresaList = usuarioCreateDTO.getListEmpresa();
+        // Aqui vai vincular o usuário em todas as empresas da lista
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(usuarioCreateDTO.getEmail());
@@ -102,7 +103,7 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponseDTO atualizarDados(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
-        if(usuarioAtualizaDadosDTO.getRoleUsuario() == null || usuarioAtualizaDadosDTO.getNome() == null || usuarioAtualizaDadosDTO.getEmail() == null ) {
+        if( usuarioAtualizaDadosDTO.getNome() == null || usuarioAtualizaDadosDTO.getEmail() == null ) {
             throw new NoSuchElementException("Não é permitido campos em branco");
         }
 

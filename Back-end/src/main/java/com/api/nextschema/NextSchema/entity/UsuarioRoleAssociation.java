@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"idUsuario", "role"}))
 public class UsuarioRoleAssociation {
 
     @Id

@@ -13,6 +13,5 @@ import lombok.Setter;
 public class UsuarioAtualizaDadosDTO {
     private Long id;
     private String nome;
-    private Role roleUsuario;
     private String email;
 }

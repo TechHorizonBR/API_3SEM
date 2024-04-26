@@ -25,6 +25,6 @@ public class UsuarioCreateDTO {
     private String email;
     @Size(min = 6, max = 20)
     private String senha;
-    private List<Empresa> listEmpresa;
+    private List<Long> listEmpresa;
 
 }
