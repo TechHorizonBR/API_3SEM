@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.controller;
 
+
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@Slf4j
 @RestController
 @RequestMapping( value ="/usuarios")
 @CrossOrigin("*")
@@ -92,7 +95,9 @@ public class UsuarioController {
    )
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
+
+
+       return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
     @Operation(
