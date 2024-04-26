@@ -1,12 +1,12 @@
 package com.api.nextschema.NextSchema.web.controller;
+
 import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.service.MetadataService;
-import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
 import com.api.nextschema.NextSchema.web.dto.mapper.MetadataMapper;
 import com.api.nextschema.NextSchema.web.exception.ErrorMessage;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;

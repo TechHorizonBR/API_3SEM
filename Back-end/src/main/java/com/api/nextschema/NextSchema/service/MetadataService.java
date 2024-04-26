@@ -17,16 +17,16 @@ import java.util.List;
 @AllArgsConstructor
 public class MetadataService {
     private final MetadataRepository metadataRepository;
-    private final UsuarioService usuarioService;
     private final EmpresaService empresaService;
+    @Transactional
     public Metadata create(Metadata metadata){
         try{
-            Usuario usuario = usuarioService.buscarPorId(metadata.getUsuario().getId());
             return metadataRepository.save(metadata);
         }catch (DataIntegrityViolationException ex){
             throw new DataViolationException("Todos os campos são obrigatórios.");
         }
     }
+    @Transactional(readOnly = true)
     public List<Metadata> find(){
         return metadataRepository.findAll();
     }
@@ -39,14 +39,7 @@ public class MetadataService {
         Metadata metadata = findbyId(id);
         metadataRepository.deleteById(id);
     }
-
     @Transactional(readOnly = true)
-    public List<Metadata> buscarPorUsuario(Long id){
-        Usuario usuario = usuarioService.buscarPorId(id);
-        return metadataRepository.findMetadataByUsuario(usuario);
-    }
-
-
     public List<Metadata >buscarPorEmpresa(Long id) {
         Empresa empresa = empresaService.buscarId(id);
         return metadataRepository.findByEmpresa(empresa);

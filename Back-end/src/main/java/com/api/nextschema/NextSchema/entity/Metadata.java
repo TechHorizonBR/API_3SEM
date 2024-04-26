@@ -18,9 +18,6 @@ public class Metadata {
     private Long id;
     @Column(name = "nome", length = 50)
     private String nome;
-    @JoinColumn(name = "usuario_id")
-    @ManyToOne
-    private Usuario usuario;
     @JoinColumn(name = "empresa_id", nullable = false)
     @ManyToOne
     private Empresa empresa;
