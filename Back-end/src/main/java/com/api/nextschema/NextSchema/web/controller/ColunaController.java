@@ -40,7 +40,7 @@ public class ColunaController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
                     @ApiResponse(responseCode = "400", description = "Nome da coluna não pode ser nulo.",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "400", description = "O tamanho de nome não pode ser menor que 6 caracteres e maior que 50 caracteres.",
+                    @ApiResponse(responseCode = "400", description = "O tamanho de nome não pode ser menor que 1 caracteres e maior que 30 caracteres.",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "400", description = "Metadata não pode ser nulo.",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
@@ -56,14 +56,8 @@ public class ColunaController {
             summary = "Buscar uma coluna.",
             description = "Recurso para buscar uma coluna.",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
-                    @ApiResponse(responseCode = "400", description = "Nome da coluna não pode ser nulo.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "400", description = "O tamanho de nome não pode ser menor que 6 caracteres e maior que 50 caracteres.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "400", description = "Metadata não pode ser nulo.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+                    @ApiResponse(responseCode = "200", description = "Colunas listadas.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
     @GetMapping
@@ -77,6 +71,8 @@ public class ColunaController {
             description = "Recurso para deletar uma coluna.",
             responses = {
                     @ApiResponse(responseCode = "204 No Content", description = "Recurso deletado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
@@ -89,7 +85,9 @@ public class ColunaController {
             summary = "Buscar por id.",
             description = "Recurso para buscar uma coluna por id.",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso buscado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Recurso buscado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
@@ -104,7 +102,9 @@ public class ColunaController {
             responses = {
                     @ApiResponse(responseCode = "201", description = "Colunas atualizadas com sucesso.",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class)))),
+                    @ApiResponse(responseCode = "404", description = "Id metadata inválido",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
     @PostMapping("/metadata")
@@ -117,7 +117,9 @@ public class ColunaController {
             responses = {
                     @ApiResponse(responseCode = "201", description = "Colunas atualizadas com sucesso.",
                             content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class))))
+                                    array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class)))),
+                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
     @PutMapping("/update")
@@ -134,6 +136,8 @@ public class ColunaController {
             description = "Recurso para atualizar uma chave primária.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso atualizado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
@@ -146,6 +150,8 @@ public class ColunaController {
             description = "Recurso para atualizar uma validação da coluna.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso atualizado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
             }
     )
