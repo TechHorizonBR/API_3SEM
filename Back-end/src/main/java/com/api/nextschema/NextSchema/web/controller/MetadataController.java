@@ -95,22 +95,6 @@ public class MetadataController {
         Metadata metadata = metadataService.findbyId(id);
         return ResponseEntity.ok().body(MetadataMapper.toDto(metadata));
     }
-
-    @Operation(
-            summary = "Buscar metadata por id de usuário ",
-            description = "Retorna os metadatas por usuário",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Metadatas do usuário",
-                    content = @Content(mediaType = "apllication/json", array = @ArraySchema(schema = @Schema(implementation = MetadataResponseDto.class)))),
-                    @ApiResponse(responseCode = "404", description = "Id de usuário inválido",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
-            }
-    )
-    @PostMapping("/usuario")
-    public ResponseEntity<List<MetadataResponseDto>> getByUsuario(@PathVariable Long id) {
-        return ResponseEntity.ok().body(MetadataMapper.toListDto(metadataService.buscarPorUsuario(id)));
-    }
-
     @Operation(
             summary = "Buscar metadatas por id de Empresa",
             description = "Buscar metadatas por id de Empresa",
