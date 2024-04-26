@@ -13,13 +13,12 @@ public class ColunaCreateDto {
 
     @NotBlank @Size(min = 1, max = 10)
     private String nome;
+    @NotBlank
+    private String tipo;
     @NotBlank @Size(min = 1, max = 30)
     private String descricao;
     @NotBlank
     private String restricao;
-    @NotBlank
     private Metadata metadata;
-    @NotBlank
     private Boolean chavePrimaria;
-
 }
