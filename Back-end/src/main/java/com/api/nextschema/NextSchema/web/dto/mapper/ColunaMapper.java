@@ -2,10 +2,7 @@ package com.api.nextschema.NextSchema.web.dto.mapper;
 
 import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
-import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
-import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
-import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
+import com.api.nextschema.NextSchema.web.dto.*;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
@@ -29,5 +26,12 @@ public class ColunaMapper {
         return new ModelMapper().map(dto, Coluna.class);
     }
 
+    public static ColunaResponseDto toResponseDto(Coluna coluna) {
+        return new ModelMapper().map(coluna, ColunaResponseDto.class);
+    }
+
+    public static ColunaUpdateValidadoDto toUpdateValidadoDto(Coluna coluna) {
+        return new ModelMapper().map(coluna, ColunaUpdateValidadoDto.class);
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.web.dto;
 
 
+import com.api.nextschema.NextSchema.entity.Empresa;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,4 +14,5 @@ import lombok.Setter;
 public class MetadataResponseDto {
     private Integer id;
     private String nome;
+    private Empresa empresa;
 }
