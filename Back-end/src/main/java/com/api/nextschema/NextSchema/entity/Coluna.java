@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.entity;
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,6 @@ public class Coluna {
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
     @Column(name = "validado")
-    private Boolean validado  = false;
+    private Validado validado;
 }
 
