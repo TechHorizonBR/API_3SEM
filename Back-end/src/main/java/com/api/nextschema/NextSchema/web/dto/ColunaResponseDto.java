@@ -1,7 +1,7 @@
 package com.api.nextschema.NextSchema.web.dto;
 
 
-import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +15,6 @@ public class ColunaResponseDto {
     private String descricao;
     private String restricao;
     private Boolean chavePrimaria;
+    private Validado validado;
+
 }
