@@ -67,9 +67,9 @@ public class ColunaService {
 
     }
     @Transactional
-    public Coluna validarColuna(ColunaValidadoDto colunaValidadoDto) {
-        Coluna colunaBuscada = buscarPorId(colunaValidadoDto.getId());
-        colunaBuscada.setValidado(colunaValidadoDto.getValidado());
+    public Coluna validarColuna(ColunaUpdateValidadoDto colunaUpdateValidadoDto) {
+        Coluna colunaBuscada = buscarPorId(colunaUpdateValidadoDto.getId());
+        colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
     }
 }
