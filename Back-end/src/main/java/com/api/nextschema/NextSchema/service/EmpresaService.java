@@ -4,6 +4,7 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.EmpresaRepository;
+import com.api.nextschema.NextSchema.web.dto.EmpresaAtualizarDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +25,9 @@ public class EmpresaService {
     public void deleteId(Long id){ empresaRepository.deleteById(id);}
 
 
+    public Empresa atualizarEmpresa(EmpresaAtualizarDto empresa) {
+        Empresa empresaBuscada = buscarId(empresa.getId());
+        empresaBuscada.setNome(empresa.getNome());
+        return empresaRepository.save(empresaBuscada);
+    }
 }
