@@ -128,13 +128,14 @@ margin-bottom: 30px;
 .prompt {
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40%;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-}
+    animation: popupAppear 0.5s normal;
+    box-shadow: 0 0px 4px rgba(0,0,0,0.1);}
 
 .buttonEdit {
     display: flex;
@@ -143,6 +144,12 @@ margin-bottom: 30px;
     align-items: center;
     flex-direction: row;
     width: 100%;
+    color: #0c4df0;
+    margin-right: 10px;
+    border: none;
+    background-color: #fff;
+    font-weight: bold;
+
 }
 
 .buttonRemove {
@@ -152,6 +159,11 @@ margin-bottom: 30px;
     align-items: center;
     flex-direction: row;
     width: 100%;
+    color: #fa0000; 
+    margin-right: 10px;
+    border: none;
+    background-color: #fff;
+    font-weight: bold;
 }
 
 .btn_p {
@@ -165,8 +177,14 @@ margin-bottom: 30px;
     background-color: #006a8f;
 }
 
-.prompt {
-    animation: popupAppear 0.5s normal;
+.input_data{
+    border: none;
+    outline: none;
+    background-color: #c1c1c1;
+    height: 30px;
+    width: 200px;
+    border-radius: 12px;
+    padding: 5px;
 }
 
 @media screen and (max-width: 768px) {
