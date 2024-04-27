@@ -19,6 +19,7 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Optional<Usuario> findById(Long id){
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+
         if (usuarioOptional.isEmpty()){
             throw new EntityNotFoundException("Usuáio não encontrado.");
         }
