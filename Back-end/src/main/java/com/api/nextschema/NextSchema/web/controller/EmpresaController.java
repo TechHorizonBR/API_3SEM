@@ -4,6 +4,7 @@ package com.api.nextschema.NextSchema.web.controller;
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.service.EmpresaService;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.EmpresaAtualizarDto;
 import com.api.nextschema.NextSchema.web.dto.EmpresaCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.mapper.EmpresaMapper;
@@ -101,9 +102,10 @@ public class EmpresaController {
         empresaService.deleteId(id);
         return ResponseEntity.noContent().build();
     }
-    //@PutMapping ResponseEntity<EmpresaResponseDTO> atulizarEmpresa(@RequestBody EmpresaAtualizarDadosDTO empresaAtualizarDadosDTO){
-    //    return ResponseEntity.status(HttpStatus.OK).body(empresaService.atualizarEmpresa)
-    //}
+    @PutMapping ()
+    public ResponseEntity<EmpresaResponseDTO> atulizarEmpresa(@RequestBody EmpresaAtualizarDto empresa){
+        return ResponseEntity.status(HttpStatus.OK).body(EmpresaMapper.toDto(empresaService.atualizarEmpresa(empresa)));
+    }
 
 }
 
