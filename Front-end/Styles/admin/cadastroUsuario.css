@@ -70,9 +70,9 @@ html,body{
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 85vh;
+    height: auto;
     background-color: #fff;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
     color: rgb(137, 137, 137);
     margin-top: 20px;
 }
@@ -91,11 +91,82 @@ margin: 0 3%;
 .firstPart{
 display: flex;
 flex-direction: column;
+margin-bottom: 30px;
 }
 
 .secondPart{
     display: flex;
     flex-direction: column;
+}
+
+.buttonUser{
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15px;
+    color: #0c4df0;
+    margin-right: 10px
+}
+.back_prompt {
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.9px);
+    -webkit-backdrop-filter: blur(2.9px);
+    position: absolute;
+    width: 100%;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.prompt {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttonEdit {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.buttonRemove {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.btn_p {
+    min-width: 72px;
+    height: 40px;
+    font-size: larger;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #006a8f;
+}
+
+.prompt {
+    animation: popupAppear 0.5s normal;
 }
 
 @media screen and (max-width: 768px) {
