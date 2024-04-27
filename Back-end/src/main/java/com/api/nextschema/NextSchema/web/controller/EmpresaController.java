@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/empresas")
 @CrossOrigin("*")
-@Tag(name = "Colunas", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de uma coluna.")
+@Tag(name = "Empresas", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de uma empresa.")
 
 public class EmpresaController {
     private final EmpresaService empresaService;
@@ -64,7 +64,7 @@ public class EmpresaController {
             description = "Retorna uma Lista de EmpresaResponseDTO",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso.",
-                            content = @Content(mediaType = "application/json"))
+                            content = @Content(mediaType = "application/json",  schema = @Schema(implementation = EmpresaResponseDTO.class)))
             }
     )
     @GetMapping
