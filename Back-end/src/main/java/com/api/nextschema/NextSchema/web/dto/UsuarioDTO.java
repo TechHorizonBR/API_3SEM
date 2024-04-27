@@ -17,7 +17,6 @@ import java.util.Optional;
 public class UsuarioDTO {
     private  Long id;
     private String nome;
-    private Role roleUsuario;
     private String email;
 
     public UsuarioDTO(Usuario usuario) {
