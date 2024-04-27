@@ -24,7 +24,10 @@ async function sendMetadata(){
             }
         });
 
-        console.log(res);
+        // console.log(res);
+        // console.log(res.data);
+        console.log("DATA EM UPLOAD:",res.data);
+        localStorage.setItem("metadata_id", res.data.id);
         if(res.status === 200){
             reqSuccess.mdReq = true;
         }else{
@@ -53,7 +56,7 @@ async function sendCSV(file){
             localStorage.setItem(`dados${x}`, res.data[x]);
         }
 
-        console.log(res);
+        // console.log(res);
         if(res.status === 200){
             reqSuccess.csvReq = true;
         }else{
@@ -116,7 +119,6 @@ function newPrompt(){
         if(nomeData === ""){
             alert("Digite um nome.");
         }else{
-            console.log("DIGITADO:", nomeData)
             prompt.remove();
 
             // Adicionando o HTML ao corpo do documento

@@ -17,9 +17,7 @@ import java.util.Optional;
 public class UsuarioDTO {
     private  Long id;
     private String nome;
-    private Role roleUsuario;
     private String email;
-    private String senha;
 
     public UsuarioDTO(Usuario usuario) {
         BeanUtils.copyProperties(usuario, this);

@@ -6,19 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "metadata")
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "metadata")
+@Entity
 public class Metadata {
-    @Column(name = "nome")
-    private String nome;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+    @Column(name = "nome", length = 50)
+    private String nome;
+    @JoinColumn(name = "empresa_id", nullable = false)
     @ManyToOne
-    private Usuario usuario;
+    private Empresa empresa;
 }
