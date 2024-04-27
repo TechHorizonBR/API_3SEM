@@ -71,6 +71,6 @@ public class UsuarioService {
         Usuario user = usuarioRepository.findById(usuario.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
-        usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome(), usuario.getRoleUsuario());
+        usuarioRepository.atualizarUsuario(usuario.getId(), usuario.getEmail(), usuario.getNome());
     }
 }
