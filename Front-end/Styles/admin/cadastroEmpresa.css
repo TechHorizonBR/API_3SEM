@@ -6,7 +6,7 @@ html,body{
 
 .conteudo{
     width: 95%;
-    height: 100px;
+    height: calc(100vh - 100px);
     margin-left: 5%;
     margin-right: 5%;
     display: flex;
@@ -15,7 +15,7 @@ html,body{
 
 .boxEmpresa{
     width: 95%;
-    height: 70vh;
+    height: 90px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     display: flex;
@@ -34,7 +34,7 @@ html,body{
 
 .fields{
     box-shadow: 0 0px 4px rgba(0,0,0,0.1);
-    color: rgb(137, 137, 137);
+    color: #000;
     margin: 20px;
     border: 0;
     width: 400px;
@@ -64,14 +64,55 @@ html,body{
     display: flex;
     flex-direction: column;
     position: static;
+    overflow-y: auto;
 }
 
 .boxList p {
     margin: 10px;
+    margin-right: 100px;
 }
 
 .line{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+#editar{
+    color: #0c4df0;
+    border: none;
+    background-color:#fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#excluir{
+    color: #fa0000;
+    border: none;
+    background-color:#fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btns{
+    display: flex;
+}
+
+.buttonsEE{
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.txtCnpj{
+    margin-right: 100px;
+}
+
+.text{
+    display: flex;
+    width: 805px;
+    justify-content: space-between;
+    margin-left: 40px;
 }

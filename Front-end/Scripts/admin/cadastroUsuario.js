@@ -51,10 +51,14 @@ async function montarUsuario(){
     cadastrarUsuario(dataJson);
 }
 async function cadastrarUsuario(dataJson){
+    try{
+
+    }catch(err){
+        console.error(err)
+    }
     let response = await axios.post("http://localhost:8080/usuarios",dataJson);
     console.log(response);
     if (response.status === 201){
-        console.log("DEU BOM")
         window.location.href = "cadastroUsuario.html";        
     } 
 }
