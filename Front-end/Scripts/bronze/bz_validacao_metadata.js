@@ -1,92 +1,59 @@
+bronzeData = "";
+
 window.onload = () => {
-    setCSVSeparator();
     generateTable();
 };
 
-const saveButton = document.querySelector("#save");
-
-let dados = localStorage.getItem("cabecalho");
-let exampleData = localStorage.getItem("dados1");
-let id_metadata = parseInt(localStorage.getItem("metadata_id"));
-
-
-function setCSVSeparator() {
-    let dados_string = dados.toString();
-
-    if (dados_string.includes(",")) {
-        dados = dados.split(",");
-        exampleData = exampleData.split(",");
-    } else {
-        dados = dados.split(";");
-        exampleData = exampleData.split(";");
-    }
-}
-
 function generateTable() {
     let table = document.getElementById("body_dados");
-    for (let x = 0; x < dados.length; x++) {
+    for (let x = 0; x < bronzeData.length; x++) {
         let dadosTable = `
         <tr>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td>${exampleData[x]}</td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-        <td><button>Delete</button></td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
+            <td class="val_data">${bronzeData[x].restricao == true ? "SIM" : "NAO"}</td>
+            <td class="val_data">${bronzeData[x].nome}</td>
+            <td class="val_data">${bronzeData[x].tipo}</td>
+            <td class="val_data">${bronzeData[x].descricao}</td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}" style="pointer-events: none; cursor: not-allowed;" checked="${bronzeData[x].validado === "SIM" ? true : false}"></td>
+            <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
+            <td class="btn_data"><button id="excluir"><i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em;"></i></button></td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
 }
 
-saveButton.addEventListener("click", function () {
-    validation();
-});
+// function validation() {
+//     const regex = /^[a-zA-Z0-9_]*$/;
+//     let errors = [];
 
-function validation() {
-    const regex = /^[a-zA-Z0-9_]*$/;
-    let errors = [];
+//     for (let i = 0; i < dados.length; i++) {
+//         inputsTextsValue = document.getElementById(`input-text${i}`).value;
+//         if (!regex.test(inputsTextsValue)) {
+//             errors.push(inputsTextsValue);
+//         }
+//     }
 
-    for (let i = 0; i < dados.length; i++) {
-        inputsTextsValue = document.getElementById(`input-text${i}`).value;
-        if (!regex.test(inputsTextsValue)) {
-            errors.push(inputsTextsValue);
-        }
+//     if (errors.length === 0) {
+//         getData(dados);
+//     } else {
+//         newFailedPrompt(errors);
+//     }
+// }
+
+async function getBronzeData() {
+    try {
+        const sendId = {
+            id: metadata_id.id,
+        };
+        let response = await axios.post(
+            "http://localhost:8080/colunas/metadata",
+            sendId
+        );
+        bronzeData = response.data;
+        popularTabela();
+    } catch (error) {
+        console.error(error);
     }
-
-    if (errors.length === 0) {
-        getData(dados);
-    } else {
-        newFailedPrompt(errors);
-    }
-}
-
-function getData(dados) {
-    let newColuna = [];
-    let checkBoxesValues = "";
-    let inputsTextsValues = "";
-    let selectsValues = "";
-    let descValues = "";
-    for (let y = 0; y < dados.length; y++) {
-        checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
-        inputsTextsValues = document.getElementById(`input-text${y}`).value;
-        selectsValues = document.getElementById(`select${y}`).value;
-        descValues = document.getElementById(`desc${y}`).value;
-        newColuna.push({
-            nome: inputsTextsValues,
-            tipo: selectsValues,
-            restricao: checkBoxesValues.toString(),
-            descricao: descValues,
-            metadata: {
-                id: id_metadata,
-            },
-        });
-    }
-
-    console.log(newColuna);
-
-    sendData(newColuna);
 }
 
 async function sendData(obj) {
@@ -99,9 +66,7 @@ async function sendData(obj) {
         if (response.status === 201) {
             newSuccessPrompt();
         } else {
-            alert(
-                "Um erro ocorreu no sistema, tente novamente mais tarde."
-            );
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
         }
     } catch (error) {
         console.log(error);
