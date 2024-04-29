@@ -4,10 +4,7 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.service.ColunaService;
 
-import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
-import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
-import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
-import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
+import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -91,4 +88,10 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> updateChavePrimaria(@RequestBody ColunaUpdateChavePrimariaDTO colunaUpdateChavePrimariaDTO){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarChavePrimaria(colunaUpdateChavePrimariaDTO)));
     }
+
+    @PatchMapping("/update")
+    public ResponseEntity<ColunaResponseDto> updateAtivo(@RequestBody ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarAtivo(colunaUpdateAtivoDTO)));
+    }
+
 }
