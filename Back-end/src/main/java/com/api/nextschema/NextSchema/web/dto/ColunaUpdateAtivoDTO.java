@@ -7,14 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ColunaUpdateDto {
+@AllArgsConstructor
+public class ColunaUpdateAtivoDTO {
     private Long id;
-    private String nome;
-    private String tipo;
-    private String descricao;
-    private String restricao;
-    private Boolean chavePrimaria;
     private Boolean ativo;
 }

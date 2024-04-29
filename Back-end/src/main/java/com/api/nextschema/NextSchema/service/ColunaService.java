@@ -66,4 +66,6 @@ public class ColunaService {
         return colunaRepository.save(coluna);
 
     }
+    @Transactional
+    public Coluna atualizarAtivo()
 }
