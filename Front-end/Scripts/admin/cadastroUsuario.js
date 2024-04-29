@@ -1,9 +1,11 @@
 window.onload = () => {
     getAllUsuarios() 
+    buscarEmpresas()
 }
 
 let botaoCadastrar = document.querySelector("#cadastrarUser")
 let botaoOk = document.querySelector("#ok")
+let opcoesempresas = document.getElementById("empresa")
 
 
 botaoCadastrar.addEventListener("click", function(){
@@ -41,6 +43,25 @@ function gerarTabela(dados){
     }
 }
 
+async function buscarEmpresas(){
+    let response = await axios.get("http://localhost:8080/empresas");
+    console.log(response)
+    let empresas_json = response.data
+
+    if(response.status == 200){
+        listarEmpresas(empresas_json)
+    }
+}
+
+function listarEmpresas(empresas_json){
+    empresas_json.forEach(empresa_json => {
+        let option_empresa = document.createElement("option");
+        option_empresa.value = empresa_json.id;
+        option_empresa.textContent = empresa_json.nome;
+        opcoesempresas.appendChild(option_empresa)
+    });
+
+}
 
 async function montarUsuario(){
     let newNome = document.getElementById("nome").value;
