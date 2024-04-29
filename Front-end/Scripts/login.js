@@ -24,7 +24,12 @@ let pagina_por_role = {
 function capturar_dados() {
     var textoEmail = document.getElementById("username").value;
     var textoSenha = document.getElementById("password").value;
+    
+    verificar_campos(textoEmail,textoSenha);
+    validar_dados(textoEmail,textoSenha);
+}
 
+function verificar_campos(textoEmail, textoSenha){
     switch (true) {
         case textoEmail.trim() === "" && textoSenha.trim() === "":
             alert("Por favor, preencha os campos.");
@@ -38,9 +43,6 @@ function capturar_dados() {
             alert("Por favor, insira a Senha.");
             break
         };
-    
-            
-    validar_dados(textoEmail,textoSenha)
 }
 
 async function validar_dados(textoEmail,textoSenha){
