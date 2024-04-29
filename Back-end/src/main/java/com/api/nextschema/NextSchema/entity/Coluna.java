@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.entity;
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import lombok.Setter;
 public class Coluna {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "nome")
     private String nome;
     @Column(name = "tipo")
@@ -30,5 +31,7 @@ public class Coluna {
     private Metadata metadata;
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
+    @Column(name = "validado")
+    private Validado validado = Validado.PENDENTE;
 }
 

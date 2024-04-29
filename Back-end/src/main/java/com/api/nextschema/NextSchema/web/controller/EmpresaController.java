@@ -4,6 +4,7 @@ package com.api.nextschema.NextSchema.web.controller;
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.service.EmpresaService;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.EmpresaAtualizarDto;
 import com.api.nextschema.NextSchema.web.dto.EmpresaCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.mapper.EmpresaMapper;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/empresas")
 @CrossOrigin("*")
-@Tag(name = "Colunas", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de uma coluna.")
+@Tag(name = "Empresas", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de uma empresa.")
 
 public class EmpresaController {
     private final EmpresaService empresaService;
@@ -64,7 +65,7 @@ public class EmpresaController {
             description = "Retorna uma Lista de EmpresaResponseDTO",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso.",
-                            content = @Content(mediaType = "application/json"))
+                            content = @Content(mediaType = "application/json",  schema = @Schema(implementation = EmpresaResponseDTO.class)))
             }
     )
     @GetMapping
@@ -101,9 +102,10 @@ public class EmpresaController {
         empresaService.deleteId(id);
         return ResponseEntity.noContent().build();
     }
-    //@PutMapping ResponseEntity<EmpresaResponseDTO> atulizarEmpresa(@RequestBody EmpresaAtualizarDadosDTO empresaAtualizarDadosDTO){
-    //    return ResponseEntity.status(HttpStatus.OK).body(empresaService.atualizarEmpresa)
-    //}
+    @PutMapping ()
+    public ResponseEntity<EmpresaResponseDTO> atulizarEmpresa(@RequestBody EmpresaAtualizarDto empresa){
+        return ResponseEntity.status(HttpStatus.OK).body(EmpresaMapper.toDto(empresaService.atualizarEmpresa(empresa)));
+    }
 
 }
 

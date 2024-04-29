@@ -7,14 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class ColunaResponseDto {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ColunaUpdateValidadoDto {
     private Long id;
-    private String nome;
-    private String tipo;
-    private String descricao;
-    private String restricao;
-    private Boolean chavePrimaria;
-    private Boolean ativo;
     private Validado validado;
 }

@@ -17,8 +17,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 
     @Modifying
-    @Query("UPDATE Usuario u SET u.email = :email, u.nome = :nome, u.roleUsuario = :role WHERE u.id = :id")
-    void atualizarUsuario(Long id, String email, String nome, Role role);
+    @Query(value = "UPDATE Usuario u SET u.email = :email, u.nome = :nome WHERE u.id = :id")
+    void atualizarUsuario(Long id, String email, String nome);
 
 
 }

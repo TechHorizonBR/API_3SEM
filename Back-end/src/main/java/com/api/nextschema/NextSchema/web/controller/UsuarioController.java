@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.controller;
 
+
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
@@ -9,16 +10,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 
+@Slf4j
 @RestController
 @RequestMapping( value ="/usuarios")
 @CrossOrigin("*")
@@ -31,7 +32,9 @@ public class UsuarioController {
             summary = "Buscar usuário pelo id.",
             description = "Recebe um id pelo path e retorna um objeto Usuario",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Usuário localizado com sucesso.",
+                            content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "404", description = "Não foi possível localizar o usuário.",
                             content = @Content(mediaType = "application/json"))
             }
     )
@@ -59,12 +62,15 @@ public class UsuarioController {
             description = "Recebe um email pelo Path e retorna um UsuárioDTO",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso.",
+                            content = @Content(mediaType = "application/json")),
+                    @ApiResponse(responseCode = "404", description = "Não foi possível localizar o usuário.",
                             content = @Content(mediaType = "application/json"))
             }
     )
     @GetMapping(value ="/{email}")
     public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
     }
 
    /* @GetMapping(value ="/empresa/{idEmpresa}")
@@ -88,8 +94,10 @@ public class UsuarioController {
            }
    )
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> createUser(@RequestBody UsuarioCreateDTO usuarioCreateDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
+    public ResponseEntity<UsuarioResponseDTO> createUser(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO){
+
+
+       return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
     }
 
     @Operation(
@@ -115,7 +123,7 @@ public class UsuarioController {
             }
     )
     @PatchMapping
-    public ResponseEntity<Void> atualizarSenha(@RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
+    public ResponseEntity<Void> atualizarSenha(@Valid @RequestBody UsuarioAlterarSenhaDTO usuarioAlterarSenhaDTO){
         usuarioService.atualizarSenha(usuarioAlterarSenhaDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
 
@@ -146,7 +154,7 @@ public class UsuarioController {
             }
     )
     @PostMapping(value = "/login")
-    public ResponseEntity<UsuarioResponseDTO> login(@RequestBody UsuarioLoginDTO userLoginDTO){
+    public ResponseEntity<UsuarioResponseDTO> login(@Valid @RequestBody UsuarioLoginDTO userLoginDTO){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.login(userLoginDTO.getEmail(), userLoginDTO.getSenha()));
     }
 }
