@@ -1,3 +1,4 @@
+
 // document.addEventListener("DOMContentLoaded", function() {
 // // Alerta ao abrir a página
 // alert("Bem vindo ao NextSchema!");
@@ -11,29 +12,63 @@
 // };
 
 document.getElementById("botaoEntrar").addEventListener("click", () => {
-    logar();
+    capturar_dados();
 });
 
-function logar() {
+let pagina_por_role = {
+    0: "admin/homeAdmin.html",
+    1: "landing_zone/homeUser.html",
+    2: "bronze/bz_visualizar_metadata.html",
+}
+
+function capturar_dados() {
     var textoEmail = document.getElementById("username").value;
     var textoSenha = document.getElementById("password").value;
 
-    if (textoEmail.trim() === "" && textoSenha.trim() === "") {
-        alert("Por favor, preencha os campos.");
-    } else if (textoEmail.trim() === "") {
-        alert("Por favor, insira o Email.");
-        return;
-    } else if (textoSenha.trim() === "") {
-        alert("Por favor, insira a Senha.");
-        return;
-    } else if (textoEmail == "admin" && textoSenha == "admin") {
-        location.href = "homeAdmin.html";
-    } else if (textoEmail == "user@email.com" && textoSenha == "user") {
-        location.href = "landing_zone/homeUser.html";
-    } else {
-        alert("Login inválido!");
-        location.href = "index.html";
-    }
+    switch (true) {
+        case textoEmail.trim() === "" && textoSenha.trim() === "":
+            alert("Por favor, preencha os campos.");
+            break
+    
+        case textoEmail.trim() === "":
+            alert("Por favor, insira o Email.");
+            break
+
+        case textoSenha.trim() === "":
+            alert("Por favor, insira a Senha.");
+            break
+        };
+    
+            
+    validar_dados(textoEmail,textoSenha)
 }
 
-// });
+async function validar_dados(textoEmail,textoSenha){
+    let data = {
+        email: textoEmail,
+        senha: textoSenha
+    }
+    try {
+        let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
+        let role = 0
+        usuario = response.data
+        localStorage.setItem('usuario', JSON.stringify(usuario))
+        if(response.status === 200){
+            location.href = pagina_por_role[role]
+            console.log(location.href)
+            //selecionar_pagina()
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+
+    }catch(error){
+        console.error(error);
+    }
+    console.log(data)
+}
+
+function selecionar_pagina(){
+    //Dar um get no endpoint pra receber qual é o id
+
+}
+
