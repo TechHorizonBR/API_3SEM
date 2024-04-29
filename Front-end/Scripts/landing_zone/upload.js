@@ -6,23 +6,26 @@ let reqSuccess = {
     csvReq:false,
 }
 
-async function sendMetadata(){
+async function sendMetadata(id_empresa){
     try{
         const newMetadata = {
             nome: nomeData,
-            usuario:{
-                id:1
+            usuario: {
+                id: 1 //arrumar quando criar autenticação
+            },
+            empresa: {
+                id: id_empresa
             }
-        }
+        };
 
-        const res = await axios.post("http://localhost:8080/metadata",newMetadata,{
+        console.log(newMetadata)
+
+        const res = await axios.post("http://localhost:8080/metadatas",newMetadata,{
             headers:{
                 'Content-Type': 'application/json'
             }
         });
 
-        // console.log(res);
-        // console.log(res.data);
         console.log("DATA EM UPLOAD:",res.data);
         localStorage.setItem("metadata_id", res.data.id);
         if(res.status === 200){
@@ -76,6 +79,8 @@ arquivo.addEventListener("change", () => {
 });
 
 function firstPrompt(){
+    getEmpresas();
+
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -86,7 +91,9 @@ function firstPrompt(){
         <span class="prompt_text">Nome do esquema:</span>
         <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
         <span class="prompt_text">Nome da empresa:</span>
-        <input type="text" class="input_data" id="input_companyname" placeholder="Digite aqui...">
+        <select class="input_data" id="input_companyname">
+            <!-- Opções serão adicionadas dinamicamente aqui -->
+        </select>
         <div class="btns">
             <button class="btn_p" id="btn_cont">Próximo</button>
         </div>
@@ -101,29 +108,58 @@ function firstPrompt(){
     let prompt = document.getElementById("prompt");
 
     document.getElementById("btn_cont").addEventListener("click", ()=>{
+        let id_empresa = input_companyname.value;
         nomeData = prompt_name.value;
         if(nomeData === ""){
             alert("Digite um nome.");
         }else{
             prompt.remove();
             document.getElementById("back_prompt").remove();
-            validation(nomeData);
+            validation(nomeData, id_empresa);
         }
     })
 }
 
-function validation(nomeData) {
+async function getEmpresas() {
+    try{
+        let response = await axios.get("http://localhost:8080/empresas");
+        let empresas = response.data
+        console.log(response.data)
+
+        if(response.status === 200) {
+            listEmpresas(empresas);
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+    }
+    catch{
+        console.error(error);
+    }
+};
+
+function listEmpresas(empresas){
+    let select_companyname = document.getElementById("input_companyname");
+
+    empresas.forEach(empresa => {
+        let option = document.createElement('option');
+        option.value = empresa.id;
+        option.textContent = empresa.nome;
+        select_companyname.appendChild(option);
+    });
+}
+
+function validation(nomeData, id_empresa) {
     const regex = /^[a-zA-Z0-9_]*$/;
 
     if (regex.test(nomeData)) {
-        secondPrompt()
+        secondPrompt(id_empresa)
         console.log("DEU BOM")
     }else{
         newFailedPrompt()
     }
 }
 
-function secondPrompt(){
+function secondPrompt(id_empresa){
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -148,14 +184,14 @@ function secondPrompt(){
         cabecalho = true;
         prompt.remove();
         var_back.remove();
-        sendMetadata();
+        sendMetadata(id_empresa);
     })
 
     document.getElementById("btn_no").addEventListener("click", ()=>{
         cabecalho = false;
         prompt.remove();
         var_back.remove();
-        sendMetadata();
+        sendMetadata(id_empresa);
     })
 }
 
