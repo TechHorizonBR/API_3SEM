@@ -89,7 +89,7 @@ public class ColunaController {
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarChavePrimaria(colunaUpdateChavePrimariaDTO)));
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/ativo")
     public ResponseEntity<ColunaResponseDto> updateAtivo(@RequestBody ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarAtivo(colunaUpdateAtivoDTO)));
     }
