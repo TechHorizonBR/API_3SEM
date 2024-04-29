@@ -4,6 +4,10 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.service.ColunaService;
 
+import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import io.swagger.v3.oas.annotations.Operation;
