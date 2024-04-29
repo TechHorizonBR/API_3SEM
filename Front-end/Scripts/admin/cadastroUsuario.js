@@ -6,12 +6,17 @@ window.onload = () => {
 let botaoCadastrar = document.querySelector("#cadastrarUser")
 let botaoOk = document.querySelector("#ok")
 let opcoesempresas = document.getElementById("empresa")
-
-
 botaoCadastrar.addEventListener("click", function(){
     montarUsuario();
 });
 
+function limparCampo() {
+    document.getElementById("nome").value = ""
+    document.getElementById("email").value = ""
+    document.getElementById("senha").value = ""
+    document.getElementById("empresa").value = ""
+    document.getElementById("role").value = ""
+}
 
 async function getAllUsuarios(){
     let response = await axios.get("http://localhost:8080/usuarios");
@@ -20,8 +25,17 @@ async function getAllUsuarios(){
     gerarTabela(dados)
 }
 
+function limparTabela() {
+    let table = document.getElementById("body_dados");
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+}
+
+
 function gerarTabela(dados){
     
+    limparTabela()
     let table = document.getElementById("body_dados");
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
@@ -62,7 +76,24 @@ function listarEmpresas(empresas_json){
     });
 
 }
+// async function buscarRole(){
+//     let response = await axios.get("http://localhost:8080/empresas");
+//     console.log(response)
+//     let roles_json = response.data
 
+//     if(response.status == 200){
+//         listarRoles(roles_json)
+//     }
+// }
+// function listarRoles(roles_json){
+//     roles_json.forEach(role_json => {
+//         let option_role = document.createElement("option");
+//         option_role.value = role_json.id;
+//         option_role.textContent = role_json.nome;
+//         opcoesroles.appendChild(option_role)
+//     });
+
+// }
 async function montarUsuario(){
     let newNome = document.getElementById("nome").value;
     let newemail = document.getElementById("email").value;
@@ -73,7 +104,7 @@ async function montarUsuario(){
         nome: newNome,
         email: newemail,
         senha: newsenha,
-        //empresa: newempresa,
+        empresa: newempresa,
         roleUsuario: [newrole],
     };
     console.log(dataJson)
@@ -88,11 +119,11 @@ async function cadastrarUsuario(dataJson){
     let response = await axios.post("http://localhost:8080/usuarios",dataJson);
     console.log(response);
     if (response.status === 201){
-        promptCadastrado();        
+        promptCadastradosucess();        
     } 
 }
 
-function promptCadastrado(){
+function promptCadastradosucess(){
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -112,7 +143,41 @@ function promptCadastrado(){
     var_back.insertAdjacentHTML('beforeend', successPrompt);
 
     document.getElementById("btn_ok").addEventListener("click", () => {
-        window.location.href = "cadastroUsuario.html"
+        getAllUsuarios()
+        limparCampo()
+        document.getElementById("prompt").remove()
+        document.getElementById("back_prompt").remove()  
+
+        // window.location.href = "cadastroUsuario.html"
+
+    });
+}
+function promptDeletadosucess(){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var successPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text">Usuário deletado com Sucesso!</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', successPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        getAllUsuarios()
+        document.getElementById("prompt").remove()
+        document.getElementById("back_prompt").remove()  
+
+        // window.location.href = "cadastroUsuario.html"
+
     });
 }
 function promptDelete(id){
@@ -137,10 +202,13 @@ function promptDelete(id){
 
     document.getElementById("btn_nao").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
     });
 
     document.getElementById("btn_sim").addEventListener("click", () => {
         excluirEmpresa(id)
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
         
     });
 }
@@ -205,5 +273,13 @@ async function editarUsuario(id, nome, email){
     }
 
 }
+
+async function excluirEmpresa(id){
+    let response = await axios.delete(`http://localhost:8080/usuarios/${id}`);
+    console.log(response);
+    promptDeletadosucess()
+
+}
+
 
 
