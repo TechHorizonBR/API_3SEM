@@ -71,7 +71,17 @@ public class ColunaService {
         colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
     }
+    @Transactional
+    public Coluna atualizarColunaBronze(ColunaUpdateDto coluna) {
+        Coluna colunaEncontrada = buscarPorId(coluna.getId());
 
+        colunaEncontrada.setDescricao(coluna.getDescricao());
+        colunaEncontrada.setTipo(coluna.getTipo());
+        colunaEncontrada.setNome(coluna.getNome());
+        colunaEncontrada.setRestricao(coluna.getRestricao());
+
+        return colunaRepository.save(colunaEncontrada);
+    }
 
 
 }
