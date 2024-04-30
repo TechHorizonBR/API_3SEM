@@ -78,7 +78,7 @@ public class ColunaService {
     @Transactional
     public Coluna atualizarAtivo(ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
         Coluna coluna = buscarPorId(colunaUpdateAtivoDTO.getId());
-        coluna.setChavePrimaria(colunaUpdateAtivoDTO.getAtivo());
+        coluna.setAtivo(colunaUpdateAtivoDTO.getAtivo());
         return colunaRepository.save(coluna);
 
     }
