@@ -33,5 +33,9 @@ public class ColunaMapper {
     public static ColunaUpdateValidadoDto toUpdateValidadoDto(Coluna coluna) {
         return new ModelMapper().map(coluna, ColunaUpdateValidadoDto.class);
     }
+    public static Coluna toColunaBronze(ColunaUpdateDto dto){
+        return new ModelMapper().map(dto, Coluna.class);
+    }
+
 }
 
