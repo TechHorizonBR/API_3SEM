@@ -159,17 +159,7 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> updateValidado(@RequestBody ColunaUpdateValidadoDto colunaUpdateValidadoDto){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toDto(colunaService.validarColuna(colunaUpdateValidadoDto)));
     }
-    @Operation(
-            summary = "Atualizar uma lista de colunas para usuário Bronze",
-            description = "Recurso criado para atualizar colunas para usuário Bronze",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Colunas atualizadas com sucesso.",
-                            content = @Content(mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ColunaResponseDto.class)))),
-                    @ApiResponse(responseCode = "404", description = "Id coluna inválido",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ColunaResponseDto.class)))
-            }
-    )
+
     @PutMapping("/update/bronze")
     public ResponseEntity<List<ColunaResponseDto>> updateColunasBronze(@RequestBody List<ColunaUpdateDto> colunasDto){
         List<Coluna> listColunasAtualizadasBronze = new ArrayList<>();
