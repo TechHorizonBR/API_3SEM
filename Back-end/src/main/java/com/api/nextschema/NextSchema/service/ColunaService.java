@@ -4,6 +4,10 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.ColunaRepository;
+import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateAtivoDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +74,13 @@ public class ColunaService {
         Coluna colunaBuscada = buscarPorId(colunaUpdateValidadoDto.getId());
         colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
+    }
+    @Transactional
+    public Coluna atualizarAtivo(ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
+        Coluna coluna = buscarPorId(colunaUpdateAtivoDTO.getId());
+        coluna.setAtivo(colunaUpdateAtivoDTO.getAtivo());
+        return colunaRepository.save(coluna);
+
     }
 }
 
