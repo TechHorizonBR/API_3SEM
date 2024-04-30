@@ -1,7 +1,13 @@
 bronzeData = "";
+columnsIds = [];
+metadata = "";
+let user = JSON.parse(localStorage.getItem("usuario"))
 
 window.onload = () => {
-    generateTable();
+    updateNameUsuario();
+    getBronzeData();
+    getMetadata();
+    document.getElementById("title").innerText = `Validacao do Esquema ${metadata.nome}`
 };
 
 function generateTable() {
@@ -10,16 +16,29 @@ function generateTable() {
         let dadosTable = `
         <tr>
             <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-            <td class="val_data">${bronzeData[x].restricao == true ? "SIM" : "NAO"}</td>
+            <td class="val_data" id="rest${x}">${bronzeData[x].restricao == "true" ? "SIM" : "NÃO"}</td>
             <td class="val_data">${bronzeData[x].nome}</td>
             <td class="val_data">${bronzeData[x].tipo}</td>
             <td class="val_data">${bronzeData[x].descricao}</td>
-            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}" style="pointer-events: none; cursor: not-allowed;" checked="${bronzeData[x].validado === "SIM" ? true : false}"></td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox_v${x}" style="pointer-events: none; cursor: not-allowed;" checked="${bronzeData[x].validado === "SIM" ? true : false}"></td>
             <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-            <td class="btn_data"><button id="excluir"><i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em;"></i></button></td>
+            <td class="btn_data">
+                <button class="delete-btn" id="excluir" data-index="${x}">
+                    <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>
+                </button>
+            </td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
+
+    table.addEventListener("click", (e)=>{
+        if(e.target.classList.contains("delete-btn")){
+            console.log("CLIQUE");
+            let index = e.target.getAttribute("data-index");
+            let id = columnsIds[index];
+            deleteColumn(id);
+        }
+    })
 }
 
 // function validation() {
@@ -40,17 +59,54 @@ function generateTable() {
 //     }
 // }
 
+function updateNameUsuario(){
+    document.getElementById("username").innerHTML = user.nome
+}
+
+document.getElementById("save").addEventListener("click", ()=>{
+    alert("OLA");
+    sendData();
+})
+
+async function deleteColumn(id){
+    try{
+        let response = await axios.delete(`http://localhost:8080/colunas/${id}`)
+        console.log(response.status);
+        getBronzeData();
+    }catch(err){
+        console.error(err);
+    }
+}
+
+async function getMetadata() {
+    try {
+        let response = await axios.get(
+            `http://localhost:8080/metadatas/${20}`
+        );
+        metadata = response.data;
+        console.log(metadata);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function getBronzeData() {
     try {
         const sendId = {
-            id: metadata_id.id,
+            id: 36,
         };
         let response = await axios.post(
             "http://localhost:8080/colunas/metadata",
             sendId
         );
         bronzeData = response.data;
-        popularTabela();
+        console.log(bronzeData);
+        for(let coluna of bronzeData){
+            columnsIds.push(coluna.id);
+        }
+
+        console.log(columnsIds);
+        generateTable();
     } catch (error) {
         console.error(error);
     }
@@ -58,18 +114,32 @@ async function getBronzeData() {
 
 async function sendData(obj) {
     try {
-        let response = await axios.post(
-            "http://localhost:8080/colunas",
-            newColuna
-        );
-
-        if (response.status === 201) {
-            newSuccessPrompt();
-        } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+        let dados = []
+        for (let y = 0; y < bronzeData.length; y++) {
+            dados.push({
+                chavePrimaria: document.getElementById(`checkbox${y}`).checked,
+                restricao: bronzeData[y].restricao,
+                nome: bronzeData[y].nome,
+                tipo: bronzeData[y].tipo,
+                descricao: bronzeData[y].descricao,
+                validado: document.getElementById(`checkbox_v${y}`).checked,
+                comentarioBronze: document.getElementById(`desc${y}`).value
+            })
         }
+
+        console.log(dados);
+        // let response = await axios.post(
+        //     "http://localhost:8080/colunas",
+        //     newColuna
+        // );
+
+        // if (response.status === 201) {
+        //     newSuccessPrompt();
+        // } else {
+        //     alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+        // }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
