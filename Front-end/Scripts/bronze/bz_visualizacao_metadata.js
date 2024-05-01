@@ -1,15 +1,19 @@
 window.onload = () => {
   getEmpresas();
+  updateNameUsuario()
 };
+
+let usuario = localStorage.getItem("usuario");
+let userData = JSON.parse(usuario);
+
+let userId = userData.id;
+let userName = userData.nome;
 
 const searchButton = document.querySelector("#btn-search");
 
 async function getEmpresas() {
   try{
-    // let usuario = {
-    // };
-
-    let response = await axios.get(`http://localhost:8080/empresas`);
+    let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
     let empresas = response.data;
 
     if(response.status === 200) {
@@ -37,16 +41,11 @@ function generateOptions(empresas){
 searchButton.addEventListener("click", function () {
   let selectValue = document.getElementById(`select-filter`).value;
   getMetadata(selectValue);
-  generateList(metadatas, selectValue)
 });
 
 async function getMetadata(selectValue) {
   try{
-    let empresa = {
-        nome: selectValue
-    };
-
-    let response = await axios.get(`http://localhost:8080/${empresa}`);
+    let response = await axios.get(`http://localhost:8080/${selectValue}`);
     let metadatas = response.data;
     console.log(metadatas)
 
@@ -89,5 +88,8 @@ function generateList(metadatas, selectValue) {
       listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
     }
   }
+}
 
+function updateNameUsuario(){
+  document.getElementById("username").innerHTML = userName
 }
