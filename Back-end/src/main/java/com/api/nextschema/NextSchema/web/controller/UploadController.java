@@ -1,6 +1,9 @@
 package com.api.nextschema.NextSchema.web.controller;
 
+import com.api.nextschema.NextSchema.web.exception.ErrorMessage;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +29,10 @@ public class UploadController {
             summary = "Recurso responsável por realizar o upload de arquivo CSV, retornando uma lista de nome de colunas e exemplo de dados.",
             description = "Recurso para Upload",
             responses = {
-                    @ApiResponse()
+                    @ApiResponse(responseCode = "200", description = "Upload realizado com sucesso",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))),
+                    @ApiResponse(responseCode = "400", description = "Tamanho do arquivo excedido.",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             }
     )
     @PostMapping
