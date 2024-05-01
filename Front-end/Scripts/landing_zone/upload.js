@@ -118,6 +118,8 @@ function firstPrompt(){
         nomeData = prompt_name.value;
         if(nomeData === ""){
             alert("Digite um nome.");
+        }else if(id_empresa === ""){
+            alert("Selecione uma Empresa");
         }else{
             prompt.remove();
             document.getElementById("back_prompt").remove();
@@ -168,7 +170,7 @@ function listEmpresas(empresas){
 }
 
 function validation(nomeData, id_empresa) {
-    const regex = /^[a-zA-Z0-9_]*$/;
+    const regex = /^[a-zA-Z0-9_]{6,50}$/;
 
     if (regex.test(nomeData)) {
         secondPrompt(id_empresa)
