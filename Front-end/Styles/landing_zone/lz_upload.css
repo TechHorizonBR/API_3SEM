@@ -99,18 +99,6 @@ body {
     align-items: center;
 }
 
-.prompt {
-    background-color: white;
-    padding: 1% 8% ;
-    border-radius: 10px;
-    /* border: 2px; */
-    /* border-color: black; */
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    width: 300px;
-}
 
 .btns {
     display: flex;
@@ -152,10 +140,6 @@ body {
     background-color: #006a8f;
 } */
 
-.prompt {
-    animation: popupAppear 0.5s normal;
-}
-
 @keyframes popupAppear {
     from {
         opacity: 0;
@@ -175,4 +159,31 @@ body {
     width: 200px;
     border-radius: 12px;
     padding: 5px;
+}
+.button_close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute; /* Define a posição absoluta */
+    right: 8px; /* Define a distância do lado direito */
+    top: 8px; /* Define a distância do topo */
+    color: #df0202;
+    font-size: 125%;
+    
+}
+
+.prompt {
+    background-color: white;
+    padding: 1% 8%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    position: relative; /* Define a posição relativa */
+    animation: popupAppear 0.5s normal;
+}
+
+.button_close{
 }
