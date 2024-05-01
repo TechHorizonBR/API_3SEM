@@ -3,7 +3,10 @@ package com.api.nextschema.NextSchema.web.controller;
 import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.service.ColunaService;
-
+import com.api.nextschema.NextSchema.web.dto.ColunaCreateDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import com.api.nextschema.NextSchema.web.exception.ErrorMessage;
@@ -145,6 +148,13 @@ public class ColunaController {
     public ResponseEntity<ColunaResponseDto> updateChavePrimaria(@RequestBody ColunaUpdateChavePrimariaDTO colunaUpdateChavePrimariaDTO){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarChavePrimaria(colunaUpdateChavePrimariaDTO)));
     }
+
+
+    @PatchMapping("/update/ativo")
+    public ResponseEntity<ColunaResponseDto> updateAtivo(@RequestBody ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toResponseDto(colunaService.atualizarAtivo(colunaUpdateAtivoDTO)));
+    }
+  
     @Operation(
             summary = "Atualizar atributo de validação.",
             description = "Recurso para atualizar uma validação da coluna.",
