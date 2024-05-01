@@ -25,6 +25,8 @@ public class Coluna {
     private String restricao;
     @Column(name = "descricao")
     private String descricao;
+    @Column(name = "ativo")
+    private Boolean ativo;
     @ManyToOne
     private Metadata metadata;
     @Column(name= "chave_primaria")

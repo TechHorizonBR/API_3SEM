@@ -15,6 +15,6 @@ public class ColunaResponseDto {
     private String descricao;
     private String restricao;
     private Boolean chavePrimaria;
+    private Boolean ativo;
     private Validado validado;
-
 }
