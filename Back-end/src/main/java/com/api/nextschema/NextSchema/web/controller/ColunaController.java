@@ -156,7 +156,7 @@ public class ColunaController {
             }
     )
     @PatchMapping("/update/validado")
-    public ResponseEntity<ColunaResponseDto> updateValidado(@RequestBody ColunaUpdateValidadoDto colunaUpdateValidadoDto){
+    public ResponseEntity<ColunaResponseDto> updateValidado(@RequestBody ColunaUpdateBronzeDto colunaUpdateValidadoDto){
         return ResponseEntity.status(HttpStatus.OK).body(ColunaMapper.toDto(colunaService.validarColuna(colunaUpdateValidadoDto)));
     }
     @Operation(
@@ -171,9 +171,9 @@ public class ColunaController {
             }
     )
     @PutMapping("/update/bronze")
-    public ResponseEntity<List<ColunaResponseDto>> updateColunasBronze(@RequestBody List<ColunaUpdateDto> colunasDto){
+    public ResponseEntity<List<ColunaResponseDto>> updateColunasBronze(@RequestBody List<ColunaUpdateBronzeDto> colunasDto){
         List<Coluna> listColunasAtualizadasBronze = new ArrayList<>();
-        for(ColunaUpdateDto coluna : colunasDto) {
+        for(ColunaUpdateBronzeDto coluna : colunasDto) {
             Coluna colunaAtualizadaBronze = colunaService.atualizarColunaBronze(coluna);
             listColunasAtualizadasBronze.add(colunaAtualizadaBronze);
         }

@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.dto;
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,5 @@ public class ColunaUpdateDto {
     private String tipo;
     private String descricao;
     private String restricao;
-    private Boolean chavePrimaria;
+
 }

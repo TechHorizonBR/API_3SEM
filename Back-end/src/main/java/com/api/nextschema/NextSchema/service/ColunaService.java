@@ -66,19 +66,17 @@ public class ColunaService {
         return colunaRepository.save(coluna);
     }
     @Transactional
-    public Coluna validarColuna(ColunaUpdateValidadoDto colunaUpdateValidadoDto) {
+    public Coluna validarColuna(ColunaUpdateBronzeDto colunaUpdateValidadoDto) {
         Coluna colunaBuscada = buscarPorId(colunaUpdateValidadoDto.getId());
         colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
     }
     @Transactional
-    public Coluna atualizarColunaBronze(ColunaUpdateDto coluna) {
+    public Coluna atualizarColunaBronze(ColunaUpdateBronzeDto coluna) {
         Coluna colunaEncontrada = buscarPorId(coluna.getId());
 
-        colunaEncontrada.setDescricao(coluna.getDescricao());
-        colunaEncontrada.setTipo(coluna.getTipo());
-        colunaEncontrada.setNome(coluna.getNome());
-        colunaEncontrada.setRestricao(coluna.getRestricao());
+        colunaEncontrada.setChavePrimaria(coluna.getChavePrimaria());
+        colunaEncontrada.setValidado(coluna.getValidado());
 
         return colunaRepository.save(colunaEncontrada);
     }
