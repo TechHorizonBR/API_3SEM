@@ -149,7 +149,7 @@ function listEmpresas(empresas){
 }
 
 function validation(nomeData, id_empresa) {
-    const regex = /^[a-zA-Z0-9_]*$/;
+    const regex = /^[a-zA-Z0-9_]{6,50}$/;
 
     if (regex.test(nomeData)) {
         secondPrompt(id_empresa)
@@ -204,7 +204,7 @@ function newFailedPrompt(){
     var failedPrompt = `
         <div class="prompt" id="prompt">
             <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
-            <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+            <div id="text_validation">O campo "Nome do Esquema" precisa ter no mínimo seis caracteres e não pode conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
             <div class="btns">
                 <button class="btn_p" id="btn_ok">OK</button>
             </div>
