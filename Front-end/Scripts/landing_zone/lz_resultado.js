@@ -1,15 +1,25 @@
-let metadata_id = localStorage.getItem("metadata");
-metadata_id = JSON.parse(metadata_id);
+window.onload = () => {
+    getAllData();
+    updateNameUsuario()
+};
+
+let user = localStorage.getItem("usuario");
+let userData = JSON.parse(user);
+let metadata = localStorage.getItem("metadata");
+metadata = JSON.parse(metadata);
+
+let userId = userData.id;
+let userName = userData.nome;
 dados_Json = "";
 var isEdit = false;
 
 async function getAllData() {
     try {
         const sendId = {
-            id: metadata_id.id,
+            id: metadata.id
         };
         let response = await axios.post(
-            "http://localhost:8080/colunas/metadata",
+            "http://localhost:8080/colunas/metadatas",
             sendId
         );
         dados_Json = response.data;
@@ -65,12 +75,15 @@ function popularTabela() {
     let tabela = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
     btn_atualizar.style = "visibility: hidden;";
+
     tabela.innerHTML = "";
+
     let titulo = document.getElementById("title");
-    titulo.innerHTML = "Visualização do metadata " + metadata_id.name;
+    titulo.innerHTML = "Visualização do metadata " + metadata.name;
 
     for (let x = dados_Json.length - 1; x >= 0; x--) {
         let linha = tabela.insertRow();
+
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         if (dados_Json[x].restricao === "true") {
@@ -82,11 +95,12 @@ function popularTabela() {
         checkbox.style = "pointer-events: none; cursor: not-allowed;";
 
         let celulaCheck = linha.insertCell(0);
-        let celulaNome = linha.insertCell(1);
-        let celulaDado = linha.insertCell(2);
-        let celulaDesc = linha.insertCell(3);
         celulaCheck.appendChild(checkbox);
+
+        let celulaNome = linha.insertCell(1);
         celulaNome.innerHTML = dados_Json[x].nome;
+
+        let celulaDado = linha.insertCell(2);
         if (dados_Json[x].tipo === "boolean") {
             celulaDado.innerHTML = "Verdadeiro/Falso";
         } else if (dados_Json[x].tipo === "string") {
@@ -99,16 +113,18 @@ function popularTabela() {
             celulaDado.innerHTML = "Carácter Único";
         }
 
-        // celulaDado.innerHTML = dados_Json[x].tipo;
+        let celulaDesc = linha.insertCell(3);
         celulaDesc.innerHTML = dados_Json[x].descricao;
+
+        let celulaStatus = linha.insertCell(4);
+        celulaStatus.innerHTML = dados_Json[x].validado;
+
+        let celulaFeedback = linha.insertCell(5);
+        celulaFeedback.innerHTML = dados_Json[x].comentario;
 
         celulaCheck.classList.add("tab_check");
     }
 }
-
-window.onload = () => {
-    getAllData();
-};
 
 function editData(){
     let tabela_atual = document.getElementById("body_dados");
@@ -180,7 +196,6 @@ document.getElementById("btn_pen").addEventListener("click", () => {
         popularTabela();
         isEdit =  false;
     }
-    
 });
 
 function newPrompt(){
@@ -251,4 +266,8 @@ function newFailedPrompt(errors){
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+}
+
+function updateNameUsuario(){
+    document.getElementById("username").innerHTML = userName
 }
