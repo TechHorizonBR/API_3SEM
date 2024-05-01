@@ -3,10 +3,12 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.UsuarioEmpresaRepository;
+import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,13 +41,20 @@ public class UsuarioEmpresaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Long> buscarEmpresasPorUsuario (Long idUsuario) {
-        List<UsuarioEmpresa> buscados = usuarioEmpresaRepository.findByUsuario(usuarioService.buscarPorId(idUsuario));
-        List<Long> empresasIds = new LinkedList<>();
+    public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
+        Empresa empresa = empresaService.buscarId(id);
+        List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByEmpresa(empresa);
+        List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
-        for(UsuarioEmpresa ue : buscados){
-            empresasIds.add(ue.getEmpresa().getId());
+        for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
+            EmpresaResponseDTO empresaDTO = new EmpresaResponseDTO();
+            empresasDTO.setNome(usuarioEmpresas.getEmpresa().getNome());
+            empresasDTO.setCNPJ(usuarioEmpresas.getEmpresa().getCNPJ());
+            empresasDTO.setId(usuarioEmpresas.getEmpresa().getId());
+            empresasDTO.add(empresaDTO);
         }
-        return empresasIds;
+
+        return empresasDTO;
     }
+
 }

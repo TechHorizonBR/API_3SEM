@@ -36,8 +36,9 @@ public class UsuarioEmpresaController {
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<Long>> buscarEmpresaPorUsuario(@PathVariable Long id) {
-        List<Long> empresas = usuarioEmpresaService.buscarEmpresasPorUsuario(id);
-        return ResponseEntity.ok(empresas);
+    public ResponseEntity<List<EmpresaResponseDTO>> buscarEmpresaPorUsuario(@RequestParam Long id) {
+        List<EmpresaResponseDTO> empresasDTO = empresaService.buscarEmpresaPorUsuario(id);
+        return ResponseEntity.ok(empresasDTO);
     }
+
 }
