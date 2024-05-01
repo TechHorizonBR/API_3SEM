@@ -1,13 +1,13 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.*;
-import com.api.nextschema.NextSchema.repository.EmpresaRepository;
+import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
+import com.api.nextschema.NextSchema.repository.HistoricoRepository;
 import com.api.nextschema.NextSchema.repository.UsuarioEmpresaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -15,8 +15,6 @@ import java.util.List;
 
 public class UsuarioEmpresaService {
     private final UsuarioEmpresaRepository usuarioEmpresaRepository;
-    private final EmpresaService empresaService;
-    private final UsuarioService usuarioService;
 
     @Transactional(readOnly = false)
     public UsuarioEmpresa criarRegistro (UsuarioEmpresa usuarioEmpresa) {
@@ -27,25 +25,22 @@ public class UsuarioEmpresaService {
         usuarioEmpresaRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Long> buscarUsuariosPorEmpresa (Long idEmpresa) {
-        List<UsuarioEmpresa> buscados =  usuarioEmpresaRepository.findByEmpresa(empresaService.buscarId(idEmpresa));
-        List<Long> usuariosIds = new LinkedList<>();
-
-        for(UsuarioEmpresa ue : buscados){
-            usuariosIds.add(ue.getUsuario().getId());
-        }
-        return usuariosIds;
-    }
+    /*@Transactional(readOnly = true)
+    public List<UsuarioEmpresa> buscarUsuarioPorEmpresa (Usuario usuario) {
+        return usuarioEmpresaRepository.findByUsuario(usuario);
+    } //antigo, fazer um for */
 
     @Transactional(readOnly = true)
-    public List<Long> buscarEmpresasPorUsuario (Long idUsuario) {
-        List<UsuarioEmpresa> buscados = usuarioEmpresaRepository.findByUsuario(usuarioService.buscarPorId(idUsuario));
-        List<Long> empresasIds = new LinkedList<>();
+    public List<EmpresaResponseDTO> buscarEmpresaPorUsuario(Empresa empresa) {
+        List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByEmpresa(empresa);
+        List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
-        for(UsuarioEmpresa ue : buscados){
-            empresasIds.add(ue.getEmpresa().getId());
+        for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
+            Empresa empresaDoUsuario = usuarioEmpresa.getEmpresa();
+            empresasDTO.add(new EmpresaResponseDTO(empresaDoUsuario.getId(), empresaDoUsuario.getNome()));
         }
-        return empresasIds;
+
+        return empresasDTO;
     }
+
 }
