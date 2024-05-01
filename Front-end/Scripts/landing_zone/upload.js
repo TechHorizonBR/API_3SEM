@@ -92,6 +92,7 @@ function firstPrompt(){
         <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
         <span class="prompt_text">Nome da empresa:</span>
         <select class="input_data" id="input_companyname">
+            <option value="" disabled selected hidden>Selecionar</option>
             <!-- Opções serão adicionadas dinamicamente aqui -->
         </select>
         <div class="btns">
@@ -112,6 +113,8 @@ function firstPrompt(){
         nomeData = prompt_name.value;
         if(nomeData === ""){
             alert("Digite um nome.");
+        }else if(id_empresa === ""){
+            alert("Selecione uma Empresa");
         }else{
             prompt.remove();
             document.getElementById("back_prompt").remove();
