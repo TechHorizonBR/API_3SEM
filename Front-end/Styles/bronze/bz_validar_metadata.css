@@ -109,7 +109,7 @@ th {
 
 .checkbox-container {
     display: flex;
-    margin-top: 8%;
+    margin-top: 16px;
     justify-content: center;
 }
 
@@ -167,12 +167,18 @@ th {
 .prompt {
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+}
+
+.prompt_text{
+    margin: auto 0;
+    height: 130px;
+    display: flex;
+    align-items: center;
 }
 
 .btns {
@@ -182,6 +188,7 @@ th {
     align-items: center;
     flex-direction: row;
     width: 100%;
+    margin: 20px 0;
 }
 
 
@@ -213,6 +220,13 @@ th {
 
 .val_data{
     text-align: center;
+    font-size: 15px;
+}
+
+.val_desc{
+    text-align: justify;
+    font-size: 10px;
+    width: 200px;
 }
 
 #excluir{
@@ -227,4 +241,43 @@ th {
 .btn_data{
     display: flex;
     justify-content: center;
+}
+
+/* ---- */
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+select:active, select.open {
+    border-color: #007bff;
+}
+
+select::after {
+    content: '\25BC';
+    position: absolute;
+    top: calc(50% - 6px);
+    right: 12px;
+    color: #666;
+    pointer-events: none;
+}
+
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
