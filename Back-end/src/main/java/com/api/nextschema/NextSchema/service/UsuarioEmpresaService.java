@@ -49,7 +49,7 @@ public class UsuarioEmpresaService {
         for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
             EmpresaResponseDTO empresaDTO = new EmpresaResponseDTO();
             empresaDTO.setNome(usuarioEmpresa.getEmpresa().getNome());
-            empresaDTO.setCNPJ(usuarioEmpresa.getEmpresa().getCnpj());
+            empresaDTO.setCnpj(usuarioEmpresa.getEmpresa().getCnpj());
             empresaDTO.setId(usuarioEmpresa.getEmpresa().getId());
             empresaDTO.add(empresaDTO);
         }
