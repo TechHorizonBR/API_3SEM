@@ -80,33 +80,39 @@ arquivo.addEventListener("change", () => {
 
 function firstPrompt(){
     getEmpresas();
-
+    
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `
-
+    
     var firstPrompt = `
     <div class="prompt" id="prompt">
+        <div class="button_wrapper"> <!-- Envolve o botão com uma div -->
+        <button class="button_close" id="fechar">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        </div>
+        
         <span class="prompt_text">Nome do esquema:</span>
         <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
         <span class="prompt_text">Nome da empresa:</span>
         <select class="input_data" id="input_companyname">
-            <!-- Opções serão adicionadas dinamicamente aqui -->
+        <!-- Opções serão adicionadas dinamicamente aqui -->
         </select>
         <div class="btns">
-            <button class="btn_p" id="btn_cont">Próximo</button>
+        <button class="btn_p" id="btn_cont">Próximo</button>
         </div>
     </div>
-    `
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', firstPrompt);
-
-    let prompt_name = document.getElementById("input_data");
+        `
+        
+        document.body.insertAdjacentHTML('beforeend', back);
+        let var_back = document.getElementById("back_prompt");
+        var_back.insertAdjacentHTML('beforeend', firstPrompt);
+        
+        let prompt_name = document.getElementById("input_data");
     let prompt = document.getElementById("prompt");
-
+    
     document.getElementById("btn_cont").addEventListener("click", ()=>{
         let id_empresa = input_companyname.value;
         nomeData = prompt_name.value;
@@ -118,8 +124,21 @@ function firstPrompt(){
             validation(nomeData, id_empresa);
         }
     })
+    
+    botao_fechar();
 }
 
+
+function botao_fechar(){
+    let botao_fechar = document.getElementById("fechar");
+    let promptElement = document.getElementById("prompt");
+    let backPromptElement = document.getElementById("back_prompt");
+    
+    botao_fechar.addEventListener("click", () =>{
+        promptElement.remove();
+        backPromptElement.remove()
+    })
+}
 async function getEmpresas() {
     try{
         let response = await axios.get("http://localhost:8080/empresas");
@@ -160,61 +179,68 @@ function validation(nomeData, id_empresa) {
 }
 
 function secondPrompt(id_empresa){
+    
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `
-
+    
     var secondPrompt = `
     <div class="prompt" id="prompt">
-        <span class="prompt_text">O CSV contém cabeçalho?</span>
-        <div class="btns">
-            <button class="btn_p" id="btn_yes">Sim</button>
-            <button class="btn_p" id="btn_no">Não</button>
-        </div>
+    <div class="button_wrapper"> <!-- Envolve o botão com uma div -->
+    <button class="button_close" id="fechar">
+    <i class="fa-solid fa-times"></i>
+    </button>
+    </div>
+    <span class="prompt_text">O CSV contém cabeçalho?</span>
+    <div class="btns">
+    <button class="btn_p" id="btn_yes">Sim</button>
+    <button class="btn_p" id="btn_no">Não</button>
+    </div>
     </div>
     `
-
+    
     document.body.insertAdjacentHTML('beforeend', back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML('beforeend', secondPrompt);
     let prompt = document.getElementById("prompt");
-
+    
     document.getElementById("btn_yes").addEventListener("click", ()=>{
         cabecalho = true;
         prompt.remove();
         var_back.remove();
         sendMetadata(id_empresa);
-    })
-
-    document.getElementById("btn_no").addEventListener("click", ()=>{
-        cabecalho = false;
-        prompt.remove();
-        var_back.remove();
-        sendMetadata(id_empresa);
-    })
-}
-
-function newFailedPrompt(){
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `
-
-    var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
-            <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
+        })
+        
+        document.getElementById("btn_no").addEventListener("click", ()=>{
+            cabecalho = false;
+            prompt.remove();
+            var_back.remove();
+            sendMetadata(id_empresa);
+        })
+        botao_fechar();
+    }
+    
+    function newFailedPrompt(){
+        var back = `
+        <div class="back_prompt" id="back_prompt">
         </div>
-    `
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', failedPrompt);
-
+        `
+        
+        var failedPrompt = `
+        <div class="prompt" id="prompt">
+        <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
+        <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+        <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+                </div>
+                </div>
+                `
+                
+                document.body.insertAdjacentHTML('beforeend', back);
+                let var_back = document.getElementById("back_prompt");
+                var_back.insertAdjacentHTML('beforeend', failedPrompt);
+                
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
