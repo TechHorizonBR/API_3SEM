@@ -51,9 +51,17 @@
                     <p>Senha:</p>
                     <input type="text" name="senha" id="senha" class="fields">
                     <p>Empresa:</p>
-                    <input type="text" name="empresa" id="empresa" class="fields">
+                    <select name="empresa" id="empresa" class="fields">
+                        <option value="">Selecione...</option>
+                    </select>
                     <p>Permissões:</p>
-                    <input type="text" name="permissao" id="role" class="fields">
+                    <select name="permissao" id="role" class="fields">
+                        <option value="">Selecione...</option>
+                        <option value="ROLE_ADMIN">Administrador</option>
+                        <option value="ROLE_LZ">Landing Zone</option>
+                        <option value="ROLE_BRONZE">Bronze</option>
+                        <option value="ROLE_SILVER">Silver</option>
+                    </select>
                 </div>
                 <div class="l3">
                     <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #0CF030;"></i>

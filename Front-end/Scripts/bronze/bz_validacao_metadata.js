@@ -1,110 +1,145 @@
+bronzeData = "";
+columnsIds = [];
+metadata = "";
+let user = JSON.parse(localStorage.getItem("usuario"))
+
 window.onload = () => {
-    setCSVSeparator();
-    generateTable();
+    updateNameUsuario();
+    getBronzeData();
+    getMetadata();
+    document.getElementById("title").innerText = `Validacao do Esquema ${metadata.nome}`
 };
-
-const saveButton = document.querySelector("#save");
-
-let dados = localStorage.getItem("cabecalho");
-let exampleData = localStorage.getItem("dados1");
-let id_metadata = parseInt(localStorage.getItem("metadata_id"));
-
-
-function setCSVSeparator() {
-    let dados_string = dados.toString();
-
-    if (dados_string.includes(",")) {
-        dados = dados.split(",");
-        exampleData = exampleData.split(",");
-    } else {
-        dados = dados.split(";");
-        exampleData = exampleData.split(";");
-    }
-}
 
 function generateTable() {
     let table = document.getElementById("body_dados");
-    for (let x = 0; x < dados.length; x++) {
+    for (let x = 0; x < bronzeData.length; x++) {
         let dadosTable = `
         <tr>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td>${exampleData[x]}</td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-        <td><button>Delete</button></td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
+            <td class="val_data" id="rest${x}">${bronzeData[x].restricao == "true" ? "SIM" : "NÃO"}</td>
+            <td class="val_data">${bronzeData[x].nome}</td>
+            <td class="val_data">${bronzeData[x].tipo}</td>
+            <td class="val_data">${bronzeData[x].descricao}</td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox_v${x}" style="pointer-events: none; cursor: not-allowed;" checked="${bronzeData[x].validado === "SIM" ? true : false}"></td>
+            <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
+            <td class="btn_data">
+                <button class="delete-btn" id="excluir" data-index="${x}">
+                    <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>
+                </button>
+            </td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
-}
 
-saveButton.addEventListener("click", function () {
-    validation();
-});
-
-function validation() {
-    const regex = /^[a-zA-Z0-9_]*$/;
-    let errors = [];
-
-    for (let i = 0; i < dados.length; i++) {
-        inputsTextsValue = document.getElementById(`input-text${i}`).value;
-        if (!regex.test(inputsTextsValue)) {
-            errors.push(inputsTextsValue);
+    table.addEventListener("click", (e)=>{
+        if(e.target.classList.contains("delete-btn")){
+            console.log("CLIQUE");
+            let index = e.target.getAttribute("data-index");
+            let id = columnsIds[index];
+            deleteColumn(id);
         }
-    }
+    })
+}
 
-    if (errors.length === 0) {
-        getData(dados);
-    } else {
-        newFailedPrompt(errors);
+// function validation() {
+//     const regex = /^[a-zA-Z0-9_]*$/;
+//     let errors = [];
+
+//     for (let i = 0; i < dados.length; i++) {
+//         inputsTextsValue = document.getElementById(`input-text${i}`).value;
+//         if (!regex.test(inputsTextsValue)) {
+//             errors.push(inputsTextsValue);
+//         }
+//     }
+
+//     if (errors.length === 0) {
+//         getData(dados);
+//     } else {
+//         newFailedPrompt(errors);
+//     }
+// }
+
+function updateNameUsuario(){
+    document.getElementById("username").innerHTML = user.nome
+}
+
+document.getElementById("save").addEventListener("click", ()=>{
+    alert("OLA");
+    sendData();
+})
+
+async function deleteColumn(id){
+    try{
+        let response = await axios.delete(`http://localhost:8080/colunas/${id}`)
+        console.log(response.status);
+        getBronzeData();
+    }catch(err){
+        console.error(err);
     }
 }
 
-function getData(dados) {
-    let newColuna = [];
-    let checkBoxesValues = "";
-    let inputsTextsValues = "";
-    let selectsValues = "";
-    let descValues = "";
-    for (let y = 0; y < dados.length; y++) {
-        checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
-        inputsTextsValues = document.getElementById(`input-text${y}`).value;
-        selectsValues = document.getElementById(`select${y}`).value;
-        descValues = document.getElementById(`desc${y}`).value;
-        newColuna.push({
-            nome: inputsTextsValues,
-            tipo: selectsValues,
-            restricao: checkBoxesValues.toString(),
-            descricao: descValues,
-            metadata: {
-                id: id_metadata,
-            },
-        });
+async function getMetadata() {
+    try {
+        let response = await axios.get(
+            `http://localhost:8080/metadatas/${20}`
+        );
+        metadata = response.data;
+        console.log(metadata);
+    } catch (error) {
+        console.error(error);
     }
+}
 
-    console.log(newColuna);
+async function getBronzeData() {
+    try {
+        const sendId = {
+            id: 36,
+        };
+        let response = await axios.post(
+            "http://localhost:8080/colunas/metadata",
+            sendId
+        );
+        bronzeData = response.data;
+        console.log(bronzeData);
+        for(let coluna of bronzeData){
+            columnsIds.push(coluna.id);
+        }
 
-    sendData(newColuna);
+        console.log(columnsIds);
+        generateTable();
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 async function sendData(obj) {
     try {
-        let response = await axios.post(
-            "http://localhost:8080/colunas",
-            newColuna
-        );
-
-        if (response.status === 201) {
-            newSuccessPrompt();
-        } else {
-            alert(
-                "Um erro ocorreu no sistema, tente novamente mais tarde."
-            );
+        let dados = []
+        for (let y = 0; y < bronzeData.length; y++) {
+            dados.push({
+                chavePrimaria: document.getElementById(`checkbox${y}`).checked,
+                restricao: bronzeData[y].restricao,
+                nome: bronzeData[y].nome,
+                tipo: bronzeData[y].tipo,
+                descricao: bronzeData[y].descricao,
+                validado: document.getElementById(`checkbox_v${y}`).checked,
+                comentarioBronze: document.getElementById(`desc${y}`).value
+            })
         }
+
+        console.log(dados);
+        // let response = await axios.post(
+        //     "http://localhost:8080/colunas",
+        //     newColuna
+        // );
+
+        // if (response.status === 201) {
+        //     newSuccessPrompt();
+        // } else {
+        //     alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+        // }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
