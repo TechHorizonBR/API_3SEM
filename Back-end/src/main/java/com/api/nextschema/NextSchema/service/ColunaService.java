@@ -32,7 +32,7 @@ public class ColunaService {
         return colunaRepository.findAll();
     }
     public void deleteporId(Long id){
-
+        Coluna coluna = buscarPorId(id);
         colunaRepository.deleteById(id);
     }
     @Transactional(readOnly = true)
