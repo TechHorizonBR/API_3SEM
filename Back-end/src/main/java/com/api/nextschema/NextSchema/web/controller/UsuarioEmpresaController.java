@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.entity.UsuarioEmpresa;
 import com.api.nextschema.NextSchema.service.UsuarioEmpresaService;
+import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,8 @@ public class UsuarioEmpresaController {
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<EmpresaResponseDTO>> buscarEmpresaPorUsuario(@RequestParam Long id) {
-        List<EmpresaResponseDTO> empresasDTO = empresaService.buscarEmpresaPorUsuario(id);
+    public ResponseEntity<List<EmpresaResponseDTO>> buscarEmpresaPorUsuario(@PathVariable Long id) {
+        List<EmpresaResponseDTO> empresasDTO = usuarioEmpresaService.buscarEmpresasPorUsuario(id);
         return ResponseEntity.ok(empresasDTO);
     }
 

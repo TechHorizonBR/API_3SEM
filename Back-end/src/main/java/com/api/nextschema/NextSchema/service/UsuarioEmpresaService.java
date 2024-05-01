@@ -42,19 +42,19 @@ public class UsuarioEmpresaService {
 
     @Transactional(readOnly = true)
     public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
-        Empresa empresa = empresaService.buscarId(id);
-        List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByEmpresa(empresa);
-        List<EmpresaResponseDTO> empresaDTO = new ArrayList<>();
+        Usuario usuario = usuarioService.buscarPorId(id);
+        List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByUsuario(usuario);
+        List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
         for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
             EmpresaResponseDTO empresaDTO = new EmpresaResponseDTO();
             empresaDTO.setNome(usuarioEmpresa.getEmpresa().getNome());
             empresaDTO.setCnpj(usuarioEmpresa.getEmpresa().getCnpj());
             empresaDTO.setId(usuarioEmpresa.getEmpresa().getId());
-            empresaDTO.add(empresaDTO);
+            empresasDTO.add(empresaDTO);
         }
 
-        return empresaDTO;
+        return empresasDTO;
     }
 
 }
