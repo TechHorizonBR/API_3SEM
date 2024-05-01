@@ -44,17 +44,17 @@ public class UsuarioEmpresaService {
     public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
         Empresa empresa = empresaService.buscarId(id);
         List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByEmpresa(empresa);
-        List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
+        List<EmpresaResponseDTO> empresaDTO = new ArrayList<>();
 
         for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
             EmpresaResponseDTO empresaDTO = new EmpresaResponseDTO();
-            empresasDTO.setNome(usuarioEmpresas.getEmpresa().getNome());
-            empresasDTO.setCNPJ(usuarioEmpresas.getEmpresa().getCNPJ());
-            empresasDTO.setId(usuarioEmpresas.getEmpresa().getId());
-            empresasDTO.add(empresaDTO);
+            empresaDTO.setNome(usuarioEmpresa.getEmpresa().getNome());
+            empresaDTO.setCNPJ(usuarioEmpresa.getEmpresa().getCnpj());
+            empresaDTO.setId(usuarioEmpresa.getEmpresa().getId());
+            empresaDTO.add(empresaDTO);
         }
 
-        return empresasDTO;
+        return empresaDTO;
     }
 
 }
