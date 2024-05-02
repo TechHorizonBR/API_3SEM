@@ -24,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColunaService {
     private final ColunaRepository colunaRepository;
+    private final MetadataService metadataService;
 
     @Transactional
     public Coluna criarColuna(Coluna coluna){
@@ -44,8 +45,9 @@ public class ColunaService {
         return colunaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
-    public List<Coluna> buscarPorMetadata(Metadata metadata){
+    public List<Coluna> buscarPorMetadata(Long id){
         try {
+            Metadata metadata = metadataService.findbyId(id);
             return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
