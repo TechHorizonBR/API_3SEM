@@ -29,19 +29,20 @@ function generateTable(){
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <tr>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td>${exampleData[x]}</td>
-        <td>
-        <select class="inputs select-custom" id="select${x}">
-        <option value="string">Texto</option>
-        <option value="float">Número decimal</option>
-        <option value="int">Número inteiro</option>
-        <option value="boolean">Verdadeiro/Falso</option>
-        <option value="char">Caracter Único (Ex: M ou F)</option>
-        </select>
-        </td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
+            <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
+            <td>${exampleData[x]}</td>
+            <td>
+                <select class="inputs select-custom" id="select${x}">
+                    <option value="string">Texto</option>
+                    <option value="float">Número decimal</option>
+                    <option value="int">Número inteiro</option>
+                    <option value="boolean">Verdadeiro/Falso</option>
+                    <option value="char">Caracter Único (Ex: M ou F)</option>
+                    <option value="date">Date</option>
+                </select>
+            </td>
+            <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
