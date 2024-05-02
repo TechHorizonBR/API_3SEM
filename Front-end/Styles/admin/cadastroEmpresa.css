@@ -181,9 +181,11 @@ html,body{
     margin-top: 15%;
 }
 
-.user_name{
-  margin: 0;
-}
+.user_name {
+    margin: 0;
+    align-self: flex-end; /* Adicionando esta linha */
+  }
+  
 
 .user {
     display: flex;

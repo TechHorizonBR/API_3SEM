@@ -200,8 +200,9 @@ margin-bottom: 30px;
     margin-top: 15%;
 }
 
-.user_name{
-  margin: 0;
+.user_name {
+    margin: 0;
+    align-self: flex-end;
 }
 
 .user {
