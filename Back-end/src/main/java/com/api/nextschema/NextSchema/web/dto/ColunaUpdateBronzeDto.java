@@ -11,7 +11,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ColunaUpdateValidadoDto {
+public class ColunaUpdateBronzeDto {
     private Long id;
+    private Boolean chavePrimaria;
     private Validado validado;
+    private String comentario;
 }

@@ -26,12 +26,15 @@ public class Coluna {
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "ativo")
-    private Boolean ativo;
+    private Boolean ativo = true;
     @ManyToOne
     private Metadata metadata;
     @Column(name= "chave_primaria")
     private Boolean chavePrimaria;
     @Column(name = "validado")
     private Validado validado = Validado.PENDENTE;
+    @Column(name = "comentario")
+    private String comentario;
+
 }
 
