@@ -1,7 +1,11 @@
 window.onload = () => {
     getAllUsuarios() 
     buscarEmpresas()
+    info_usuario(usuario)
 }
+
+var jsonusuario = localStorage.getItem("usuario");
+var usuario = JSON.parse(jsonusuario);
 
 let botaoCadastrar = document.querySelector("#cadastrarUser")
 let botaoOk = document.querySelector("#ok")
@@ -9,6 +13,12 @@ let opcoesempresas = document.getElementById("empresa")
 botaoCadastrar.addEventListener("click", function(){
     montarUsuario();
 });
+
+function info_usuario(usuario){
+    namespace = document.getElementById("user_name").textContent = usuario.nome
+    rolespace = document.getElementById("user_role").textContent = "Adminstrador"
+    console.log(usuario)
+}
 
 function limparCampo() {
     document.getElementById("nome").value = ""
