@@ -15,6 +15,4 @@ public class ColunaUpdateDto {
     private String tipo;
     private String descricao;
     private String restricao;
-    private Boolean chavePrimaria;
-    private Boolean ativo;
 }
