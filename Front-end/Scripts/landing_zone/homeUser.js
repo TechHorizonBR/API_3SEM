@@ -1,15 +1,46 @@
+
 window.onload = () => {
+    opcoes_roles_metadata(pagina_por_role,nome_por_role)
     getEmpresas();
     updateNameUsuario()
 };
-
+let role = localStorage.getItem("role");
+role = JSON.parse(role)
+console.log(role)
 let usuario = localStorage.getItem("usuario");
 let userData = JSON.parse(usuario);
-
+let pagina_por_role = {
+    0: "../admin/homeAdmin.html",
+    1: "../landing_zone/homeUser.html",
+    2: "../bronze/bz_visualizar_metadata.html",
+}
+let nome_por_role= {
+    0: "Adminstrador",
+    1: "Landing_zone",
+    2: "Bronze",
+    3: "Silver",
+}
 let userId = userData.id;
 let userName = userData.nome;
 
 const searchButton = document.querySelector("#btn-search");
+
+function opcoes_roles_metadata(pagina_por_role,nome_por_role) {
+    console.log(Object.keys(pagina_por_role).length);
+    let table = document.querySelector(".metadatas");
+
+    for (let chave in pagina_por_role) {
+        let rota = pagina_por_role[chave];
+        let nome = nome_por_role[chave]
+        
+        var listar_metadata = `
+            <a href="${rota}">${nome}</a>
+        `;
+
+        table.insertAdjacentHTML("beforeend", listar_metadata);
+    }
+}
+
 
 async function getEmpresas() {
     try{
