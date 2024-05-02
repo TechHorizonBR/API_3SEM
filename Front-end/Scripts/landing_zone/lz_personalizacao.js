@@ -133,6 +133,9 @@ function newSuccessPrompt(){
 
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
+        localStorage.removeItem('metadata_id');
+        localStorage.removeItem('cabecalho');
+        localStorage.removeItem('dados1');
         window.location.href = "homeUser.html"
     });
 }
