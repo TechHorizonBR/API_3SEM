@@ -3,25 +3,19 @@ window.onload = () => {
     updateNameUsuario()
 };
 
-let user = localStorage.getItem("usuario");
-let userData = JSON.parse(user);
-let metadata = localStorage.getItem("metadata");
-metadata = JSON.parse(metadata);
+let userData = JSON.parse(localStorage.getItem("usuario"));
+let metadata = JSON.parse(localStorage.getItem("metadata"));
 
 let userId = userData.id;
 let userName = userData.nome;
-dados_Json = "";
+
 var isEdit = false;
 
 async function getAllData() {
     try {
-        const sendId = {
-            id: metadata.id
-        };
-        let response = await axios.post(
-            "http://localhost:8080/colunas/metadatas",
-            sendId
-        );
+
+        let response = await axios.get(`http://localhost:8080/colunas/metadata/${metadata}`);
+
         dados_Json = response.data;
         popularTabela();
     } catch (error) {
