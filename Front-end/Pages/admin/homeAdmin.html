@@ -26,21 +26,35 @@
                         </ul>
                     </li>
                     
-                    <li><a href="#">Dashboards</a></li>
-
-                    <li><a href="#">Configurações</a></li>
+                    <li><a href="#">Ações</a>
+                        <ul>
+                            <li><a href="#">Histórico</a></li>
+                            <li><a href="#">Perfil de Usuários</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html">Logout</a></li>
                 </ul>
             </nav>
         </div>
+        <!--DADOS DO USUARIO-->
         <div id="user-identification">
-            <i class="fa-regular fa-user" id="user-icon"></i>
-            <p></i>ADMINISTRADOR</p>
+            <div class="info_user">
+                <p id="user_name" class="user_name"></p>
+                <div class="user">
+                    <i class="fa-regular fa-user" id="user-icon"></i>
+                    <p id="">Administrador</p>
+                </div>
+            </div>
         </div>
+        <!--DADOS DO USUARIO FIM-->
     </header>
+    <!--PEGAR ATÉ AQUI-->
     <main>
     <div class="conteudo">
     <h1>Bem vindo, Administrador!</h1>
     </div>
     </main>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/Front-end/Scripts/admin/homeAdmin.js"></script>
 </html>
