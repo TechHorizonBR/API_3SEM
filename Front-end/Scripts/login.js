@@ -10,7 +10,9 @@
 //     // Exibe o e-mail no console
 //     console.log(email);
 // };
-
+window.onload = function(){
+    localStorage.clear();
+}
 document.getElementById("botaoEntrar").addEventListener("click", () => {
     capturar_dados();
 });
@@ -52,11 +54,13 @@ async function validar_dados(textoEmail,textoSenha){
     }
     try {
         let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
-        let role = 0
+        let roles = [0,1,2]
         usuario = response.data
         localStorage.setItem('usuario', JSON.stringify(usuario))
+        localStorage.setItem('roles', JSON.stringify(roles))
+
         if(response.status === 200){
-            location.href = pagina_por_role[role]
+            location.href = pagina_por_role[roles[0]]
             console.log(location.href)
             //selecionar_pagina()
         }else{

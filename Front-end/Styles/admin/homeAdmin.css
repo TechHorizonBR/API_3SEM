@@ -16,11 +16,19 @@
     align-items: center;
   }
 
-
+.info_user{
+  flex-direction: column;
+  justify-content: space-between;
+}
 
   .conteudo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.menu{
+display: flex;
+gap: 70px;
 }
