@@ -103,8 +103,10 @@ function popularTabela() {
             celulaDado.innerHTML = "Número Inteiro";
         } else if (dados_Json[x].tipo === "float") {
             celulaDado.innerHTML = "Número Decimal";
-        } else {
+        } else if (dados_Json[x].tipo === "char") {
             celulaDado.innerHTML = "Carácter Único";
+        } else {
+            celulaDado.innerHTML = "Data";
         }
 
         let celulaDesc = linha.insertCell(3);
@@ -157,6 +159,7 @@ function editData(){
                 selectedOption[2] = "";
                 selectedOption[3] = "";
                 selectedOption[4] = "";
+                selectedOption[5] = "";
         }
 
         let dadosTable = `
@@ -170,6 +173,7 @@ function editData(){
                   <option value="int" ${selectedOption[2]}>Número inteiro</option>
                   <option value="boolean" ${selectedOption[3]}>Verdadeiro/Falso</option>
                   <option value="char" ${selectedOption[4]}>Caracter Único (Ex: M ou F)</option>
+                  <option value="date" ${selectedOption[5]}>Data</option>
               </select>
           </td>
           <td><textarea name="desc" id="desc${x}" class="desc_input">${dados_Json[x].descricao}</textarea></td>
