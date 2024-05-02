@@ -169,6 +169,11 @@ html,body{
     animation: popupAppear 0.5s normal;
 }
 
+.menu{
+    display: flex;
+    gap: 70px;
+}
+
 @keyframes popupAppear {
     from {
         opacity: 0;
