@@ -167,6 +167,17 @@ html,body{
 
 .prompt {
     animation: popupAppear 0.5s normal;
+    
+}
+
+.input_data{
+    border: none;
+    outline: none;
+    background-color: #c1c1c1;
+    height: 30px;
+    width: 200px;
+    border-radius: 12px;
+    padding: 5px;
 }
 
 @keyframes popupAppear {

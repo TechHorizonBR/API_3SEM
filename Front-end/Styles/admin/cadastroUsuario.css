@@ -23,6 +23,14 @@ html,body{
     color: rgb(137, 137, 137);
 }
 
+.conteudoEditar{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 80vh;
+    color: rgb(137, 137, 137);
+}
+
 .l1, .l2{
     display: flex;
     flex-direction: row;
@@ -42,7 +50,7 @@ html,body{
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
-    margin-right: 20px;
+    margin-right: 0px;
     justify-content: flex-end;
     cursor: pointer;
     margin-top: 10px;
@@ -127,15 +135,17 @@ margin-bottom: 30px;
 
 .prompt {
     background-color: #ffffff;
-    width: 38vw;
-    height: 40%;
+    width: 60vw;
+    height: 60%;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
     animation: popupAppear 0.5s normal;
-    box-shadow: 0 0px 4px rgba(0,0,0,0.1);}
+    box-shadow: 0 0px 4px rgba(0,0,0,0.1);
+    padding: 2em 1em 0 1em;
+}
 
 .buttonEdit {
     display: flex;
@@ -149,7 +159,7 @@ margin-bottom: 30px;
     border: none;
     background-color: #fff;
     font-weight: bold;
-
+    cursor: pointer;
 }
 
 .buttonRemove {
@@ -164,6 +174,7 @@ margin-bottom: 30px;
     border: none;
     background-color: #fff;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .btn_p {
@@ -186,6 +197,17 @@ margin-bottom: 30px;
     border-radius: 12px;
     padding: 5px;
 }
+
+.salvar{
+    color: #0c4df0;
+    border: none;
+    background-color:#fff;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 0px;
+    display: flex;
+}
+
 
 @media screen and (max-width: 768px) {
     .conteudoCadastro{

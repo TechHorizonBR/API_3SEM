@@ -3,7 +3,7 @@ window.onload = () => {
 };
 
 
-function firstPrompt(id){
+function firstPrompt(id, nome){
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -12,7 +12,7 @@ function firstPrompt(id){
     var firstPrompt = `
     <div class="prompt" id="prompt">
         <span class="prompt_text">Inserir novo Nome:</span>
-        <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
+        <input type="text" class="input_data" id="input_data" value=${nome}>
         <div class="btns">
             <button class="btn_p" id="btn_cont">Próximo</button>
         </div>
@@ -97,7 +97,7 @@ async function generateTable(){
                     <p class="txtCnpj">CNPJ: ${dados[x].cnpj}</p>
                     </div>
                     <div class="buttonsEE">
-                    <button class="btns" id="editar" onclick="firstPrompt('${dados[x].id}')"><i class="fa-solid fa-pen"style="color: #0c4df0; margin-right: 10px"></i>Editar</button>
+                    <button class="btns" id="editar" onclick="firstPrompt('${dados[x].id}', '${dados[x].nome}')"><i class="fa-solid fa-pen"style="color: #0c4df0; margin-right: 10px"></i>Editar</button>
                     <button class="btns" id="excluir" onclick="promptDelete('${dados[x].id}')"><i class="fa-solid fa-trash" style="color: #fa0000; margin-right: 10px"></i>Excluir</button> 
                     </div>
         </div>
