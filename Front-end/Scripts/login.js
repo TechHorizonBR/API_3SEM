@@ -13,9 +13,6 @@
 window.onload = function(){
     localStorage.clear();
 }
-document.getElementById("botaoEntrar").addEventListener("click", () => {
-    capturar_dados();
-});
 
 let pagina_por_role = {
     0: "admin/homeAdmin.html",
@@ -34,15 +31,18 @@ function capturar_dados() {
 function verificar_campos(textoEmail, textoSenha){
     switch (true) {
         case textoEmail.trim() === "" && textoSenha.trim() === "":
-            alert("Por favor, preencha os campos.");
+            message = "Por favor, preencha os campos"    
+            prompt_login(message)
             break
     
         case textoEmail.trim() === "":
-            alert("Por favor, insira o Email.");
+            message = "Por favor, insira o Email"    
+            prompt_login(message)
             break
 
         case textoSenha.trim() === "":
-            alert("Por favor, insira a Senha.");
+            message = "Por favor, insira a Senha"    
+            prompt_login(message)
             break
         };
 }
@@ -54,7 +54,7 @@ async function validar_dados(textoEmail,textoSenha){
     }
     try {
         let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
-        let roles = [0,1,2]
+        let roles = [1,2]
         usuario = response.data
         localStorage.setItem('usuario', JSON.stringify(usuario))
         localStorage.setItem('roles', JSON.stringify(roles))
@@ -63,18 +63,43 @@ async function validar_dados(textoEmail,textoSenha){
             location.href = pagina_por_role[roles[0]]
             console.log(location.href)
             //selecionar_pagina()
-        }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
         }
 
     }catch(error){
-        console.error(error);
+    if (error.response.data.message === "Credenciais inválidas."){
+        prompt_login(error.response.data.message)
+        console.log(error.response.data.message)}
+    else{
+        alert("Ocorreu um erro no sistema, tente novamente mais tarde")
     }
-    console.log(data)
 }
 
 function selecionar_pagina(){
     //Dar um get no endpoint pra receber qual é o id
 
-}
+}}
 
+function prompt_login(message){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var firstPrompt = `
+    <div class="prompt" id="prompt">
+        <span class="prompt_text">${message}</span>
+        <div class="btns">
+            <button class="btn_p" id="btn_cont">Ok</button>
+        </div>
+    </div>
+    `
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', firstPrompt);
+    let prompt = document.getElementById("prompt");
+
+    document.getElementById("btn_cont").addEventListener("click", ()=>{
+            prompt.remove();
+            document.getElementById("back_prompt").remove()})
+}
