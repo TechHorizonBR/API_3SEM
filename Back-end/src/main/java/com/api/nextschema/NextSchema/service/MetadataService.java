@@ -18,6 +18,7 @@ import java.util.List;
 public class MetadataService {
     private final MetadataRepository metadataRepository;
     private final EmpresaService empresaService;
+    private final ColunaService colunaService;
     @Transactional
     public Metadata create(Metadata metadata){
         try{
@@ -37,6 +38,7 @@ public class MetadataService {
     @Transactional
     public void deletebyId(Long id){
         Metadata metadata = findbyId(id);
+        colunaService.deleteByMetadata(metadata);
         metadataRepository.deleteById(id);
     }
     @Transactional(readOnly = true)
