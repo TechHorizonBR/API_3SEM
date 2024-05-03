@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Empresa;
+import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
 import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
@@ -14,11 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -123,7 +122,15 @@ public class UsuarioService {
         if (!usuario.getSenha().equals(senha)) {
             throw new WrongCredentialsException("Credenciais inválidas.");
         }
+        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(usuario);
 
-        return UsuarioMapper.toResponseDTO(usuario);
+        List<UsuarioRoleAssociation> association = usuarioRoleAssociationService.buscarRole(usuario);
+
+        List<Role> roleList = new LinkedList<>();
+        for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
+            roleList.add(usuarioRoleAssociation.getRole());
+        }
+        responseDTO.setRoleUsuario(roleList);
+        return responseDTO;
     }
 }
