@@ -27,7 +27,7 @@ selecao.addEventListener("change", ()=>{
         selecao.disabled = true;
     }
     roles.push(newrole);
-    console.log("CHEGOU")
+    console.log(roles)
 })
 
 
@@ -186,6 +186,11 @@ function promptDeletadosucess(){
 
     });
 }
+
+function selecionar(id){
+    console.log(id);
+}
+
 function promptDelete(id){
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -193,7 +198,7 @@ function promptDelete(id){
     `
 
     var deletePrompt = `
-        <div class="prompt" id="prompt">
+        <div class="prompt1" id="prompt">
             <span class="prompt_text">Deseja realmente excluir?</span>
             <div class="btns">
                 <button class="btn_p" id="btn_sim">SIM</button>

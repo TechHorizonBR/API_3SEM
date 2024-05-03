@@ -66,17 +66,30 @@
                     <p>Senha:</p>
                     <input type="password" name="senha" id="senha" class="fields">
                     <p>Empresa:</p>
-                    <select name="empresa" id="empresa" class="fields">
-                        <option value="">Selecione...</option>
-                    </select>
+                    <div class="all-select">
+                        <select name="empresa" id="empresa" class="fields">
+                            <option value="">Selecione...</option>
+                        </select>
+                        <div class="options-selected">
+                            <span class="opt_empresa">ADM</span>
+                            <span class="opt_empresa">ADM</span>
+                            <span class="opt_empresa">ADM</span>
+                            <span class="opt_empresa">ADM</span>
+                            <span class="opt_empresa">ADM</span>
+                        </div>
+                    </div>
+                    
                     <p>Permissões:</p>
-                    <select name="permissao" id="role" class="fields">
-                        <option value="">Selecione...</option>
-                        <option value="ROLE_ADMIN">Administrador</option>
-                        <option value="ROLE_LZ">Landing Zone</option>
-                        <option value="ROLE_BRONZE">Bronze</option>
-                        <option value="ROLE_SILVER">Silver</option>
-                    </select>
+                    <div class="all-select">
+                        <select name="permissao" id="role" class="fields">
+                            <option value="">Selecione...</option>
+                            <option value="ROLE_ADMIN">Administrador</option>
+                            <option value="ROLE_LZ">Landing Zone</option>
+                            <option value="ROLE_BRONZE">Bronze</option>
+                            <option value="ROLE_SILVER">Silver</option>
+                        </select>
+                        <div class="options-selected"></div>
+                    </div>
                 </div>
                 <div class="l3">
                     <i class="fa-solid fa-circle-plus" id="plusCad" style="color: #0CF030;"></i>

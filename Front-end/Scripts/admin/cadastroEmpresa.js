@@ -23,7 +23,7 @@ function firstPrompt(id, nome){
         <span class="prompt_text">Inserir novo Nome:</span>
         <input type="text" class="input_data" id="input_data" value=${nome}>
         <div class="btns">
-            <button class="btn_p" id="btn_cont">Próximo</button>
+            <button class="btn_p" id="btn_cont">Salvar</button>
         </div>
     </div>
     `
