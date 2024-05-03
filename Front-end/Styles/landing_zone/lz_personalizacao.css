@@ -200,6 +200,35 @@ th {
     animation: popupAppear 0.5s normal;
 }
 
+/* DADOS DO USUARIO */
+.info_user {
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
+
+.user_name {
+  margin: 0;
+  align-self: flex-end;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+    width: 150px;
+}
+#user-icon{
+  margin-right: 4%;
+  margin-top: 11%;
+}
+/* FIM DADOS DO USUARIO */
+.menu{
+    display: flex;
+    gap: 70px;
+    }
 @keyframes popupAppear {
     from {
         opacity: 0;
