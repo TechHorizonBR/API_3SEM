@@ -4,6 +4,10 @@ import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.ColunaRepository;
+import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateAtivoDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateChavePrimariaDTO;
+import com.api.nextschema.NextSchema.web.dto.ColunaUpdateDto;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColunaService {
     private final ColunaRepository colunaRepository;
+    private final MetadataService metadataService;
 
     @Transactional
     public Coluna criarColuna(Coluna coluna){
@@ -32,7 +37,7 @@ public class ColunaService {
         return colunaRepository.findAll();
     }
     public void deleteporId(Long id){
-
+        Coluna coluna = buscarPorId(id);
         colunaRepository.deleteById(id);
     }
     @Transactional(readOnly = true)
@@ -40,8 +45,9 @@ public class ColunaService {
         return colunaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
-    public List<Coluna> buscarPorMetadata(Metadata metadata){
+    public List<Coluna> buscarPorMetadata(Long id){
         try {
+            Metadata metadata = metadataService.findbyId(id);
             return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
@@ -66,10 +72,25 @@ public class ColunaService {
         return colunaRepository.save(coluna);
     }
     @Transactional
-    public Coluna validarColuna(ColunaUpdateValidadoDto colunaUpdateValidadoDto) {
+    public Coluna validarColuna(ColunaUpdateBronzeDto colunaUpdateValidadoDto) {
         Coluna colunaBuscada = buscarPorId(colunaUpdateValidadoDto.getId());
         colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
+    }
+    @Transactional
+    public Coluna atualizarAtivo(ColunaUpdateAtivoDTO colunaUpdateAtivoDTO){
+        Coluna coluna = buscarPorId(colunaUpdateAtivoDTO.getId());
+        coluna.setAtivo(colunaUpdateAtivoDTO.getAtivo());
+        return colunaRepository.save(coluna);
+
+    }
+    @Transactional
+    public Coluna atualizarColunaBronze(ColunaUpdateBronzeDto coluna) {
+        Coluna colunaEncontrada = buscarPorId(coluna.getId());
+        colunaEncontrada.setChavePrimaria(coluna.getChavePrimaria());
+        colunaEncontrada.setValidado(coluna.getValidado());
+        colunaEncontrada.setComentario(coluna.getComentario());
+        return colunaRepository.save(colunaEncontrada);
     }
 }
 

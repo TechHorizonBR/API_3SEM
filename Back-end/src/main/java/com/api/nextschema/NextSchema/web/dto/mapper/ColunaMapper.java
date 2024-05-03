@@ -30,8 +30,12 @@ public class ColunaMapper {
         return new ModelMapper().map(coluna, ColunaResponseDto.class);
     }
 
-    public static ColunaUpdateValidadoDto toUpdateValidadoDto(Coluna coluna) {
-        return new ModelMapper().map(coluna, ColunaUpdateValidadoDto.class);
+    public static ColunaUpdateBronzeDto toUpdateValidadoDto(Coluna coluna) {
+        return new ModelMapper().map(coluna, ColunaUpdateBronzeDto.class);
     }
+    public static Coluna toColunaBronze(ColunaUpdateDto dto){
+        return new ModelMapper().map(dto, Coluna.class);
+    }
+
 }
 

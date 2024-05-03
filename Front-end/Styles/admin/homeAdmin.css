@@ -16,11 +16,39 @@
     align-items: center;
   }
 
+/* DADOS DO USUARIO */
+  .info_user {
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
 
+.user_name {
+  margin: 0;
+  align-self: flex-end;
+}
 
-  .conteudo {
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+}
+#user-icon{
+  margin-right: 4%;
+  margin-top: 13%;
+}
+/* FIM DADOS DO USUARIO */
+
+.conteudo {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.menu{
+display: flex;
+gap: 70px;
 }

@@ -1,4 +1,6 @@
 window.onload = () => {
+    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
+    info_usuario(userData)
     setCSVSeparator()
     generateTable()
 };
@@ -10,7 +12,38 @@ let exampleData = localStorage.getItem("dados1");
 let id_metadata = parseInt(localStorage.getItem("metadata_id"));
 
 let allResquests = 0;
+let roles = JSON.parse(localStorage.getItem("roles"))
+let userData = JSON.parse(localStorage.getItem("usuario"));
 
+let pagina_por_role = {
+    0: "../admin/homeAdmin.html",
+    1: "../landing_zone/homeUser.html",
+    2: "../bronze/bz_visualizar_metadata.html",
+}
+let nome_por_role= {
+    0: "Adminstrador",
+    1: "Landing_zone",
+    2: "Bronze",
+    3: "Silver",
+}
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
+function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
+    let table = document.querySelector(".metadatas");
+
+    for (let chave in roles) {
+        enum_role = roles[chave]
+        let rota = pagina_por_role[enum_role];
+        let nome = nome_por_role[enum_role];
+        
+        var listar_metadata = `
+            <a href="${rota}">${nome}</a>
+        `;
+
+        table.insertAdjacentHTML("beforeend", listar_metadata);
+    }
+}
 function setCSVSeparator(){
     let dados_string = dados.toString();
 
@@ -29,19 +62,20 @@ function generateTable(){
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <tr>
-        <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-        <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
-        <td>${exampleData[x]}</td>
-        <td>
-        <select class="inputs select-custom" id="select${x}">
-        <option value="string">Texto</option>
-        <option value="float">Número decimal</option>
-        <option value="int">Número inteiro</option>
-        <option value="boolean">Verdadeiro/Falso</option>
-        <option value="char">Caracter Único (Ex: M ou F)</option>
-        </select>
-        </td>
-        <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
+            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
+            <td><input type="text" class="inputs" id="input-text${x}" value="${dados[x]}"></td>
+            <td>${exampleData[x]}</td>
+            <td>
+                <select class="inputs select-custom" id="select${x}">
+                    <option value="string">Texto</option>
+                    <option value="float">Número decimal</option>
+                    <option value="int">Número inteiro</option>
+                    <option value="boolean">Verdadeiro/Falso</option>
+                    <option value="char">Caracter Único (Ex: M ou F)</option>
+                    <option value="date">Date</option>
+                </select>
+            </td>
+            <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
@@ -71,29 +105,35 @@ function validation() {
 }
 
 function getData(dados) {
+    let allData = []
     for(let y = 0; y < dados.length; y++){
-        let checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
-        let inputsTextsValues = document.getElementById(`input-text${y}`).value;
-        let selectsValues = document.getElementById(`select${y}`).value;
-        let descValues = document.getElementById(`desc${y}`).value;
-
-        sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, id_metadata)
-    }
-}
-
-async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, id_metadata) {
-    try{
-        let newColuna = {
-            nome: inputsTextsValues,
-            tipo: selectsValues,
-            restricao: checkBoxesValues.toString(),
-            descricao: descValues,
+        allData.push({
+            nome: document.getElementById(`input-text${y}`).value,
+            tipo: document.getElementById(`select${y}`).value,
+            restricao: (document.getElementById(`checkbox${y}`).checked).toString(),
+            descricao: document.getElementById(`desc${y}`).value,
             metadata: {
                 id: id_metadata
             }
-        }
+        })
+    }
+    sendData(allData)
+}
 
-        let response = await axios.post("http://localhost:8080/colunas", newColuna);
+async function sendData(allData) {
+    try{
+        // let newColuna = {
+        //     nome: inputsTextsValues,
+        //     tipo: selectsValues,
+        //     restricao: checkBoxesValues.toString(),
+        //     descricao: descValues,
+        //     metadata: {
+        //         id: id_metadata
+        //     }
+        // }
+        console.log(allData);
+
+        let response = await axios.post("http://localhost:8080/colunas", allData);
         console.log(response);
 
         allResquests++;
@@ -132,6 +172,9 @@ function newSuccessPrompt(){
 
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
+        localStorage.removeItem('metadata_id');
+        localStorage.removeItem('cabecalho');
+        localStorage.removeItem('dados1');
         window.location.href = "homeUser.html"
     });
 }

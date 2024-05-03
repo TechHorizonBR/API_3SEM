@@ -66,4 +66,13 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Campos inválidos.", result));
     }
 
+    @ExceptionHandler(org.springframework.web.multipart.MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorMessage> maxUploadExceededException(org.springframework.web.multipart.MaxUploadSizeExceededException ex, HttpServletRequest request){
+        log.error("API ERROR: ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, "O tamanho permitido do arquivo no upload é no máximo de 500MB."));
+    }
+
 }

@@ -1,17 +1,21 @@
-let metadata_id = localStorage.getItem("metadata");
-metadata_id = JSON.parse(metadata_id);
-dados_Json = "";
+window.onload = () => {
+    getAllData();
+    updateNameUsuario()
+};
+
+let userData = JSON.parse(localStorage.getItem("usuario"));
+let metadata = JSON.parse(localStorage.getItem("metadata"));
+
+let userId = userData.id;
+let userName = userData.nome;
+
 var isEdit = false;
 
 async function getAllData() {
     try {
-        const sendId = {
-            id: metadata_id.id,
-        };
-        let response = await axios.post(
-            "http://localhost:8080/colunas/metadata",
-            sendId
-        );
+
+        let response = await axios.get(`http://localhost:8080/colunas/metadata/${metadata}`);
+
         dados_Json = response.data;
         popularTabela();
     } catch (error) {
@@ -65,12 +69,15 @@ function popularTabela() {
     let tabela = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
     btn_atualizar.style = "visibility: hidden;";
+
     tabela.innerHTML = "";
+
     let titulo = document.getElementById("title");
-    titulo.innerHTML = "Visualização do metadata " + metadata_id.name;
+    titulo.innerHTML = "Visualização do metadata " + metadata.name;
 
     for (let x = dados_Json.length - 1; x >= 0; x--) {
         let linha = tabela.insertRow();
+
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         if (dados_Json[x].restricao === "true") {
@@ -82,11 +89,12 @@ function popularTabela() {
         checkbox.style = "pointer-events: none; cursor: not-allowed;";
 
         let celulaCheck = linha.insertCell(0);
-        let celulaNome = linha.insertCell(1);
-        let celulaDado = linha.insertCell(2);
-        let celulaDesc = linha.insertCell(3);
         celulaCheck.appendChild(checkbox);
+
+        let celulaNome = linha.insertCell(1);
         celulaNome.innerHTML = dados_Json[x].nome;
+
+        let celulaDado = linha.insertCell(2);
         if (dados_Json[x].tipo === "boolean") {
             celulaDado.innerHTML = "Verdadeiro/Falso";
         } else if (dados_Json[x].tipo === "string") {
@@ -95,20 +103,24 @@ function popularTabela() {
             celulaDado.innerHTML = "Número Inteiro";
         } else if (dados_Json[x].tipo === "float") {
             celulaDado.innerHTML = "Número Decimal";
-        } else {
+        } else if (dados_Json[x].tipo === "char") {
             celulaDado.innerHTML = "Carácter Único";
+        } else {
+            celulaDado.innerHTML = "Data";
         }
 
-        // celulaDado.innerHTML = dados_Json[x].tipo;
+        let celulaDesc = linha.insertCell(3);
         celulaDesc.innerHTML = dados_Json[x].descricao;
+
+        let celulaStatus = linha.insertCell(4);
+        celulaStatus.innerHTML = dados_Json[x].validado;
+
+        let celulaFeedback = linha.insertCell(5);
+        celulaFeedback.innerHTML = dados_Json[x].comentario;
 
         celulaCheck.classList.add("tab_check");
     }
 }
-
-window.onload = () => {
-    getAllData();
-};
 
 function editData(){
     let tabela_atual = document.getElementById("body_dados");
@@ -147,6 +159,7 @@ function editData(){
                 selectedOption[2] = "";
                 selectedOption[3] = "";
                 selectedOption[4] = "";
+                selectedOption[5] = "";
         }
 
         let dadosTable = `
@@ -160,6 +173,7 @@ function editData(){
                   <option value="int" ${selectedOption[2]}>Número inteiro</option>
                   <option value="boolean" ${selectedOption[3]}>Verdadeiro/Falso</option>
                   <option value="char" ${selectedOption[4]}>Caracter Único (Ex: M ou F)</option>
+                  <option value="date" ${selectedOption[5]}>Data</option>
               </select>
           </td>
           <td><textarea name="desc" id="desc${x}" class="desc_input">${dados_Json[x].descricao}</textarea></td>
@@ -180,7 +194,6 @@ document.getElementById("btn_pen").addEventListener("click", () => {
         popularTabela();
         isEdit =  false;
     }
-    
 });
 
 function newPrompt(){
@@ -251,4 +264,8 @@ function newFailedPrompt(errors){
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+}
+
+function updateNameUsuario(){
+    document.getElementById("username").innerHTML = userName
 }

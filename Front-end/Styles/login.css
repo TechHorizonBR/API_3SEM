@@ -89,3 +89,55 @@ body{
     border-radius: 1em;
     outline: none;
 }
+.back_prompt {
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.9px);
+    -webkit-backdrop-filter: blur(2.9px);
+    position: absolute;
+    width: 100%;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.prompt {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btns {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.btn_p {
+    min-width: 72px;
+    height: 40px;
+    font-size: larger;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #006a8f;
+}
+
+.prompt {
+    animation: popupAppear 0.5s normal;
+}

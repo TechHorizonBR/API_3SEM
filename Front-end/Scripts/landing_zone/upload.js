@@ -1,3 +1,7 @@
+window.onload = function() {
+    updateNameUsuario()
+};
+
 let cabecalho = false;
 let arquivoSelec;
 let nomeData = "";
@@ -6,12 +10,18 @@ let reqSuccess = {
     csvReq:false,
 }
 
+let usuario = localStorage.getItem("usuario");
+let userData = JSON.parse(usuario);
+
+let userId = userData.id;
+let userName = userData.nome;
+
 async function sendMetadata(id_empresa){
     try{
         const newMetadata = {
             nome: nomeData,
             usuario: {
-                id: 1 //arrumar quando criar autenticação
+                id: userId
             },
             empresa: {
                 id: id_empresa
@@ -26,7 +36,6 @@ async function sendMetadata(id_empresa){
             }
         });
 
-        console.log("DATA EM UPLOAD:",res.data);
         localStorage.setItem("metadata_id", res.data.id);
         if(res.status === 200){
             reqSuccess.mdReq = true;
@@ -50,13 +59,11 @@ async function sendCSV(file){
             }
         });
 
-        //Adicionar no LocalStorage
         localStorage.setItem('cabecalho', res.data[0]);
         for(let x = 1; x < res.data.length; x++){
             localStorage.setItem(`dados${x}`, res.data[x]);
         }
 
-        // console.log(res);
         if(res.status === 200){
             reqSuccess.csvReq = true;
         }else{
@@ -88,6 +95,12 @@ function firstPrompt(){
 
     var firstPrompt = `
     <div class="prompt" id="prompt">
+        <div class="button_wrapper"> <!-- Envolve o botão com uma div -->
+        <button class="button_close" id="fechar">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        </div>
+
         <span class="prompt_text">Nome do esquema:</span>
         <input type="text" class="input_data" id="input_data" placeholder="Digite aqui...">
         <span class="prompt_text">Nome da empresa:</span>
@@ -98,7 +111,7 @@ function firstPrompt(){
             <button class="btn_p" id="btn_cont">Próximo</button>
         </div>
     </div>
-    `
+        `
 
     document.body.insertAdjacentHTML('beforeend', back);
     let var_back = document.getElementById("back_prompt");
@@ -112,17 +125,32 @@ function firstPrompt(){
         nomeData = prompt_name.value;
         if(nomeData === ""){
             alert("Digite um nome.");
+        }else if(id_empresa === ""){
+            alert("Selecione uma Empresa");
         }else{
             prompt.remove();
             document.getElementById("back_prompt").remove();
             validation(nomeData, id_empresa);
         }
     })
+
+    botao_fechar();
+}
+
+function botao_fechar(){
+    let botao_fechar = document.getElementById("fechar");
+    let promptElement = document.getElementById("prompt");
+    let backPromptElement = document.getElementById("back_prompt");
+
+    botao_fechar.addEventListener("click", () =>{
+        promptElement.remove();
+        backPromptElement.remove()
+    })
 }
 
 async function getEmpresas() {
     try{
-        let response = await axios.get("http://localhost:8080/empresas");
+        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
         let empresas = response.data
         console.log(response.data)
 
@@ -149,7 +177,7 @@ function listEmpresas(empresas){
 }
 
 function validation(nomeData, id_empresa) {
-    const regex = /^[a-zA-Z0-9_]*$/;
+    const regex = /^[a-zA-Z0-9_]{6,50}$/;
 
     if (regex.test(nomeData)) {
         secondPrompt(id_empresa)
@@ -160,6 +188,7 @@ function validation(nomeData, id_empresa) {
 }
 
 function secondPrompt(id_empresa){
+
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -167,6 +196,11 @@ function secondPrompt(id_empresa){
 
     var secondPrompt = `
     <div class="prompt" id="prompt">
+        <div class="button_wrapper"> <!-- Envolve o botão com uma div -->
+            <button class="button_close" id="fechar">
+            <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
         <span class="prompt_text">O CSV contém cabeçalho?</span>
         <div class="btns">
             <button class="btn_p" id="btn_yes">Sim</button>
@@ -185,30 +219,30 @@ function secondPrompt(id_empresa){
         prompt.remove();
         var_back.remove();
         sendMetadata(id_empresa);
-    })
+        })
 
-    document.getElementById("btn_no").addEventListener("click", ()=>{
-        cabecalho = false;
-        prompt.remove();
-        var_back.remove();
-        sendMetadata(id_empresa);
-    })
-}
+        document.getElementById("btn_no").addEventListener("click", ()=>{
+            cabecalho = false;
+            prompt.remove();
+            var_back.remove();
+            sendMetadata(id_empresa);
+        })
+        botao_fechar();
+    }
 
 function newFailedPrompt(){
     var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
+    <div class="back_prompt" id="back_prompt"></div>
     `
 
     var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
-            <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
+    <div class="prompt" id="prompt">
+        <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
+        <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+        <div class="btns">
+            <button class="btn_p" id="btn_ok">OK</button>
         </div>
+    </div>
     `
 
     document.body.insertAdjacentHTML('beforeend', back);
@@ -219,4 +253,8 @@ function newFailedPrompt(){
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+}
+
+function updateNameUsuario(){
+    document.getElementById("username").innerHTML = userName
 }

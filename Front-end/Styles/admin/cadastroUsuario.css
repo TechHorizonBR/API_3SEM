@@ -209,6 +209,36 @@ margin-bottom: 30px;
 }
 
 
+.menu{
+    display: flex;
+    gap: 70px;
+}
+
+/* DADOS DO USUARIO */
+.info_user {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
+
+.user_name {
+    margin: 0;
+    align-self: flex-end;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+}
+#user-icon{
+  margin-right: 4%;
+  margin-top: 13%;
+}
+/* FIM DADOS DO USUARIO */
+
 @media screen and (max-width: 768px) {
     .conteudoCadastro{
         background-color: black;
