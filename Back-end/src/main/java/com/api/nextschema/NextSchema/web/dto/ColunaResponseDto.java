@@ -17,4 +17,5 @@ public class ColunaResponseDto {
     private Boolean chavePrimaria;
     private Boolean ativo;
     private Validado validado;
+    private String comentario;
 }

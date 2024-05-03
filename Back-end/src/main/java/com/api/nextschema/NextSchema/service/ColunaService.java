@@ -24,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColunaService {
     private final ColunaRepository colunaRepository;
+    private final MetadataService metadataService;
 
     @Transactional
     public Coluna criarColuna(Coluna coluna){
@@ -44,8 +45,9 @@ public class ColunaService {
         return colunaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
     }
     @Transactional(readOnly = true)
-    public List<Coluna> buscarPorMetadata(Metadata metadata){
+    public List<Coluna> buscarPorMetadata(Long id){
         try {
+            Metadata metadata = metadataService.findbyId(id);
             return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
@@ -70,7 +72,7 @@ public class ColunaService {
         return colunaRepository.save(coluna);
     }
     @Transactional
-    public Coluna validarColuna(ColunaUpdateValidadoDto colunaUpdateValidadoDto) {
+    public Coluna validarColuna(ColunaUpdateBronzeDto colunaUpdateValidadoDto) {
         Coluna colunaBuscada = buscarPorId(colunaUpdateValidadoDto.getId());
         colunaBuscada.setValidado(colunaUpdateValidadoDto.getValidado());
         return colunaRepository.save(colunaBuscada);
@@ -81,6 +83,14 @@ public class ColunaService {
         coluna.setAtivo(colunaUpdateAtivoDTO.getAtivo());
         return colunaRepository.save(coluna);
 
+    }
+    @Transactional
+    public Coluna atualizarColunaBronze(ColunaUpdateBronzeDto coluna) {
+        Coluna colunaEncontrada = buscarPorId(coluna.getId());
+        colunaEncontrada.setChavePrimaria(coluna.getChavePrimaria());
+        colunaEncontrada.setValidado(coluna.getValidado());
+        colunaEncontrada.setComentario(coluna.getComentario());
+        return colunaRepository.save(colunaEncontrada);
     }
 }
 
