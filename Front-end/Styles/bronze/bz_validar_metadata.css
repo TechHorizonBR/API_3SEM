@@ -281,3 +281,28 @@ select:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
+/* DADOS DO USUARIO */
+.info_user {
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
+
+.user_name {
+  margin: 0;
+  align-self: flex-end;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+    width: 150px;
+}
+#user-icon{
+  margin-right: 4%;
+  margin-top: 11%;
+}
+/* FIM DADOS DO USUARIO */
