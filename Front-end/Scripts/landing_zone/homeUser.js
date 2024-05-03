@@ -1,18 +1,12 @@
 
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
-    getEmpresas();
     info_usuario(userData)
+    getEmpresas();
 };
-let roles_json = localStorage.getItem("roles");
-roles = JSON.parse(roles_json)
-console.log(roles)
-let usuario = localStorage.getItem("usuario");
-let userData = JSON.parse(usuario);
+let roles = JSON.parse(localStorage.getItem("roles"))
+let userData = JSON.parse(localStorage.getItem("usuario"));
 
-function info_usuario(userData){
-    namespace = document.getElementById("user_name").textContent = userData.nome
-}
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
     1: "../landing_zone/homeUser.html",
@@ -24,11 +18,9 @@ let nome_por_role= {
     2: "Bronze",
     3: "Silver",
 }
-let userId = userData.id;
-let userName = userData.nome;
-
-const searchButton = document.querySelector("#btn-search");
-
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
@@ -44,6 +36,11 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         table.insertAdjacentHTML("beforeend", listar_metadata);
     }
 }
+let userId = userData.id;
+let userName = userData.nome;
+
+const searchButton = document.querySelector("#btn-search");
+
 
 
 async function getEmpresas() {
