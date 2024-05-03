@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,4 +19,5 @@ public class UsuarioResponseDTO {
     private Long id;
     private String nome;
     private String email;
+    private List<Role> roleUsuario;
 }
