@@ -2,6 +2,7 @@ bronzeData = "";
 columnsIds = [];
 metadata = "";
 let user = JSON.parse(localStorage.getItem("usuario"));
+met_selec = localStorage.getItem("metadata");
 
 window.onload = () => {
     updateNameUsuario();
@@ -13,50 +14,55 @@ function generateTable() {
     let table = document.getElementById("body_dados");
     table.innerHTML = "";
     for (let x = 0; x < bronzeData.length; x++) {
-        let tipo = "";
-        if (bronzeData[x].tipo === "boolean") {
-            tipo = "Verdadeiro/Falso";
-        } else if (bronzeData[x].tipo === "string") {
-            tipo = "Texto";
-        } else if (bronzeData[x].tipo === "int") {
-            tipo = "Número Inteiro";
-        } else if (bronzeData[x].tipo === "float") {
-            tipo = "Número Decimal";
-        } else {
-            tipo = "Carácter Único";
+        if(bronzeData[x].ativo !== false){
+            let tipo = "";
+            if (bronzeData[x].tipo === "boolean") {
+                tipo = "Verdadeiro/Falso";
+            } else if (bronzeData[x].tipo === "string") {
+                tipo = "Texto";
+            } else if (bronzeData[x].tipo === "int") {
+                tipo = "Número Inteiro";
+            } else if (bronzeData[x].tipo === "float") {
+                tipo = "Número Decimal";
+            } else if (bronzeData[x].tipo === "char"){
+                tipo = "Carácter Único";
+            }else{
+                tipo = "Data";
+            }
+            let checkboxChecked = bronzeData[x].chavePrimaria ? "checked" : "";
+            let dadosTable = `
+            <tr>
+                <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}" ${checkboxChecked}></td>
+                <td class="val_data" id="rest${x}">${
+                bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
+            }</td>
+                <td class="val_data">${bronzeData[x].nome}</td>
+                <td class="val_data">${tipo}</td>
+                <td class="val_desc">${bronzeData[x].descricao}</td>
+                <td class="val_data">
+                    <select id="valid_select_${x}">
+                        <option value="VALIDADO" ${
+                            bronzeData[x].validado === "VALIDADO" ? "selected" : ""
+                        }>Validado</option>
+                        <option value="INVALIDADO" ${
+                            bronzeData[x].validado === "INVALIDADO"
+                                ? "selected"
+                                : ""
+                        }>Invalidado</option>
+                        <option value="PENDENTE" ${
+                            bronzeData[x].validado === "PENDENTE" ? "selected" : ""
+                        }>Pendente</option>
+                    </select>
+                </td>
+                <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${bronzeData[x].comentario}</textarea></td>
+                <td class="btn_data">
+                    <button class="delete-btn" id="excluir" data-index="${x}">
+                        <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>
+                    </button>
+                </td>
+            </tr>`;
+            table.insertAdjacentHTML("afterbegin", dadosTable);
         }
-        let dadosTable = `
-        <tr>
-            <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}"></td>
-            <td class="val_data" id="rest${x}">${
-            bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
-        }</td>
-            <td class="val_data">${bronzeData[x].nome}</td>
-            <td class="val_data">${tipo}</td>
-            <td class="val_desc">${bronzeData[x].descricao}</td>
-            <td class="val_data">
-                <select>
-                    <option value="VALIDADO" ${
-                        bronzeData[x].validado === "VALIDADO" ? "selected" : ""
-                    }>Validado</option>
-                    <option value="INVALIDADO" ${
-                        bronzeData[x].validado === "INVALIDADO"
-                            ? "selected"
-                            : ""
-                    }>Invalidado</option>
-                    <option value="PENDENTE" ${
-                        bronzeData[x].validado === "PENDENTE" ? "selected" : ""
-                    }>Pendente</option>
-                </select>
-            </td>
-            <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
-            <td class="btn_data">
-                <button class="delete-btn" id="excluir" data-index="${x}">
-                    <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>
-                </button>
-            </td>
-        </tr>`;
-        table.insertAdjacentHTML("afterbegin", dadosTable);
     }
 
     table.addEventListener("click", (e) => {
@@ -92,16 +98,19 @@ function updateNameUsuario() {
 }
 
 document.getElementById("save").addEventListener("click", () => {
-    alert("OLA");
     sendData();
 });
 
 async function deleteColumn(id) {
     try {
-        let response = await axios.delete(
-            `http://localhost:8080/colunas/${id}`
+        let col_delete = {
+            id:id,
+            ativo:false
+        }
+        let response = await axios.patch(
+            `http://localhost:8080/colunas/update/ativo`,
+            col_delete
         );
-        console.log(response.status);
         getBronzeData();
     } catch (err) {
         console.error(err);
@@ -115,7 +124,6 @@ async function getMetadata() {
         document.getElementById(
             "title"
         ).innerText = `Validacao do Esquema ${metadata.nome}`;
-        console.log(metadata);
     } catch (error) {
         console.error(error);
     }
@@ -124,19 +132,15 @@ async function getMetadata() {
 async function getBronzeData() {
     try {
         const sendId = {
-            id: 2,
+            id: met_selec,
         };
-        let response = await axios.post(
-            "http://localhost:8080/colunas/metadata",
-            sendId
+        let response = await axios.get(
+            `http://localhost:8080/colunas/metadata/${sendId.id}`
         );
         bronzeData = response.data;
-        console.log(bronzeData);
         for (let coluna of bronzeData) {
             columnsIds.push(coluna.id);
         }
-
-        console.log(columnsIds);
         generateTable();
     } catch (error) {
         console.error(error);
@@ -147,28 +151,27 @@ async function sendData(obj) {
     try {
         let dados = [];
         for (let y = 0; y < bronzeData.length; y++) {
-            dados.push({
-                chavePrimaria: document.getElementById(`checkbox${y}`).checked,
-                restricao: bronzeData[y].restricao,
-                nome: bronzeData[y].nome,
-                tipo: bronzeData[y].tipo,
-                descricao: bronzeData[y].descricao,
-                validado: document.getElementById(`checkbox_v${y}`).checked,
-                comentarioBronze: document.getElementById(`desc${y}`).value,
-            });
+            if(bronzeData[y].ativo !== false){
+                dados.push({
+                    id: bronzeData[y].id,
+                    chavePrimaria: document.getElementById(`checkbox${y}`).checked,
+                    validado: document.getElementById(`valid_select_${y}`).value,
+                    comentario: document.getElementById(`desc${y}`).value,
+                });
+            }
         }
 
         console.log(dados);
-        // let response = await axios.post(
-        //     "http://localhost:8080/colunas",
-        //     newColuna
-        // );
+        let response = await axios.put(
+            "http://localhost:8080/colunas/update/bronze",
+            dados
+        );
 
-        // if (response.status === 201) {
-        //     newSuccessPrompt();
-        // } else {
-        //     alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
-        // }
+        if (response.status === 200) {
+            newSuccessPrompt();
+        } else {
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+        }
     } catch (error) {
         console.error(error);
     }
@@ -182,7 +185,7 @@ function newSuccessPrompt() {
 
     var successPrompt = `
         <div class="prompt" id="prompt">
-            <span class="prompt_text">Sucesso! Seu esquema foi criado.</span>
+            <span class="prompt_text">Sucesso! Seu esquema foi Atualizado.</span>
             <div class="btns">
                 <button class="btn_p" id="btn_ok">OK</button>
             </div>
@@ -195,7 +198,7 @@ function newSuccessPrompt() {
 
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
-        window.location.href = "homeUser.html";
+        window.location.href = "bz_visualizar_metadata.html";
     });
 }
 
