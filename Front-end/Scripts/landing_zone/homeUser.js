@@ -2,13 +2,17 @@
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     getEmpresas();
-    updateNameUsuario()
+    info_usuario(userData)
 };
 let roles_json = localStorage.getItem("roles");
 roles = JSON.parse(roles_json)
 console.log(roles)
 let usuario = localStorage.getItem("usuario");
 let userData = JSON.parse(usuario);
+
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
     1: "../landing_zone/homeUser.html",
@@ -127,8 +131,4 @@ console.log(metadata)
 
 localStorage.setItem("metadata", JSON.stringify(metadata));
 window.location.href = "lz_resultado.html";
-}
-
-function updateNameUsuario(){
-    document.getElementById("username").innerHTML = userName
 }
