@@ -36,6 +36,7 @@ public class ColunaService {
 
         return colunaRepository.findAll();
     }
+    @Transactional
     public void deleteporId(Long id){
         Coluna coluna = buscarPorId(id);
         colunaRepository.deleteById(id);
@@ -92,5 +93,7 @@ public class ColunaService {
         colunaEncontrada.setComentario(coluna.getComentario());
         return colunaRepository.save(colunaEncontrada);
     }
+
+
 }
 
