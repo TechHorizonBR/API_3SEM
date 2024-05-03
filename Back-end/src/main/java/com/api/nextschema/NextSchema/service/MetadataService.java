@@ -40,9 +40,10 @@ public class MetadataService {
         Metadata metadata = findbyId(id);
         colunaService.deleteByMetadata(metadata);
         metadataRepository.deleteById(id);
+
     }
     @Transactional(readOnly = true)
-    public List<Metadata >buscarPorEmpresa(Long id) {
+    public List<Metadata>buscarPorEmpresa(Long id) {
         Empresa empresa = empresaService.buscarId(id);
         return metadataRepository.findByEmpresa(empresa);
     }
