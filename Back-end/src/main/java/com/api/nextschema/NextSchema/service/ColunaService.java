@@ -93,7 +93,10 @@ public class ColunaService {
         colunaEncontrada.setComentario(coluna.getComentario());
         return colunaRepository.save(colunaEncontrada);
     }
-
+    @Transactional
+    public void deleteByMetadata(Metadata metadata){
+        colunaRepository.deleteByMetadata(metadata);
+    }
 
 }
 
