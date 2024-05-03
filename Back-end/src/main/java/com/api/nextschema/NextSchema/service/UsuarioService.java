@@ -1,14 +1,13 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Empresa;
-import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
 import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
-import com.api.nextschema.NextSchema.repository.UsuarioRoleAssociationRepository;
+import com.api.nextschema.NextSchema.service.UsuarioEmpresaService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +28,10 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    UsuarioRoleAssociationRepository usuarioRoleAssociationRepository;
+    UsuarioRoleAssociationService usuarioRoleAssociationService;
+
     @Autowired
-    private UsuarioRoleAssociationService usuarioRoleAssociationService;
+    EmpresaService empresaService;
 
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
@@ -67,18 +67,18 @@ public class UsuarioService {
 
         List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
         List<Long> empresaList = usuarioCreateDTO.getListEmpresa();
-        // Aqui vai vincular o usuário em todas as empresas da lista
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(usuarioCreateDTO.getEmail());
         novoUsuario.setNome(usuarioCreateDTO.getNome());
         novoUsuario.setSenha(usuarioCreateDTO.getSenha());
-
         novoUsuario = usuarioRepository.save(novoUsuario);
+
         usuarioRoleAssociationService.saveAssociation(novoUsuario.getId(), roleList);
-
-
-        return UsuarioMapper.toResponseDTO(novoUsuario);
+        empresaService.criarRelacao(novoUsuario, empresaList);
+        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(novoUsuario);
+        responseDTO.setRoleUsuario(roleList);
+        return  responseDTO;
     }
 
     public void deletarUsuario(Long idUsuario) {

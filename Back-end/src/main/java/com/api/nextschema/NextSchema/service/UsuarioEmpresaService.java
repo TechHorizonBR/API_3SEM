@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.UsuarioEmpresaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class UsuarioEmpresaService {
     public UsuarioEmpresa criarRegistro (UsuarioEmpresa usuarioEmpresa) {
         return usuarioEmpresaRepository.save(usuarioEmpresa);
     }
+
+
     @Transactional(readOnly = false)
     public void deleteRegistroPorId (Long id) {
         usuarioEmpresaRepository.deleteById(id);
@@ -40,12 +43,12 @@ public class UsuarioEmpresaService {
 
     @Transactional(readOnly = true)
     public List<Long> buscarEmpresasPorUsuario (Long idUsuario) {
-        List<UsuarioEmpresa> buscados = usuarioEmpresaRepository.findByUsuario(usuarioService.buscarPorId(idUsuario));
-        List<Long> empresasIds = new LinkedList<>();
+       List<UsuarioEmpresa> buscados = usuarioEmpresaRepository.findByUsuario(usuarioService.buscarPorId(idUsuario));
+       List<Long> empresasIds = new LinkedList<>();
 
-        for(UsuarioEmpresa ue : buscados){
+       for(UsuarioEmpresa ue : buscados){
             empresasIds.add(ue.getEmpresa().getId());
-        }
+       }
         return empresasIds;
     }
 }
