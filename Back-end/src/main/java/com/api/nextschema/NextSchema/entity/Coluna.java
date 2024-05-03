@@ -31,5 +31,6 @@ public class Coluna {
     private Boolean chavePrimaria;
     @Column(name = "validado")
     private Validado validado = Validado.PENDENTE;
+
 }
 
