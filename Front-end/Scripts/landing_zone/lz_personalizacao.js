@@ -72,29 +72,35 @@ function validation() {
 }
 
 function getData(dados) {
+    let allData = []
     for(let y = 0; y < dados.length; y++){
-        let checkBoxesValues = document.getElementById(`checkbox${y}`).checked;
-        let inputsTextsValues = document.getElementById(`input-text${y}`).value;
-        let selectsValues = document.getElementById(`select${y}`).value;
-        let descValues = document.getElementById(`desc${y}`).value;
-
-        sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, id_metadata)
-    }
-}
-
-async function sendData(checkBoxesValues, inputsTextsValues, selectsValues, descValues, id_metadata) {
-    try{
-        let newColuna = {
-            nome: inputsTextsValues,
-            tipo: selectsValues,
-            restricao: checkBoxesValues.toString(),
-            descricao: descValues,
+        allData.push({
+            nome: document.getElementById(`input-text${y}`).value,
+            tipo: document.getElementById(`select${y}`).value,
+            restricao: (document.getElementById(`checkbox${y}`).checked).toString(),
+            descricao: document.getElementById(`desc${y}`).value,
             metadata: {
                 id: id_metadata
             }
-        }
+        })
+    }
+    sendData(allData)
+}
 
-        let response = await axios.post("http://localhost:8080/colunas", newColuna);
+async function sendData(allData) {
+    try{
+        // let newColuna = {
+        //     nome: inputsTextsValues,
+        //     tipo: selectsValues,
+        //     restricao: checkBoxesValues.toString(),
+        //     descricao: descValues,
+        //     metadata: {
+        //         id: id_metadata
+        //     }
+        // }
+        console.log(allData);
+
+        let response = await axios.post("http://localhost:8080/colunas", allData);
         console.log(response);
 
         allResquests++;
