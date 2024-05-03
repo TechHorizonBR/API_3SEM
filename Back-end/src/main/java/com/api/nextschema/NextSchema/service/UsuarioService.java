@@ -8,18 +8,16 @@ import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
-import com.api.nextschema.NextSchema.repository.UsuarioRoleAssociationRepository;
+import com.api.nextschema.NextSchema.service.UsuarioEmpresaService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -29,9 +27,10 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    UsuarioRoleAssociationRepository usuarioRoleAssociationRepository;
+    UsuarioRoleAssociationService usuarioRoleAssociationService;
+
     @Autowired
-    private UsuarioRoleAssociationService usuarioRoleAssociationService;
+    EmpresaService empresaService;
 
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
@@ -67,18 +66,18 @@ public class UsuarioService {
 
         List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
         List<Long> empresaList = usuarioCreateDTO.getListEmpresa();
-        // Aqui vai vincular o usuário em todas as empresas da lista
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(usuarioCreateDTO.getEmail());
         novoUsuario.setNome(usuarioCreateDTO.getNome());
         novoUsuario.setSenha(usuarioCreateDTO.getSenha());
-
         novoUsuario = usuarioRepository.save(novoUsuario);
+
         usuarioRoleAssociationService.saveAssociation(novoUsuario.getId(), roleList);
-
-
-        return UsuarioMapper.toResponseDTO(novoUsuario);
+        empresaService.criarRelacao(novoUsuario, empresaList);
+        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(novoUsuario);
+        responseDTO.setRoleUsuario(roleList);
+        return  responseDTO;
     }
 
     public void deletarUsuario(Long idUsuario) {
@@ -123,7 +122,15 @@ public class UsuarioService {
         if (!usuario.getSenha().equals(senha)) {
             throw new WrongCredentialsException("Credenciais inválidas.");
         }
+        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(usuario);
 
-        return UsuarioMapper.toResponseDTO(usuario);
+        List<UsuarioRoleAssociation> association = usuarioRoleAssociationService.buscarRole(usuario);
+
+        List<Role> roleList = new LinkedList<>();
+        for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
+            roleList.add(usuarioRoleAssociation.getRole());
+        }
+        responseDTO.setRoleUsuario(roleList);
+        return responseDTO;
     }
 }

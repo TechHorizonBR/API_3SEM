@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
 import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.repository.UsuarioRoleAssociationRepository;
@@ -20,5 +21,10 @@ public class UsuarioRoleAssociationService {
             usuarioRoleAssociation.setRole(role);
             usuarioRoleAssociationRepository.save(usuarioRoleAssociation);
         }
+    }
+
+    public List<UsuarioRoleAssociation> buscarRole(Usuario usuario){
+        List<UsuarioRoleAssociation> associations = usuarioRoleAssociationRepository.findAllByIdUsuario(usuario.getId());
+        return associations;
     }
 }
