@@ -113,7 +113,7 @@ function generateList(metadatas, empresas, selectValue) {
                         <i class="fa-solid fa-trash" id="trash"></i>
                         <button class="cadastrarUsuario" id="trash-metadata" onclick="confirmarExclusao(${metadatas[x].id})">EXCLUIR</button>
                         <i class="fa-solid fa-eye" id="view_eye"></i>
-                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata(${metadatas[x].id})">VISUALIZAR</button>
+                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata(${metadatas[x].id}, '${metadatas[x].nome}')"v>VISUALIZAR</button>
                     </div>
                 </div>
             `
@@ -122,10 +122,8 @@ function generateList(metadatas, empresas, selectValue) {
     }
 }
 
-function viewMetadata(metadata){
-    console.log(metadata)
-
-    localStorage.setItem("metadata", JSON.stringify(metadata));
+function viewMetadata(metadata_id, metadata_nome) {
+    localStorage.setItem("metadata", JSON.stringify({ id: metadata_id, nome: metadata_nome }));
     window.location.href = "lz_resultado.html";
 }
 
