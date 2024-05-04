@@ -38,8 +38,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 let userId = userData.id;
 let userName = userData.nome;
 
-const searchButton = document.querySelector("#btn-search");
-
 async function getEmpresas() {
     try{
         let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
@@ -68,22 +66,17 @@ function generateOptions(empresas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        getMetadata(selectValue);
+        getMetadata(selectValue, empresas);
     });
 };
 
-searchButton.addEventListener("click", function () {
-    let selectValue = document.getElementById(`select-filter`).value;
-    getMetadata(selectValue);
-});
-
-async function getMetadata(selectValue) {
+async function getMetadata(selectValue, empresas) {
     try{
         let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
         let metadatas = response.data;
 
         if(response.status === 200) {
-            generateList(metadatas, selectValue);
+            generateList(metadatas, empresas, selectValue);
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
     }
@@ -94,7 +87,7 @@ async function getMetadata(selectValue) {
     }
 };
 
-function generateList(metadatas, selectValue) {
+function generateList(metadatas, empresas, selectValue) {
     let listMetadatas = document.getElementById("listMetadatas");
 
     listMetadatas.innerHTML = '';
@@ -104,6 +97,8 @@ function generateList(metadatas, selectValue) {
         listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
     }else{
         for(let x = 0; x < metadatas.length; x++){
+            let selectedEmpresa = empresas.find(emp => emp.id == selectValue);
+
             let metadatasList = `
                 <div id="metadatas">
                     <div class="line">
@@ -112,7 +107,7 @@ function generateList(metadatas, selectValue) {
                     </div>
                     <div class="line">
                         <div class="base-name">Empresa: </div>
-                        <div>${selectValue}</div>
+                        <div>${selectedEmpresa ? selectedEmpresa.nome : 'Nome da empresa não encontrado'}</div>
                     </div>
                     <div class="viewMetadata">
                         <i class="fa-solid fa-trash" id="trash"></i>
