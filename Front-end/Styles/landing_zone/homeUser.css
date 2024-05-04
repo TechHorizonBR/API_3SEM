@@ -73,12 +73,39 @@ main{
     margin: 5% 10% 3% 10%;
 }
 
+#btn-search{
+    margin: 1%;
+    border: none;
+    background-color: var(--bg-color);
+}
+
+#btn-search:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
 #view-metadata{
     color: #0CF030;
     border: none;
     background-color: #FFF;
     cursor: pointer;
     font-weight: bold;
+}
+
+#view_eye {
+    color: #0CF030;
+}
+
+#trash-metadata{
+    color: #f00c0c;
+    border: none;
+    background-color: #FFF;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#trash {
+    color: #f00c0c;
 }
 
 #metadatas{
@@ -109,21 +136,6 @@ main{
     overflow-y: auto;
 }
 
-#view_eye {
-    color: #0CF030;
-}
-
-#btn-search{
-    margin: 1%;
-    border: none;
-    background-color: var(--bg-color);
-}
-
-#btn-search:hover{
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
 /* DADOS DO USUARIO */
 .info_user {
     justify-content: flex-start;
@@ -152,4 +164,68 @@ main{
 .menu{
     display: flex;
     gap: 70px;
+}
+
+.back_prompt {
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.9px);
+    -webkit-backdrop-filter: blur(2.9px);
+    position: absolute;
+    width: 100%;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.prompt {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btns {
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.btn_p {
+    min-width: 72px;
+    height: 40px;
+    font-size: larger;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #006a8f;
+}
+
+.prompt {
+    animation: popupAppear 0.5s normal;
+}
+
+@keyframes popupAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
     }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

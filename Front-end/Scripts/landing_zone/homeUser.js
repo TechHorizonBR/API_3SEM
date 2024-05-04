@@ -41,8 +41,6 @@ let userName = userData.nome;
 
 const searchButton = document.querySelector("#btn-search");
 
-
-
 async function getEmpresas() {
     try{
         let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
@@ -113,6 +111,8 @@ function generateList(metadatas, selectValue) {
                         <div>${selectValue}</div>
                     </div>
                     <div class="viewMetadata">
+                        <i class="fa-solid fa-trash" id="trash"></i>
+                        <button class="cadastrarUsuario" id="trash-metadata" onclick="confirmarExclusao(${metadatas[x].id})">EXCLUIR</button>
                         <i class="fa-solid fa-eye" id="view_eye"></i>
                         <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata(${metadatas[x].id})">VISUALIZAR</button>
                     </div>
@@ -123,9 +123,84 @@ function generateList(metadatas, selectValue) {
     }
 }
 
+function confirmarExclusao(metadata){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var successPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text">Deseja excluir o metadata selecionado?</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_yes">Sim</button>
+                <button class="btn_p" id="btn_no">Não</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', successPrompt);
+    let prompt = document.getElementById("prompt");
+
+    document.getElementById("btn_yes").addEventListener("click", ()=>{
+        prompt.remove();
+        var_back.remove();
+        excluirMetadata(metadata);
+    })
+
+    document.getElementById("btn_no").addEventListener("click", ()=>{
+        prompt.remove();
+        var_back.remove();;
+    })
+}
+
 function viewMetadata(metadata){
 console.log(metadata)
 
 localStorage.setItem("metadata", JSON.stringify(metadata));
 window.location.href = "lz_resultado.html";
 }
+
+async function excluirMetadata(metadata) {
+    try {
+        let response = await axios.delete(`http://localhost:8080/metadatas/${metadata}`)
+
+        if(response.status === 204) {
+            newSuccessPrompt();
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+
+function newSuccessPrompt(){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var successPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text">Metadata excluído com sucesso!</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', successPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        document.getElementById("prompt").remove();
+        document.getElementById("back_prompt").remove();
+        generateList(metadatas, selectValue);
+    });
+}
+
