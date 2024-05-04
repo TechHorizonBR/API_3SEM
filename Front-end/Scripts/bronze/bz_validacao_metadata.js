@@ -1,7 +1,6 @@
 bronzeData = "";
 columnsIds = [];
-metadata = "";
-let user = JSON.parse(localStorage.getItem("usuario"));
+                                    let user = JSON.parse(localStorage.getItem("usuario"));
 met_selec = localStorage.getItem("metadata");
 
 window.onload = () => {
@@ -11,6 +10,11 @@ window.onload = () => {
     getBronzeData();
     getMetadata();
 };
+let metadata = JSON.parse(localStorage.getItem("metadata"));
+
+let metadataId = metadata.id;
+let metadataName = metadata.nome;
+
 let usuario = localStorage.getItem("usuario");
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
@@ -80,6 +84,9 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 }
 
 function generateTable() {
+    let titulo = document.getElementById("title");
+    titulo.innerHTML = "Visualização do metadata " + metadataName;
+
     let table = document.getElementById("body_dados");
     table.innerHTML = "";
     for (let x = 0; x < bronzeData.length; x++) {
@@ -186,25 +193,10 @@ async function deleteColumn(id) {
     }
 }
 
-async function getMetadata() {
-    try {
-        let response = await axios.get(`http://localhost:8080/metadatas/${1}`);
-        metadata = response.data;
-        document.getElementById(
-            "title"
-        ).innerText = `Validacao do Esquema ${metadata.nome}`;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 async function getBronzeData() {
     try {
-        const sendId = {
-            id: met_selec,
-        };
         let response = await axios.get(
-            `http://localhost:8080/colunas/metadata/${sendId.id}`
+            `http://localhost:8080/colunas/metadata/${metadataId}`
         );
         bronzeData = response.data;
         for (let coluna of bronzeData) {
