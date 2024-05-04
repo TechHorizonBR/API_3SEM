@@ -4,9 +4,24 @@ window.onload = () => {
     info_usuario(userData)
     getEmpresas();
 };
+
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
 
+let empresasList, selectValueEmpresa
+
+let pagina_por_role = {
+    0: "../admin/homeAdmin.html",
+    1: "../landing_zone/homeUser.html",
+    2: "../bronze/bz_visualizar_metadata.html",
+    3: "../silver/",
+}
+let nome_por_role= {
+    0: "Adminstrador",
+    1: "Landing Zone",
+    2: "Bronze",
+    3: "Silver",
+}
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -28,21 +43,10 @@ function opcoes_roles_acoes(userData){
     }
 }
 
-let pagina_por_role = {
-    0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
-    2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
-}
-let nome_por_role= {
-    0: "Adminstrador",
-    1: "Landing Zone",
-    2: "Bronze",
-    3: "Silver",
-}
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
@@ -70,16 +74,15 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         }  
     }
 }
-let userId = userData.id;
-let userName = userData.nome;
 
 async function getEmpresas() {
     try{
-        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
+        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userData.id}`);
         let empresas = response.data;
 
         if(response.status === 200) {
             generateOptions(empresas)
+            console.log(empresas)
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
     }
@@ -94,7 +97,7 @@ function generateOptions(empresas){
 
     for(let i = 0; i < empresas.length; i++){
         let selectOptions = `
-            <option class="option" onchange="" id="select${i}" value="${empresas[i].id}">${empresas[i].nome}</option>
+            <option class="option" id="select${i}" value="${empresas[i].id}">${empresas[i].nome}</option>
         `
         select.insertAdjacentHTML("afterbegin", selectOptions);
     }
@@ -106,6 +109,9 @@ function generateOptions(empresas){
 };
 
 async function getMetadata(selectValue, empresas) {
+    empresasList = empresas
+    selectValueEmpresa = selectValue
+
     try{
         let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
         let metadatas = response.data;
@@ -232,7 +238,7 @@ function newSuccessPrompt(){
     document.getElementById("btn_ok").addEventListener("click", () => {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
-        generateList(metadatas, selectValue);
+        getMetadata(selectValueEmpresa, empresasList);
     });
 }
 
