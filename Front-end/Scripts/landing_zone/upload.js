@@ -1,6 +1,40 @@
 window.onload = function() {
-    updateNameUsuario()
+    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
+    info_usuario(userData)
+    getEmpresas();
 };
+let roles = JSON.parse(localStorage.getItem("roles"))
+let userData = JSON.parse(localStorage.getItem("usuario"));
+
+let pagina_por_role = {
+    0: "../admin/homeAdmin.html",
+    1: "../landing_zone/homeUser.html",
+    2: "../bronze/bz_visualizar_metadata.html",
+}
+let nome_por_role= {
+    0: "Adminstrador",
+    1: "Landing_zone",
+    2: "Bronze",
+    3: "Silver",
+}
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
+function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
+    let table = document.querySelector(".metadatas");
+
+    for (let chave in roles) {
+        enum_role = roles[chave]
+        let rota = pagina_por_role[enum_role];
+        let nome = nome_por_role[enum_role];
+
+        var listar_metadata = `
+            <a href="${rota}">${nome}</a>
+        `;
+
+        table.insertAdjacentHTML("beforeend", listar_metadata);
+    }
+}
 
 let cabecalho = false;
 let arquivoSelec;
@@ -9,9 +43,6 @@ let reqSuccess = {
     mdReq: false,
     csvReq:false,
 }
-
-let usuario = localStorage.getItem("usuario");
-let userData = JSON.parse(usuario);
 
 let userId = userData.id;
 let userName = userData.nome;
