@@ -68,7 +68,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 let cabecalho = false;
@@ -184,7 +184,6 @@ function firstPrompt(){
     var_back.insertAdjacentHTML('beforeend', firstPrompt);
 
     let prompt_name = document.getElementById("input_data");
-    let prompt = document.getElementById("prompt");
 
     document.getElementById("btn_cont").addEventListener("click", ()=>{
         let id_empresa = input_companyname.value;
@@ -194,7 +193,6 @@ function firstPrompt(){
         }else if(id_empresa === ""){
             alert("Selecione uma Empresa");
         }else{
-            prompt.remove();
             document.getElementById("back_prompt").remove();
             validation(nomeData, id_empresa);
         }
@@ -247,7 +245,6 @@ function validation(nomeData, id_empresa) {
 
     if (regex.test(nomeData)) {
         secondPrompt(id_empresa)
-        console.log("DEU BOM")
     }else{
         newFailedPrompt()
     }

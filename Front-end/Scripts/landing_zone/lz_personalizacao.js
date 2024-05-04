@@ -106,7 +106,7 @@ function generateTable(){
                     <option value="int">Número inteiro</option>
                     <option value="boolean">Verdadeiro/Falso</option>
                     <option value="char">Caracter Único (Ex: M ou F)</option>
-                    <option value="date">Date</option>
+                    <option value="date">Data</option>
                 </select>
             </td>
             <td><textarea name="desc" id="desc${x}" class="desc_input"></textarea></td>
