@@ -143,19 +143,54 @@ function validation() {
 }
 
 function getData(dados) {
-    let allData = []
-    for(let y = 0; y < dados.length; y++){
+    let allData = [];
+
+    for (let y = 0; y < dados.length; y++) {
+        let descricaoValue = document.getElementById(`desc${y}`).value;
+
+        if (descricaoValue.trim() === "") {
+            InvalidDescription();
+            return;
+        }
+
         allData.push({
             nome: document.getElementById(`input-text${y}`).value,
             tipo: document.getElementById(`select${y}`).value,
-            restricao: (document.getElementById(`checkbox${y}`).checked).toString(),
-            descricao: document.getElementById(`desc${y}`).value,
+            restricao: document.getElementById(`checkbox${y}`).checked.toString(),
+            descricao: descricaoValue,
             metadata: {
                 id: id_metadata
             }
-        })
+        });
     }
-    sendData(allData)
+
+    sendData(allData);
+}
+
+function InvalidDescription(){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var failedPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text" id="validate_identification">Descrição inválida!</span>
+            <div id="text_validation">Preencha todas as descrições antes de enviar os dados.</div>
+            <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', failedPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        document.getElementById("prompt").remove();
+        document.getElementById("back_prompt").remove();
+    });
 }
 
 async function sendData(allData) {
