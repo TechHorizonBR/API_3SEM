@@ -17,9 +17,63 @@ window.onload = function(){
 let pagina_por_role = {
     "ROLE_ADMIN": "admin/homeAdmin.html",
     "ROLE_LZ": "landing_zone/homeUser.html",
-    "ROLE_BRONZE": "bronze/bz_visualizar_metadata.html",
-    "ROLE_SILVER": "#"
+    2: "bronze/bz_visualizar_metadata.html",
 }
+
+function capturar_dados() {
+    var textoEmail = document.getElementById("username").value;
+    var textoSenha = document.getElementById("password").value;
+    
+    verificar_campos(textoEmail,textoSenha);
+    validar_dados(textoEmail,textoSenha);
+}
+
+function verificar_campos(textoEmail, textoSenha){
+    switch (true) {
+        case textoEmail.trim() === "" && textoSenha.trim() === "":
+            message = "Por favor, preencha os campos"    
+            prompt_login(message)
+            break
+    
+        case textoEmail.trim() === "":
+            message = "Por favor, insira o Email"    
+            prompt_login(message)
+            break
+
+        case textoSenha.trim() === "":
+            message = "Por favor, insira a Senha"    
+            prompt_login(message)
+            break
+        };
+}
+
+async function validar_dados(textoEmail,textoSenha){
+    let data = {
+        email: textoEmail,
+        senha: textoSenha
+    }
+    try {
+        let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
+        let roles = response.data.roleUsuario
+        console.log(roles)
+        usuario = response.data
+        localStorage.setItem('usuario', JSON.stringify(usuario))
+        localStorage.setItem('roles', JSON.stringify(roles))
+
+        if(response.status === 200){
+            location.href = pagina_por_role[roles[0]]
+            console.log(location.href)
+        }
+
+    }catch(error){
+    if (error.response.data.message === "Credenciais inválidas."){
+        prompt_login(error.response.data.message)
+        console.log(error.response.data.message)}
+    else{
+        alert("Ocorreu um erro no sistema, tente novamente mais tarde")
+    }
+}
+
 function prompt_login(message){
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -43,65 +97,4 @@ function prompt_login(message){
     document.getElementById("btn_cont").addEventListener("click", ()=>{
             prompt.remove();
             document.getElementById("back_prompt").remove()})
-}
-
-function capturar_dados() {
-    var textoEmail = document.getElementById("username").value;
-    var textoSenha = document.getElementById("password").value;
-
-
-    if (verificar_campos(textoEmail,textoSenha) === true){
-        validar_dados(textoEmail,textoSenha);}
-}
-
-function verificar_campos(textoEmail, textoSenha){
-    let validado = false
-    switch (true) {
-        case textoEmail.trim() === "" || textoSenha.trim() === "":
-            message = "Por favor, preencha os campos"    
-            prompt_login(message)
-            break
-    
-        case textoEmail.trim() === "":
-            message = "Por favor, insira o Email"    
-            prompt_login(message)
-            break
-
-        case textoSenha.trim() === "":
-            message = "Por favor, insira a Senha"    
-            prompt_login(message)
-            break
-
-        default:
-            validado = true
-            return validado
-        };
-}
-
-async function validar_dados(textoEmail,textoSenha){
-    let data = {
-        email: textoEmail,
-        senha: textoSenha
-    }
-    try {
-        let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
-        userData = response.data
-        localStorage.setItem('usuario', JSON.stringify(userData))
-
-        if(response.status === 200){
-            console.log(pagina_por_role[userData.roleUsuario[0]])
-            location.href = pagina_por_role[userData.roleUsuario[0]]
-            console.log(location.href)
-        }
-
-    }catch(error){
-     
-        if (error.response.data.message === "Credenciais inválidas." || error.response.data.message === "Campos inválidos."){
-            prompt_login("Credenciais inválidas")
-        console.log(error.response.data.message)}
-        else{
-            alert("Ocorreu um erro no sistema, tente novamente mais tarde")
-    }
-}
-
-}
+}}
