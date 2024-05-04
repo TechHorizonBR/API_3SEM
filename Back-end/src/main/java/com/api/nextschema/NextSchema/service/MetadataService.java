@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
+import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.MetadataRepository;
 import lombok.AllArgsConstructor;
 import com.api.nextschema.NextSchema.exception.DataViolationException;
@@ -17,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MetadataService {
     private final MetadataRepository metadataRepository;
-    private final EmpresaService empresaService;
     private final ColunaService colunaService;
+    private final EmpresaRepository empresaRepository;
     @Transactional
     public Metadata create(Metadata metadata){
         try{
@@ -44,7 +45,16 @@ public class MetadataService {
     }
     @Transactional(readOnly = true)
     public List<Metadata>buscarPorEmpresa(Long id) {
-        Empresa empresa = empresaService.buscarId(id);
+        Empresa empresa = empresaRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Entidade não encontrada"));
         return metadataRepository.findByEmpresa(empresa);
     }
+    @Transactional
+    public void deleteByEmpresa(Empresa empresa){
+        List<Metadata> metadatas = buscarPorEmpresa(empresa.getId());
+        for(Metadata metadata : metadatas){
+            colunaService.deleteByMetadata(metadata);
+            metadataRepository.deleteById(metadata.getId());
+        }
+    }
+
 }

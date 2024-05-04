@@ -22,4 +22,7 @@ public interface UsuarioEmpresaRepository extends JpaRepository<UsuarioEmpresa, 
     @Query("DELETE FROM UsuarioEmpresa u WHERE u.usuario = :usuario")
     void deleteByUsuario(@Param("usuario") Usuario usuario);
 
+    @Modifying
+    @Query("DELETE FROM UsuarioEmpresa u WHERE u.empresa = :empresa")
+    void deleteByEmpresa(@Param("empresa") Empresa empresa);
 }
