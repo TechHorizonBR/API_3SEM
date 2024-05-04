@@ -280,14 +280,23 @@ margin-bottom: 30px;
     flex-direction: row;
     align-items: center;
     width: 100%;
-    background: aqua;
+    background: transparent;
 }
 
 .opt_empresa{
-    background: blue;
-    width: 60px;
-    padding: 1px;
+    background: #bdbaba;
+    padding: 0 10px;
     height: 20px;
     border-radius: 5px;
     margin: 0 5px;
+    display: inline-block;
+    color: #000;
+}
+
+.opt_btn{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
 }
