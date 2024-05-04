@@ -8,17 +8,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "usuario_empresa")
 @Entity
+@AllArgsConstructor
 public class UsuarioEmpresa {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Usuario usuario;
     @ManyToOne
     private Empresa empresa;
-
 }
 
