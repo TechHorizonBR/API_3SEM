@@ -304,7 +304,6 @@ function newPrompt(){
     var_back.insertAdjacentHTML('beforeend', successPrompt);
 
     document.getElementById("btn_ok").addEventListener("click", () => {
-        // document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
 }

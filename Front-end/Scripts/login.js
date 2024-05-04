@@ -1,15 +1,3 @@
-
-// document.addEventListener("DOMContentLoaded", function() {
-// // Alerta ao abrir a página
-// alert("Bem vindo ao NextSchema!");
-
-// // Função a ser executada quando o botão for clicado
-// document.getElementById("botao-entrar").onclick = function() {
-//     // Captura o valor do campo de e-mail
-//     let email = document.getElementById("texto-email").value;
-//     // Exibe o e-mail no console
-//     console.log(email);
-// };
 window.onload = function(){
     localStorage.clear();
 }

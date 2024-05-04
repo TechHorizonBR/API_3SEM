@@ -12,8 +12,6 @@ let dados = localStorage.getItem("cabecalho");
 let exampleData = localStorage.getItem("dados1");
 let id_metadata = parseInt(localStorage.getItem("metadata_id"));
 
-let allResquests = 0;
-
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
 
@@ -122,7 +120,7 @@ saveButton.addEventListener("click", function () {
     validation();
     setTimeout(function() {
         saveButton.disabled = false;
-        }, 5000); // Reativa o botão após 5 segundos (5000 milissegundos)
+        }, 5000);
 });
 
 function validation() {
@@ -162,15 +160,6 @@ function getData(dados) {
 
 async function sendData(allData) {
     try{
-        // let newColuna = {
-        //     nome: inputsTextsValues,
-        //     tipo: selectsValues,
-        //     restricao: checkBoxesValues.toString(),
-        //     descricao: descValues,
-        //     metadata: {
-        //         id: id_metadata
-        //     }
-        // }
         console.log(allData);
 
         let response = await axios.post("http://localhost:8080/colunas", allData);
