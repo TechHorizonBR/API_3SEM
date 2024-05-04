@@ -22,11 +22,7 @@ botaoCadastrar.addEventListener("click", function () {
 
 function info_usuario(usuario) {
     namespace = document.getElementById("user_name").textContent = usuario.nome;
-    rolespace = document.getElementById("user_role").textContent =
-        "Adminstrador";
-    console.log(usuario);
-}
-
+    rolespace = document.getElementById("user_role").textContent = "Adminstrador";
 empresa_selec.addEventListener("change", () => {
     let newempresa = empresa_selec.value;
     let newid = parseInt(
@@ -64,7 +60,6 @@ selecao.addEventListener("change", () => {
             perm_bubble.innerHTML = "";
             selecao.disabled = true;
         }
-        console.log(newrole);
         if (!roles.includes(newrole)) {
             roles.push(newrole);
             let buttonId = `btn_${newrole}`;
@@ -72,13 +67,11 @@ selecao.addEventListener("change", () => {
                 <div class="opt_empresa">${newrole}<button id="${buttonId}" class="opt_btn">X</button></div>
             `;
             perm_bubble.insertAdjacentHTML("beforeend", bubble);
-            console.log(roles);
 
             let botao = document.getElementById(buttonId);
             botao.addEventListener("click", () => {
                 roles = roles.filter((item) => item !== newrole);
                 selecao.disabled = false;
-                console.log(roles);
                 let divpai = botao.parentNode;
                 divpai.parentNode.removeChild(divpai);
             });
@@ -97,7 +90,6 @@ function limparCampo() {
 async function getAllUsuarios() {
     let response = await axios.get("http://localhost:8080/usuarios");
     dados = response.data;
-    console.log(response);
     gerarTabela(dados);
 }
 
@@ -121,7 +113,7 @@ function gerarTabela(dados) {
                 <p>Email: ${dados[x].email}</p>
             </div>
             <div class="buttonUser">
-                    <button class="buttonEdit" id="editar" onclick="firstPrompt('${dados[x].id}', '${dados[x].nome}', '${dados[x].email}', '${dados[x].senha}')"><i class="fa-solid fa-eye"style="color: #0c4df0; margin-right: 10px"></i>Visualizar</button>
+                    <button class="buttonEdit" id="editar" onclick="firstPrompt('${dados[x].id}', '${dados[x].nome}', '${dados[x].email}', '${dados[x].senha}', '${dados[x].roleUsuario}', '${dados[x].listEmpresa}')"><i class="fa-solid fa-eye"style="color: #0c4df0; margin-right: 10px"></i>Visualizar</button>
                     <button class="buttonRemove" id="excluir" onclick="promptDelete('${dados[x].id}')"><i class="fa-solid fa-trash" style="color: #fa0000; margin-right: 10px"></i>Excluir</button> 
                     </div>
         </div>`;
@@ -131,7 +123,6 @@ function gerarTabela(dados) {
 
 async function buscarEmpresas() {
     let response = await axios.get("http://localhost:8080/empresas");
-    console.log(response);
     let empresas_json = response.data;
 
     if (response.status == 200) {
@@ -169,13 +160,11 @@ function montarUsuario(roles) {
         listEmpresa: all_empresas_id,
         roleUsuario: roles,
     };
-    console.log(dataJson);
     cadastrarUsuario(dataJson);
 }
 async function cadastrarUsuario(dataJson) {
     try {
         let response = await axios.post("http://localhost:8080/usuarios", dataJson);
-        console.log(response);
         if (response.status === 201) {
             promptCadastradosucess();
         }
@@ -274,12 +263,11 @@ function promptDelete(id) {
     });
 }
 
-function firstPrompt(id, nome, email, senha) {
+function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     async function buscarEmpresasEditar() {
         let response = await axios.get("http://localhost:8080/empresas");
-        console.log(response);
-        let empresas_json = response.data;
+        empresas_json = response.data;
     
         if (response.status == 200) {
             listarEmpresasEditar(empresas_json);
@@ -355,7 +343,6 @@ function firstPrompt(id, nome, email, senha) {
     });
 
 
-    buscarEmpresasEditar();
     let roles_edit = [];
     let all_empresas_edit = [];
     let all_empresas_id_edit = [];
@@ -403,7 +390,6 @@ function firstPrompt(id, nome, email, senha) {
                 perm_bubble_edit.innerHTML = "";
                 perm_selec_edit.disabled = true;
             }
-            console.log(newrole);
             if (!roles_edit.includes(newrole)) {
                 roles_edit.push(newrole);
                 let buttonId = `btn_${newrole}`;
@@ -411,13 +397,11 @@ function firstPrompt(id, nome, email, senha) {
                         <div class="opt_empresa">${newrole}<button id="${buttonId}" class="opt_btn">X</button></div>
                     `;
                 perm_bubble_edit.insertAdjacentHTML("beforeend", bubble);
-                console.log(roles_edit);
 
                 let botao = document.getElementById(buttonId);
                 botao.addEventListener("click", () => {
                     roles_edit = roles_edit.filter((item) => item !== newrole);
                     perm_selec_edit.disabled = false;
-                    console.log(roles_edit);
                     let divpai = botao.parentNode;
                     divpai.parentNode.removeChild(divpai);
                 });
@@ -443,7 +427,6 @@ function firstPrompt(id, nome, email, senha) {
     async function atualizarUsuario(dataJson) {
         try {
             let response = await axios.put("http://localhost:8080/usuarios", dataJson);
-            console.log(response);
             if (response.status === 200) {
                 document.getElementById("back_prompt").remove();
                 getAllUsuarios();
@@ -464,9 +447,9 @@ function firstPrompt(id, nome, email, senha) {
             nome: newNomeEdit.toUpperCase(),
             email: newemailEdit,
             senha: newsenhaEdit,
-            listRole: roles_edit
+            roleUsuario: roles_edit,
+            listEmpresa: all_empresas_id_edit
         };
-        console.log(dataJson);
         atualizarUsuario(dataJson);
     }
 }
@@ -485,7 +468,6 @@ async function editarUsuario(id, nome, email, empresa, permissao) {
             `http://localhost:8080/usuarios/${id}`,
             data
         );
-        console.log(data);
         if (response.status == 200) {
             generateTable();
             alert("Alteração realizada!");
@@ -500,7 +482,6 @@ async function editarUsuario(id, nome, email, empresa, permissao) {
 
 async function excluirEmpresa(id) {
     let response = await axios.delete(`http://localhost:8080/usuarios/${id}`);
-    console.log(response);
     promptDeletadosucess();
 }
 
