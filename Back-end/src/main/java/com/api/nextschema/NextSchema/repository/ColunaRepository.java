@@ -14,4 +14,7 @@ public interface ColunaRepository extends JpaRepository<Coluna, Long>{
     @Modifying
     @Query("UPDATE Coluna c SET c.chavePrimaria = :isPrimary WHERE c.id = :id")
     void updateChavePrimaria (Long id, Boolean isPrimary);
+
+    @Query("DELETE Coluna c WHERE c.metadata = :metadata")
+    void deleteByMetadata (Metadata metadata);
 }

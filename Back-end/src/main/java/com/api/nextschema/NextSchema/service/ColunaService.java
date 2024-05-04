@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColunaService {
     private final ColunaRepository colunaRepository;
-    private final MetadataService metadataService;
+
 
     @Transactional
     public Coluna criarColuna(Coluna coluna){
@@ -36,6 +36,7 @@ public class ColunaService {
 
         return colunaRepository.findAll();
     }
+    @Transactional
     public void deleteporId(Long id){
         Coluna coluna = buscarPorId(id);
         colunaRepository.deleteById(id);
@@ -47,7 +48,8 @@ public class ColunaService {
     @Transactional(readOnly = true)
     public List<Coluna> buscarPorMetadata(Long id){
         try {
-            Metadata metadata = metadataService.findbyId(id);
+            Metadata metadata = new Metadata();
+            metadata.setId(id);
             return colunaRepository.findColunasByMetadata(metadata);
         }
         catch (Exception ex){
@@ -92,5 +94,10 @@ public class ColunaService {
         colunaEncontrada.setComentario(coluna.getComentario());
         return colunaRepository.save(colunaEncontrada);
     }
+    @Transactional
+    public void deleteByMetadata(Metadata metadata){
+        colunaRepository.deleteByMetadata(metadata);
+    }
+
 }
 
