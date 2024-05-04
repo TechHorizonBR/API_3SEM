@@ -5,6 +5,7 @@ import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.UsuarioEmpresaRepository;
 import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,8 @@ public class UsuarioEmpresaService {
     public UsuarioEmpresa criarRegistro (UsuarioEmpresa usuarioEmpresa) {
         return usuarioEmpresaRepository.save(usuarioEmpresa);
     }
+
+
     @Transactional(readOnly = false)
     public void deleteRegistroPorId (Long id) {
         usuarioEmpresaRepository.deleteById(id);
@@ -42,7 +45,7 @@ public class UsuarioEmpresaService {
 
     @Transactional(readOnly = true)
     public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
-        Usuario usuario = usuarioService.buscarPorId(id);
+        Usuario usuario = usuarioService.findById(id);
         List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByUsuario(usuario);
         List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
