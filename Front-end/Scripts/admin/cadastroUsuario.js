@@ -326,7 +326,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         </div>
         <div class="l3s">
             <i class="fa-solid fa-floppy-disk id="plusCad" style="color: #0c4df0;"></i>
-            <button class="salvar" id="btn_salvar">SALVAR</button>
+            <button class="salvar" id="btn_salvar" onclick="editPrompt">SALVAR</button>
         </div>
     </div>
         </div>
@@ -482,11 +482,36 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
             if (response.status === 200) {
                 document.getElementById("back_prompt").remove();
                 getAllUsuarios();
-                alert("Atualizado com sucesso!");
+                editPrompt();
             }
         } catch (err) {
             console.error(err);
         }
+    }
+
+    function editPrompt() {
+        var back = `
+        <div class="back_prompt" id="back_prompt">
+        </div>
+        `;
+    
+        var editPrompt = `
+            <div class="prompt1" id="prompt">
+                <span class="prompt_text">Alteração feita com sucesso!</span>
+                <div class="btns">
+                    <button class="btn_p" id="btn_OK">OK</button>
+                </div>
+            </div>
+        `;
+    
+        document.body.insertAdjacentHTML("beforeend", back);
+        let var_back = document.getElementById("back_prompt");
+        var_back.insertAdjacentHTML("beforeend", editPrompt);
+    
+        document.getElementById("btn_OK").addEventListener("click", () => {
+            document.getElementById("back_prompt").remove();
+            document.getElementById("prompt").remove();
+        });
     }
 
     function montarUsuarioEdit() {
