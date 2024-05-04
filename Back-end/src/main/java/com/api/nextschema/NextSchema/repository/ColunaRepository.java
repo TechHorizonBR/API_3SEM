@@ -5,6 +5,7 @@ import com.api.nextschema.NextSchema.entity.Metadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface ColunaRepository extends JpaRepository<Coluna, Long>{
     @Query("UPDATE Coluna c SET c.chavePrimaria = :isPrimary WHERE c.id = :id")
     void updateChavePrimaria (Long id, Boolean isPrimary);
 
-    @Query("DELETE Coluna c WHERE c.metadata = :metadata")
-    void deleteByMetadata (Metadata metadata);
+    @Modifying
+    @Query("DELETE FROM Coluna c WHERE c.metadata = :metadata")
+    void deleteByMetadata(@Param("metadata") Metadata metadata);
 }

@@ -15,7 +15,7 @@ public class ColunaCreateDto {
     private String nome;
     @NotBlank
     private String tipo;
-    @NotBlank @Size(min = 1, max = 30)
+    @Size(max = 30)
     private String descricao;
     @NotBlank
     private String restricao;

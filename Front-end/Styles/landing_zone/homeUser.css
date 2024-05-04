@@ -14,7 +14,10 @@ main{
     align-content: center;
     flex-wrap: nowrap;
 }
-
+#messageMet{
+    text-align: center;
+    justify-content: center;
+}
 #title {
     color: var(--title-color);
     font-weight: bold;

@@ -96,7 +96,7 @@ function generateList(metadatas, selectValue) {
     listMetadatas.innerHTML = '';
 
     if (metadatas.length === 0){
-        let metadatasList = `<h3>Não há metadatas disponíveis para essa empresa</h3>`
+        let metadatasList = `<h3 id="messageMet">Não há metadatas disponíveis para essa empresa</h3>`
         listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
     }else{
         for(let x = 0; x < metadatas.length; x++){
