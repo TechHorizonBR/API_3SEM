@@ -211,7 +211,8 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 
 ## Documentação 📜
 
-- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V1_NEXTSCHEMA.pdf">Clique aqui</a>
+- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V2_NEXTSCHEMA.pdf">Clique aqui</a>
+- Como executar: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/EXECUTAR.md">Clique aqui</a>
 
 <span id="tecnologias">
 
