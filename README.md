@@ -146,10 +146,10 @@ Personalização de esquema de banco de dados | Como usuário Landing Zone, dese
 Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
 Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
 Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ➖
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ➖
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ➖
-Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ➖
-Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ➖
+Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ✅
+Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
+Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
+Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
 Análise e Definição de Relacionamentos | Como usuário Silver, desejo definir os relacionamentos de uma ou mais fontes de dados, com a finalidade de gerar significado ao plano de negócio. | 10 | ➖
 Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 11 | ➖
 Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 12 | ➖
@@ -188,6 +188,8 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 <details>
      
 <summary>Sprint 2</summary>
+
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/d72f60b2-b884-4561-86d5-ed0b17e77bd4)
 
 
 </details>
