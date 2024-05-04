@@ -36,6 +36,7 @@ html,body{
     flex-direction: row;
     margin-left: 10px;
     align-items: center;
+    justify-content: space-around;
 }
 
 .l1 input{
@@ -237,10 +238,65 @@ margin-bottom: 30px;
   margin-right: 4%;
   margin-top: 13%;
 }
+
+.prompt1 {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
 /* FIM DADOS DO USUARIO */
 
 @media screen and (max-width: 768px) {
     .conteudoCadastro{
         background-color: black;
     }
+}
+
+.all-select{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+#role{
+    margin: 0;
+    width: 100%;
+}
+
+#empresa{
+    margin: 0;
+    width: 100%;
+}
+
+.options-selected{
+    display: inline-block;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+}
+
+.opt_empresa{
+    background: #bdbaba;
+    padding: 0 10px;
+    height: 20px;
+    border-radius: 5px;
+    margin: 0 5px;
+    display: inline-block;
+    color: #000;
+}
+
+.opt_btn{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
 }
