@@ -20,4 +20,5 @@ public class UsuarioResponseDTO {
     private String nome;
     private String email;
     private List<Role> roleUsuario;
+    private List<Long> listEmpresa;
 }

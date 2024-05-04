@@ -29,6 +29,8 @@ public class UsuarioService {
 
     @Autowired
     EmpresaService empresaService;
+    @Autowired
+    UsuarioEmpresaService usuarioEmpresaService;
 
     @Transactional(readOnly = true)
     public UsuarioResponseDTO buscarPorId(Long id) {
@@ -44,10 +46,23 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioResponseDTO> findAll() {
         List<Usuario> listUsuario = usuarioRepository.findAll();
+        List<UsuarioResponseDTO> usuariosResponse = new LinkedList<>();
 
-        return listUsuario.stream()
-                .map(UsuarioMapper::toResponseDTO)
-                .collect(Collectors.toList());
+        for (Usuario usuario : listUsuario){
+            List<UsuarioRoleAssociation> roles = usuarioRoleAssociationService.buscarRole(usuario.getId());
+            List<Role> rolesUsuarios = new ArrayList<>();
+            for(UsuarioRoleAssociation roleUsuario : roles){
+                rolesUsuarios.add(roleUsuario.getRole());
+            }
+            List<EmpresaResponseDTO> empresasUsuarios = usuarioEmpresaService.buscarEmpresasPorUsuario(usuario.getId());
+            List<Long> idsEmpresas = new ArrayList<>();
+            for(EmpresaResponseDTO empresa : empresasUsuarios){
+                idsEmpresas.add(empresa.getId());
+            }
+            UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), rolesUsuarios, idsEmpresas);
+            usuariosResponse.add(usuarioResponseDTO);
+        }
+        return usuariosResponse;
     }
 
     @Transactional(readOnly = true)
@@ -114,9 +129,12 @@ public class UsuarioService {
         user.setEmail(usuarioAtualizaDadosDTO.getEmail());
         usuarioRepository.save(user);
 
-        List<Role> roleList = usuarioAtualizaDadosDTO.getListRole();
+        List<Role> roleList = usuarioAtualizaDadosDTO.getRoleUsuario();
 
         usuarioRoleAssociationService.atualizarRole(usuarioAtualizaDadosDTO.getId(), roleList);
+        Usuario usuario = new Usuario();
+        usuario.setId(usuarioAtualizaDadosDTO.getId());
+        usuarioEmpresaService.atualizarEmpresasUsuarios(usuario, usuarioAtualizaDadosDTO.getListEmpresa());
 
         return vincularRole(user);
     }
@@ -130,6 +148,12 @@ public class UsuarioService {
             roleListservice.add(usuarioRoleAssociation.getRole());
         }
         responseDTO.setRoleUsuario(roleListservice);
+        List<Long> idsEmpresas = new ArrayList<>();
+        List<EmpresaResponseDTO> empresasEncontras = usuarioEmpresaService.buscarEmpresasPorUsuario(usuario.getId());
+        for(EmpresaResponseDTO empresaResponseDTO : empresasEncontras){
+            idsEmpresas.add(empresaResponseDTO.getId());
+        }
+        responseDTO.setListEmpresa(idsEmpresas);
         return responseDTO;
     }
 

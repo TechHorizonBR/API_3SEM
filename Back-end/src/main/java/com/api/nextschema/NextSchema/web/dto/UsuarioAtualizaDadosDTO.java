@@ -15,5 +15,6 @@ public class UsuarioAtualizaDadosDTO {
     private Long id;
     private String nome;
     private String email;
-    private List<Role> listRole;
+    private List<Role> roleUsuario;
+    private List<Long> listEmpresa;
 }

@@ -19,11 +19,27 @@ import java.util.List;
 public class UsuarioEmpresaService {
     private final UsuarioEmpresaRepository usuarioEmpresaRepository;
     private final EmpresaService empresaService;
-    private final UsuarioService usuarioService;
 
     @Transactional(readOnly = false)
     public UsuarioEmpresa criarRegistro (UsuarioEmpresa usuarioEmpresa) {
         return usuarioEmpresaRepository.save(usuarioEmpresa);
+    }
+    @Transactional
+    public List<Long> atualizarEmpresasUsuarios(Usuario usuario, List<Long> empresas){
+        deleteByUsuario(usuario);
+        List<Long> idsEmpresas = new ArrayList<>();
+        for(Long empresa : empresas){
+            UsuarioEmpresa usuarioEmpresa = new UsuarioEmpresa();
+            usuarioEmpresa.setUsuario(usuario);
+            Empresa empresaCriada = new Empresa();
+            empresaCriada.setId(empresa);
+            usuarioEmpresa.setEmpresa(empresaCriada);
+            idsEmpresas.add(criarRegistro(usuarioEmpresa).getEmpresa().getId());
+        }
+        return idsEmpresas;
+    }
+    public void deleteByUsuario(Usuario usuario){
+        usuarioEmpresaRepository.deleteByUsuario(usuario);
     }
 
 
@@ -45,7 +61,8 @@ public class UsuarioEmpresaService {
 
     @Transactional(readOnly = true)
     public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
-        Usuario usuario = usuarioService.findById(id);
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
         List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByUsuario(usuario);
         List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
