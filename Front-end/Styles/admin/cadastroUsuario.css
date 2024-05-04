@@ -287,8 +287,17 @@ justify-content:space-between;
     margin: 0;
     width: 100%;
 }
+#role_edit{
+    margin: 0;
+    width: 100%;
+}
 
 #empresa{
+    margin: 0;
+    width: 100%;
+}
+
+#empresa_edit{
     margin: 0;
     width: 100%;
 }
