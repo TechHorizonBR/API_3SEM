@@ -1,11 +1,12 @@
 window.onload = () => {
-    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
+    opcoes_roles_metadata(userData,pagina_por_role)
     opcoes_roles_acoes(userData)
     info_usuario(userData)
     getEmpresas();
 };
-let roles = JSON.parse(localStorage.getItem("roles"))
+
 let userData = JSON.parse(localStorage.getItem("usuario"));
+console.log(userData)
 
 
 function opcoes_roles_acoes(userData){
@@ -28,18 +29,6 @@ function opcoes_roles_acoes(userData){
     }
 }
 
-let pagina_por_role = {
-    0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
-    2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
-}
-let nome_por_role= {
-    0: "Adminstrador",
-    1: "Landing Zone",
-    2: "Bronze",
-    3: "Silver",
-}
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
@@ -70,12 +59,21 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         }  
     }
 }
-let userId = userData.id;
-let userName = userData.nome;
+
+let pagina_por_role = [
+    {role: "ROLE_ADMIN", nome:"Adminstrador", link: "admin/homeAdmin.html"},
+    {role: "ROLE_LZ", nome:"Landing Zone", link: "homeUser.html"},
+    {role: "ROLE_BRONZE", nome:"Bronze", link: "bronze/bz_visualizar_metadata.html"},
+    {role: "ROLE_SILVER", nome:"Silver", link: "#"},
+]
+
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
 
 async function getEmpresas() {
     try{
-        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
+        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userData.id}`);
         let empresas = response.data;
 
         if(response.status === 200) {
