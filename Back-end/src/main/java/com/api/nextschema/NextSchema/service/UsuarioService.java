@@ -104,6 +104,7 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new EntityNotFoundException("Usuário não cadastrado"));
 
         usuarioRoleAssociationService.deleteAssociation(idUsuario);
+        usuarioEmpresaService.deleteByUsuario(usuario);
         usuarioRepository.deleteById(usuario.getId());
     }
 
