@@ -113,7 +113,24 @@ function popularTabela() {
         celulaDesc.innerHTML = dados_Json[x].descricao;
 
         let celulaStatus = linha.insertCell(4);
-        celulaStatus.innerHTML = dados_Json[x].validado;
+        let status = dados_Json[x].validado.toLowerCase(); 
+
+        switch (status) {
+            case "pendente":
+                celulaStatus.innerHTML = "Pendente";
+                celulaStatus.style.color = "#FFA800";
+                break;
+            case "validado":
+                celulaStatus.innerHTML = "Validado";
+                celulaStatus.style.color = "#0CF030";
+                break;
+            case "invalidado":
+                celulaStatus.innerHTML = "Invalidado";
+                celulaStatus.style.color = "#f00c0c";
+                break;
+            default:
+                celulaStatus.innerHTML = status;
+        }
 
         let celulaFeedback = linha.insertCell(5);
         celulaFeedback.innerHTML = dados_Json[x].comentario;
