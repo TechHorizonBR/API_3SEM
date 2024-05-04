@@ -10,6 +10,7 @@ let empresas_bubble = document.getElementById("options-selected");
 let perm_bubble = document.getElementById("options_perm");
 let roles = [];
 let all_empresas = [];
+let all_empresas_id = [];
 let selecao = document.getElementById("role");
 let empresa_selec = document.getElementById("empresa");
 let botaoCadastrar = document.querySelector("#cadastrarUser")
@@ -38,20 +39,20 @@ function info_usuario(usuario){
 
 empresa_selec.addEventListener("change", ()=>{
     let newempresa = empresa_selec.value;
-    console.log(newempresa);
+    let newid = empresa_selec.options[empresa_selec.selectedIndex].getAttribute("ident");
     if(newempresa !== ""){
         if (!(all_empresas.includes(newempresa))) {
             all_empresas.push(newempresa);
+            all_empresas_id.push(newid);
             let buttonId = `btn_${newempresa}`;
             let bubble = `
                 <div class="opt_empresa">${newempresa}<button id="${buttonId}" class="opt_btn">X</button></div>
             `;
             empresas_bubble.insertAdjacentHTML("beforeend", bubble);
-            console.log(all_empresas);
             let botao = document.getElementById(buttonId);
             botao.addEventListener("click", ()=>{
                 all_empresas = all_empresas.filter(item=>item!==newempresa);
-                console.log(all_empresas);
+                all_empresas_id = all_empresas_id.filter(item=>item!==newid);
                 let divpai = botao.parentNode;
                 divpai.parentNode.removeChild(divpai);
             })
@@ -148,11 +149,11 @@ async function buscarEmpresas(){
 function listarEmpresas(empresas_json){
     empresas_json.forEach(empresa_json => {
         let option_empresa = document.createElement("option");
+        option_empresa.setAttribute("ident", empresa_json.id);
         option_empresa.value = empresa_json.nome;
         option_empresa.textContent = empresa_json.nome;
         opcoesempresas.appendChild(option_empresa)
     });
-
 }
 
 async function montarUsuario(roles){
@@ -171,8 +172,8 @@ async function montarUsuario(roles){
         nome: newNome.toUpperCase(),
         email: newemail,
         senha: newsenha,
-        empresa: newempresa,
-        roleUsuario: [newrole],
+        empresa: all_empresas_id,
+        roleUsuario: roles,
     };
     console.log(dataJson)
     cadastrarUsuario(dataJson);
