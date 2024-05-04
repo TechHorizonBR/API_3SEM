@@ -6,8 +6,12 @@ window.onload = () => {
 
 var jsonusuario = localStorage.getItem("usuario");
 var usuario = JSON.parse(jsonusuario);
-let roles = []
-let selecao = document.getElementById("role")
+let empresas_bubble = document.getElementById("options-selected");
+let perm_bubble = document.getElementById("options_perm");
+let roles = [];
+let all_empresas = [];
+let selecao = document.getElementById("role");
+let empresa_selec = document.getElementById("empresa");
 let botaoCadastrar = document.querySelector("#cadastrarUser")
 let botaoOk = document.querySelector("#ok")
 let opcoesempresas = document.getElementById("empresa")
@@ -21,14 +25,69 @@ function info_usuario(usuario){
     console.log(usuario)
 }
 
-selecao.addEventListener("change", ()=>{
-    let newrole = document.getElementById("role").value;
-    if (newrole === "ROLE_ADMIN"){
-        selecao.disabled = true;
+// let btn_close = document.getElementById(`btn_${newrole}`);
+// btn_close.addEventListener("click", () => {
+//     console.log("FECHOU");
+//     let divToRemove = btn_close.parentElement;
+//     let roleIndex = rolesIndexes[buttonId];
+//     roles.splice(roleIndex, 1);
+//     divToRemove.remove();
+//     delete rolesIndexes[buttonId];
+//     console.log(roles);
+// });
+
+empresa_selec.addEventListener("change", ()=>{
+    let newempresa = empresa_selec.value;
+    console.log(newempresa);
+    if(newempresa !== ""){
+        if (!(all_empresas.includes(newempresa))) {
+            all_empresas.push(newempresa);
+            let buttonId = `btn_${newempresa}`;
+            let bubble = `
+                <div class="opt_empresa">${newempresa}<button id="${buttonId}" class="opt_btn">X</button></div>
+            `;
+            empresas_bubble.insertAdjacentHTML("beforeend", bubble);
+            console.log(all_empresas);
+            let botao = document.getElementById(buttonId);
+            botao.addEventListener("click", ()=>{
+                all_empresas = all_empresas.filter(item=>item!==newempresa);
+                console.log(all_empresas);
+                let divpai = botao.parentNode;
+                divpai.parentNode.removeChild(divpai);
+            })
+        }
     }
-    roles.push(newrole);
-    console.log(roles)
 })
+
+selecao.addEventListener("change", () => {
+    let newrole = selecao.value;
+    if(newrole !== ""){
+        if (newrole === "ROLE_ADMIN") {
+            roles = [];
+            perm_bubble.innerHTML = "";
+            selecao.disabled = true;
+        }
+        console.log(newrole);
+        if (!(roles.includes(newrole))) {
+            roles.push(newrole);
+            let buttonId = `btn_${newrole}`;
+            let bubble = `
+                <div class="opt_empresa">${newrole}<button id="${buttonId}" class="opt_btn">X</button></div>
+            `;
+            perm_bubble.insertAdjacentHTML("beforeend", bubble);
+            console.log(roles);
+    
+            let botao = document.getElementById(buttonId);
+            botao.addEventListener("click", ()=>{
+                roles = roles.filter(item => item !== newrole);
+                selecao.disabled = false;
+                console.log(roles);
+                let divpai = botao.parentNode;
+                divpai.parentNode.removeChild(divpai);
+            })
+        }
+    }
+});
 
 
 function limparCampo() {
@@ -89,7 +148,7 @@ async function buscarEmpresas(){
 function listarEmpresas(empresas_json){
     empresas_json.forEach(empresa_json => {
         let option_empresa = document.createElement("option");
-        option_empresa.value = empresa_json.id;
+        option_empresa.value = empresa_json.nome;
         option_empresa.textContent = empresa_json.nome;
         opcoesempresas.appendChild(option_empresa)
     });
