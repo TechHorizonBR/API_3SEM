@@ -105,6 +105,9 @@ function generateTable() {
             }else{
                 tipo = "Data";
             }
+
+            let comentarioBronze = bronzeData[x].comentario === null || bronzeData[x].comentario === "null" ? "" : bronzeData[x].comentario;
+
             let checkboxChecked = bronzeData[x].chavePrimaria ? "checked" : "";
             let dadosTable = `
             <tr>
@@ -130,7 +133,7 @@ function generateTable() {
                         }>Pendente</option>
                     </select>
                 </td>
-                <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${bronzeData[x].comentario}</textarea></td>
+                <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${comentarioBronze}</textarea></td>
                 <td class="btn_data">
                     <button class="delete-btn" id="excluir" data-index="${x}">
                         <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>

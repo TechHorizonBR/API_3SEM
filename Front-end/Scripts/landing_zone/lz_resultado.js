@@ -204,7 +204,7 @@ function popularTabela() {
         }
 
         let celulaFeedback = linha.insertCell(5);
-        celulaFeedback.innerHTML = dados_Json[x].comentario;
+        celulaFeedback.innerHTML = dados_Json[x].comentario === "null" ? "" : dados_Json[x].comentario;
 
         celulaCheck.classList.add("tab_check");
     }
