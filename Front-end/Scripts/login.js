@@ -15,8 +15,8 @@ window.onload = function(){
 }
 
 let pagina_por_role = {
-    0: "admin/homeAdmin.html",
-    1: "landing_zone/homeUser.html",
+    "ROLE_ADMIN": "admin/homeAdmin.html",
+    "ROLE_LZ": "landing_zone/homeUser.html",
     2: "bronze/bz_visualizar_metadata.html",
 }
 
@@ -54,7 +54,8 @@ async function validar_dados(textoEmail,textoSenha){
     }
     try {
         let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
-        let roles = [1,2]
+        let roles = response.data.roleUsuario
+        console.log(roles)
         usuario = response.data
         localStorage.setItem('usuario', JSON.stringify(usuario))
         localStorage.setItem('roles', JSON.stringify(roles))
@@ -62,7 +63,6 @@ async function validar_dados(textoEmail,textoSenha){
         if(response.status === 200){
             location.href = pagina_por_role[roles[0]]
             console.log(location.href)
-            //selecionar_pagina()
         }
 
     }catch(error){
@@ -73,11 +73,6 @@ async function validar_dados(textoEmail,textoSenha){
         alert("Ocorreu um erro no sistema, tente novamente mais tarde")
     }
 }
-
-function selecionar_pagina(){
-    //Dar um get no endpoint pra receber qual é o id
-
-}}
 
 function prompt_login(message){
     var back = `
@@ -102,4 +97,4 @@ function prompt_login(message){
     document.getElementById("btn_cont").addEventListener("click", ()=>{
             prompt.remove();
             document.getElementById("back_prompt").remove()})
-}
+}}
