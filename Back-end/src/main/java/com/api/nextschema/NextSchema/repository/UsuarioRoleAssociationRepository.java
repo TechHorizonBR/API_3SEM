@@ -13,4 +13,6 @@ public interface UsuarioRoleAssociationRepository  extends JpaRepository<Usuario
 
     @Query("SELECT ura FROM UsuarioRoleAssociation ura WHERE ura.idUsuario = :idUsuario")
     List<UsuarioRoleAssociation> findAllByIdUsuario(Long idUsuario);
+
+    void deleteUsuarioRoleAssociationByIdUsuario(Long idUsuario);
 }

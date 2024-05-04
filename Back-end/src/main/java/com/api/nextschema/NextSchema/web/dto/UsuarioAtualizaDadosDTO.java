@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +15,5 @@ public class UsuarioAtualizaDadosDTO {
     private Long id;
     private String nome;
     private String email;
+    private List<Role> listRole;
 }

@@ -45,7 +45,7 @@ public class UsuarioEmpresaService {
 
     @Transactional(readOnly = true)
     public List<EmpresaResponseDTO> buscarEmpresasPorUsuario (Long id) {
-        Usuario usuario = usuarioService.buscarPorId(id);
+        Usuario usuario = usuarioService.findById(id);
         List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByUsuario(usuario);
         List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 

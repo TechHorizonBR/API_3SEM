@@ -1,6 +1,5 @@
 package com.api.nextschema.NextSchema.web.controller;
 
-
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 
 @Slf4j
 @RestController
@@ -38,10 +36,10 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json"))
             }
     )
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/buscar/{id}")
     public ResponseEntity<UsuarioResponseDTO> findUsuarioById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(
-                UsuarioMapper.toResponseDTO(usuarioService.buscarPorId(id)));
+
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.buscarPorId(id));
     }
 
     @Operation(
@@ -72,18 +70,6 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
     }
-
-   /* @GetMapping(value ="/empresa/{idEmpresa}")
-    public ResponseEntity<Object> getUsuarioByEmpresa(@PathVariable Long idEmpresa){
-        try {
-            List<Usuario> listUsuarios =  usuarioService.findUsuarioByEmpresa(idEmpresa);
-            return ResponseEntity.status(HttpStatus.OK).body(listUsuarios);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao localizar usuários. " + e.getMessage());
-        }
-    }*/
-
 
    @Operation(
            summary = "Criar usuário.",
