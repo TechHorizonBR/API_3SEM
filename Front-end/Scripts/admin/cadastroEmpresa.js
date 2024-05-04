@@ -30,7 +30,7 @@ function firstPrompt(id, nome){
             <span class="prompt_text">Inserir novo Nome:</span>
             <input type="text" class="input_data" id="input_data" value=${nome}>
             <div class="btns">
-                <button class="btn_p" id="btn_cont">Salvar</button>
+                <button class="btn_p" id="btn_cont" onclick="editPrompt">Salvar</button>
             </div>
         </div>
     </div>    
@@ -67,7 +67,7 @@ async function excluirEmpresa(id){
     if(response.status == 204){
         document.getElementById("back_prompt").remove();
         generateTable()
-        alert("Empresa excluida com SUCESSO!")
+        promptDeleteEmp()
     }
 }
 
@@ -78,7 +78,7 @@ function promptDelete(id){
     `
 
     var deletePrompt = `
-        <div class="prompt" id="prompt">
+        <div class="promptEx" id="prompt">
             <span class="prompt_text">Deseja realmente excluir?</span>
             <div class="btns">
                 <button class="btn_p" id="btn_sim">SIM</button>
@@ -101,7 +101,29 @@ function promptDelete(id){
     });
 }
 
+function promptDeleteEmp(){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
 
+    var promptDeleteEmp = `
+        <div class="promptEx" id="prompt">
+            <span class="prompt_text">Empresa excluida com sucesso.</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK" onclick="promptDeleteEmp">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', promptDeleteEmp);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+    });
+}
 
 
 async function generateTable(){
@@ -173,7 +195,7 @@ async function editarEmpresa(id, new_nome){
         console.log(response)
         if(response.status == 200){
             generateTable();
-            alert("Alteração realizada!")
+            editPrompt();
         } else {
             alert("ERROR! Atuaçização não executada.")
         }
@@ -181,7 +203,31 @@ async function editarEmpresa(id, new_nome){
         console.error("ERRO:", err)
         alert("Erro no sistema.")
     }
+}
 
+function editPrompt() {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var editPrompt = `
+        <div class="prompt1" id="prompt">
+            <span class="prompt_text">Alteração feita com sucesso!</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", editPrompt);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
 }
 
 
@@ -218,8 +264,8 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
         };
         let response = await axios.post(`http://localhost:8080/empresas`, data)
         if(response.status == 201){
-            alert("Cadastrado com sucesso!")
             generateTable()
+            promptSuccess();
         }else{
             alert("Erro no cadastro.")
         }
@@ -228,6 +274,31 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
         console.error(err)
         alert("Erro no cadastro.")
     }
+}
+
+function promptSuccess() {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var promptSuccess= `
+        <div class="prompt1" id="prompt">
+            <span class="prompt_text">Cadastro feito com sucesso!</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", promptSuccess);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
 }
 
 
