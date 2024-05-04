@@ -65,8 +65,18 @@ selecao.addEventListener("change", () => {
         if (!roles.includes(newrole)) {
             roles.push(newrole);
             let buttonId = `btn_${newrole}`;
+            let nomeRole= "";
+                if(newrole === "ROLE_LZ"){
+                    nomeRole = "Landing Zone";
+                }else if(newrole === "ROLE_BRONZE"){
+                    nomeRole = "Bronze";
+                }else if(newrole === "ROLE_SILVER"){
+                    nomeRole = "Silver";
+                }else{
+                    nomeRole = "Administrador";
+                }
             let bubble = `
-                <div class="opt_empresa">${newrole}<button id="${buttonId}" class="opt_btn">X</button></div>
+                <div class="opt_empresa">${nomeRole}<button id="${buttonId}" class="opt_btn">X</button></div>
             `;
             perm_bubble.insertAdjacentHTML("beforeend", bubble);
 
@@ -105,6 +115,7 @@ function limparTabela() {
 function gerarTabela(dados) {
     limparTabela();
     let table = document.getElementById("body_dados");
+    console.log(dados);
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <div class="line">
@@ -115,7 +126,7 @@ function gerarTabela(dados) {
                 <p>Email: ${dados[x].email}</p>
             </div>
             <div class="buttonUser">
-                    <button class="buttonEdit" id="editar" onclick="firstPrompt('${dados[x].id}', '${dados[x].nome}', '${dados[x].email}', '${dados[x].senha}', '${dados[x].roleUsuario}', '${dados[x].listEmpresa}')"><i class="fa-solid fa-eye"style="color: #0c4df0; margin-right: 10px"></i>Visualizar</button>
+                    <button class="buttonEdit" id="editar${x}" onclick="firstPrompt('${dados[x].id}', '${dados[x].nome}', '${dados[x].email}', '${dados[x].senha}', '${dados[x].roleUsuario}', '${dados[x].listEmpresa}')"><i class="fa-solid fa-eye"style="color: #0c4df0; margin-right: 10px"></i>Visualizar</button>
                     <button class="buttonRemove" id="excluir" onclick="promptDelete('${dados[x].id}')"><i class="fa-solid fa-trash" style="color: #fa0000; margin-right: 10px"></i>Excluir</button> 
                     </div>
         </div>`;
@@ -387,8 +398,18 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         for(let x = 0; x < listaRole.length; x++){
             roles_edit.push(listaRole[x]);
             let buttonId = `btn_${listaRole[x]}`;
+            let nomeRole= "";
+            if(listaRole[x] === "ROLE_LZ"){
+                nomeRole = "Landing Zone";
+            }else if(listaRole[x] === "ROLE_BRONZE"){
+                nomeRole = "Bronze";
+            }else if(listaRole[x] === "ROLE_SILVER"){
+                nomeRole = "Silver";
+            }else{
+                nomeRole = "Administrador";
+            }
             let bubble = `
-                    <div class="opt_empresa">${listaRole[x]}<button id="${buttonId}" class="opt_btn">X</button></div>
+                    <div class="opt_empresa">${nomeRole}<button id="${buttonId}" class="opt_btn">X</button></div>
                 `;
             perm_bubble_edit.insertAdjacentHTML("beforeend", bubble);
             let botao = document.getElementById(buttonId);
@@ -445,8 +466,18 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
             if (!roles_edit.includes(newrole)) {
                 roles_edit.push(newrole);
                 let buttonId = `btn_${newrole}`;
+                let nomeRole= "";
+                if(newrole === "ROLE_LZ"){
+                    nomeRole = "Landing Zone";
+                }else if(newrole === "ROLE_BRONZE"){
+                    nomeRole = "Bronze";
+                }else if(newrole === "ROLE_SILVER"){
+                    nomeRole = "Silver";
+                }else{
+                    nomeRole = "Administrador";
+                }
                 let bubble = `
-                        <div class="opt_empresa">${newrole}<button id="${buttonId}" class="opt_btn">X</button></div>
+                        <div class="opt_empresa">${nomeRole}<button id="${buttonId}" class="opt_btn">X</button></div>
                     `;
                 perm_bubble_edit.insertAdjacentHTML("beforeend", bubble);
 
