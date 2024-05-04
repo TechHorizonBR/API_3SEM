@@ -23,6 +23,7 @@ main{
     margin-left: 50px;
     display: flex;
     align-items: center;
+    margin-top: 3.2em;
 }
 
 #question:hover{

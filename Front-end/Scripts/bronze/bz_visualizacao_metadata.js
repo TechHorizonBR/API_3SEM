@@ -1,5 +1,6 @@
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
+    opcoes_roles_acoes(userData)
     info_usuario(userData)
     getEmpresas();
   
@@ -7,22 +8,43 @@ window.onload = () => {
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+
+
+function opcoes_roles_acoes(userData){
+    let table = document.querySelector(".upload");
+    for (let i in userData.roleUsuario){
+        if (userData.roleUsuario[i] === "ROLE_LZ"){
+            var listar_metadata = `
+            <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
+        `;
+        console.log(userData.roleUsuario)
+        table.insertAdjacentHTML("beforeend", listar_metadata);
+        }
+        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
+            var listar_metadata = `
+            <li><a href="#">Relacionamentos</a></li>
+        `;
+        console.log(userData.roleUsuario)
+        table.insertAdjacentHTML("beforeend", listar_metadata);
+        }
+    }
+}
+
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
     1: "../landing_zone/homeUser.html",
     2: "../bronze/bz_visualizar_metadata.html",
+    3: "../silver/",
 }
 let nome_por_role= {
     0: "Adminstrador",
-    1: "Landing_zone",
+    1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
-
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
-
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
@@ -30,14 +52,32 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        
-        var listar_metadata = `
-            <a href="${rota}">${nome}</a>
-        `;
+        console.log("CHAVE:",pagina_por_role[1])
 
-        table.insertAdjacentHTML("beforeend", listar_metadata);
+        if(roles[chave] == "ROLE_LZ"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[1]}">${nome_por_role[1]}</a></li>
+        `;
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }else if(roles[chave] == "ROLE_BRONZE"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[2]}">${nome_por_role[2]}</a></li>
+        `;
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }else if(roles[chave] == "ROLE_SILVER"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
+        `;
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }  
     }
 }
+
+function info_usuario(userData){
+    namespace = document.getElementById("user_name").textContent = userData.nome
+}
+
+
 const searchButton = document.querySelector("#btn-search");
 
 async function getEmpresas() {

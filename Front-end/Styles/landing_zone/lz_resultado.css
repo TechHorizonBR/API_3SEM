@@ -116,6 +116,8 @@ nav ul.menu ul li:hover {
     display: flex;
     /* margin: 5%; */
     align-items: center;
+    margin-top: 3.2em;
+    margin-left: 8em
 }
 
 #question:hover{

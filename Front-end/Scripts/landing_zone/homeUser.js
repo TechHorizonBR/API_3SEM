@@ -13,14 +13,14 @@ function opcoes_roles_acoes(userData){
     for (let i in userData.roleUsuario){
         if (userData.roleUsuario[i] === "ROLE_LZ"){
             var listar_metadata = `
-            <a href="../landing_zone/lz_upload.html">Upload CSV</a>
+            <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
         console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
         else if(userData.roleUsuario[i] === "ROLE_SILVER"){
             var listar_metadata = `
-            <a href="#">Relacionamentos</a>
+            <li><a href="#">Relacionamentos</a></li>
         `;
         console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
@@ -32,10 +32,11 @@ let pagina_por_role = {
     0: "../admin/homeAdmin.html",
     1: "../landing_zone/homeUser.html",
     2: "../bronze/bz_visualizar_metadata.html",
+    3: "../silver/",
 }
 let nome_por_role= {
     0: "Adminstrador",
-    1: "Landing_zone",
+    1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
@@ -49,12 +50,24 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
+        console.log("CHAVE:",pagina_por_role[1])
 
-        var listar_metadata = `
-            <a href="${rota}">${nome}</a>
+        if(roles[chave] == "ROLE_LZ"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[1]}">${nome_por_role[1]}</a></li>
         `;
-
-        table.insertAdjacentHTML("beforeend", listar_metadata);
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }else if(roles[chave] == "ROLE_BRONZE"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[2]}">${nome_por_role[2]}</a></li>
+        `;
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }else if(roles[chave] == "ROLE_SILVER"){
+            var listar_metadata = `
+            <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
+        `;
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        }  
     }
 }
 let userId = userData.id;

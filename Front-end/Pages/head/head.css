@@ -89,6 +89,7 @@ nav ul.menu ul {
     left: 0;
     background-color: var(--title-color);
     padding: 0;
+    width: 10em
 }
 
 nav ul.menu ul li {
@@ -139,4 +140,7 @@ nav ul.menu ul li:hover {
 .menu{
     display: flex;
     gap: 70px;
+}
+i{
+    font-size: 1.2em;
 }
