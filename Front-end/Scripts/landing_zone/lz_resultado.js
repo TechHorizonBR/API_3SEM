@@ -241,6 +241,9 @@ function editData(){
             case "char":
                 selectedOption[4] = "selected";
                 break;
+            case "date":
+                selectedOption[5] = "selected";
+                break;
             default:
                 selectedOption[0] = "";
                 selectedOption[1] = "";
