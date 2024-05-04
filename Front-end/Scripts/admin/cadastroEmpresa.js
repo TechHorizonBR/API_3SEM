@@ -13,19 +13,27 @@ function info_usuario(usuario){
 }
 
 function firstPrompt(id, nome){
+    console.log(nome)
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `
 
     var firstPrompt = `
+    
+        
     <div class="prompt" id="prompt">
-        <span class="prompt_text">Inserir novo Nome:</span>
-        <input type="text" class="input_data" id="input_data" value=${nome}>
-        <div class="btns">
-            <button class="btn_p" id="btn_cont">Salvar</button>
+        <div class="l0">
+            <i class="fa-solid fa-xmark" id="fechar"></i>
+        </div>  
+        <div class="conteudoPrompt"> 
+            <span class="prompt_text">Inserir novo Nome:</span>
+            <input type="text" class="input_data" id="input_data" value=${nome}>
+            <div class="btns">
+                <button class="btn_p" id="btn_cont">Salvar</button>
+            </div>
         </div>
-    </div>
+    </div>    
     `
 
     document.body.insertAdjacentHTML('beforeend', back);
@@ -45,6 +53,12 @@ function firstPrompt(id, nome){
             editarEmpresa(id, nomeData);
         }
     })
+    
+    document.getElementById("fechar").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+    });
+
+    
 }
 
 async function excluirEmpresa(id){
@@ -152,7 +166,7 @@ async function editarEmpresa(id, new_nome){
     try{
         console.log(`Id: ${id} NOVO NOME: ${new_nome}`);
         let data={
-            nome:new_nome,
+            nome:new_nome.toUpperCase(),
             id:id
         }
         let response = await axios.put(`http://localhost:8080/empresas`, data)

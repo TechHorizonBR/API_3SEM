@@ -51,7 +51,7 @@ html,body{
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
-    margin-right: 0px;
+    margin-right: 15px;
     justify-content: flex-end;
     cursor: pointer;
     margin-top: 10px;
@@ -88,13 +88,13 @@ html,body{
 
 .conteudoList p {
     margin: 10px;
+    width: 250px;
 }
 
 .line{
 display: flex;
 flex-direction: row;
 justify-content:space-between;
-margin: 0 3%;
 }
 
 .firstPart{
@@ -115,9 +115,7 @@ margin: 0 3%;
     width: 200px;
     justify-content: space-between;
     align-items: center;
-    margin-right: 15px;
     color: #0c4df0;
-    margin-right: 10px
 }
 .back_prompt {
     height: 100vh;

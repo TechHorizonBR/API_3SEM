@@ -70,6 +70,7 @@ html,body{
 .boxList p {
     margin: 10px;
     margin-right: 100px;
+    width: 250px;
 }
 
 .line{
@@ -103,7 +104,6 @@ html,body{
     width: 200px;
     justify-content: space-between;
     align-items: center;
-    margin-right: 15px;
 }
 
 .txtCnpj{
@@ -114,7 +114,7 @@ html,body{
     display: flex;
     width: 805px;
     justify-content: space-between;
-    margin-left: 40px;
+    margin-left: 10px;
 }
 .back_prompt {
     height: 100vh;
@@ -139,9 +139,15 @@ html,body{
     height: 27vh;
     border-radius: 10px;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
     flex-direction: column;
+}
+
+#fechar{
+    display: flex;
+    justify-content: flex-end;
+    width: 97%;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .btns {
@@ -178,6 +184,16 @@ html,body{
     width: 200px;
     border-radius: 12px;
     padding: 5px;
+    display: flex;
+}
+
+.conteudoPrompt{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+    justify-content: space-around;
+    height: 350px;
 }
 
 .menu{
