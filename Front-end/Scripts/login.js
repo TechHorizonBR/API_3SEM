@@ -15,9 +15,10 @@ window.onload = function(){
 }
 
 let pagina_por_role = {
-    "ROLE_ADMIN": "admin/homeAdmin.html",
-    "ROLE_LZ": "landing_zone/homeUser.html",
-    2: "bronze/bz_visualizar_metadata.html",
+    "ROLE_ADMIN": "/admin/homeAdmin.html",
+    "ROLE_LZ": "/landing_zone/homeUser.html",
+    "ROLE_BRONZE": "/bronze/bz_visualizar_metadata.html",
+    "ROLE_SILVER": "#"
 }
 
 function capturar_dados() {
