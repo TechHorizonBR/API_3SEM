@@ -10,13 +10,8 @@ MySQL
 
 ## Preparando ambiente
 
-É necessário a criação da base de dados relacional no Postgres
+É necessário a criação da base de dados relacional no MySQL
 
-```
-CREATE DATABASE "productivity-with-spring";
-```
-
-Para os testes de integração também é necessario criar uma base de dados para os testes não interferirem na base de desenvolvimento.
 ```
 CREATE DATABASE dbnextschema;
 ```
@@ -42,4 +37,4 @@ Pronto. O back-end está disponível em http://localhost:8080
 ```
 Tomcat started on port(s): 8080 (http)
 ```
-Para o Front-end, basta ir no arquivo index.html da pasta Front-end/Pages e executar
+Para o Front-end, basta ir no arquivo index.html da pasta Front-end/Pages e executar.
