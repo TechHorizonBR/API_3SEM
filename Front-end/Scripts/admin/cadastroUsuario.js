@@ -112,7 +112,7 @@ async function montarUsuario(roles){
         nome: newNome.toUpperCase(),
         email: newemail,
         senha: newsenha,
-        empresa: newempresa,
+        empresa: newempresa.id,
         roleUsuario: [newrole],
     };
     console.log(dataJson)
@@ -234,6 +234,9 @@ function firstPrompt(id, nome, email, senha){
         var firstPrompt = `
         <div class="prompt" id="prompt">
         <div class="conteudoEditar">
+        <div class="l0">
+            <i class="fa-solid fa-xmark" id="btnfechar" ></i>
+        </div>      
         <div class="l1">
             <p>Nome:</p>
             <input type="text" name="nome" id="nome" value=${nome} class="fields">
@@ -242,7 +245,7 @@ function firstPrompt(id, nome, email, senha){
         </div>
         <div class="l2">
             <p>Senha:</p>
-            <input type="password" name="senha" id="senha" value=${senha} class="fields">
+            <input type="password" name="senha" id="senha" value=${senha} class="fields" disabled>
             <br>
             <p>Empresa:</p>
             <select name="empresa" id="empresa" class="fields">
@@ -257,7 +260,7 @@ function firstPrompt(id, nome, email, senha){
                 <option value="ROLE_SILVER">Silver</option>
             </select>
         </div>
-        <div class="l3">
+        <div class="l3s">
             <i class="fa-solid fa-floppy-disk id="plusCad" style="color: #0c4df0;"></i>
             <button class="salvar" id="btn_salvar">SALVAR</button>
         </div>
@@ -272,20 +275,12 @@ function firstPrompt(id, nome, email, senha){
         
         document.body.insertAdjacentHTML('beforeend', back);
         let var_back = document.getElementById("back_prompt");
-        var_back.insertAdjacentHTML('beforeend', firstPrompt);
+        var_back.insertAdjacentHTML('beforeend', firstPrompt); 
         
-    
-        // document.getElementById("btn_cont").addEventListener("click", ()=>{
-    
-        //     if(prompt_email === "" || prompt_name === "" || prompt_empresa === "" || prompt_permissao === ""){
-        //         alert("Digite um nome ou email.");
-        //     }else{
-        //         editarUsuario(id,nome,email,empresa,permissao);
-        //         window.location.href = "cadastroUsuario.html"
-    
-        //     }
-        // })
-
+        document.getElementById("btnfechar").addEventListener("click", () => {
+            document.getElementById("back_prompt").remove();
+        });
+        
 }
 
 async function editarUsuario(id, nome, email, empresa, permissao){
