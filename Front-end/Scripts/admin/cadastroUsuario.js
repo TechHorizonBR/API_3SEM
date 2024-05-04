@@ -23,6 +23,8 @@ botaoCadastrar.addEventListener("click", function () {
 function info_usuario(usuario) {
     namespace = document.getElementById("user_name").textContent = usuario.nome;
     rolespace = document.getElementById("user_role").textContent = "Adminstrador";
+}
+
 empresa_selec.addEventListener("change", () => {
     let newempresa = empresa_selec.value;
     let newid = parseInt(
@@ -265,6 +267,7 @@ function promptDelete(id) {
 
 function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
+    let empresas_json;
     async function buscarEmpresasEditar() {
         let response = await axios.get("http://localhost:8080/empresas");
         empresas_json = response.data;
@@ -351,6 +354,55 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
     let empresa_selec_edit = document.getElementById("empresa_edit");
     let perm_selec_edit = document.getElementById("role_edit");
 
+    async function addEmpresasExistentes(listaEmp){
+        await buscarEmpresasEditar();
+        for(let x = 0; x < listaEmp.length; x++){
+            let id = listaEmp[x];
+            let empresa = empresas_json.find(emp=>emp.id == id);
+            if(empresa){
+                all_empresas_id_edit.push(id);
+                all_empresas_edit.push(empresa.nome);
+                let buttonId = `btn_${empresa.nome}`;
+                let bubble = `
+                        <div class="opt_empresa">${empresa.nome}<button id="${buttonId}" class="opt_btn">X</button></div>
+                    `;
+                empresas_bubble_edit.insertAdjacentHTML("beforeend", bubble);
+                let botao = document.getElementById(buttonId);
+                botao.addEventListener("click", () => {
+                    all_empresas_edit = all_empresas_edit.filter(
+                        (item) => item !== empresa.nome
+                    );
+                    all_empresas_id_edit = all_empresas_id_edit.filter(
+                        (item) => item !== id
+                    );
+                    let divpai = botao.parentNode;
+                    divpai.parentNode.removeChild(divpai);
+                });
+            }
+        }
+    }
+
+    function addRolesExistentes(listaRole){
+        listaRole = listaRole.split(",");
+        for(let x = 0; x < listaRole.length; x++){
+            roles_edit.push(listaRole[x]);
+            let buttonId = `btn_${listaRole[x]}`;
+            let bubble = `
+                    <div class="opt_empresa">${listaRole[x]}<button id="${buttonId}" class="opt_btn">X</button></div>
+                `;
+            perm_bubble_edit.insertAdjacentHTML("beforeend", bubble);
+            let botao = document.getElementById(buttonId);
+            botao.addEventListener("click", () => {
+                roles_edit = roles_edit.filter(
+                    (item) => item !== listaRole[x]
+                );
+                let divpai = botao.parentNode;
+                divpai.parentNode.removeChild(divpai);
+            });
+        }
+    }
+    addEmpresasExistentes(listaEmp);
+    addRolesExistentes(listaRole);
     empresa_selec_edit.addEventListener("change", () => {
         let newempresa = empresa_selec_edit.value;
         let newid = parseInt(
