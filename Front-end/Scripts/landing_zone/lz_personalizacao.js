@@ -77,7 +77,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 function setCSVSeparator(){
@@ -118,7 +118,11 @@ function generateTable(){
 }
 
 saveButton.addEventListener("click", function () {
+    saveButton.disabled = true;
     validation();
+    setTimeout(function() {
+        saveButton.disabled = false;
+        }, 5000); // Reativa o botão após 5 segundos (5000 milissegundos)
 });
 
 function validation() {
@@ -172,15 +176,11 @@ async function sendData(allData) {
         let response = await axios.post("http://localhost:8080/colunas", allData);
         console.log(response);
 
-        allResquests++;
-
-        if(allResquests === dados.length){
-            if(response.status === 201) {
-                newSuccessPrompt();
-            }else{
-                alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        if(response.status === 201) {
+            newSuccessPrompt();
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
             }
-        }
 
     }catch(error){
         console.log(error);
