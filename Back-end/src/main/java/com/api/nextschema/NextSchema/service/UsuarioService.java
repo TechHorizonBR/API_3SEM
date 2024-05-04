@@ -1,6 +1,5 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
 import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.entity.Usuario;
@@ -8,7 +7,6 @@ import com.api.nextschema.NextSchema.exception.DuplicateEmailException;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.exception.WrongCredentialsException;
 import com.api.nextschema.NextSchema.repository.UsuarioRepository;
-import com.api.nextschema.NextSchema.service.UsuarioEmpresaService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +31,14 @@ public class UsuarioService {
     EmpresaService empresaService;
 
     @Transactional(readOnly = true)
-    public Usuario buscarPorId(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+    public UsuarioResponseDTO buscarPorId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entidade não encontrada"));
+
+        return vincularRole(usuario);
+    }
+
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
     }
 
     @Transactional(readOnly = true)
@@ -80,9 +84,11 @@ public class UsuarioService {
         return  responseDTO;
     }
 
+    @Transactional
     public void deletarUsuario(Long idUsuario) {
-        Usuario usuario = buscarPorId(idUsuario);
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new EntityNotFoundException("Usuário não cadastrado"));
 
+        usuarioRoleAssociationService.deleteAssociation(idUsuario);
         usuarioRepository.deleteById(usuario.getId());
     }
 
@@ -102,35 +108,39 @@ public class UsuarioService {
 
     @Transactional
     public UsuarioResponseDTO atualizarDados(UsuarioAtualizaDadosDTO usuarioAtualizaDadosDTO) {
-        if( usuarioAtualizaDadosDTO.getNome() == null || usuarioAtualizaDadosDTO.getEmail() == null ) {
-            throw new NoSuchElementException("Não é permitido campos em branco");
+        Usuario user = usuarioRepository.findById(usuarioAtualizaDadosDTO.getId()).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado!"));
+
+        user.setNome(usuarioAtualizaDadosDTO.getNome());
+        user.setEmail(usuarioAtualizaDadosDTO.getEmail());
+        usuarioRepository.save(user);
+
+        List<Role> roleList = usuarioAtualizaDadosDTO.getListRole();
+
+        usuarioRoleAssociationService.atualizarRole(usuarioAtualizaDadosDTO.getId(), roleList);
+
+        return vincularRole(user);
+    }
+    public UsuarioResponseDTO vincularRole(Usuario usuario){
+        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(usuario);
+
+        List<UsuarioRoleAssociation> association = usuarioRoleAssociationService.buscarRole(usuario.getId());
+        List<Role> roleListservice = new LinkedList<>();
+
+        for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
+            roleListservice.add(usuarioRoleAssociation.getRole());
         }
-
-        Usuario usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
-
-        Usuario user = UsuarioMapper.toUsuario(usuarioAtualizaDadosDTO);
-        usuarioRepository.atualizarUsuario(user.getId(), user.getNome(), user.getEmail());
-        usuario = buscarPorId(usuarioAtualizaDadosDTO.getId());
-        return UsuarioMapper.toResponseDTO(usuario);
+        responseDTO.setRoleUsuario(roleListservice);
+        return responseDTO;
     }
 
     public UsuarioResponseDTO login(String email, String senha) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
                 .orElseThrow(() -> new WrongCredentialsException("Credenciais inválidas."));
 
-
         if (!usuario.getSenha().equals(senha)) {
             throw new WrongCredentialsException("Credenciais inválidas.");
         }
-        UsuarioResponseDTO responseDTO = UsuarioMapper.toResponseDTO(usuario);
 
-        List<UsuarioRoleAssociation> association = usuarioRoleAssociationService.buscarRole(usuario);
-
-        List<Role> roleList = new LinkedList<>();
-        for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
-            roleList.add(usuarioRoleAssociation.getRole());
-        }
-        responseDTO.setRoleUsuario(roleList);
-        return responseDTO;
+        return vincularRole(usuario);
     }
 }
