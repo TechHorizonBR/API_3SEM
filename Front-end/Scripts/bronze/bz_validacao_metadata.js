@@ -146,28 +146,9 @@ function generateTable() {
             let index = e.target.getAttribute("data-index");
             let id = columnsIds[index];
             confirmPrompt(id);
-            // deleteColumn(id);
         }
     });
 }
-
-// function validation() {
-//     const regex = /^[a-zA-Z0-9_]*$/;
-//     let errors = [];
-
-//     for (let i = 0; i < dados.length; i++) {
-//         inputsTextsValue = document.getElementById(`input-text${i}`).value;
-//         if (!regex.test(inputsTextsValue)) {
-//             errors.push(inputsTextsValue);
-//         }
-//     }
-
-//     if (errors.length === 0) {
-//         getData(dados);
-//     } else {
-//         newFailedPrompt(errors);
-//     }
-// }
 
 function updateNameUsuario() {
     document.getElementById("username").innerHTML = user.nome;
@@ -314,12 +295,10 @@ function confirmPrompt(id) {
         deleteColumn(id);
         prompt.remove();
         var_back.remove();
-        // sendMetadata(id_empresa);
     });
 
     document.getElementById("btn_no").addEventListener("click", () => {
         prompt.remove();
         var_back.remove();
-        // sendMetadata(id_empresa);
     });
 }

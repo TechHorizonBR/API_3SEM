@@ -12,8 +12,6 @@ let dados = localStorage.getItem("cabecalho");
 let exampleData = localStorage.getItem("dados1");
 let id_metadata = parseInt(localStorage.getItem("metadata_id"));
 
-let allResquests = 0;
-
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
 
@@ -77,7 +75,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 function setCSVSeparator(){
@@ -118,7 +116,11 @@ function generateTable(){
 }
 
 saveButton.addEventListener("click", function () {
+    saveButton.disabled = true;
     validation();
+    setTimeout(function() {
+        saveButton.disabled = false;
+        }, 5000);
 });
 
 function validation() {
@@ -141,46 +143,68 @@ function validation() {
 }
 
 function getData(dados) {
-    let allData = []
-    for(let y = 0; y < dados.length; y++){
+    let allData = [];
+
+    for (let y = 0; y < dados.length; y++) {
+        let descricaoValue = document.getElementById(`desc${y}`).value;
+
+        if (descricaoValue.trim() === "") {
+            InvalidDescription();
+            return;
+        }
+
         allData.push({
             nome: document.getElementById(`input-text${y}`).value,
             tipo: document.getElementById(`select${y}`).value,
-            restricao: (document.getElementById(`checkbox${y}`).checked).toString(),
-            descricao: document.getElementById(`desc${y}`).value,
+            restricao: document.getElementById(`checkbox${y}`).checked.toString(),
+            descricao: descricaoValue,
             metadata: {
                 id: id_metadata
             }
-        })
+        });
     }
-    sendData(allData)
+
+    sendData(allData);
+}
+
+function InvalidDescription(){
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `
+
+    var failedPrompt = `
+        <div class="prompt" id="prompt">
+            <span class="prompt_text" id="validate_identification">Descrição inválida!</span>
+            <div id="text_validation">Preencha todas as descrições antes de enviar os dados.</div>
+            <div class="btns">
+                <button class="btn_p" id="btn_ok">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML('beforeend', failedPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        document.getElementById("prompt").remove();
+        document.getElementById("back_prompt").remove();
+    });
 }
 
 async function sendData(allData) {
     try{
-        // let newColuna = {
-        //     nome: inputsTextsValues,
-        //     tipo: selectsValues,
-        //     restricao: checkBoxesValues.toString(),
-        //     descricao: descValues,
-        //     metadata: {
-        //         id: id_metadata
-        //     }
-        // }
         console.log(allData);
 
         let response = await axios.post("http://localhost:8080/colunas", allData);
         console.log(response);
 
-        allResquests++;
-
-        if(allResquests === dados.length){
-            if(response.status === 201) {
-                newSuccessPrompt();
-            }else{
-                alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        if(response.status === 201) {
+            newSuccessPrompt();
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
             }
-        }
 
     }catch(error){
         console.log(error);
