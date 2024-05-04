@@ -6,6 +6,9 @@ window.onload = () => {
 let userData = JSON.parse(localStorage.getItem("usuario"));
 let metadata = JSON.parse(localStorage.getItem("metadata"));
 
+let metadataId = metadata.id;
+let metadataName = metadata.nome;
+
 let userId = userData.id;
 let userName = userData.nome;
 
@@ -14,7 +17,7 @@ var isEdit = false;
 async function getAllData() {
     try {
 
-        let response = await axios.get(`http://localhost:8080/colunas/metadata/${metadata}`);
+        let response = await axios.get(`http://localhost:8080/colunas/metadata/${metadataId}`);
 
         dados_Json = response.data;
         popularTabela();
@@ -73,7 +76,7 @@ function popularTabela() {
     tabela.innerHTML = "";
 
     let titulo = document.getElementById("title");
-    titulo.innerHTML = "Visualização do metadata " + metadata.name;
+    titulo.innerHTML = "Visualização do metadata " + metadataName;
 
     for (let x = dados_Json.length - 1; x >= 0; x--) {
         let linha = tabela.insertRow();
@@ -113,7 +116,7 @@ function popularTabela() {
         celulaDesc.innerHTML = dados_Json[x].descricao;
 
         let celulaStatus = linha.insertCell(4);
-        let status = dados_Json[x].validado.toLowerCase(); 
+        let status = dados_Json[x].validado.toLowerCase();
 
         switch (status) {
             case "pendente":

@@ -1,4 +1,3 @@
-
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     info_usuario(userData)
@@ -28,7 +27,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        
+
         var listar_metadata = `
             <a href="${rota}">${nome}</a>
         `;
@@ -38,8 +37,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 }
 let userId = userData.id;
 let userName = userData.nome;
-
-const searchButton = document.querySelector("#btn-search");
 
 async function getEmpresas() {
     try{
@@ -66,20 +63,20 @@ function generateOptions(empresas){
         `
         select.insertAdjacentHTML("afterbegin", selectOptions);
     }
+
+    select.addEventListener("change", function () {
+        let selectValue = select.value;
+        getMetadata(selectValue, empresas);
+    });
 };
 
-searchButton.addEventListener("click", function () {
-    let selectValue = document.getElementById(`select-filter`).value;
-    getMetadata(selectValue);
-});
-
-async function getMetadata(selectValue) {
+async function getMetadata(selectValue, empresas) {
     try{
         let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
         let metadatas = response.data;
 
         if(response.status === 200) {
-            generateList(metadatas, selectValue);
+            generateList(metadatas, empresas, selectValue);
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
     }
@@ -90,7 +87,7 @@ async function getMetadata(selectValue) {
     }
 };
 
-function generateList(metadatas, selectValue) {
+function generateList(metadatas, empresas, selectValue) {
     let listMetadatas = document.getElementById("listMetadatas");
 
     listMetadatas.innerHTML = '';
@@ -100,6 +97,8 @@ function generateList(metadatas, selectValue) {
         listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
     }else{
         for(let x = 0; x < metadatas.length; x++){
+            let selectedEmpresa = empresas.find(emp => emp.id == selectValue);
+
             let metadatasList = `
                 <div id="metadatas">
                     <div class="line">
@@ -108,19 +107,24 @@ function generateList(metadatas, selectValue) {
                     </div>
                     <div class="line">
                         <div class="base-name">Empresa: </div>
-                        <div>${selectValue}</div>
+                        <div>${selectedEmpresa ? selectedEmpresa.nome : 'Nome da empresa não encontrado'}</div>
                     </div>
                     <div class="viewMetadata">
                         <i class="fa-solid fa-trash" id="trash"></i>
                         <button class="cadastrarUsuario" id="trash-metadata" onclick="confirmarExclusao(${metadatas[x].id})">EXCLUIR</button>
                         <i class="fa-solid fa-eye" id="view_eye"></i>
-                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata(${metadatas[x].id})">VISUALIZAR</button>
+                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata(${metadatas[x].id}, '${metadatas[x].nome}')"v>VISUALIZAR</button>
                     </div>
                 </div>
             `
             listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
         }
     }
+}
+
+function viewMetadata(metadata_id, metadata_nome) {
+    localStorage.setItem("metadata", JSON.stringify({ id: metadata_id, nome: metadata_nome }));
+    window.location.href = "lz_resultado.html";
 }
 
 function confirmarExclusao(metadata){
@@ -154,13 +158,6 @@ function confirmarExclusao(metadata){
         prompt.remove();
         var_back.remove();;
     })
-}
-
-function viewMetadata(metadata){
-console.log(metadata)
-
-localStorage.setItem("metadata", JSON.stringify(metadata));
-window.location.href = "lz_resultado.html";
 }
 
 async function excluirMetadata(metadata) {
