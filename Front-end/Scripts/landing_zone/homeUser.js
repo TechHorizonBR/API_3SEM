@@ -1,4 +1,3 @@
-
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     info_usuario(userData)
@@ -28,7 +27,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        
+
         var listar_metadata = `
             <a href="${rota}">${nome}</a>
         `;
@@ -66,6 +65,11 @@ function generateOptions(empresas){
         `
         select.insertAdjacentHTML("afterbegin", selectOptions);
     }
+
+    select.addEventListener("change", function () {
+        let selectValue = select.value;
+        getMetadata(selectValue);
+    });
 };
 
 searchButton.addEventListener("click", function () {
@@ -123,6 +127,13 @@ function generateList(metadatas, selectValue) {
     }
 }
 
+function viewMetadata(metadata){
+    console.log(metadata)
+
+    localStorage.setItem("metadata", JSON.stringify(metadata));
+    window.location.href = "lz_resultado.html";
+}
+
 function confirmarExclusao(metadata){
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -154,13 +165,6 @@ function confirmarExclusao(metadata){
         prompt.remove();
         var_back.remove();;
     })
-}
-
-function viewMetadata(metadata){
-console.log(metadata)
-
-localStorage.setItem("metadata", JSON.stringify(metadata));
-window.location.href = "lz_resultado.html";
 }
 
 async function excluirMetadata(metadata) {
