@@ -189,7 +189,8 @@ Feira de Soluções| 27/06/2024| 27/06/2024
      
 <summary>Sprint 2</summary>
 
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/d72f60b2-b884-4561-86d5-ed0b17e77bd4)
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/2a41ad67-6c75-4d7c-9ccb-c3ed9454f6e7)
+
 
 
 </details>
