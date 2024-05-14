@@ -1,6 +1,6 @@
 bronzeData = "";
 columnsIds = [];
-                                    let user = JSON.parse(localStorage.getItem("usuario"));
+let user = JSON.parse(localStorage.getItem("usuario"));
 met_selec = localStorage.getItem("metadata");
 
 window.onload = () => {
@@ -92,57 +92,71 @@ function generateTable() {
     for (let x = 0; x < bronzeData.length; x++) {
         if(bronzeData[x].ativo !== false){
             let tipo = "";
+            let tipo_inp = "";
             if (bronzeData[x].tipo === "boolean") {
                 tipo = "Verdadeiro/Falso";
+                tipo_inp = "checkbox";
             } else if (bronzeData[x].tipo === "string") {
                 tipo = "Texto";
+                tipo_inp = "text";
             } else if (bronzeData[x].tipo === "int") {
                 tipo = "Número Inteiro";
+                tipo_inp = "number";
             } else if (bronzeData[x].tipo === "float") {
                 tipo = "Número Decimal";
+                tipo_inp = "number";
             } else if (bronzeData[x].tipo === "char"){
                 tipo = "Carácter Único";
+                tipo_inp = "text"
             }else{
                 tipo = "Data";
+                tipo_inp = "date";
             }
 
-            let comentarioBronze = bronzeData[x].comentario === null || bronzeData[x].comentario === "null" ? "" : bronzeData[x].comentario;
-
-            let checkboxChecked = bronzeData[x].chavePrimaria ? "checked" : "";
             let dadosTable = `
             <tr>
-                <td class="checkbox-container"><input type="checkbox" class="checkbox-custom" id="checkbox${x}" ${checkboxChecked}></td>
+            <td class="val_data" id="key${x}">${
+                bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
+            }</td>
                 <td class="val_data" id="rest${x}">${
                 bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
             }</td>
                 <td class="val_data">${bronzeData[x].nome}</td>
                 <td class="val_data">${tipo}</td>
                 <td class="val_desc">${bronzeData[x].descricao}</td>
-                <td class="val_data">
-                    <select id="valid_select_${x}">
-                        <option value="VALIDADO" ${
-                            bronzeData[x].validado === "VALIDADO" ? "selected" : ""
-                        }>Validado</option>
-                        <option value="INVALIDADO" ${
-                            bronzeData[x].validado === "INVALIDADO"
-                                ? "selected"
-                                : ""
-                        }>Invalidado</option>
-                        <option value="PENDENTE" ${
-                            bronzeData[x].validado === "PENDENTE" ? "selected" : ""
-                        }>Pendente</option>
-                    </select>
-                </td>
-                <td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${comentarioBronze}</textarea></td>
-                <td class="btn_data">
-                    <button class="delete-btn" id="excluir" data-index="${x}">
-                        <i class="fa-solid fa-trash" style="color: #fa0000; font-size:1.5em; pointer-events: none;"></i>
-                    </button>
+                <td class="val_inp">
+                
+                    Se <b>${bronzeData[x].nome}</b>
+                    <span class="sig_inputs">
+                        <select>
+                            ${tipo === "Verdadeiro/Falso"
+                            ? 
+                            `<option>for verdadeiro</option>
+                            <option>for falso</option>`
+                            :
+                            `<option>for maior que</option>
+                            <option>for menor que</option>
+                            <option>for igual a</option>
+                            <option>for diferente de</option>`
+                        }
+                            
+                        </select>
+                        ${tipo !== "Verdadeiro/Falso"?
+                            `<input type="${tipo_inp}" id="inp_sig${x}">`
+                            :
+                            ""
+                        }
+                    </span>
+                    ENTÃO
+                    <input type="text" id="inp_res${x}">
                 </td>
             </tr>`;
             table.insertAdjacentHTML("afterbegin", dadosTable);
         }
     }
+
+    //<td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${comentarioBronze}</textarea></td>
+
 
     table.addEventListener("click", (e) => {
         if (e.target.classList.contains("delete-btn")) {

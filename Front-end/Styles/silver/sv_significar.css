@@ -307,4 +307,31 @@ select:disabled {
   margin-right: 4%;
   margin-top: 11%;
 }
+
+.val_inp{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    height: 60px;
+}
+
+.val_inp input{
+    width: 100px;
+}
+
+.val_inp select{
+    width: 150px;
+    text-align: center;
+}
+
+.sig_inputs{
+    display: inline-flex;
+    width: 300px;
+    align-items: center;
+    justify-content: space-around;
+}
 /* FIM DADOS DO USUARIO */
