@@ -25,11 +25,19 @@ public class Usuario implements UserDetails {
     @Column(name = "email", unique = true)
     private String email;
     private String senha;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     public Usuario(UsuarioDTO usuarioNovosDados) {
         BeanUtils.copyProperties(usuarioNovosDados, this);
+    }
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }
 
     @Override
@@ -54,6 +62,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+
         return true;
     }
 
