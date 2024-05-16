@@ -50,7 +50,12 @@ async function validar_dados(textoEmail,textoSenha){
         localStorage.setItem('roles', JSON.stringify(roles))
 
         if(response.status === 200){
-            location.href = "../Pages/usuario/home_user.html"
+            if (roles[0] === 'ROLE_ADMIN'){
+                location.href = "../Pages/admin/homeAdmin.html"
+            }
+            else {
+                location.href = "../Pages/usuario/home_user.html"
+            }
         }
 
     }catch(error){
