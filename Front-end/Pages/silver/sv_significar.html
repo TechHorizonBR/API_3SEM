@@ -1,89 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="/Front-end/media/images/logoo.ico">
-    <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
-    <link rel="stylesheet" href="/Front-end/Styles/silver/sv_significar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>NextSchema - Significado de Esquema</title>
-</head>
-<body>
-    <header>
-        <div id="left">
-            <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NS-logo" id="NS-logo">
-            <nav>
-                <ul class="menu">
-                    <li><a><i class="fa-solid fa-database" style="color: #ffffff;"></i> Metadatas</a>
-                        <ul class="metadatas">
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa-regular fa-clipboard" style="color: #ffffff;"></i> Ações</a>
-                        <ul class="upload">
-                            <li><a href="#">Histórico</a></li>
-                            <li><a href="#">Perfil de Usuário</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="../index.html"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i> Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-        <!--DADOS DO USUARIO-->
-        <div id="user-identification">
-            <div class="info_user">
-                <p id="user_name" class="user_name"></p>
-                <div class="user">
-                    <i class="fa-solid fa-user" id="user-icon"></i>
-                    <p id="">Bronze</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/Front-end/media/images/logoo.ico"
+        />
+        <link rel="stylesheet" href="/Front-end/Pages/head/head.css" />
+        <link
+            rel="stylesheet"
+            href="/Front-end/Styles/silver/sv_significar.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <title>NextSchema - Significar Metadatas</title>
+    </head>
+    <body>
+        <header>
+            <div id="left">
+                <img
+                    src="/Front-end/media/images/logo_nextschema_branco.png"
+                    alt="NS-logo"
+                    id="NS-logo"
+                />
+                <nav>
+                    <ul class="menu">
+                        <li>
+                            <a
+                                ><i
+                                    class="fa-solid fa-database"
+                                    style="color: #ffffff"
+                                ></i>
+                                Metadatas</a
+                            >
+                            <ul class="metadatas"></ul>
+                        </li>
+                        <li>
+                            <a href="#"
+                                ><i
+                                    class="fa-regular fa-clipboard"
+                                    style="color: #ffffff"
+                                ></i>
+                                Ações</a
+                            >
+                            <ul class="upload">
+                                <li><a href="#">Histórico</a></li>
+                                <li><a href="#">Perfil de Usuário</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="../index.html"
+                                ><i
+                                    class="fa-solid fa-arrow-right-from-bracket"
+                                    style="color: #ffffff"
+                                ></i>
+                                Logout</a
+                            >
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--DADOS DO USUARIO-->
+            <div id="user-identification">
+                <div class="info_user">
+                    <p id="user_name" class="user_name"></p>
+                    <div class="user">
+                        <i class="fa-solid fa-user" id="user-icon"></i>
+                        <p id="">Silver</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--DADOS DO USUARIO FIM-->
-    </header>
-    <main>
-        <div id="title">
-            Significar Esquema X
-            <div class="icon-container">
-                <i class="fa-regular fa-circle-question" id="question"></i>
-                <p id="question-input"> Nesta estapa é possível selecionar qual metadata gostaria de visualizar.</p>
+            <!--DADOS DO USUARIO FIM-->
+        </header>
+        <main>
+            <div id="filter">
+                <div id="title">Significar Metadata X</div>
             </div>
-        </div>
-        <div id="table-background">
-            <table>
-                <thead>
-                    <tr>
-                        <th scope="col">Chave</th>
-                        <th scope="col">Obrigatório</th>
-                        <th scope="col">Coluna</th>
-                        <th scope="col">Tipo de Dado</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">De/Para</th>
-                    </tr>
-                </thead>
-                <tbody id="body_dados">
-                    <!-- <tr>
-                        <td><input type="checkbox" id="checkbox"></td>
-                        <td><input type="text" class="inputs" id="input-text"></td>
-                        <td>
-                            <select class="inputs" id="select">
-                                <option value="string">Texto</option>
-                                <option value="float">Número decimal</option>
-                                <option value="int">Número inteiro</option>
-                                <option value="boolean">Verdadeiro/Falso</option>
-                                <option value="char">Caracter Único (Ex: M ou F)</option>
+            <div id="listMetadatas"></div>
+            <!-- <div class="back_prompt" id="back_prompt">
+                <div class="prompt" id="prompt">
+                    <span style="font-size: 25px; margin: 40px 0 0 60px"
+                    >Informações</span
+                >
+                    <div class="conteudoCadastro">
+                        <div class="l1">
+                            <span class="meta_row">
+                                <p>Nome Coluna:</p>
+                                <p class="meta_text">TESTE</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Tipo:</p>
+                                <p class="meta_text">Texto</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Chave:</p>
+                                <p class="meta_text">SIM</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Obrigatorio:</p>
+                                <p class="meta_text">SIM</p>
+                            </span>
+                        </div>
+                        <div class="l2">
+                            <p>Descricao:</p>
+                            <p class="meta_text">
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Donec fermentum semper ligula.
+                            </p>
+                        </div>
+                    </div>
+                    <span style="font-size: 25px; margin: 40px 0 10px 60px"
+                        >Criar De/Para</span
+                    >
+                    <div class="create_sig">
+                        Se <b>Teste</b> for
+                        <span class="sig_inputs">
+                            <select>
+                                <option>verdadeiro</option>
+                                <option>falso</option>
+                                <option>maior que</option>
+                                <option>menor que</option>
+                                <option>igual a</option>
+                                <option>diferente de</option>
                             </select>
-                        </td>
-                        <td><textarea name="desc" id="desc" class="desc_input" cols="30" rows="1" maxlength="100"></textarea></td>
-                    </tr> -->
-                </tbody>
-            </table>
-        </div>
-        <div class="button-container">
-            <button class="button" id="save">SALVAR</button>
-        </div>
-    </main>
-</body>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/Front-end/Scripts/silver/sv_significar.js"></script>
+                        </span>
+                        <input class="input_sig" id="inp_sig${x}" />
+                        ENTÃO
+                        <input class="input_sig" type="text" id="inp_res${x}" />
+                        <button class="new_sig">
+                            <p>CRIAR</p>
+                            <span class="btn_circle_create">
+                                <i
+                                    class="fa-solid fa-plus"
+                                    style="font-size: 1.2em; color: #fff"
+                                ></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="all_sig">
+                        <div class="res_sig" id="sig1">
+                            <div class="posicao_sig">1º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>maior que</b> <b>4</b>,
+                                então <b>esta muito bom</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig2">
+                            <div class="posicao_sig">2º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>igual a</b> <b>3</b>,
+                                então <b>esta aceitável</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig3">
+                            <div class="posicao_sig">3º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>menor que</b> <b>3</b>,
+                                então <b>esta ruim</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig4">
+                            <div class="posicao_sig">4º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>menor que</b> <b>2</b>,
+                                então <b>esta péssimo</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig5">
+                            <div class="posicao_sig">5º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>igual a</b> <b>5</b>,
+                                então <b>esta maravilhoso</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </main>
+    </body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/Front-end/Scripts/silver/sv_significar.js"></script>
 </html>

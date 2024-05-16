@@ -1,43 +1,39 @@
-bronzeData = "";
-columnsIds = [];
-let user = JSON.parse(localStorage.getItem("usuario"));
-met_selec = localStorage.getItem("metadata");
-
 window.onload = () => {
-    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
-    opcoes_roles_acoes(userData)
-    info_usuario(userData)
-    getBronzeData();
-    getMetadata();
+    opcoes_roles_metadata(roles, pagina_por_role, nome_por_role);
+    opcoes_roles_acoes(userData);
+    info_usuario(userData);
+    showMetadata(metadataName);
+    getSilverData();
 };
+
+let roles = JSON.parse(localStorage.getItem("roles"));
+let userData = JSON.parse(localStorage.getItem("usuario"));
 let metadata = JSON.parse(localStorage.getItem("metadata"));
 
 let metadataId = metadata.id;
 let metadataName = metadata.nome;
 
-let usuario = localStorage.getItem("usuario");
-let roles = JSON.parse(localStorage.getItem("roles"))
-let userData = JSON.parse(localStorage.getItem("usuario"));
-
-
-function opcoes_roles_acoes(userData){
+function opcoes_roles_acoes(userData) {
     let table = document.querySelector(".upload");
-    for (let i in userData.roleUsuario){
-        if (userData.roleUsuario[i] === "ROLE_LZ"){
+    for (let i in userData.roleUsuario) {
+        if (userData.roleUsuario[i] === "ROLE_LZ") {
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
+            console.log(userData.roleUsuario);
+            table.insertAdjacentHTML("beforeend", listar_metadata);
+        } else if (userData.roleUsuario[i] === "ROLE_SILVER") {
             var listar_metadata = `
             <li><a href="#">Relacionamentos</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
+            console.log(userData.roleUsuario);
+            table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
+}
+
+function showMetadata(name) {
+    document.getElementById("title").innerText = `Significar Metadata ${name}`;
 }
 
 let pagina_por_role = {
@@ -45,286 +41,255 @@ let pagina_por_role = {
     1: "../landing_zone/homeUser.html",
     2: "../bronze/bz_visualizar_metadata.html",
     3: "../silver/",
-}
-let nome_por_role= {
+};
+let nome_por_role = {
     0: "Adminstrador",
     1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
+};
+function info_usuario(userData) {
+    namespace = document.getElementById("user_name").textContent =
+        userData.nome;
 }
-function info_usuario(userData){
-    namespace = document.getElementById("user_name").textContent = userData.nome
-}
-function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
+function opcoes_roles_metadata(roles, pagina_por_role, nome_por_role) {
     let table = document.querySelector(".metadatas");
 
     for (let chave in roles) {
-        enum_role = roles[chave]
+        enum_role = roles[chave];
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
+        console.log("CHAVE:", pagina_por_role[1]);
 
-        if(roles[chave] == "ROLE_LZ"){
+        if (roles[chave] == "ROLE_LZ") {
             var listar_metadata = `
             <li><a href="${pagina_por_role[1]}">${nome_por_role[1]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }else if(roles[chave] == "ROLE_BRONZE"){
+        } else if (roles[chave] == "ROLE_BRONZE") {
             var listar_metadata = `
             <li><a href="${pagina_por_role[2]}">${nome_por_role[2]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }else if(roles[chave] == "ROLE_SILVER"){
+        } else if (roles[chave] == "ROLE_SILVER") {
             var listar_metadata = `
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
-    }
-}
-
-function generateTable() {
-    let titulo = document.getElementById("title");
-    titulo.innerHTML = "Significar metadata " + metadataName;
-
-    let table = document.getElementById("body_dados");
-    table.innerHTML = "";
-    for (let x = 0; x < bronzeData.length; x++) {
-        if(bronzeData[x].ativo !== false){
-            let tipo = "";
-            let tipo_inp = "";
-            if (bronzeData[x].tipo === "boolean") {
-                tipo = "Verdadeiro/Falso";
-                tipo_inp = "checkbox";
-            } else if (bronzeData[x].tipo === "string") {
-                tipo = "Texto";
-                tipo_inp = "text";
-            } else if (bronzeData[x].tipo === "int") {
-                tipo = "Número Inteiro";
-                tipo_inp = "number";
-            } else if (bronzeData[x].tipo === "float") {
-                tipo = "Número Decimal";
-                tipo_inp = "number";
-            } else if (bronzeData[x].tipo === "char"){
-                tipo = "Carácter Único";
-                tipo_inp = "text"
-            }else{
-                tipo = "Data";
-                tipo_inp = "date";
-            }
-
-            let dadosTable = `
-            <tr>
-            <td class="val_data" id="key${x}">${
-                bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
-            }</td>
-                <td class="val_data" id="rest${x}">${
-                bronzeData[x].restricao == "true" ? "SIM" : "NÃO"
-            }</td>
-                <td class="val_data">${bronzeData[x].nome}</td>
-                <td class="val_data">${tipo}</td>
-                <td class="val_desc">${bronzeData[x].descricao}</td>
-                <td class="val_inp">
-                
-                    Se <b>${bronzeData[x].nome}</b>
-                    <span class="sig_inputs">
-                        <select>
-                            ${tipo === "Verdadeiro/Falso"
-                            ? 
-                            `<option>for verdadeiro</option>
-                            <option>for falso</option>`
-                            :
-                            `<option>for maior que</option>
-                            <option>for menor que</option>
-                            <option>for igual a</option>
-                            <option>for diferente de</option>`
-                        }
-                            
-                        </select>
-                        ${tipo !== "Verdadeiro/Falso"?
-                            `<input type="${tipo_inp}" id="inp_sig${x}">`
-                            :
-                            ""
-                        }
-                    </span>
-                    ENTÃO
-                    <input type="text" id="inp_res${x}">
-                </td>
-            </tr>`;
-            table.insertAdjacentHTML("afterbegin", dadosTable);
         }
     }
-
-    //<td class="val_data"><textarea name="desc" id="desc${x}" class="desc_input">${comentarioBronze}</textarea></td>
-
-
-    table.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-btn")) {
-            let index = e.target.getAttribute("data-index");
-            let id = columnsIds[index];
-            confirmPrompt(id);
-        }
-    });
 }
 
-function updateNameUsuario() {
-    document.getElementById("username").innerHTML = user.nome;
-}
-
-document.getElementById("save").addEventListener("click", () => {
-    sendData();
-});
-
-async function deleteColumn(id) {
-    try {
-        let col_delete = {
-            id:id,
-            ativo:false
-        }
-        let response = await axios.patch(
-            `http://localhost:8080/colunas/update/ativo`,
-            col_delete
-        );
-        getBronzeData();
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-async function getBronzeData() {
+async function getSilverData() {
     try {
         let response = await axios.get(
             `http://localhost:8080/colunas/metadata/${metadataId}`
         );
-        bronzeData = response.data;
-        for (let coluna of bronzeData) {
-            columnsIds.push(coluna.id);
-        }
-        generateTable();
+        let silverData = response.data;
+        console.log(silverData);
+        // for (let coluna of bronzeData) {
+        //     columnsIds.push(coluna.id);
+        // }
+        generateList(silverData);
     } catch (error) {
         console.error(error);
     }
 }
 
-async function sendData(obj) {
-    try {
-        let dados = [];
-        for (let y = 0; y < bronzeData.length; y++) {
-            if(bronzeData[y].ativo !== false){
-                dados.push({
-                    id: bronzeData[y].id,
-                    chavePrimaria: document.getElementById(`checkbox${y}`).checked,
-                    validado: document.getElementById(`valid_select_${y}`).value,
-                    comentario: document.getElementById(`desc${y}`).value,
-                });
+function generateList(metadatas) {
+    let listMetadatas = document.getElementById("listMetadatas");
+
+    listMetadatas.innerHTML = "";
+
+    if (metadatas.length === 0) {
+        let metadatasList = `<h3 id="messageMet">Não há metadatas disponíveis para essa empresa</h3>`;
+        listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
+    } else {
+        for (let x = 0; x < metadatas.length; x++) {
+            let descricao = metadatas[x].descricao;
+            if (descricao.length > 20) {
+                descricao = descricao.substring(0, 30) + "...";
             }
+            let metadatasList = `
+                <div id="metadatas">
+                    <div class="line">
+                        <div class="base-name" id="name">Nome: </div>
+                        <div>${metadatas[x].nome}</div>
+                    </div>
+                    <div class="line" style="width:400px">
+                        <div class="base-name">Descrição: </div>
+                        <div>${descricao}</div>
+                    </div>
+                    <div class="viewMetadata">
+                        <i class="fa-solid fa-eye" id="view_eye"></i>
+                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata()"v>VISUALIZAR</button>
+                    </div>
+                </div>
+            `;
+            listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
         }
-
-        console.log(dados);
-        let response = await axios.put(
-            "http://localhost:8080/colunas/update/bronze",
-            dados
-        );
-
-        if (response.status === 200) {
-            newSuccessPrompt();
-        } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
-        }
-    } catch (error) {
-        console.error(error);
     }
 }
 
-function newSuccessPrompt() {
+function viewMetadata() {
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `;
 
-    var successPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text">Sucesso! Seu esquema foi Atualizado.</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", successPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        window.location.href = "bz_visualizar_metadata.html";
-    });
-}
-
-function newFailedPrompt(errors) {
-    var back = `
+    var popup_sig = `
     <div class="back_prompt" id="back_prompt">
-    </div>
-    `;
-
-    var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Valor inválido na(s) coluna(s): ${errors}</span>
-            <div id="text_validation">O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
+                <div class="prompt" id="prompt">
+                    <span class="exit_btn" id="exit_btn">X</span>
+                    <span style="font-size: 25px; margin: 40px 0 0 60px"
+                    >Informações</span>
+                    <div class="contSig">
+                        <div class="l1">
+                            <span class="meta_row">
+                                <p>Nome Coluna:</p>
+                                <p class="meta_text">TESTE</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Tipo:</p>
+                                <p class="meta_text">Texto</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Chave:</p>
+                                <p class="meta_text">SIM</p>
+                            </span>
+                            <span class="meta_row">
+                                <p>Obrigatorio:</p>
+                                <p class="meta_text">SIM</p>
+                            </span>
+                        </div>
+                        <div class="l2">
+                            <p>Descricao:</p>
+                            <p class="meta_text">
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Donec fermentum semper ligula.
+                            </p>
+                        </div>
+                    </div>
+                    <span style="font-size: 25px; margin: 40px 0 10px 60px"
+                        >Criar De/Para</span
+                    >
+                    <div class="create_sig">
+                        Se <b>Teste</b> for
+                        <span class="sig_inputs">
+                            <select>
+                                <option>verdadeiro</option>
+                                <option>falso</option>
+                                <option>maior que</option>
+                                <option>menor que</option>
+                                <option>igual a</option>
+                                <option>diferente de</option>
+                            </select>
+                        </span>
+                        <input class="input_sig" id="inp_sig" />
+                        ENTÃO
+                        <input class="input_sig" type="text" id="inp_res" />
+                        <button class="new_sig">
+                            <p>CRIAR</p>
+                            <span class="btn_circle_create">
+                                <i
+                                    class="fa-solid fa-plus"
+                                    style="font-size: 1.2em; color: #fff"
+                                ></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="all_sig">
+                        <div class="res_sig" id="sig1">
+                            <div class="posicao_sig">1º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>maior que</b> <b>4</b>,
+                                então <b>esta muito bom</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig2">
+                            <div class="posicao_sig">2º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>igual a</b> <b>3</b>,
+                                então <b>esta aceitável</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig3">
+                            <div class="posicao_sig">3º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>menor que</b> <b>3</b>,
+                                então <b>esta ruim</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig4">
+                            <div class="posicao_sig">4º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>menor que</b> <b>2</b>,
+                                então <b>esta péssimo</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="res_sig" id="sig5">
+                            <div class="posicao_sig">5º</div>
+                            <div class="text_sig">
+                                Se <b>Coluna1</b> for <b>igual a</b> <b>5</b>,
+                                então <b>esta maravilhoso</b>
+                            </div>
+                            <button class="remove_sig">
+                                <p>REMOVER</p>
+                                <span class="btn_circle_remove">
+                                    <i
+                                        class="fa-solid fa-plus"
+                                        style="font-size: 1.2em; color: #fff"
+                                    ></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
     `;
 
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", failedPrompt);
+    var_back.insertAdjacentHTML("beforeend", popup_sig);
 
-    document.getElementById("btn_ok").addEventListener("click", () => {
+    document.getElementById("exit_btn").addEventListener("click", () => {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
-    });
-}
-
-function confirmPrompt(id) {
-    let existingBackPrompt = document.getElementById("back_prompt");
-    let existingPrompt = document.getElementById("prompt");
-
-    if (existingBackPrompt) {
-        existingBackPrompt.remove();
-    }
-    if (existingPrompt) {
-        existingPrompt.remove();
-    }
-    let back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `;
-
-    let secondPrompt = `
-    <div class="prompt" id="prompt">
-        <span class="prompt_text">Confirma a exclusão da coluna?</span>
-        <div class="btns">
-            <button class="btn_p" id="btn_yes">Sim</button>
-            <button class="btn_p" id="btn_no">Não</button>
-        </div>
-    </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", secondPrompt);
-    let prompt = document.getElementById("prompt");
-
-    document.getElementById("btn_yes").addEventListener("click", () => {
-        deleteColumn(id);
-        prompt.remove();
-        var_back.remove();
-    });
-
-    document.getElementById("btn_no").addEventListener("click", () => {
-        prompt.remove();
-        var_back.remove();
     });
 }
