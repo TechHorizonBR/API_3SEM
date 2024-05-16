@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 :root {
     --bg-color: #F8F8F8;
@@ -13,7 +13,7 @@ html,body{
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
     /* font-size: 20px; */
     background-color: var(--bg-color);
-    font-family: "Inter", sans-serif;
+    font-family: "Open Sans", sans-serif;
     /* color: var(--text-color) */
     margin: 0;
     padding: 0;
@@ -89,7 +89,9 @@ nav ul.menu ul {
     left: 0;
     background-color: var(--title-color);
     padding: 0;
-    width: 10em
+    width: 10em;
+    z-index: 9999;
+    border-radius: 5%;
 }
 
 nav ul.menu ul li {
@@ -101,6 +103,7 @@ nav ul.menu li:hover ul {
 }
 
 nav ul.menu ul li:hover {
+    border-radius: 6%;
     background-color: #555;
 }
 
