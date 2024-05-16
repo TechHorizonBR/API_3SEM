@@ -20,10 +20,10 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuarios/").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/empresas").permitAll()
                         .requestMatchers(HttpMethod.GET,"/usuarios").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuarios").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .build();
