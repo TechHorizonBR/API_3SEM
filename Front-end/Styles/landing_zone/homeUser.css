@@ -127,6 +127,7 @@ main{
 
 .line{
     display: flex;
+    width: 250px;
 }
 
 #listMetadatas{
