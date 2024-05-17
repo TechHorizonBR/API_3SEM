@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.entity;
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,6 @@ public class Metadata {
     @JoinColumn(name = "empresa_id", nullable = false)
     @ManyToOne
     private Empresa empresa;
+    @Column(name = "validado")
+    private Validado validado = Validado.PENDENTE;
 }
