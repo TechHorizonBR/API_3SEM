@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.DePara;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.DeParaRepository;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeParaService {
     private final DeParaRepository deParaRepository;
+    private final ColunaService colunaService;
 
     @Transactional
     public DePara create(DePara dePara){
@@ -33,5 +35,10 @@ public class DeParaService {
     public void deleteById(Long id){
         getById(id);
         deParaRepository.deleteById(id);
+    }
+    @Transactional(readOnly = true)
+    public List<DePara> getByColuna(Long id){
+        Coluna coluna = colunaService.buscarPorId(id);
+        return deParaRepository.getDeParaByColuna(coluna);
     }
 }

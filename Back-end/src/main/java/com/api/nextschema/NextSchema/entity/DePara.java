@@ -21,7 +21,7 @@ public class DePara {
     @Column(name = "sinal", length = 20, nullable = false)
     private String sinal;
     @Column(name = "valorPadrao", length = 50, nullable = false)
-    private String valorPadrão;
+    private String valorPadrao;
     @Column(name = "valorResultado", length = 50, nullable = false)
     private String valorResultado;
 }
