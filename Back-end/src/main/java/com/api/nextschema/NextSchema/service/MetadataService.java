@@ -3,6 +3,7 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.enums.Validado;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.MetadataRepository;
@@ -55,6 +56,10 @@ public class MetadataService {
             colunaService.deleteByMetadata(metadata);
             metadataRepository.deleteById(metadata.getId());
         }
+    }
+    @Transactional(readOnly = true)
+    public List<Metadata> getValidatedMetadata() {
+        return metadataRepository.findByStatusIgnoreCase(Validado.VALIDADO);
     }
 
 }
