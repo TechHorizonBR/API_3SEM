@@ -116,9 +116,6 @@ public class MetadataController {
         List<MetadataResponseDto> metadatas = MetadataMapper.toListDto(metadataService.buscarPorEmpresa(id));
         return ResponseEntity.ok().body(metadatas);
     }
-    @GetMapping("/validado")
-    public ResponseEntity<List<Metadata>> getValidatedMetadata() {
-        return ResponseEntity.ok().body(metadataService.getValidatedMetadata());
-    }
+
 
 }
