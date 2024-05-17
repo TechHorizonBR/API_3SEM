@@ -59,7 +59,7 @@ public class MetadataService {
     }
     @Transactional(readOnly = true)
     public List<Metadata> getValidatedMetadata() {
-        return metadataRepository.findByStatusIgnoreCase(Validado.VALIDADO);
+        return metadataRepository.findByStatusIgnoreCase(2);
     }
 
 }
