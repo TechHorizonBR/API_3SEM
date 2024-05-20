@@ -4,6 +4,25 @@ window.onload = () => {
     info_usuario(usuario);
 };
 
+async function dadosDoUsuario(id, nome, email, permissao, empresa, senha) {
+    try {
+        let data = {
+            nome: nome,
+            email: email,
+            empresa: empresa,
+            permissão: permissao,
+            senha: senha,
+            id: id,
+        };
+        let response = await axios.put(
+            `http://localhost:8080/usuarios/${id}`,
+            data
+        );
+    } catch (err) {
+        console.error("ERRO:", err);
+        alert("Erro no sistema.");
+    }
+}
 
 function changePassword() {
     var back = `
@@ -42,20 +61,19 @@ function changePassword() {
             document.getElementById("back_prompt").remove();
         });
 
-        document.getElementById("btn_salvar").addEventListener("click", validateAndSubmit);
+        document.getElementById("btn_salvar").addEventListener("click", validatePassword);
     }
 
-    // Função de validação dos campos
-    function validateAndSubmit() {
+    function validatePassword() {
         const senhaAtual = document.getElementById("senha_atual").value;
         const senhaNova = document.getElementById("senha_nova").value;
         const confSenha = document.getElementById("conf_senha").value;
         
-        if (senhaAtual.length < 5) {
+        if (senhaAtual.length < 6) {
             alert("A senha atual deve ter no mínimo 5 caracteres.");
             return;
         }
-        if (senhaNova.length < 5) {
+        if (senhaNova.length < 6) {
             alert("A nova senha deve ter no mínimo 5 caracteres.");
             return;
         }
@@ -64,12 +82,10 @@ function changePassword() {
             return;
         }
 
-        // Se todas as validações passarem, a senha pode ser alterada
         alert("Senha alterada com sucesso!");
         document.getElementById("back_prompt").remove();
     }
 
-    // Adiciona o evento de clique ao botão após o carregamento do DOM
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("changePassword").addEventListener("click", changePassword);
     });
