@@ -60,10 +60,11 @@ public class ColunaService {
     public Coluna atualizarColuna(ColunaUpdateDto coluna) {
         Coluna colunaEncontrada = buscarPorId(coluna.getId());
 
-        colunaEncontrada.setDescricao(coluna.getDescricao());
+
         colunaEncontrada.setTipo(coluna.getTipo());
         colunaEncontrada.setNome(coluna.getNome());
         colunaEncontrada.setRestricao(coluna.getRestricao());
+        colunaEncontrada.setDescricao(coluna.getDescricao());
 
         return colunaRepository.save(colunaEncontrada);
     }
