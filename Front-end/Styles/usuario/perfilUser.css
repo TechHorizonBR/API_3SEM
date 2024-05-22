@@ -114,25 +114,24 @@ main{
     margin-left: 100px;
     margin-right: 100px;
     margin-top: 95px;
-    margin-bottom: 36px;
-}
-
-.nome {
-    margin-bottom: 30px
+    margin-bottom: 10px;
 }
 
 .nome p {
     font-weight: bold;
+    margin-right: 5px;
+
 }
 
 .email p{
     font-weight: bold;
     margin-top: 10px;
+    margin-right: 5px;
 }
 
 .permissoes{
     margin-left: 100px;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 .listP p {
@@ -214,6 +213,20 @@ main{
     content: "• "; /* Adiciona um ponto (disco) antes do primeiro item */
 }
 
+.nome{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+
+.email{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .alterarSenha{
     margin-left: 100px;
     padding-top: 25px;
@@ -230,8 +243,7 @@ main{
     cursor: pointer;
     font-weight: bold;
     margin-left: 4px;
-}
-
+} 
 
 /* DEIXAR NO FINAL */
 .back_prompt {
@@ -287,12 +299,19 @@ main{
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    color: black;
 }
 
 .l1 input{
     width: 300px;
+    border-color: #8080802e;
+    border-radius: 2px;
 }
+
+.l1 h3{
+    color: black;
+}
+
+.l1 p{color: black;}
 
 .l3s{
     display: flex;

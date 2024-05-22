@@ -1,28 +1,59 @@
 window.onload = () => {
-    getAllUsuarios();
-    buscarEmpresas();
-    info_usuario(usuario);
+    //getAllUsuarios();
+    //buscarEmpresas();
+    //info_usuario(usuario);
+    
 };
 
-async function dadosDoUsuario(id, nome, email, permissao, empresa, senha) {
+let usuario = JSON.parse(localStorage.getItem("usuario"));
+dadosDoUsuario(usuario.id);
+console.log(usuario.id)
+async function dadosDoUsuario(id) {
     try {
-        let data = {
-            nome: nome,
-            email: email,
-            empresa: empresa,
-            permissão: permissao,
-            senha: senha,
-            id: id,
-        };
-        let response = await axios.put(
-            `http://localhost:8080/usuarios/${id}`,
-            data
+        let response = await axios.get(
+            `http://localhost:8080/usuarios/buscar/${id}`
         );
+        response = response.data
+        let nome = document.getElementById('nome')
+        nome.innerHTML = response.nome
+
+        let emailElement = document.getElementById('email')
+        emailElement.innerHTML = response.email
+
+        let lista = response.roleUsuario
+        let listaPermissoes = document.getElementById('listaPermissoes')
+        for(i of lista){
+            var bloco = `
+                <li>${i}</li>
+            `
+            listaPermissoes.insertAdjacentHTML("beforeend", bloco);
+        }
+        let listaEmpresas = document.getElementById('listaEmpresas')
+        let listEpresa = response.listEmpresa
+        for(let idEmpresa of listEpresa){
+            
+            let responseEmpresa = await axios.get(
+                `http://localhost:8080/empresas/${idEmpresa}`
+            );
+            responseEmpresa = responseEmpresa.data
+            var bloco = `   
+                <li>${responseEmpresa.nome}</li>
+            `
+            listaEmpresas.insertAdjacentHTML("beforeend", bloco);
+        }
     } catch (err) {
         console.error("ERRO:", err);
         alert("Erro no sistema.");
     }
 }
+
+async function getEmpresaById(id){        
+    let responseEmpresa = await axios.get(
+        `http://localhost:8080/empresas/${id}`
+    );
+    return responseEmpresa;
+}
+
 
 function changePassword() {
     var back = `
@@ -64,7 +95,7 @@ function changePassword() {
         document.getElementById("btn_salvar").addEventListener("click", validatePassword);
     }
 
-    function validatePassword() {
+    async function validatePassword() {
         const senhaAtual = document.getElementById("senha_atual").value;
         const senhaNova = document.getElementById("senha_nova").value;
         const confSenha = document.getElementById("conf_senha").value;
@@ -82,7 +113,21 @@ function changePassword() {
             return;
         }
 
-        alert("Senha alterada com sucesso!");
+        let dados = {
+            id: usuario.id,
+            senhaAntiga: senhaAtual,
+            novaSenha: senhaNova,
+            novaSenhaConfirma: confSenha
+        }
+
+        let responseSenha = await axios.patch(
+            `http://localhost:8080/usuarios`, dados
+        )
+        if (responseSenha.status == 200){
+            alert("Senha alterada com sucesso!");
+        }
+
+        
         document.getElementById("back_prompt").remove();
     }
 
