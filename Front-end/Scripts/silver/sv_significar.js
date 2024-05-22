@@ -12,6 +12,8 @@ let metadata = JSON.parse(localStorage.getItem("metadata"));
 
 let metadataId = metadata.id;
 let metadataName = metadata.nome;
+let indice;
+let silverData;
 
 function opcoes_roles_acoes(userData) {
     let table = document.querySelector(".upload");
@@ -20,13 +22,11 @@ function opcoes_roles_acoes(userData) {
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-            console.log(userData.roleUsuario);
             table.insertAdjacentHTML("beforeend", listar_metadata);
         } else if (userData.roleUsuario[i] === "ROLE_SILVER") {
             var listar_metadata = `
             <li><a href="#">Relacionamentos</a></li>
         `;
-            console.log(userData.roleUsuario);
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -59,7 +59,6 @@ function opcoes_roles_metadata(roles, pagina_por_role, nome_por_role) {
         enum_role = roles[chave];
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        console.log("CHAVE:", pagina_por_role[1]);
 
         if (roles[chave] == "ROLE_LZ") {
             var listar_metadata = `
@@ -85,14 +84,37 @@ async function getSilverData() {
         let response = await axios.get(
             `http://localhost:8080/colunas/metadata/${metadataId}`
         );
-        let silverData = response.data;
-        console.log(silverData);
-        // for (let coluna of bronzeData) {
-        //     columnsIds.push(coluna.id);
-        // }
+        silverData = response.data;
         generateList(silverData);
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function sendDePara(significado, data) {
+    try {
+        let res = await axios.post(`http://localhost:8080/dePara`, significado);
+        // viewMetadata(JSON.stringify(silverData[indice]));
+        let updateSigValues = await getDePara(data.id);
+        updateAllSig(updateSigValues, data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function getDePara(id) {
+    try {
+        let res = await axios.get(`http://localhost:8080/dePara/coluna/${id}`);
+        return res.data;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function updateAllSig(sigValues, data) {
+    let allSigElement = document.getElementById("all_sig");
+    if (allSigElement) {
+        allSigElement.innerHTML = generateAllSigHTML(sigValues, data);
     }
 }
 
@@ -122,16 +144,68 @@ function generateList(metadatas) {
                     </div>
                     <div class="viewMetadata">
                         <i class="fa-solid fa-eye" id="view_eye"></i>
-                        <button class="cadastrarUsuario" id="view-metadata" onclick="viewMetadata()"v>VISUALIZAR</button>
+                        <button class="cadastrarUsuario" id="view-metadata">VISUALIZAR</button>
                     </div>
                 </div>
             `;
             listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
+
+            document.getElementById("view-metadata").addEventListener("click",()=>{
+                indice = x;
+                viewMetadata(JSON.stringify(metadatas[x]));
+            })
         }
     }
 }
 
-function viewMetadata() {
+function generateAllSigHTML(sigValues, data) {
+
+    let resultHTML = "";
+    let index = 0;
+    if (sigValues.length === 0) {
+        resultHTML = "<h2>Esta coluna não possui De/Para</h2>"
+    } else {
+        for (let key in sigValues) {
+            let sig = sigValues[index];
+            let sinal;
+            switch (sig.sinal) {
+                case ">":
+                    sinal = "maior que";
+                    break;
+                case "<":
+                    sinal = "menor que";
+                    break;
+                case "==":
+                    sinal = "igual a";
+                    break;
+                case "!=":
+                    sinal = "diferente de";
+                    break;
+                default:
+                    alert("O sinal está errado");
+                    continue;
+            }
+            resultHTML += `
+                <div class="res_sig" id="sig${index + 1}">
+                    <div class="posicao_sig">${index + 1}º</div>
+                    <div class="text_sig">Se <b>${data.nome}</b> for ${sinal} <b>${sig.valorPadrao}</b>, então <b>${sig.valorResultado}</b></div>
+                    <button class="remove_sig">
+                        <p>REMOVER</p>
+                        <span class="btn_circle_remove">
+                            <i class="fa-solid fa-plus" style="font-size: 1.2em; color: #fff"></i>
+                        </span>
+                    </button>
+                </div>`;
+            index++;
+        }
+    }
+    return resultHTML;
+}
+
+async function viewMetadata(data) {
+    data = JSON.parse(data);
+    let sigValues = await getDePara(data.id);
+
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -141,54 +215,60 @@ function viewMetadata() {
     <div class="back_prompt" id="back_prompt">
                 <div class="prompt" id="prompt">
                     <span class="exit_btn" id="exit_btn">X</span>
-                    <span style="font-size: 25px; margin: 40px 0 0 60px"
+                    <span style="font-size: 25px; margin: 0 0 0 60px"
                     >Informações</span>
                     <div class="contSig">
                         <div class="l1">
                             <span class="meta_row">
                                 <p>Nome Coluna:</p>
-                                <p class="meta_text">TESTE</p>
+                                <p class="meta_text">${data.nome}</p>
                             </span>
                             <span class="meta_row">
                                 <p>Tipo:</p>
-                                <p class="meta_text">Texto</p>
+                                <p class="meta_text">${data.tipo}</p>
                             </span>
                             <span class="meta_row">
                                 <p>Chave:</p>
-                                <p class="meta_text">SIM</p>
+                                <p class="meta_text">${data.chavePrimaria}</p>
                             </span>
                             <span class="meta_row">
                                 <p>Obrigatorio:</p>
-                                <p class="meta_text">SIM</p>
+                                <p class="meta_text">${data.restricao}</p>
                             </span>
                         </div>
                         <div class="l2">
                             <p>Descricao:</p>
                             <p class="meta_text">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Donec fermentum semper ligula.
+                                ${data.descricao}
                             </p>
                         </div>
                     </div>
-                    <span style="font-size: 25px; margin: 40px 0 10px 60px"
+                    <span style="font-size: 25px; margin: 40px 0 0 60px"
                         >Criar De/Para</span
                     >
                     <div class="create_sig">
-                        Se <b>Teste</b> for
+                        Se <b>${data.nome}</b> for
                         <span class="sig_inputs">
-                            <select>
-                                <option>verdadeiro</option>
-                                <option>falso</option>
-                                <option>maior que</option>
-                                <option>menor que</option>
-                                <option>igual a</option>
-                                <option>diferente de</option>
+                            <select id="sig_select">
+                            ${
+                                data.tipo !== "boolean"
+                                    ? `<option value="<">maior que</option>
+                            <option value=">">menor que</option>
+                            <option value="==">igual a</option>
+                            <option value="!=">diferente de</option>`
+                                    : `<option value="true">verdadeiro</option>
+                            <option value="false">falso</option>`
+                            }
                             </select>
                         </span>
-                        <input class="input_sig" id="inp_sig" />
+                        ${
+                            data.tipo !== "boolean"
+                                ? `<input class="input_sig" id="inp_sig" />`
+                                : ``
+                        }                        
                         ENTÃO
                         <input class="input_sig" type="text" id="inp_res" />
-                        <button class="new_sig">
+                        <button class="new_sig" id="btn_create_sig">
                             <p>CRIAR</p>
                             <span class="btn_circle_create">
                                 <i
@@ -198,87 +278,8 @@ function viewMetadata() {
                             </span>
                         </button>
                     </div>
-                    <div class="all_sig">
-                        <div class="res_sig" id="sig1">
-                            <div class="posicao_sig">1º</div>
-                            <div class="text_sig">
-                                Se <b>Coluna1</b> for <b>maior que</b> <b>4</b>,
-                                então <b>esta muito bom</b>
-                            </div>
-                            <button class="remove_sig">
-                                <p>REMOVER</p>
-                                <span class="btn_circle_remove">
-                                    <i
-                                        class="fa-solid fa-plus"
-                                        style="font-size: 1.2em; color: #fff"
-                                    ></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="res_sig" id="sig2">
-                            <div class="posicao_sig">2º</div>
-                            <div class="text_sig">
-                                Se <b>Coluna1</b> for <b>igual a</b> <b>3</b>,
-                                então <b>esta aceitável</b>
-                            </div>
-                            <button class="remove_sig">
-                                <p>REMOVER</p>
-                                <span class="btn_circle_remove">
-                                    <i
-                                        class="fa-solid fa-plus"
-                                        style="font-size: 1.2em; color: #fff"
-                                    ></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="res_sig" id="sig3">
-                            <div class="posicao_sig">3º</div>
-                            <div class="text_sig">
-                                Se <b>Coluna1</b> for <b>menor que</b> <b>3</b>,
-                                então <b>esta ruim</b>
-                            </div>
-                            <button class="remove_sig">
-                                <p>REMOVER</p>
-                                <span class="btn_circle_remove">
-                                    <i
-                                        class="fa-solid fa-plus"
-                                        style="font-size: 1.2em; color: #fff"
-                                    ></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="res_sig" id="sig4">
-                            <div class="posicao_sig">4º</div>
-                            <div class="text_sig">
-                                Se <b>Coluna1</b> for <b>menor que</b> <b>2</b>,
-                                então <b>esta péssimo</b>
-                            </div>
-                            <button class="remove_sig">
-                                <p>REMOVER</p>
-                                <span class="btn_circle_remove">
-                                    <i
-                                        class="fa-solid fa-plus"
-                                        style="font-size: 1.2em; color: #fff"
-                                    ></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="res_sig" id="sig5">
-                            <div class="posicao_sig">5º</div>
-                            <div class="text_sig">
-                                Se <b>Coluna1</b> for <b>igual a</b> <b>5</b>,
-                                então <b>esta maravilhoso</b>
-                            </div>
-                            <button class="remove_sig">
-                                <p>REMOVER</p>
-                                <span class="btn_circle_remove">
-                                    <i
-                                        class="fa-solid fa-plus"
-                                        style="font-size: 1.2em; color: #fff"
-                                    ></i>
-                                </span>
-                            </button>
-                        </div>
+                    <div class="all_sig" id="all_sig">
+                        ${generateAllSigHTML(sigValues, data)}
                     </div>
                 </div>
             </div>
@@ -287,6 +288,26 @@ function viewMetadata() {
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
+
+    document.getElementById("btn_create_sig").addEventListener("click", async() => {
+        let inp_sig;
+        if (document.getElementById("inp_sig")) {
+            inp_sig = document.getElementById("inp_sig").value;
+        } else {
+            inp_sig = "";
+        }
+
+        let significado = {
+            coluna: {
+                id: data.id,
+            },
+            sinal: document.getElementById("sig_select").value,
+            valorPadrao: inp_sig,
+            valorResultado: document.getElementById("inp_res").value,
+        };
+
+        await sendDePara(significado, data);
+    });
 
     document.getElementById("exit_btn").addEventListener("click", () => {
         document.getElementById("prompt").remove();
