@@ -274,12 +274,21 @@ function newFailedPrompt(errors) {
 }
 
 function confirmPrompt(id) {
-    var back = `
+    let existingBackPrompt = document.getElementById("back_prompt");
+    let existingPrompt = document.getElementById("prompt");
+
+    if (existingBackPrompt) {
+        existingBackPrompt.remove();
+    }
+    if (existingPrompt) {
+        existingPrompt.remove();
+    }
+    let back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `;
 
-    var secondPrompt = `
+    let secondPrompt = `
     <div class="prompt" id="prompt">
         <span class="prompt_text">Confirma a exclusão da coluna?</span>
         <div class="btns">
