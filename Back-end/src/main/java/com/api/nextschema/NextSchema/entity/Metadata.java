@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.entity;
 
+import com.api.nextschema.NextSchema.enums.Validado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
