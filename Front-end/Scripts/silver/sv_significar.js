@@ -111,10 +111,21 @@ async function getDePara(id) {
     }
 }
 
+async function deleteDePara(id, data){
+    try{
+        let res = await axios.delete(`http://localhost:8080/dePara/${id}`);
+        let updateSigValues = await getDePara(data.id);
+        updateAllSig(updateSigValues, data);
+    }catch(err){
+        console.error(err);
+    }
+}
+
 function updateAllSig(sigValues, data) {
     let allSigElement = document.getElementById("all_sig");
     if (allSigElement) {
         allSigElement.innerHTML = generateAllSigHTML(sigValues, data);
+        refreshDeleteButtons(sigValues, data);
     }
 }
 
@@ -181,15 +192,21 @@ function generateAllSigHTML(sigValues, data) {
                 case "!=":
                     sinal = "diferente de";
                     break;
+                case "true":
+                    sinal = "verdade";
+                    break;
+                case "false":
+                    sinal = "falso";
+                    break;
                 default:
-                    alert("O sinal está errado");
+                    alert("Sinal errado")
                     continue;
             }
             resultHTML += `
                 <div class="res_sig" id="sig${index + 1}">
                     <div class="posicao_sig">${index + 1}º</div>
                     <div class="text_sig">Se <b>${data.nome}</b> for ${sinal} <b>${sig.valorPadrao}</b>, então <b>${sig.valorResultado}</b></div>
-                    <button class="remove_sig">
+                    <button class="remove_sig" id="btn_remove_sig${index}">
                         <p>REMOVER</p>
                         <span class="btn_circle_remove">
                             <i class="fa-solid fa-plus" style="font-size: 1.2em; color: #fff"></i>
@@ -202,6 +219,15 @@ function generateAllSigHTML(sigValues, data) {
     return resultHTML;
 }
 
+function refreshDeleteButtons(sigValues, data){
+    for(let y = 0; y < sigValues.length; y++){
+        console.log(`Y: ${y}`);
+        document.getElementById(`btn_remove_sig${y}`).addEventListener("click", async()=>{
+            await deleteDePara(sigValues[y].id, data);
+        })
+    }
+}
+
 async function viewMetadata(data) {
     data = JSON.parse(data);
     let sigValues = await getDePara(data.id);
@@ -210,6 +236,21 @@ async function viewMetadata(data) {
     <div class="back_prompt" id="back_prompt">
     </div>
     `;
+
+    let tipo = "";
+    if (data.tipo === "boolean") {
+        tipo = "Verdadeiro/Falso";
+    } else if (data.tipo === "string") {
+        tipo = "Texto";
+    } else if (data.tipo === "int") {
+        tipo = "Número Inteiro";
+    } else if (data.tipo === "float") {
+        tipo = "Número Decimal";
+    } else if (data.tipo === "char"){
+        tipo = "Caracter Único";
+    }else{
+        tipo = "Data";
+    }
 
     var popup_sig = `
     <div class="back_prompt" id="back_prompt">
@@ -225,15 +266,15 @@ async function viewMetadata(data) {
                             </span>
                             <span class="meta_row">
                                 <p>Tipo:</p>
-                                <p class="meta_text">${data.tipo}</p>
+                                <p class="meta_text">${tipo}</p>
                             </span>
                             <span class="meta_row">
                                 <p>Chave:</p>
-                                <p class="meta_text">${data.chavePrimaria}</p>
+                                <p class="meta_text">${data.chavePrimaria === false ? "NÃO" : "SIM"}</p>
                             </span>
                             <span class="meta_row">
-                                <p>Obrigatorio:</p>
-                                <p class="meta_text">${data.restricao}</p>
+                                <p>Obrigatório:</p>
+                                <p class="meta_text">${data.restricao === false ? "NÃO" : "SIM"}</p>
                             </span>
                         </div>
                         <div class="l2">
@@ -250,22 +291,27 @@ async function viewMetadata(data) {
                         Se <b>${data.nome}</b> for
                         <span class="sig_inputs">
                             <select id="sig_select">
-                            ${
-                                data.tipo !== "boolean"
-                                    ? `<option value="<">maior que</option>
-                            <option value=">">menor que</option>
-                            <option value="==">igual a</option>
-                            <option value="!=">diferente de</option>`
-                                    : `<option value="true">verdadeiro</option>
-                            <option value="false">falso</option>`
-                            }
+                            ${data.tipo !== "boolean"
+                            ? data.tipo === "string" || data.tipo === "char"
+                                ? `<option value="==">igual a</option>
+                                    <option value="!=">diferente de</option>`
+                                : `<option value="<">maior que</option>
+                                    <option value=">">menor que</option>
+                                    <option value="==">igual a</option>
+                                    <option value="!=">diferente de</option>`
+                            : `
+                                <option value="true">verdadeiro</option>
+                                <option value="false">falso</option>`
+                        }
                             </select>
                         </span>
-                        ${
-                            data.tipo !== "boolean"
-                                ? `<input class="input_sig" id="inp_sig" />`
-                                : ``
-                        }                        
+                        ${data.tipo !== "boolean" && {
+                            string: `<input class="input_sig" id="inp_sig" type="text" />`,
+                            int: `<input class="input_sig" id="inp_sig" type="number" step="1" />`,
+                            float: `<input class="input_sig" id="inp_sig" type="number" step="any" />`,
+                            char: `<input class="input_sig" id="inp_sig" type="text" maxlength="1" />`,
+                            date: `<input class="input_sig" id="inp_sig" type="date" />`
+                        }[data.tipo] || ''}                     
                         ENTÃO
                         <input class="input_sig" type="text" id="inp_res" />
                         <button class="new_sig" id="btn_create_sig">
@@ -289,6 +335,11 @@ async function viewMetadata(data) {
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
 
+    console.log(sigValues);
+    console.log(data);
+
+    refreshDeleteButtons(sigValues, data);
+
     document.getElementById("btn_create_sig").addEventListener("click", async() => {
         let inp_sig;
         if (document.getElementById("inp_sig")) {
@@ -305,6 +356,14 @@ async function viewMetadata(data) {
             valorPadrao: inp_sig,
             valorResultado: document.getElementById("inp_res").value,
         };
+
+        if(document.getElementById("inp_sig")){
+            document.getElementById("inp_sig").value = "";
+        }
+
+        if(document.getElementById("inp_res")){
+            document.getElementById("inp_res").value = "";
+        }
 
         await sendDePara(significado, data);
     });
