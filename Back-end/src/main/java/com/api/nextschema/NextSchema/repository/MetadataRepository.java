@@ -11,6 +11,4 @@ import java.util.List;
 
 public interface MetadataRepository extends JpaRepository<Metadata, Long> {
     List<Metadata> findByEmpresa(Empresa empresa);
-    @Query("select m from Metadata m where m.validado = :validado")
-    List<Metadata> findByStatusIgnoreCase(@Param("validado") Validado validado);
 }
