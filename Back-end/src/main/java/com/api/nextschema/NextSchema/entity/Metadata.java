@@ -22,6 +22,4 @@ public class Metadata {
     @JoinColumn(name = "empresa_id", nullable = false)
     @ManyToOne
     private Empresa empresa;
-    @Column(name = "validado")
-    private Validado validado = Validado.PENDENTE;
 }

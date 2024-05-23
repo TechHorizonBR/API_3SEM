@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.entity.Usuario;
@@ -13,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,8 +60,25 @@ public class MetadataService {
         }
     }
     @Transactional(readOnly = true)
-    public List<Metadata> getValidatedMetadata() {
-        return metadataRepository.findByStatusIgnoreCase(Validado.VALIDADO);
+    public List<Metadata> getValidatedMetadata(Long id) {
+        List<Metadata> metadatas = buscarPorEmpresa(id);
+        List<Metadata> metadatasValidados = new ArrayList<>();
+        boolean verificador = true;
+        for(Metadata metadata : metadatas){
+            List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
+
+            for(Coluna coluna : colunas){
+                if(coluna.getValidado() != Validado.VALIDADO){
+                    verificador = false;
+                }
+            }
+            if(verificador){
+                metadatasValidados.add(metadata);
+            }else{
+                verificador = true;
+            }
+        }
+        return metadatasValidados;
     }
 
 }
