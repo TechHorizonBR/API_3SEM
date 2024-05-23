@@ -29,7 +29,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/usuarios").permitAll()
                         .requestMatchers(HttpMethod.POST,"/empresas").permitAll()
                         .requestMatchers(HttpMethod.GET,"/usuarios").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
