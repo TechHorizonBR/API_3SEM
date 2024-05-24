@@ -17,10 +17,15 @@ import java.time.LocalDateTime;
 public class Historico {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "data_hora")
+    private LocalDateTime data_hora = LocalDateTime.now();
+    @Column(name = "log")
+    private String log;
     @ManyToOne
     private Usuario usuario;
+    @Column(name = "descricao")
+    private Sring descricao;
     @ManyToOne
     private Metadata metadata;
-    @Column(name = "descricao")
-    private String descricao;
+
 }
