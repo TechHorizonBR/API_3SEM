@@ -56,8 +56,8 @@ public class EmpresaController {
     )
 
     @GetMapping("/{id}")
-    public ResponseEntity<Empresa> getbyID(@PathVariable Long id){
-        return ResponseEntity.ok().body((empresaService.buscarId(id)));
+    public ResponseEntity<EmpresaResponseDTO> getbyID(@PathVariable Long id){
+        return ResponseEntity.ok().body(EmpresaMapper.toDto(empresaService.buscarId(id)));
     }
 
     @Operation(
@@ -83,7 +83,7 @@ public class EmpresaController {
             }
     )
 
-    @GetMapping("/{cnpj}")
+    @GetMapping("/cnpj/{cnpj}")
     public ResponseEntity<EmpresaResponseDTO> getbyCNPJ(@PathVariable String cnpj){
         return ResponseEntity.status(HttpStatus.OK).body(EmpresaMapper.toDto(empresaService.buscarCNPJ(cnpj)));
     }

@@ -70,9 +70,6 @@ public class UsuarioController {
     )
     @GetMapping(value ="/email/{email}")
     public ResponseEntity<UsuarioResponseDTO> getByEmail(@PathVariable String email ){
-
-
-
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
     }
 

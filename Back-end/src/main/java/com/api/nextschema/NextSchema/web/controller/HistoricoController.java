@@ -23,26 +23,28 @@ import java.util.List;
 public class HistoricoController {
     private final HistoricoService historicoService;
 
-    @PostMapping
-    public ResponseEntity<HistoricoResponseDto> create(@RequestBody  HistoricoCreateDto dto){
-        Historico historico = historicoService.criar(HistoricoMapper.toHistorico(dto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(HistoricoMapper.toDto(historico));
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<Historico> getById(@PathVariable Long id){
-        return ResponseEntity.ok().body(historicoService.buscarPorId(id));
-    }
-    @GetMapping
-    public ResponseEntity<List<Historico>> getAll(){
-        return ResponseEntity.ok(historicoService.buscarTodos());
-    }
-    @GetMapping("/usuario")
-    public ResponseEntity<List<Historico>> getByUser(@RequestBody Usuario usuario){
-        return ResponseEntity.ok().body(historicoService.buscarPorUsuario(usuario));
-    }
-    @GetMapping("/metadata")
+
+    /*@GetMapping("/metadata")
     public ResponseEntity<List<Historico>> getByMetadata(@RequestBody Metadata metadata){
         return ResponseEntity.ok().body(historicoService.buscarPorMetada(metadata));
+    }
+
+     */
+
+    /*@Operation(
+            summary = "Buscar por metadata"
+            description = "Buscar historico por metadata"
+            response = {
+                    @ApiREsponse(responseCode= "201", description = " encontradas"),
+                            content =
+    }
+    
+     */
+
+    )
+    @getMapping("/metadata")
+    public ResponseEntity<List>HistoricoResponseDto>> getByMetadata(@PathVarible Long id) {
+        return ResponseEntity.ok().body(HistoricoMapper.toListDto(historicoService.buscarPorMetadata(id)));
     }
 
 
