@@ -139,7 +139,7 @@ width="60"></a>
 
 
 
-Story ID| Epico | User stories | Prioridade | Status
+ID História | Epico | User stories | Prioridade | Status
 --- |--- | --- | --- | --- 
 NS-20| Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
 NS-21|Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
@@ -213,6 +213,7 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 
 - Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V2_NEXTSCHEMA.pdf">Clique aqui</a>
 - Como executar: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/EXECUTAR.md">Clique aqui</a>
+- Gerenciamento de Projeto (Jira): <a href="https://techhorizon.atlassian.net/jira/software/projects/NS/boards/1/timeline?shared=&atlOrigin=eyJpIjoiMGUxNmUyZTk3NzIxNGNjNDgxYmNjNDEwYTZlZGE3OTEiLCJwIjoiaiJ9">Clique aqui</a>
 
 <span id="tecnologias">
 
