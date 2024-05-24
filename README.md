@@ -169,6 +169,30 @@ Sprint 3| 06/05/2024| 26/05/2024
 Sprint 4| 27/05/2024| 16/06/2024 
 Feira de Soluções| 27/06/2024| 27/06/2024 
 
+## Resumo de Sprints
+
+<details>
+     
+<summary>Sprint 1</summary>
+
+> Foi desenvolvido o primeiro estágio do sistema, Landing Zone, sendo entregado as funcionalides de carregamento de arquivos CSV, a personalização de esquemas de banco de dados e a sua visualização, garantindo uma base sólida para a configuração e visualização inicial dos dados. 
+
+</details>
+
+<details>
+     
+<summary>Sprint 2</summary>
+
+> Foi desenvolvido o segundo estágio do sistema, Bronze, sendo as funcionalidades gestão de usuários administradores e clientes, especificação, validação e mapeamento de chaves do esquema, além da implementação da autenticação de usuários, garantindo a segurança e integridade dos dados. 
+
+</details>
+<details>
+     
+<summary>Sprint 3</summary>
+
+> Foi desenvolvido o terceiro estágio do sistema, Silver, sendo as funcionalidades de atribuição de significados de cada coluna do Metadata, e registro de histórico de ações no sistema.
+
+</details>
 
 
 <span id="burndown">
