@@ -68,7 +68,7 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json"))
             }
     )
-    @GetMapping(value ="/{email}")
+    @GetMapping(value ="/email/{email}")
     public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
         return ResponseEntity.status(HttpStatus.OK).body(
                 UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
