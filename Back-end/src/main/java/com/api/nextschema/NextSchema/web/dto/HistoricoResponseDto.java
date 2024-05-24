@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class HistoricoResponseDto {
     private String log;
     private LocalDateTime data_hora;
+    private String descricao;
     private Usuario usuario;
     private Metadata metadata;
 }

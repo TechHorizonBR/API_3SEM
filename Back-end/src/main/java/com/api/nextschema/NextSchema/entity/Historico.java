@@ -23,6 +23,8 @@ public class Historico {
     private String log;
     @ManyToOne
     private Usuario usuario;
+    @Column(name = "descricao")
+    private Sring descricao;
     @ManyToOne
     private Metadata metadata;
 
