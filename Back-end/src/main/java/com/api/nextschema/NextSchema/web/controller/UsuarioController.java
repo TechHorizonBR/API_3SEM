@@ -69,9 +69,9 @@ public class UsuarioController {
             }
     )
     @GetMapping(value ="/email/{email}")
-    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
+    public ResponseEntity<UsuarioResponseDTO> getByEmail(@PathVariable String email ){
         return ResponseEntity.status(HttpStatus.OK).body(
-                UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
+                UsuarioMapper.toResponseDTO(usuarioService.findByEmail(email)));
     }
 
    @Operation(
