@@ -33,7 +33,7 @@ public class HistoricoService {
         return historicoRepository.findByUser(usuario.getId());
     }
     @Transactional
-    public List<Historico> buscarPorMetadata(Metadata metadata){
-        return historicoRepository.findByMetadata(metadata.getId());
+    public List<Historico> buscarPorMetadata(Long id){
+        return historicoRepository.findByMetadata(id);
     }
 }
