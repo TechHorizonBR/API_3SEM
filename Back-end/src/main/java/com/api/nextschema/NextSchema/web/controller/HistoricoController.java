@@ -33,7 +33,11 @@ public class HistoricoController {
 
     @Operation(
             summary = "Buscar por metadata"
-            description = 
+            description = "Buscar historico por metadata"
+            response = {
+                    @ApiREsponse(responseCode= "201", description = " encontradas"),
+                            content =
+    }
 
     )
     @getMapping("/metadata")
