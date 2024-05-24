@@ -107,7 +107,7 @@ function generateOptions(empresas){
 
 async function getMetadata(selectValue, empresas) {
   try{
-      let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
+      let response = await axios.get(`http://localhost:8080/metadatas/validado/empresa/${selectValue}`);
       let metadatas = response.data;
 
       if(response.status === 200) {
