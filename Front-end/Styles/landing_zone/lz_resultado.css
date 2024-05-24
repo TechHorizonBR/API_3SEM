@@ -86,8 +86,6 @@ nav ul.menu ul li:hover {
     font-size: larger;
     display: flex;
     align-items: center;
-    margin-top: 3.2em;
-    margin-left: 8em
 }
 
 #question:hover{
@@ -131,29 +129,29 @@ table {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  thead {
+}
+
+thead {
     background-color: #001233;
     color: #fff;
-  }
-  
-  th, td {
+}
+
+th, td {
     padding: 12px 20px;
     text-align: left;
-  }
-  
-  tbody tr {
+}
+
+tbody tr {
     transition: background-color 0.3s ease;
-  }
-  
-  tbody tr:nth-child(even) {
+}
+
+tbody tr:nth-child(even) {
     background-color: #f9f9f9;
-  }
-  
-  tbody tr:hover {
+}
+
+tbody tr:hover {
     background-color: #ddd;
-  }
+}
 
 #body_dados {
     height: 50px;
@@ -219,7 +217,6 @@ table {
 #save:hover {
     transform: scale(1.05);
 }
-
 
 .pen{
     display: grid;
