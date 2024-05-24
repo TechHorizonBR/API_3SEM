@@ -67,11 +67,11 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario findByEmail(String email) {
+    public UsuarioResponseDTO findByEmail(String email) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Não foi possível localizar um usuário com este e-mail"));
 
-        return usuario;
+        return vincularRole(usuario);
     }
 
     public boolean verificarEmailExistente(String email) {
