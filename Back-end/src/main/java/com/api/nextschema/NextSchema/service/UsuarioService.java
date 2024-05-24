@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
+import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.entity.UsuarioRoleAssociation;
 import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.entity.Usuario;
@@ -79,17 +80,10 @@ public class UsuarioService {
     }
 
 
-    public UsuarioResponseDTO create(UsuarioCreateDTO usuarioCreateDTO) {
-        if(verificarEmailExistente(usuarioCreateDTO.getEmail()))
+    public UsuarioResponseDTO create(Usuario novoUsuario, List<Role> roleList, List<Long> empresaList) {
+        if(verificarEmailExistente(novoUsuario.getEmail()))
             throw new DuplicateEmailException("Já existe usuário cadastrado com este email");
 
-        List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
-        List<Long> empresaList = usuarioCreateDTO.getListEmpresa();
-
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setEmail(usuarioCreateDTO.getEmail());
-        novoUsuario.setNome(usuarioCreateDTO.getNome());
-        novoUsuario.setSenha(usuarioCreateDTO.getSenha());
         novoUsuario = usuarioRepository.save(novoUsuario);
 
         usuarioRoleAssociationService.saveAssociation(novoUsuario.getId(), roleList);
