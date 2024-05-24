@@ -80,10 +80,8 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 async function initialize() {
     try {
         const empresas = await getEmpresas();
-        const metadatas = await getMetadatas();
-
-        if (empresas && metadatas) {
-            generateOptions(empresas, metadatas);
+        if (empresas) {
+            generateEmpresas(empresas);
         }
     } catch (error) {
         console.error(error);
@@ -105,9 +103,9 @@ async function getEmpresas() {
     }
 }
 
-async function getMetadatas() {
+async function getMetadata(id) {
     try {
-        let response = await axios.get(`http://localhost:8080/metadatas`);
+        let response = await axios.get(`http://localhost:8080/metadatas/empresa/${id}`);
         if(response.status === 200) {
             return response.data;
         } else {
@@ -120,9 +118,9 @@ async function getMetadatas() {
     }
 }
 
-async function getHistorico(empresa,metadata){
+async function getHistorico(id){
     try {
-        let response = await axios.get(`http://localhost:8080/historicos`);
+        let response = await axios.get(`http://localhost:8080/historicos/metadata/${id}`);
         if(response.status === 200) {
             generateTable(response.data);
         } else {
@@ -135,38 +133,47 @@ async function getHistorico(empresa,metadata){
     }
 }
 
-function generateOptions(empresas, metadatas){
-    if(empresas !== null && metadatas !== null){
+function generateEmpresas(empresas){
+    if(empresas !== null){
         for(let i = 0; i < empresas.length; i++){
             let selectOptions = `
                 <option class="option" onchange="" id="select${i}" value="${empresas[i].id}">${empresas[i].nome}</option>
             `
             select.insertAdjacentHTML("afterbegin", selectOptions);
         }
-
-        for(let i = 0; i < metadatas.length; i++){
-            let selectOptions2 = `
-                <option class="option" id="select${i}" value="${metadatas[i].id}">${metadatas[i].nome}</option>
-            `
-            select2.insertAdjacentHTML("afterbegin", selectOptions2);
-        }
     }
 };
 
-select.addEventListener("change", function () {
-    if(select.value !== "" && select2.value !== ""){
-        //getHistorico(select.value, select2.value)
+function generateMetadatas(metadatas){
+    select2.innerHTML = "";
+    select2.insertAdjacentHTML("afterbegin", `<option value="" disabled selected hidden>Selecionar</option>`)
+    for(let i = 0; i < metadatas.length; i++){
+        let selectOptions2 = `
+            <option class="option" id="select${i}" value="${metadatas[i].id}">${metadatas[i].nome}</option>
+        `
+        select2.insertAdjacentHTML("afterbegin", selectOptions2);
+    }
+}
+
+select.addEventListener("change", async function () {
+    if(select.value !== "") {
+        try {
+            let mt = await getMetadata(select.value);
+            if (mt) {
+                select2.disabled = false;
+                generateMetadatas(mt);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 });
 
 select2.addEventListener("change", function () {
-    if(select.value !== "" && select2.value !== ""){
-        //getHistorico(select.value, select2.value)
+    if(select2.value !== ""){
+        getHistorico(select2.value)
     }
 });
-
-
-
 
 function generateTable(dados) {
     let table = document.getElementById("body_dados");

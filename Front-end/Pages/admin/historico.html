@@ -15,17 +15,21 @@
             <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NS-logo" id="NS-logo">
             <nav>
                 <ul class="menu">
-                    <li><a><i class="fa-solid fa-database" style="color: #ffffff;"></i> Metadatas</a>
-                        <ul class="metadatas">
+                    <li><a href="homeAdmin.html">Home</a></li>
+                    
+                    <li><a href="#">Cadastros</a>
+                        <ul>
+                            <li><a href="cadastroEmpresa.html">Empresa</a></li>
+                            <li><a href="cadastroUsuario.html">Usuário</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fa-regular fa-clipboard" style="color: #ffffff;"></i> Ações</a>
-                        <ul class="upload">
-                            <li><a href="#">Histórico</a></li>
-                            <li><a href="#">Perfil de Usuário</a></li>
+                    
+                    <li><a href="#">Ações</a>
+                        <ul>
+                            <li><a href="#">Perfil de Usuários</a></li>
                         </ul>
                     </li>
-                    <li><a href="../index.html"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i> Logout</a></li>
+                    <li><a href="../index.html">Logout</a></li>
                 </ul>
             </nav>
         </div>
@@ -56,7 +60,7 @@
                 </div>
                 <div id="select">
                     <div>Metadata</div>
-                    <select class="select-custom" id="select-filter2">
+                    <select class="select-custom" id="select-filter2" disabled>
                         <option value="" disabled selected hidden>Selecionar</option>
                         <!-- <option class="option" value="1">Opção 1</option> -->
                     </select>
