@@ -1,25 +1,34 @@
 package com.api.nextschema.NextSchema.web.controller;
 
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.api.nextschema.NextSchema.entity.Empresa;
 import com.api.nextschema.NextSchema.service.EmpresaService;
-import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
 import com.api.nextschema.NextSchema.web.dto.EmpresaAtualizarDto;
 import com.api.nextschema.NextSchema.web.dto.EmpresaCreateDTO;
 import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import com.api.nextschema.NextSchema.web.dto.mapper.EmpresaMapper;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RestController
@@ -55,10 +64,10 @@ public class EmpresaController {
             }
     )
 
-        @GetMapping("/{id}")
-        public ResponseEntity<EmpresaResponseDTO> getbyID(@PathVariable Long id){
-            return ResponseEntity.ok().body(EmpresaMapper.toDto(empresaService.buscarId(id)));
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpresaResponseDTO> getbyID(@PathVariable Long id){
+        return ResponseEntity.ok().body(EmpresaMapper.toDto(empresaService.buscarId(id)));
+    }
 
     @Operation(
             summary = "Listar empresas.",

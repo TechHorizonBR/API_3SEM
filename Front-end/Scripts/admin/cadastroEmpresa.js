@@ -252,6 +252,8 @@ botaoCadastrar.addEventListener("click",function(){
         corretos2 = 1;
     }
     if (corretos === 1 && corretos2 === 1){
+        document.getElementById('cnpj').value = ''
+        document.getElementById('nome').value = ''
         cadastrarEmpresa(new_nome, new_cnpj);
     }
 })
@@ -264,7 +266,7 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
         };
         let response = await axios.post(`http://localhost:8080/empresas`, data)
         if(response.status == 201){
-            generateTable()
+            generateTable();
             promptSuccess();
         }else{
             alert("Erro no cadastro.")

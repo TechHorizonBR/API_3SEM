@@ -1,5 +1,7 @@
 package com.api.nextschema.NextSchema.web.controller;
 
+import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.enums.Role;
 import com.api.nextschema.NextSchema.service.UsuarioService;
 import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -65,10 +68,9 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json"))
             }
     )
-    @GetMapping(value ="/{email}")
-    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
-        return ResponseEntity.status(HttpStatus.OK).body(
-                UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
+    @GetMapping(value ="/email/{email}")
+    public ResponseEntity<UsuarioResponseDTO> getByEmail(@PathVariable String email ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
     }
 
    @Operation(
@@ -79,11 +81,17 @@ public class UsuarioController {
                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioCreateDTO.class)))
            }
    )
+
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> createUser(@Valid @RequestBody UsuarioCreateDTO usuarioCreateDTO){
 
+       List<Role> roleList = usuarioCreateDTO.getRoleUsuario();
+       List<Long> empresaList = usuarioCreateDTO.getListEmpresa();
 
-       return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(usuarioCreateDTO));
+       String passwordEncripted = new BCryptPasswordEncoder().encode(usuarioCreateDTO.getSenha());
+       Usuario newUser = new Usuario(usuarioCreateDTO.getNome(), usuarioCreateDTO.getEmail(), passwordEncripted);
+
+       return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.create(newUser, roleList, empresaList));
     }
 
     @Operation(

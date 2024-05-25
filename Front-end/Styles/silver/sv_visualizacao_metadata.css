@@ -76,17 +76,6 @@ display: block;
   margin: 5% 10% 3% 10%;
 }
 
-#btn-search{
-  margin: 1%;
-  border: none;
-  background-color: var(--bg-color);
-}
-
-#btn-search:hover{
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
 #view-metadata{
   color: #0CF030;
   border: none;
@@ -95,20 +84,8 @@ display: block;
   font-weight: bold;
 }
 
-#view_eye {
+#book {
   color: #0CF030;
-}
-
-#trash-metadata{
-  color: #f00c0c;
-  border: none;
-  background-color: #FFF;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#trash {
-  color: #f00c0c;
 }
 
 #metadatas{
@@ -127,7 +104,6 @@ display: block;
 
 .line{
   display: flex;
-  width: 250px;
 }
 
 #listMetadatas{
