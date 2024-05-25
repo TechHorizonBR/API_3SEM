@@ -14,9 +14,13 @@
 
   ## Sobre 📚
   
-<p align="left">Um sistema desenvolvido para a empresa Dom Rock com o propósito de automatizar as configurações das fontes de dados do Pipeline da empresa.
+<p align="left">Dom Rock possui uma arquitetura de processamento de dados encadeados denominado pipeline que contempla alguns estágios. Esses estágios são orquestrados de forma automatizada mediante características das fontes de dados e soluções de algoritmos de IA ou modelos matemáticos em função do negócio dos clientes. Na metodologia de implantação da solução, existe a necessidade de configurar as fontes de dados envolvidas para que a plataforma possa operar. Essa configuração, atualmente, é manual e trata-se de um passo crítico e fundamental que consome muito tempo de técnicos. O desafio, portanto, é criar uma interface amigável para configuração das fontes de dados em alguns estágios que levarão a dois benefícios tangíveis: <br>
+     
+> Maior agilidade de configurar implantação para clientes Dom Rock e;
 
-<p align="left">Neste sistema, os usuários podem realizar o upload de um arquivo CSV contendo os dados do negócio. Conforme o progresso das etapas, o sistema auxiliará o cliente a definir os itens a serem processados para a análise.</p>
+> Diminuir a dependência de técnicos especialistas para a configuração.
+
+
 
 <span id="equipe"> 
      
@@ -133,28 +137,64 @@ width="60"></a>
     </table>
   </div>
 
+## Requisitos Funcionais
+
+<details>
+     
+<summary>Clique aqui</summary>
+
+Itens
+-- |
+Desenvolver uma interface de cadastro do cliente, solução e usuários autorizados a configurar os dados |
+Desenvolver uma interface de upload de dados csv ou Excel e apresentação da estrutura dos dados (campos, tipos, regras – pode ou não conter nulos, descrição do significado do campo na perspectiva do negócio) |
+Desenvolver uma interface que define quais campos serão mapeados como chave de identificação dos dados |
+Desenvolver uma interface que será aplicada uma regra comum aos clientes que chamamos de “de/para” (exemplo: tipo de movimento 802 = transferência de estoque) |
+Desenvolver uma interface que será feito o mapeamento de cruzamento de dados (pode ser 1 ou mais fontes de dados com as respectivas chaves, para cada cruzamento ter o espaço para descrever o significado do negócio) |
+Desenvolver uma interface que será feito o mapeamento de cruzamento de dados (pode ser 1 ou mais fontes de dados com as respectivas chaves, para cada cruzamento ter o espaço para descrever o significado do negócio) |
+Desenvolver um dashboard a respeito dos dados configurados para um perfil administrador para visões quantitativas como clientes, tipos de fontes de dados, quantidade de campos etc. |
+Desenvolver uma interface que mostre a visão analítica completa da configuração. |
+
+</details>
+
+## Requisitos Não Funcionais
+
+<details>
+     
+<summary>Clique aqui</summary>
+
+Itens
+-- |
+Login e autenticação e permissão de usuários (por cliente, solução e estágio de configuração). |
+Modelagem de Banco de Dados que será utilizado para gerar arquivos YAML. |
+Log contendo a rastreabilidade das configurações. |
+O front-end deve ser desenvolvido de forma minimalista. |
+
+</details>
+
+
+
 <span id="backlog">
      
 ## Product Backlog 🔍
 
 
 
-ID História | Epico | User stories | Prioridade | Status
---- |--- | --- | --- | --- 
-NS-20| Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
-NS-21|Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
+ID da História |Epico | User stories | Prioridade | Status
+--- | --- | --- | --- | --- 
+NS-20 | Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
+NS-21 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
 NS-22 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
-NS-23| Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
-NS-28|Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ✅
+NS-23 | Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
+NS-28 | Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ✅
 NS-26 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ✅
-NS-27|Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
-NS-24 |Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
-NS-87|Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
-NS-29 | Análise e Definição de significados | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 11 | ✅
-NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 12 | ✅
-NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 13 | ✅
-NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 14 | ➖
-NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 15 | ➖
+NS-27 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
+NS-24 | Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
+NS-87 | Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
+NS-29 | Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 10 | ✅
+NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 11 | ✅
+NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 12 | ✅
+NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 13 | ➖
+NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 14 | ➖
 
 <span id="cronograma">
 
@@ -169,30 +209,6 @@ Sprint 3| 06/05/2024| 26/05/2024
 Sprint 4| 27/05/2024| 16/06/2024 
 Feira de Soluções| 27/06/2024| 27/06/2024 
 
-## Resumo de Sprints
-
-<details>
-     
-<summary>Sprint 1</summary>
-
-> Foi desenvolvido o primeiro estágio do sistema, Landing Zone, sendo entregado as funcionalides de carregamento de arquivos CSV, a personalização de esquemas de banco de dados e a sua visualização, garantindo uma base sólida para a configuração e visualização inicial dos dados. 
-
-</details>
-
-<details>
-     
-<summary>Sprint 2</summary>
-
-> Foi desenvolvido o segundo estágio do sistema, Bronze, sendo as funcionalidades gestão de usuários administradores e clientes, especificação, validação e mapeamento de chaves do esquema, além da implementação da autenticação de usuários, garantindo a segurança e integridade dos dados. 
-
-</details>
-<details>
-     
-<summary>Sprint 3</summary>
-
-> Foi desenvolvido o terceiro estágio do sistema, Silver, sendo as funcionalidades de atribuição de significados de cada coluna do Metadata, e registro de histórico de ações no sistema.
-
-</details>
 
 
 <span id="burndown">
@@ -203,7 +219,8 @@ Feira de Soluções| 27/06/2024| 27/06/2024
      
 <summary>Sprint 1</summary>
 
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/208ea577-53a0-47ea-a8e2-aaab1ced6d30)
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/056cb59d-10c8-476f-bf0a-74d50d526265)
+
 
 </details>
 
@@ -212,8 +229,7 @@ Feira de Soluções| 27/06/2024| 27/06/2024
      
 <summary>Sprint 2</summary>
 
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/2a41ad67-6c75-4d7c-9ccb-c3ed9454f6e7)
-
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/d72f60b2-b884-4561-86d5-ed0b17e77bd4)
 
 
 </details>
@@ -222,26 +238,24 @@ Feira de Soluções| 27/06/2024| 27/06/2024
      
 <summary>Sprint 3</summary>
 
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/05f3e8a2-9a44-42eb-a34a-98cb45174ec1)
+
 
 </details>
 
-<details>
-
-<summary>Sprint 4</summary>
-
-</details>
   
 <span id="docs">
 
 ## Documentação 📜
 
-- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V2_NEXTSCHEMA.pdf">Clique aqui</a>
+- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V3_NEXTSCHEMA.pdf">Clique aqui</a>
 - Como executar: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/EXECUTAR.md">Clique aqui</a>
-- Gerenciamento de Projeto (Jira): <a href="https://techhorizon.atlassian.net/jira/software/projects/NS/boards/1/timeline?shared=&atlOrigin=eyJpIjoiMGUxNmUyZTk3NzIxNGNjNDgxYmNjNDEwYTZlZGE3OTEiLCJwIjoiaiJ9">Clique aqui</a>
+- Gerenciador de Tasks(Jira): <a href="https://techhorizon.atlassian.net/jira/software/projects/NS/boards/1/backlog?atlOrigin=eyJpIjoiZTk0MmM0N2UyMDM1NGZkNThiYTA5YzM0NGU0MTRiNGQiLCJwIjoiaiJ9">Clique aqui</a>
 
 <span id="tecnologias">
 
 ## Tecnologias Utilizadas 💻
-![Readme TechHorizon 2S (1)](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/e687e1ab-dc5d-4742-9a8f-9f52e160af15)
+![Readme TechHorizon 2S (2)](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/41ae2d54-a5c5-4215-9b3f-95ef9ba39f0b)
+
 
 
