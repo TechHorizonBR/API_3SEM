@@ -63,7 +63,10 @@ async function validar_dados(textoEmail,textoSenha){
         
     })
     console.log(token)
-    let responseUser = api.get(`/usuarios/email/${textoEmail}`)
+    let responseUser = await api.get(`/usuarios/email/${textoEmail}`)
+
+
+
     console.log(responseUser)
     console.log("dkjsaldaj")
         let roles = responseUser.data.roleUsuario
