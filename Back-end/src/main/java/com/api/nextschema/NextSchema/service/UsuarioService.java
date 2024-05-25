@@ -142,10 +142,14 @@ public class UsuarioService {
         for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
             roleListservice.add(usuarioRoleAssociation.getRole());
         }
+
         responseDTO.setRoleUsuario(roleListservice);
         List<Long> idsEmpresas = new ArrayList<>();
+
         List<EmpresaResponseDTO> empresasEncontras = usuarioEmpresaService.buscarEmpresasPorUsuario(usuario.getId());
+        System.out.println("size: " + empresasEncontras.size());
         for(EmpresaResponseDTO empresaResponseDTO : empresasEncontras){
+            System.out.println("Encontrei a empresa: " + empresaResponseDTO.getNome());
             idsEmpresas.add(empresaResponseDTO.getId());
         }
         responseDTO.setListEmpresa(idsEmpresas);
@@ -162,4 +166,5 @@ public class UsuarioService {
 
         return vincularRole(usuario);
     }
+
 }
