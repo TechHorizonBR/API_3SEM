@@ -8,7 +8,7 @@
 main{
     /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
     height: calc(100vh - 100px);
-    margin: 0;
+    margin: 0% 5%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -23,7 +23,6 @@ main{
     margin-left: 50px;
     display: flex;
     align-items: center;
-    margin-top: 3.2em;
 }
 
 #question:hover{
@@ -54,31 +53,34 @@ main{
 display: block;
 }
 
-#table-background {
-    padding: 2%;
-    background-color: var(--bg-color);
-    box-shadow: 10px 10px 8px #b3b3b3;
-    height: 300px;
-    overflow-y: auto;
-    width: 80%;
-    margin: 0 auto;
-}
-
 table {
-    margin: 0 auto;
     width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-th {
-    height: 70px;
-    background-color: var(--header-color);
-    color: var(--text-color);
+thead {
+    background-color: #001233;
+    color: #fff;
 }
 
-#body_dados {
-    height: 50px;
-    color: var(--title-color);
-    border-color: var(--title-color);
+th, td {
+    padding: 12px 20px;
+    text-align: left;
+}
+
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
 }
 
 .inputs {
@@ -146,7 +148,6 @@ th {
 #validate_identification{
     padding: auto;
 }
-
 
 .back_prompt {
     height: 100vh;
@@ -221,6 +222,7 @@ th {
     padding-bottom: 15px;
     width: 150px;
 }
+
 #user-icon{
   margin-right: 4%;
   margin-top: 11%;
@@ -229,7 +231,8 @@ th {
 .menu{
     display: flex;
     gap: 70px;
-    }
+}
+
 @keyframes popupAppear {
     from {
         opacity: 0;
