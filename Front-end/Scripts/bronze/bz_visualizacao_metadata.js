@@ -3,10 +3,19 @@ window.onload = () => {
     opcoes_roles_acoes(userData)
     info_usuario(userData)
     getEmpresas();
-};
+}
+
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -34,15 +43,18 @@ let pagina_por_role = {
     2: "../bronze/bz_visualizar_metadata.html",
     3: "../silver/sv_visualizacao_metadata.html"
 }
+
 let nome_por_role= {
     0: "Adminstrador",
     1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
+
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
@@ -67,15 +79,16 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
+
 let userId = userData.id;
 let userName = userData.nome;
 
 async function getEmpresas() {
     try{
-        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
+        let response = await api.get(`/usuarioEmpresa/usuario/${userId}`);
         let empresas = response.data;
 
         if(response.status === 200) {
@@ -87,7 +100,7 @@ async function getEmpresas() {
     catch(error){
         console.error(error);
     }
-};
+}
 
 function generateOptions(empresas){
     let select = document.getElementById("select-filter");
@@ -103,24 +116,24 @@ function generateOptions(empresas){
         let selectValue = select.value;
         getMetadata(selectValue, empresas);
     });
-};
+}
 
 async function getMetadata(selectValue, empresas) {
     try{
-        let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
+        let response = await api.get(`/metadatas/empresa/${selectValue}`);
         let metadatas = response.data;
 
         if(response.status === 200) {
             generateList(metadatas, empresas, selectValue);
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
     }
 
     }
     catch(error){
         console.error(error);
     }
-};
+}
 
 function generateList(metadatas, empresas, selectValue) {
     let listMetadatas = document.getElementById("listMetadatas");
