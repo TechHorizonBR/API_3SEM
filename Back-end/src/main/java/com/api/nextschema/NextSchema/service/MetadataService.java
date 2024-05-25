@@ -1,9 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.Empresa;
-import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.enums.Validado;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.EmpresaRepository;
@@ -11,6 +8,8 @@ import com.api.nextschema.NextSchema.repository.MetadataRepository;
 import lombok.AllArgsConstructor;
 import com.api.nextschema.NextSchema.exception.DataViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +22,15 @@ public class MetadataService {
     private final MetadataRepository metadataRepository;
     private final ColunaService colunaService;
     private final EmpresaRepository empresaRepository;
+    private final HistoricoService historicoService;
     @Transactional
     public Metadata create(Metadata metadata){
         try{
-            return metadataRepository.save(metadata);
+            Metadata metadataCriado = metadataRepository.save(metadata);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Usuario usuario = (Usuario) authentication.getPrincipal();
+            historicoService.criar(new Historico(metadataCriado, String.format("Metadata %s criado.", metadataCriado.getNome()),usuario));
+            return metadataCriado;
         }catch (DataIntegrityViolationException ex){
             throw new DataViolationException("Todos os campos são obrigatórios.");
         }
@@ -41,7 +45,10 @@ public class MetadataService {
     }
     @Transactional
     public void deletebyId(Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
         Metadata metadata = findbyId(id);
+        historicoService.criar(new Historico(metadata, String.format("Metadata %s deletado.", metadata.getNome()),usuario));
         colunaService.deleteByMetadata(metadata);
         metadataRepository.deleteById(id);
 

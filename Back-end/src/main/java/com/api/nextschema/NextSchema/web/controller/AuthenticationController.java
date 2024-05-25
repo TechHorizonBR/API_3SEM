@@ -20,7 +20,7 @@ public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
-
+    @CrossOrigin("*")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO) {
 

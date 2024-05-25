@@ -139,23 +139,22 @@ width="60"></a>
 
 
 
-Epico | User stories | Prioridade | Status
---- | --- | --- | --- 
-Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
-Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
-Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
-Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
-Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ✅
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ✅
-Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
-Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
-Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
-Análise e Definição de Relacionamentos | Como usuário Silver, desejo definir os relacionamentos de uma ou mais fontes de dados, com a finalidade de gerar significado ao plano de negócio. | 10 | ➖
-Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 11 | ➖
-Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 12 | ➖
-Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 13 | ➖
-Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 14 | ➖
-Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 15 | ➖
+ID História | Epico | User stories | Prioridade | Status
+--- |--- | --- | --- | --- 
+NS-20| Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
+NS-21|Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
+NS-22 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
+NS-23| Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
+NS-28|Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ✅
+NS-26 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ✅
+NS-27|Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
+NS-24 |Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
+NS-87|Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
+NS-29 | Análise e Definição de significados | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 11 | ✅
+NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 12 | ✅
+NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 13 | ✅
+NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 14 | ➖
+NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 15 | ➖
 
 <span id="cronograma">
 
@@ -170,6 +169,30 @@ Sprint 3| 06/05/2024| 26/05/2024
 Sprint 4| 27/05/2024| 16/06/2024 
 Feira de Soluções| 27/06/2024| 27/06/2024 
 
+## Resumo de Sprints
+
+<details>
+     
+<summary>Sprint 1</summary>
+
+> Foi desenvolvido o primeiro estágio do sistema, Landing Zone, sendo entregado as funcionalides de carregamento de arquivos CSV, a personalização de esquemas de banco de dados e a sua visualização, garantindo uma base sólida para a configuração e visualização inicial dos dados. 
+
+</details>
+
+<details>
+     
+<summary>Sprint 2</summary>
+
+> Foi desenvolvido o segundo estágio do sistema, Bronze, sendo as funcionalidades gestão de usuários administradores e clientes, especificação, validação e mapeamento de chaves do esquema, além da implementação da autenticação de usuários, garantindo a segurança e integridade dos dados. 
+
+</details>
+<details>
+     
+<summary>Sprint 3</summary>
+
+> Foi desenvolvido o terceiro estágio do sistema, Silver, sendo as funcionalidades de atribuição de significados de cada coluna do Metadata, e registro de histórico de ações no sistema.
+
+</details>
 
 
 <span id="burndown">
@@ -214,6 +237,7 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 
 - Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V2_NEXTSCHEMA.pdf">Clique aqui</a>
 - Como executar: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/EXECUTAR.md">Clique aqui</a>
+- Gerenciamento de Projeto (Jira): <a href="https://techhorizon.atlassian.net/jira/software/projects/NS/boards/1/timeline?shared=&atlOrigin=eyJpIjoiMGUxNmUyZTk3NzIxNGNjNDgxYmNjNDEwYTZlZGE3OTEiLCJwIjoiaiJ9">Clique aqui</a>
 
 <span id="tecnologias">
 
