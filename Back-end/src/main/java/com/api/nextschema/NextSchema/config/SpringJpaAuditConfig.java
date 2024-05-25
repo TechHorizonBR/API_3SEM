@@ -1,22 +1,27 @@
 package com.api.nextschema.NextSchema.config;
 
-import org.springframework.context.annotation.Configuration;
+import com.api.nextschema.NextSchema.entity.Usuario;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Configuration
-@EnableJpaAuditing
-public class SpringJpaAuditConfig implements AuditorAware<String> {
+@Component
+public class SpringJpaAuditConfig implements AuditorAware<Usuario> {
+
     @Override
-    public Optional<String> getCurrentAuditor() {
+    public Optional<Usuario> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null && authentication.isAuthenticated()){
-            return Optional.of(authentication.getName());
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Usuario) {
+                return Optional.of((Usuario) principal);
+            }
         }
-        return null;
+        return Optional.empty();
     }
 }
