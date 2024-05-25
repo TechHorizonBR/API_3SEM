@@ -36,14 +36,6 @@ function verificar_campos(textoEmail, textoSenha){
     };
 }
 
-async function buscar_roles(token,email){
-    let response = await axios.get(`http://localhost:8080/usuarios/email/${email}`,{
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    })
-}
-
 async function validar_dados(textoEmail,textoSenha){
     let data = {
         email: textoEmail,
