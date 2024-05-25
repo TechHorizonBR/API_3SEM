@@ -66,6 +66,7 @@ public class UsuarioEmpresaService {
         List<UsuarioEmpresa> usuarioEmpresas = usuarioEmpresaRepository.findByUsuario(usuario);
         List<EmpresaResponseDTO> empresasDTO = new ArrayList<>();
 
+
         for (UsuarioEmpresa usuarioEmpresa : usuarioEmpresas) {
             EmpresaResponseDTO empresaDTO = new EmpresaResponseDTO();
             empresaDTO.setNome(usuarioEmpresa.getEmpresa().getNome());

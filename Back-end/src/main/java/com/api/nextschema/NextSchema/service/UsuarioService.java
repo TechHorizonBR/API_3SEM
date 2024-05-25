@@ -12,6 +12,8 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,11 +69,11 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Usuario findByEmail(String email) {
+    public UsuarioResponseDTO findByEmail(String email) {
         Usuario usuario = usuarioRepository.findUsuarioByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Não foi possível localizar um usuário com este e-mail"));
 
-        return usuario;
+        return vincularRole(usuario);
     }
 
     public boolean verificarEmailExistente(String email) {
@@ -107,13 +109,21 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        if (!usuarioAlterarSenhaDTO.getSenhaAntiga().equals(usuario.getSenha())) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (!passwordEncoder.matches(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())) {
             throw new WrongCredentialsException("Senha inválida!");
         }
         if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
             throw new WrongCredentialsException("Senhas divergentes");
         }
-        usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
+
+        // Criptografa a nova senha antes de salvar
+        String novaSenhaCriptografada = passwordEncoder.encode(usuarioAlterarSenhaDTO.getNovaSenha());
+        usuario.setSenha(novaSenhaCriptografada);
+
+        // Salva o usuário com a nova senha
+        usuarioRepository.save(usuario);
     }
 
     @Transactional
@@ -142,10 +152,14 @@ public class UsuarioService {
         for(UsuarioRoleAssociation usuarioRoleAssociation : association) {
             roleListservice.add(usuarioRoleAssociation.getRole());
         }
+
         responseDTO.setRoleUsuario(roleListservice);
         List<Long> idsEmpresas = new ArrayList<>();
+
         List<EmpresaResponseDTO> empresasEncontras = usuarioEmpresaService.buscarEmpresasPorUsuario(usuario.getId());
+        System.out.println("size: " + empresasEncontras.size());
         for(EmpresaResponseDTO empresaResponseDTO : empresasEncontras){
+            System.out.println("Encontrei a empresa: " + empresaResponseDTO.getNome());
             idsEmpresas.add(empresaResponseDTO.getId());
         }
         responseDTO.setListEmpresa(idsEmpresas);
@@ -162,4 +176,5 @@ public class UsuarioService {
 
         return vincularRole(usuario);
     }
+
 }

@@ -116,11 +116,7 @@ function generateTable(){
 }
 
 saveButton.addEventListener("click", function () {
-    saveButton.disabled = true;
     validation();
-    setTimeout(function() {
-        saveButton.disabled = false;
-        }, 5000);
 });
 
 function validation() {

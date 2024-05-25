@@ -129,6 +129,7 @@ async function getHistorico(id){
         }
     } catch(error) {
         console.error(error);
+        console.log("Disparou erro")
         return null;
     }
 }
@@ -162,6 +163,7 @@ select.addEventListener("change", async function () {
             if (mt) {
                 select2.disabled = false;
                 generateMetadatas(mt);
+                generateTable([])
             }
         } catch (error) {
             console.error(error);
@@ -171,6 +173,7 @@ select.addEventListener("change", async function () {
 
 select2.addEventListener("change", function () {
     if(select2.value !== ""){
+
         getHistorico(select2.value)
     }
 });
@@ -181,9 +184,9 @@ function generateTable(dados) {
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <tr>
-            <td>${dados[x].data_hora}</td>
-            <td>${dados[x].usuario.nome}</td>
-            <td>${dados[x].metadata.nome}</td>
+            <td>${formatDateNative(dados[x].data_hora)}</td>
+            <td>${dados[x].email_usuario}</td>
+            <td>${dados[x].log}</td>
         </tr>`;
         table.insertAdjacentHTML("afterbegin", dadosTable);
     }
@@ -192,4 +195,10 @@ function generateTable(dados) {
 
 function updateNameUsuario() {
     document.getElementById("username").innerHTML = user.nome;
+}
+
+function formatDateNative(dateString) {
+    const cleanDateString = dateString.substring(0, 23) + 'Z';
+    const date = new Date(cleanDateString);
+    return date.toLocaleString('pt-BR', { timeZone: 'UTC' });
 }

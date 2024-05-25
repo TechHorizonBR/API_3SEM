@@ -1,6 +1,7 @@
 package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.entity.Usuario;
 import com.api.nextschema.NextSchema.enums.Validado;
 import com.api.nextschema.NextSchema.service.MetadataService;
 import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
@@ -18,6 +19,8 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
