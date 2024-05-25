@@ -554,6 +554,6 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
     }
 }
 async function excluirEmpresa(id) {
-    let response = await axios.delete(`/usuarios/${id}`);
+    let response = await api.delete(`/usuarios/${id}`);
     promptDeletadosucess();
 }

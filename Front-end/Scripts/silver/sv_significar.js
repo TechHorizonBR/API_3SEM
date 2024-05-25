@@ -9,6 +9,15 @@ window.onload = () => {
 let roles = JSON.parse(localStorage.getItem("roles"));
 let userData = JSON.parse(localStorage.getItem("usuario"));
 let metadata = JSON.parse(localStorage.getItem("metadata"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 let metadataId = metadata.id;
 let metadataName = metadata.nome;
@@ -82,9 +91,7 @@ function opcoes_roles_metadata(roles, pagina_por_role, nome_por_role) {
 
 async function getSilverData() {
     try {
-        let response = await axios.get(
-            `http://localhost:8080/colunas/metadata/${metadataId}`
-        );
+        let response = await api.get(`/colunas/metadata/${metadataId}`);
         silverData = response.data;
         generateList(silverData);
     } catch (error) {
@@ -94,8 +101,7 @@ async function getSilverData() {
 
 async function sendDePara(significado, data) {
     try {
-        let res = await axios.post(`http://localhost:8080/dePara`, significado);
-        // viewMetadata(JSON.stringify(silverData[indice]));
+        let res = await api.post(`/dePara`, significado);
         let updateSigValues = await getDePara(data.id);
         updateAllSig(updateSigValues, data);
     } catch (err) {
@@ -105,7 +111,7 @@ async function sendDePara(significado, data) {
 
 async function getDePara(id) {
     try {
-        let res = await axios.get(`http://localhost:8080/dePara/coluna/${id}`);
+        let res = await api.get(`/dePara/coluna/${id}`);
         return res.data;
     } catch (err) {
         console.error(err);
@@ -114,7 +120,7 @@ async function getDePara(id) {
 
 async function deleteDePara(id, data){
     try{
-        let res = await axios.delete(`http://localhost:8080/dePara/${id}`);
+        let res = await api.delete(`/dePara/${id}`);
         let updateSigValues = await getDePara(data.id);
         updateAllSig(updateSigValues, data);
     }catch(err){
