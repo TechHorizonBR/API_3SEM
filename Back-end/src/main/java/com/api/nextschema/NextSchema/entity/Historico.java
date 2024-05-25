@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -23,8 +23,9 @@ import java.util.Objects;
 public class Historico {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @CreatedDate
     @Column(name = "data_hora")
-    private LocalDateTime data_hora = LocalDateTime.now();
+    private LocalDateTime data_hora;
     @Column(name = "log")
     private String log;
     @CreatedBy
@@ -32,6 +33,7 @@ public class Historico {
     private Usuario usuario;
     @ManyToOne
     private Metadata metadata;
+
 
     public Historico(Metadata metadata, String log, Usuario usuario){
         this.metadata = metadata;
@@ -51,4 +53,5 @@ public class Historico {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

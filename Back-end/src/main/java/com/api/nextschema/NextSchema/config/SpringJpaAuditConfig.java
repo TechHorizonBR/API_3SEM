@@ -1,4 +1,5 @@
 package com.api.nextschema.NextSchema.config;
+
 import com.api.nextschema.NextSchema.entity.Usuario;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
