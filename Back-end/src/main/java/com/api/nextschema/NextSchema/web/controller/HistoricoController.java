@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/historicos")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class HistoricoController {
     private final HistoricoService historicoService;
 
