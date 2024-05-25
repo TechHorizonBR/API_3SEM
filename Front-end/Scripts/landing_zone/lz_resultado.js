@@ -8,7 +8,15 @@ window.onload = () => {
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -69,7 +77,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 let metadata = JSON.parse(localStorage.getItem("metadata"));
@@ -85,7 +93,7 @@ var isEdit = false;
 async function getAllData() {
     try {
 
-        let response = await axios.get(`http://localhost:8080/colunas/metadata/${metadataId}`);
+        let response = await api.get(`/colunas/metadata/${metadataId}`);
 
         dados_Json = response.data;
         popularTabela();
@@ -96,8 +104,8 @@ async function getAllData() {
 
 async function updateData(newData) {
     try {
-        let response = await axios.put(
-            "http://localhost:8080/colunas/update",
+        let response = await api.put(
+            "/colunas/update",
             newData
         );
         if(response.status === 200){
