@@ -32,19 +32,22 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
   0: "../admin/homeAdmin.html",
-  1: "../landing_zone/homeUser.html",
+  1: "../landing_zone/lz_visualizar_metadata.html",
   2: "../bronze/bz_visualizar_metadata.html",
   3: "../silver/sv_visualizacao_metadata.html"
 }
+
 let nome_por_role= {
   0: "Adminstrador",
   1: "Landing Zone",
   2: "Bronze",
   3: "Silver",
 }
+
 function info_usuario(userData){
   namespace = document.getElementById("user_name").textContent = userData.nome
 }
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
   let table = document.querySelector(".metadatas");
 
@@ -87,7 +90,7 @@ async function getEmpresas() {
   catch(error){
       console.error(error);
   }
-};
+}
 
 function generateOptions(empresas){
   let select = document.getElementById("select-filter");
@@ -103,7 +106,7 @@ function generateOptions(empresas){
       let selectValue = select.value;
       getMetadata(selectValue, empresas);
   });
-};
+}
 
 async function getMetadata(selectValue, empresas) {
   try{
@@ -120,7 +123,7 @@ async function getMetadata(selectValue, empresas) {
   catch(error){
       console.error(error);
   }
-};
+}
 
 function generateList(metadatas, empresas, selectValue) {
   let listMetadatas = document.getElementById("listMetadatas");

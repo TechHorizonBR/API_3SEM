@@ -5,17 +5,27 @@ window.onload = () => {
     getEmpresas();
 };
 
-let roles = JSON.parse(localStorage.getItem("roles"))
+let roles = JSON.parse(localStorage.getItem("roles"));
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 let empresasList, selectValueEmpresa
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
     3: "../silver/sv_visualizacao_metadata.html"
 }
+
 let nome_por_role= {
     0: "Adminstrador",
     1: "Landing Zone",
@@ -52,8 +62,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
         console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
@@ -71,21 +79,22 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 
 async function getEmpresas() {
     try{
-        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userData.id}`);
+        let response = await api.get(`/usuarioEmpresa/usuario/${userData.id}`);
         let empresas = response.data;
 
         if(response.status === 200) {
             generateOptions(empresas)
             console.log(empresas)
-        }else{
+        }
+        else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
-    }
+        }
     }
     catch(error){
         console.error(error);
@@ -113,7 +122,7 @@ async function getMetadata(selectValue, empresas) {
     selectValueEmpresa = selectValue
 
     try{
-        let response = await axios.get(`http://localhost:8080/metadatas/empresa/${selectValue}`);
+        let response = await api.get(`/metadatas/empresa/${selectValue}`);
         let metadatas = response.data;
 
         if(response.status === 200) {
@@ -203,7 +212,7 @@ function confirmarExclusao(metadata){
 
 async function excluirMetadata(metadata) {
     try {
-        let response = await axios.delete(`http://localhost:8080/metadatas/${metadata}`)
+        let response = await api.delete(`/metadatas/${metadata}`)
 
         if(response.status === 204) {
             newSuccessPrompt();

@@ -1,16 +1,11 @@
 window.onload = () => {
-    //getAllUsuarios();
-    //buscarEmpresas();
-    //info_usuario(usuario);
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     opcoes_roles_acoes(userData)
     info_usuario(userData)
-    
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
-
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -34,26 +29,27 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
 }
-let nome_por_role= {
+
+let nome_por_role = {
     0: "Adminstrador",
     1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
+
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
         console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
@@ -71,13 +67,14 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 
 let usuario = JSON.parse(localStorage.getItem("usuario"));
 dadosDoUsuario(usuario.id);
 console.log(usuario.id)
+
 async function dadosDoUsuario(id) {
     try {
         let response = await axios.get(
@@ -99,14 +96,14 @@ async function dadosDoUsuario(id) {
             listaPermissoes.insertAdjacentHTML("beforeend", bloco);
         }
         let listaEmpresas = document.getElementById('listaEmpresas')
-        let listEpresa = response.listEmpresa
-        for(let idEmpresa of listEpresa){
-            
+        let listEmpresa = response.listEmpresa
+        for(let idEmpresa of listEmpresa){
+
             let responseEmpresa = await axios.get(
                 `http://localhost:8080/empresas/${idEmpresa}`
             );
             responseEmpresa = responseEmpresa.data
-            var bloco = `   
+            var bloco = `
                 <li>${responseEmpresa.nome}</li>
             `
             listaEmpresas.insertAdjacentHTML("beforeend", bloco);
@@ -117,7 +114,7 @@ async function dadosDoUsuario(id) {
     }
 }
 
-async function getEmpresaById(id){        
+async function getEmpresaById(id){
     let responseEmpresa = await axios.get(
         `http://localhost:8080/empresas/${id}`
     );
@@ -133,26 +130,26 @@ function changePassword() {
 
     var firstPrompt = `
         <div class="prompt" id="prompt">
-        <div class="conteudoEditar">
-        <div class="l0">
-            <i class="fa-solid fa-xmark" id="btnfechar"></i>
-        </div>      
-        <div class="l1">
-            <h3>ALTERAR SENHA</h3>
-            <p>Digite a senha atual:</p>
-            <input type="password" name="senha" id="senha_atual" class="fields">
-            <p>Digite a nova senha:</p>
-            <input type="password" name="novaSenha" id="senha_nova" class="fields">
-            <p>Confirme a nova senha:</p>
-            <input type="password" name="confSenha" id="conf_senha" class="fields">
-        </div>
-        <div class="l3s">
-            <button class="salvar" id="btn_salvar">SALVAR</button>
-        </div>
-    </div>
+            <div class="conteudoEditar">
+                <div class="l0">
+                    <i class="fa-solid fa-xmark" id="btnfechar"></i>
+                </div>
+                <div class="l1">
+                    <h3>ALTERAR SENHA</h3>
+                    <p>Digite a senha atual:</p>
+                    <input type="password" name="senha" id="senha_atual" class="fields">
+                    <p>Digite a nova senha:</p>
+                    <input type="password" name="novaSenha" id="senha_nova" class="fields">
+                    <p>Confirme a nova senha:</p>
+                    <input type="password" name="confSenha" id="conf_senha" class="fields">
+                </div>
+                <div class="l3s">
+                    <button class="salvar" id="btn_salvar">SALVAR</button>
+                </div>
+            </div>
         </div>
         `;
-    
+
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", firstPrompt);
@@ -167,18 +164,18 @@ function changePassword() {
 function showValidationPrompt(message) {
     var validationPrompt = `
         <div class="prompt" id="validation_prompt">
-        <div class="conteudoEditar">
-        <div class="l0">
-            <i class="fa-solid fa-xmark" id="validation_btnfechar"></i>
-        </div>      
-        <div class="l1">
-            <h3>VALIDAÇÃO</h3>
-            <p>${message}</p>
-        </div>
-        <div class="l3s">
-            <button class="ok" id="btn_ok">OK</button>
-        </div>
-    </div>
+            <div class="conteudoEditar">
+                <div class="l0">
+                    <i class="fa-solid fa-xmark" id="validation_btnfechar"></i>
+                </div>
+                <div class="l1">
+                    <h3>VALIDAÇÃO</h3>
+                    <p>${message}</p>
+                </div>
+                <div class="l3s">
+                    <button class="ok" id="btn_ok">OK</button>
+                </div>
+            </div>
         </div>
     `;
 
@@ -223,7 +220,6 @@ async function validatePassword() {
     }
 
 	postChangePassword(dados);
-
 }
 
 async function postChangePassword(dados){
