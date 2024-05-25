@@ -70,67 +70,106 @@ function changePassword() {
         <div class="l1">
             <h3>ALTERAR SENHA</h3>
             <p>Digite a senha atual:</p>
-            <input type="text" name="senha" id="senha_atual" class="fields">
+            <input type="password" name="senha" id="senha_atual" class="fields">
             <p>Digite a nova senha:</p>
-            <input type="text" name="novaSenha" id="senha_nova" class="fields">
+            <input type="password" name="novaSenha" id="senha_nova" class="fields">
             <p>Confirme a nova senha:</p>
-            <input type="text" name="confSenha" id="conf_senha" class="fields">
+            <input type="password" name="confSenha" id="conf_senha" class="fields">
         </div>
         <div class="l3s">
-            <i class="fa-solid fa-floppy-disk" id="plusCad" style="color: #0c4df0;"></i>
-            <button class="salvar" id="btn_salvar" onclick="editPrompt()">SALVAR</button>
+            <button class="salvar" id="btn_salvar">SALVAR</button>
         </div>
     </div>
         </div>
         `;
     
-        document.body.insertAdjacentHTML("beforeend", back);
-        let var_back = document.getElementById("back_prompt");
-        var_back.insertAdjacentHTML("beforeend", firstPrompt);
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", firstPrompt);
 
-        document.getElementById("btnfechar").addEventListener("click", () => {
-            document.getElementById("back_prompt").remove();
-        });
-
-        document.getElementById("btn_salvar").addEventListener("click", validatePassword);
-    }
-
-    async function validatePassword() {
-        const senhaAtual = document.getElementById("senha_atual").value;
-        const senhaNova = document.getElementById("senha_nova").value;
-        const confSenha = document.getElementById("conf_senha").value;
-        
-        if (senhaAtual.length < 6) {
-            alert("A senha atual deve ter no mínimo 5 caracteres.");
-            return;
-        }
-        if (senhaNova.length < 6) {
-            alert("A nova senha deve ter no mínimo 5 caracteres.");
-            return;
-        }
-        if (senhaNova !== confSenha) {
-            alert("A nova senha e a confirmação de senha devem ser iguais.");
-            return;
-        }
-
-        let dados = {
-            id: usuario.id,
-            senhaAntiga: senhaAtual,
-            novaSenha: senhaNova,
-            novaSenhaConfirma: confSenha
-        }
-
-        let responseSenha = await axios.patch(
-            `http://localhost:8080/usuarios`, dados
-        )
-        if (responseSenha.status == 200){
-            alert("Senha alterada com sucesso!");
-        }
-
-        
+    document.getElementById("btnfechar").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
+    });
+
+    document.getElementById("btn_salvar").addEventListener("click", validatePassword);
+}
+
+function showValidationPrompt(message) {
+    var validationPrompt = `
+        <div class="prompt" id="validation_prompt">
+        <div class="conteudoEditar">
+        <div class="l0">
+            <i class="fa-solid fa-xmark" id="validation_btnfechar"></i>
+        </div>      
+        <div class="l1">
+            <h3>VALIDAÇÃO</h3>
+            <p>${message}</p>
+        </div>
+        <div class="l3s">
+            <button class="ok" id="btn_ok">OK</button>
+        </div>
+    </div>
+        </div>
+    `;
+
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", validationPrompt);
+
+    document.getElementById("btn_ok").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+    });
+
+    document.getElementById("validation_btnfechar").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+    });
+}
+
+async function validatePassword() {
+    const senhaAtual = document.getElementById("senha_atual").value;
+    const senhaNova = document.getElementById("senha_nova").value;
+    const confSenha = document.getElementById("conf_senha").value;
+
+    if (senhaAtual.length < 5) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt("A senha atual deve ter no mínimo 5 caracteres.");
+        return;
+    }
+    if (senhaNova.length < 6) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt("A nova senha deve ter no mínimo 6 caracteres.");
+        return;
+    }
+    if (senhaNova !== confSenha) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt("A nova senha e a confirmação de senha devem ser iguais.");
+        return;
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("changePassword").addEventListener("click", changePassword);
-    });
+    let dados = {
+        id: usuario.id,
+        senhaAntiga: senhaAtual,
+        novaSenha: senhaNova,
+        novaSenhaConfirma: confSenha
+    }
+
+	postChangePassword(dados);
+
+}
+
+async function postChangePassword(dados){
+	try {
+        let responseSenha = await axios.patch(`http://localhost:8080/usuarios`, dados);
+        if (responseSenha.status === 200) {
+            document.getElementById("prompt").remove();
+            showValidationPrompt("Senha alterada com sucesso!");
+        }
+    } catch (error) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt("Erro ao alterar a senha. Tente novamente.");
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("changePassword").addEventListener("click", changePassword);
+});
