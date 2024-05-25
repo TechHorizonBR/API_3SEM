@@ -36,20 +36,48 @@ function verificar_campos(textoEmail, textoSenha){
         };
 }
 
+
+async function buscar_roles(token,email){
+    let response = await axios.get(`http://localhost:8080/usuarios/email/${email}`,{
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    })
+
+    console.log(response)
+}
 async function validar_dados(textoEmail,textoSenha){
     let data = {
         email: textoEmail,
         senha: textoSenha
     }
     try {
-        let response = await axios.post(`http://localhost:8080/usuarios/login`, data)
-        let roles = response.data.roleUsuario
-        console.log(roles)
-        usuario = response.data
+        let response = await axios.post(`http://localhost:8080/auth/login`, data)
+        let token = response.data.token
+
+        const api = await axios.create({
+            baseURL:`http://localhost:8080`,
+            headers: {
+            'Authorization': `Bearer ${token}`
+        }
+
+    })
+    console.log(token)
+    let responseUser = await api.get(`/usuarios/email/${textoEmail}`)
+
+
+
+    console.log(responseUser)
+    console.log("dkjsaldaj")
+        let roles = responseUser.data.roleUsuario
+        console.log(token)
+        usuario = responseUser.data
         localStorage.setItem('usuario', JSON.stringify(usuario))
         localStorage.setItem('roles', JSON.stringify(roles))
 
         if(response.status === 200){
+
+
             if (roles[0] === 'ROLE_ADMIN'){
                 location.href = "../Pages/admin/homeAdmin.html"
             }
@@ -64,9 +92,10 @@ async function validar_dados(textoEmail,textoSenha){
             console.log(error.response.data.message)}
         else{
             alert("Ocorreu um erro no sistema, tente novamente mais tarde")
+        }
     }
 }
-}
+
 function prompt_login(message){
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -88,6 +117,6 @@ function prompt_login(message){
     let prompt = document.getElementById("prompt");
 
     document.getElementById("btn_cont").addEventListener("click", ()=>{
-            prompt.remove();
-            document.getElementById("back_prompt").remove()})
+        prompt.remove();
+        document.getElementById("back_prompt").remove()})
 }

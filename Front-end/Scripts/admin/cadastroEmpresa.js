@@ -5,6 +5,43 @@ window.onload = () => {
 
 var jsonusuario = localStorage.getItem("usuario");
 var usuario = JSON.parse(jsonusuario);
+let campoNome = document.getElementById("nome")
+let campoCnpj = document.getElementById("cnpj")
+let botaoCadastrar = document.querySelector("#cadastrarEmp")
+botaoCadastrar.addEventListener("click",function(){
+    validar_cnpj_e_nome()
+})
+
+campoNome.addEventListener("input", ()=>{
+    let value = campoNome.value
+    if(value.length > 15){
+        value = value.slice(0, 15);
+    }
+    campoNome.value = value;
+})
+
+campoCnpj.addEventListener("input", ()=>{
+    formatar_campo_cnpj();
+})
+
+function formatar_campo_cnpj(){    
+    let value = campoCnpj.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (value.length > 14) {
+        value = value.slice(0, 14);
+    }
+    let formattedValue = '';
+    for (let i = 0; i < value.length; i++) {
+        if (i === 2 || i === 5) {
+            formattedValue += '.'; 
+        } else if (i === 8) {
+            formattedValue += '/';
+        } else if (i === 12) {
+            formattedValue += '-'; 
+        }
+        formattedValue += value[i];
+    }
+    campoCnpj.value = formattedValue;
+}
 
 function info_usuario(usuario){
     namespace = document.getElementById("user_name").textContent = usuario.nome
@@ -151,39 +188,6 @@ async function generateTable(){
     }
 }
 
-let campoNome = document.getElementById("nome")
-campoNome.addEventListener("input", ()=>{
-    let value = campoNome.value
-    if(value.length > 15){
-        value = value.slice(0, 15);
-    }
-    campoNome.value = value;
-})
-
-
-
-
-let campoCnpj = document.getElementById("cnpj")
-campoCnpj.addEventListener("input", ()=>{
-    let value = campoCnpj.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-                if (value.length > 14) {
-                    value = value.slice(0, 14);
-                }
-                let formattedValue = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i === 2 || i === 5) {
-                        formattedValue += '.'; 
-                    } else if (i === 8) {
-                        formattedValue += '/';
-                    } else if (i === 12) {
-                        formattedValue += '-'; 
-                    }
-                    formattedValue += value[i];
-                }
-                campoCnpj.value = formattedValue;
-})
-
-
 async function editarEmpresa(id, new_nome){
     try{
         console.log(`Id: ${id} NOVO NOME: ${new_nome}`);
@@ -230,34 +234,23 @@ function editPrompt() {
     });
 }
 
+function validar_cnpj_e_nome(){
+    let new_nome = document.getElementById('nome').value.toUpperCase();
+    let new_cnpj = document.getElementById('cnpj').value.replace(/[.\-\/\s]/g, '');
+    switch (new_cnpj,new_nome){
 
-let botaoCadastrar = document.querySelector("#cadastrarEmp")
-botaoCadastrar.addEventListener("click",function(){
-    let corretos = 1;
-    let corretos2 = 1;
-    let new_nome = document.getElementById('nome').value;
-    let new_cnpj = document.getElementById('cnpj').value;
-    new_nome = new_nome.toUpperCase();
-    new_cnpj = new_cnpj.replace(/[.\-\/\s]/g, '');
-    if (new_cnpj.length < 14){
-        alert("Digite CNPJ corretamente.")
-        corretos = 0;
-    } else {
-        corretos = 1;
-    }
-    if (new_nome.length < 2){
-        alert("Digite um NOME válido.")
-        corretos2 = 0;
-    } else {
-        corretos2 = 1;
-    }
-    if (corretos === 1 && corretos2 === 1){
-        document.getElementById('cnpj').value = ''
-        document.getElementById('nome').value = ''
-        cadastrarEmpresa(new_nome, new_cnpj);
-    }
-})
+        case new_cnpj.length < 14:
+            alert("Digite CNPJ corretamente.")
+            break;
 
+        case new_nome.length < 2:
+            alert("Digite um NOME válido.")
+            break;
+
+        default:
+            cadastrarEmpresa(new_nome, new_cnpj);
+    }
+}
 async function cadastrarEmpresa(new_nome, new_cnpj){
     try{
         let data = {
