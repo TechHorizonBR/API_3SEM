@@ -6,6 +6,14 @@ window.onload = () => {
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -77,9 +85,7 @@ console.log(usuario.id)
 
 async function dadosDoUsuario(id) {
     try {
-        let response = await axios.get(
-            `http://localhost:8080/usuarios/buscar/${id}`
-        );
+        let response = await api.get(`/usuarios/buscar/${id}`);
         response = response.data
         let nome = document.getElementById('nome')
         nome.innerHTML = response.nome
@@ -99,9 +105,7 @@ async function dadosDoUsuario(id) {
         let listEmpresa = response.listEmpresa
         for(let idEmpresa of listEmpresa){
 
-            let responseEmpresa = await axios.get(
-                `http://localhost:8080/empresas/${idEmpresa}`
-            );
+            let responseEmpresa = await api.get(`/empresas/${idEmpresa}`);
             responseEmpresa = responseEmpresa.data
             var bloco = `
                 <li>${responseEmpresa.nome}</li>
@@ -115,9 +119,7 @@ async function dadosDoUsuario(id) {
 }
 
 async function getEmpresaById(id){
-    let responseEmpresa = await axios.get(
-        `http://localhost:8080/empresas/${id}`
-    );
+    let responseEmpresa = await api.get(`/empresas/${id}`);
     return responseEmpresa;
 }
 
@@ -224,7 +226,7 @@ async function validatePassword() {
 
 async function postChangePassword(dados){
 	try {
-        let responseSenha = await axios.patch(`http://localhost:8080/usuarios`, dados);
+        let responseSenha = await api.patch(`/usuarios`, dados);
         if (responseSenha.status === 200) {
             document.getElementById("prompt").remove();
             showValidationPrompt("Senha alterada com sucesso!");

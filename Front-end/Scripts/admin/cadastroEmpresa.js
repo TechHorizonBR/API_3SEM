@@ -3,8 +3,17 @@ window.onload = () => {
     info_usuario(usuario)
 };
 
-var jsonusuario = localStorage.getItem("usuario");
-var usuario = JSON.parse(jsonusuario);
+let usuario = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
+
+
 let campoNome = document.getElementById("nome")
 let campoCnpj = document.getElementById("cnpj")
 let botaoCadastrar = document.querySelector("#cadastrarEmp")
@@ -24,19 +33,19 @@ campoCnpj.addEventListener("input", ()=>{
     formatar_campo_cnpj();
 })
 
-function formatar_campo_cnpj(){    
-    let value = campoCnpj.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+function formatar_campo_cnpj(){
+    let value = campoCnpj.value.replace(/\D/g, '');
     if (value.length > 14) {
         value = value.slice(0, 14);
     }
     let formattedValue = '';
     for (let i = 0; i < value.length; i++) {
         if (i === 2 || i === 5) {
-            formattedValue += '.'; 
+            formattedValue += '.';
         } else if (i === 8) {
             formattedValue += '/';
         } else if (i === 12) {
-            formattedValue += '-'; 
+            formattedValue += '-';
         }
         formattedValue += value[i];
     }
@@ -57,20 +66,18 @@ function firstPrompt(id, nome){
     `
 
     var firstPrompt = `
-    
-        
     <div class="prompt" id="prompt">
         <div class="l0">
             <i class="fa-solid fa-xmark" id="fechar"></i>
-        </div>  
-        <div class="conteudoPrompt"> 
+        </div>
+        <div class="conteudoPrompt">
             <span class="prompt_text">Inserir novo Nome:</span>
             <input type="text" class="input_data" id="input_data" value=${nome}>
             <div class="btns">
                 <button class="btn_p" id="btn_cont" onclick="editPrompt">Salvar</button>
             </div>
         </div>
-    </div>    
+    </div>
     `
 
     document.body.insertAdjacentHTML('beforeend', back);
@@ -90,16 +97,14 @@ function firstPrompt(id, nome){
             editarEmpresa(id, nomeData);
         }
     })
-    
+
     document.getElementById("fechar").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
     });
-
-    
 }
 
 async function excluirEmpresa(id){
-    let response = await axios.delete(`http://localhost:8080/empresas/${id}`)
+    let response = await api.delete(`/empresas/${id}`)
     console.log(response)
     if(response.status == 204){
         document.getElementById("back_prompt").remove();
@@ -134,7 +139,6 @@ function promptDelete(id){
 
     document.getElementById("btn_sim").addEventListener("click", () => {
         excluirEmpresa(id)
-        
     });
 }
 
@@ -162,9 +166,8 @@ function promptDeleteEmp(){
     });
 }
 
-
 async function generateTable(){
-    let response = await axios.get("http://localhost:8080/empresas");
+    let response = await api.get("/empresas");
     dados = response.data;
     console.log(response);
 
@@ -195,7 +198,7 @@ async function editarEmpresa(id, new_nome){
             nome:new_nome.toUpperCase(),
             id:id
         }
-        let response = await axios.put(`http://localhost:8080/empresas`, data)
+        let response = await api.put(`/empresas`, data)
         console.log(response)
         if(response.status == 200){
             generateTable();
@@ -257,7 +260,7 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
             cnpj: new_cnpj,
             nome: new_nome
         };
-        let response = await axios.post(`http://localhost:8080/empresas`, data)
+        let response = await api.post(`/empresas`, data)
         if(response.status == 201){
             generateTable();
             promptSuccess();
@@ -295,5 +298,3 @@ function promptSuccess() {
         document.getElementById("prompt").remove();
     });
 }
-
-
