@@ -32,7 +32,7 @@ let pagina_por_role = {
     0: "../admin/homeAdmin.html",
     1: "../landing_zone/homeUser.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
 }
 let nome_por_role= {
     0: "Adminstrador",
