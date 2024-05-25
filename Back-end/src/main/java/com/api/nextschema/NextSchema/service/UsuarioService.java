@@ -12,6 +12,8 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.UsuarioMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,13 +109,21 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(usuarioAlterarSenhaDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Não existe usuário com este id"));
 
-        if (!usuarioAlterarSenhaDTO.getSenhaAntiga().equals(usuario.getSenha())) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (!passwordEncoder.matches(usuarioAlterarSenhaDTO.getSenhaAntiga(), usuario.getSenha())) {
             throw new WrongCredentialsException("Senha inválida!");
         }
         if (!Objects.equals(usuarioAlterarSenhaDTO.getNovaSenha(), usuarioAlterarSenhaDTO.getNovaSenhaConfirma())) {
             throw new WrongCredentialsException("Senhas divergentes");
         }
-        usuarioRepository.atualizarSenha(usuarioAlterarSenhaDTO.getId(), usuarioAlterarSenhaDTO.getNovaSenha());
+
+        // Criptografa a nova senha antes de salvar
+        String novaSenhaCriptografada = passwordEncoder.encode(usuarioAlterarSenhaDTO.getNovaSenha());
+        usuario.setSenha(novaSenhaCriptografada);
+
+        // Salva o usuário com a nova senha
+        usuarioRepository.save(usuario);
     }
 
     @Transactional
