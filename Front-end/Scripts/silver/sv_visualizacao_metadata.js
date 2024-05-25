@@ -7,8 +7,14 @@ window.onload = () => {
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
-let userId = userData.id;
-let userName = userData.nome;
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
 
 function opcoes_roles_acoes(userData){
   let table = document.querySelector(".upload");
@@ -78,7 +84,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
 async function getEmpresas() {
   try{
-      let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
+      let response = await api.get(`/usuarioEmpresa/usuario/${userData.id}`);
       let empresas = response.data;
 
       if(response.status === 200) {
@@ -110,7 +116,7 @@ function generateOptions(empresas){
 
 async function getMetadata(selectValue, empresas) {
   try{
-      let response = await axios.get(`http://localhost:8080/metadatas/validado/empresa/${selectValue}`);
+      let response = await api.get(`/metadatas/validado/empresa/${selectValue}`);
       let metadatas = response.data;
 
       if(response.status === 200) {
