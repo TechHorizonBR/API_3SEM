@@ -60,7 +60,7 @@ async function validar_dados(textoEmail,textoSenha){
             headers: {
             'Authorization': `Bearer ${token}`
         }
-        
+
     })
     console.log(token)
     let responseUser = await api.get(`/usuarios/email/${textoEmail}`)
@@ -74,7 +74,6 @@ async function validar_dados(textoEmail,textoSenha){
         usuario = responseUser.data
         localStorage.setItem('usuario', JSON.stringify(usuario))
         localStorage.setItem('roles', JSON.stringify(roles))
-        
 
         if(response.status === 200){
 
@@ -93,9 +92,10 @@ async function validar_dados(textoEmail,textoSenha){
             console.log(error.response.data.message)}
         else{
             alert("Ocorreu um erro no sistema, tente novamente mais tarde")
+        }
     }
 }
-}
+
 function prompt_login(message){
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -117,6 +117,6 @@ function prompt_login(message){
     let prompt = document.getElementById("prompt");
 
     document.getElementById("btn_cont").addEventListener("click", ()=>{
-            prompt.remove();
-            document.getElementById("back_prompt").remove()})
+        prompt.remove();
+        document.getElementById("back_prompt").remove()})
 }
