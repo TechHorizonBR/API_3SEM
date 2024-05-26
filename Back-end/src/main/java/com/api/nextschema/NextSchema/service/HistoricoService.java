@@ -36,4 +36,12 @@ public class HistoricoService {
     public List<Historico> buscarPorMetadata(Long id){
         return historicoRepository.findByMetadata(id);
     }
+
+    public void deleteByMetadata(Metadata metadata) {
+        historicoRepository.deleteByMetadata(metadata);
+    }
+
+    public void deleteByUsuario(Usuario usuario) {
+        historicoRepository.deleteByUsuario(usuario);
+    }
 }

@@ -13,6 +13,14 @@ let userData = JSON.parse(localStorage.getItem("usuario"));
 
 let select = document.getElementById("select-filter1");
 let select2 = document.getElementById("select-filter2");
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
 
 
 function opcoes_roles_acoes(userData){
@@ -90,7 +98,7 @@ async function initialize() {
 
 async function getEmpresas() {
     try {
-        let response = await axios.get(`http://localhost:8080/empresas`);
+        let response = await api.get(`/empresas`);
         if(response.status === 200) {
             return response.data;
         } else {
@@ -105,7 +113,7 @@ async function getEmpresas() {
 
 async function getMetadata(id) {
     try {
-        let response = await axios.get(`http://localhost:8080/metadatas/empresa/${id}`);
+        let response = await api.get(`/metadatas/empresa/${id}`);
         if(response.status === 200) {
             return response.data;
         } else {
@@ -120,8 +128,10 @@ async function getMetadata(id) {
 
 async function getHistorico(id){
     try {
-        let response = await axios.get(`http://localhost:8080/historicos/metadata/${id}`);
+        let response = await api.get(`/historicos/metadata/${id}`);
+        console.log(response)
         if(response.status === 200) {
+            console.log(response.data)
             generateTable(response.data);
         } else {
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
@@ -198,6 +208,8 @@ function updateNameUsuario() {
 }
 
 function formatDateNative(dateString) {
+    if (!dateString) return ""; // Verifica se dateString é null ou vazio
+
     const cleanDateString = dateString.substring(0, 23) + 'Z';
     const date = new Date(cleanDateString);
     return date.toLocaleString('pt-BR', { timeZone: 'UTC' });

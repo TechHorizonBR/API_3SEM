@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,8 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRoleAssociationService usuarioRoleAssociationService;
-
+    @Autowired
+    private HistoricoService historicoService;
     @Autowired
     EmpresaService empresaService;
     @Autowired
@@ -99,9 +101,10 @@ public class UsuarioService {
     public void deletarUsuario(Long idUsuario) {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new EntityNotFoundException("Usuário não cadastrado"));
 
-        usuarioRoleAssociationService.deleteAssociation(idUsuario);
+        usuarioRoleAssociationService.deleteAssociation(usuario.getId());
         usuarioEmpresaService.deleteByUsuario(usuario);
-        usuarioRepository.deleteById(usuario.getId());
+        historicoService.deleteByUsuario(usuario);
+        usuarioRepository.deleteByEmail(usuario.getEmail());
     }
 
     @Transactional

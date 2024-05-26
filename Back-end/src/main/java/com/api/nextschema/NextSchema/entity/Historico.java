@@ -25,7 +25,7 @@ public class Historico {
     private Long id;
     @CreatedDate
     @Column(name = "data_hora")
-    private LocalDateTime data_hora;
+    private LocalDateTime data_hora = LocalDateTime.now();
     @Column(name = "log")
     private String log;
     @CreatedBy
