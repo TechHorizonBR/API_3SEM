@@ -1,16 +1,18 @@
 window.onload = () => {
-    //getAllUsuarios();
-    //buscarEmpresas();
-    //info_usuario(usuario);
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     opcoes_roles_acoes(userData)
-    info_usuario(userData)
-    
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -34,27 +36,23 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
 }
-let nome_por_role= {
+
+let nome_por_role = {
     0: "Adminstrador",
     1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
-function info_usuario(userData){
-    namespace = document.getElementById("user_name").textContent = userData.nome
-}
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -71,18 +69,17 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 
 let usuario = JSON.parse(localStorage.getItem("usuario"));
 dadosDoUsuario(usuario.id);
 console.log(usuario.id)
+
 async function dadosDoUsuario(id) {
     try {
-        let response = await axios.get(
-            `http://localhost:8080/usuarios/buscar/${id}`
-        );
+        let response = await api.get(`/usuarios/buscar/${id}`);
         response = response.data
         let nome = document.getElementById('nome')
         nome.innerHTML = response.nome
@@ -94,21 +91,19 @@ async function dadosDoUsuario(id) {
         let listaPermissoes = document.getElementById('listaPermissoes')
         for(i of lista){
             var bloco = `
-                <li>${i}</li>
-            `
+                <span class="badge">${i}</span>
+            `;
             listaPermissoes.insertAdjacentHTML("beforeend", bloco);
         }
         let listaEmpresas = document.getElementById('listaEmpresas')
-        let listEpresa = response.listEmpresa
-        for(let idEmpresa of listEpresa){
-            
-            let responseEmpresa = await axios.get(
-                `http://localhost:8080/empresas/${idEmpresa}`
-            );
+        let listEmpresa = response.listEmpresa
+        for(let idEmpresa of listEmpresa){
+
+            let responseEmpresa = await api.get(`/empresas/${idEmpresa}`);
             responseEmpresa = responseEmpresa.data
-            var bloco = `   
-                <li>${responseEmpresa.nome}</li>
-            `
+            var bloco = `
+                <span class="badge">${responseEmpresa.nome}</span>
+            `;
             listaEmpresas.insertAdjacentHTML("beforeend", bloco);
         }
     } catch (err) {
@@ -116,14 +111,6 @@ async function dadosDoUsuario(id) {
         alert("Erro no sistema.");
     }
 }
-
-async function getEmpresaById(id){        
-    let responseEmpresa = await axios.get(
-        `http://localhost:8080/empresas/${id}`
-    );
-    return responseEmpresa;
-}
-
 
 function changePassword() {
     var back = `
@@ -133,26 +120,26 @@ function changePassword() {
 
     var firstPrompt = `
         <div class="prompt" id="prompt">
-        <div class="conteudoEditar">
-        <div class="l0">
-            <i class="fa-solid fa-xmark" id="btnfechar"></i>
-        </div>      
-        <div class="l1">
-            <h3>ALTERAR SENHA</h3>
-            <p>Digite a senha atual:</p>
-            <input type="password" name="senha" id="senha_atual" class="fields">
-            <p>Digite a nova senha:</p>
-            <input type="password" name="novaSenha" id="senha_nova" class="fields">
-            <p>Confirme a nova senha:</p>
-            <input type="password" name="confSenha" id="conf_senha" class="fields">
-        </div>
-        <div class="l3s">
-            <button class="salvar" id="btn_salvar">SALVAR</button>
-        </div>
-    </div>
+            <div class="conteudoEditar">
+                <div class="l0">
+                    <i class="fa-solid fa-xmark" id="btnfechar"></i>
+                </div>
+                <div class="l1">
+                    <h3>ALTERAR SENHA</h3>
+                    <p>Digite a senha atual:</p>
+                    <input type="password" name="senha" class="input_senha" id="senha_atual" class="fields">
+                    <p>Digite a nova senha:</p>
+                    <input type="password" name="novaSenha" class="input_senha" id="senha_nova" class="fields">
+                    <p>Confirme a nova senha:</p>
+                    <input type="password" name="confSenha" class="input_senha" id="conf_senha" class="fields">
+                </div>
+                <div class="l3s">
+                    <button class="btn" id="btn_salvar">SALVAR</button>
+                </div>
+            </div>
         </div>
         `;
-    
+
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", firstPrompt);
@@ -167,18 +154,18 @@ function changePassword() {
 function showValidationPrompt(message) {
     var validationPrompt = `
         <div class="prompt" id="validation_prompt">
-        <div class="conteudoEditar">
-        <div class="l0">
-            <i class="fa-solid fa-xmark" id="validation_btnfechar"></i>
-        </div>      
-        <div class="l1">
-            <h3>VALIDAÇÃO</h3>
-            <p>${message}</p>
-        </div>
-        <div class="l3s">
-            <button class="ok" id="btn_ok">OK</button>
-        </div>
-    </div>
+            <div class="conteudoEditar">
+                <div class="l0">
+                    <i class="fa-solid fa-xmark" id="validation_btnfechar"></i>
+                </div>
+                <div class="l1">
+                    <h3>VALIDAÇÃO</h3>
+                    <p>${message}</p>
+                </div>
+                <div class="l3s">
+                    <button class="btn" id="btn_ok">OK</button>
+                </div>
+            </div>
         </div>
     `;
 
@@ -194,41 +181,44 @@ function showValidationPrompt(message) {
     });
 }
 
-async function validatePassword() {
+function validatePassword() {
     const senhaAtual = document.getElementById("senha_atual").value;
     const senhaNova = document.getElementById("senha_nova").value;
     const confSenha = document.getElementById("conf_senha").value;
 
-    if (senhaAtual.length < 5) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A senha atual deve ter no mínimo 5 caracteres.");
-        return;
-    }
-    if (senhaNova.length < 6) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A nova senha deve ter no mínimo 6 caracteres.");
-        return;
-    }
-    if (senhaNova !== confSenha) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A nova senha e a confirmação de senha devem ser iguais.");
-        return;
+    let validationMessage = '';
+
+    switch (true) {
+        case (senhaAtual.length < 5):
+            validationMessage = "A senha atual deve ter no mínimo 5 caracteres.";
+            break;
+        case (senhaNova.length < 6):
+            validationMessage = "A nova senha deve ter no mínimo 6 caracteres.";
+            break;
+        case (senhaNova !== confSenha):
+            validationMessage = "A nova senha e a confirmação de senha devem ser iguais.";
+            break;
+        default:
+            let dados = {
+                id: usuario.id,
+                senhaAntiga: senhaAtual,
+                novaSenha: senhaNova,
+                novaSenhaConfirma: confSenha
+            };
+            postChangePassword(dados);
+            return;
     }
 
-    let dados = {
-        id: usuario.id,
-        senhaAntiga: senhaAtual,
-        novaSenha: senhaNova,
-        novaSenhaConfirma: confSenha
+    if (validationMessage) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt(validationMessage);
     }
-
-	postChangePassword(dados);
-
 }
+
 
 async function postChangePassword(dados){
 	try {
-        let responseSenha = await axios.patch(`http://localhost:8080/usuarios`, dados);
+        let responseSenha = await api.patch(`/usuarios`, dados);
         if (responseSenha.status === 200) {
             document.getElementById("prompt").remove();
             showValidationPrompt("Senha alterada com sucesso!");

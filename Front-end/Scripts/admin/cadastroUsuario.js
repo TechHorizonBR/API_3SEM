@@ -4,7 +4,16 @@ window.onload = () => {
     info_usuario(usuario);
 };
 
-var usuario = JSON.parse(localStorage.getItem("usuario"));
+let usuario = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
+
 let empresas_bubble = document.getElementById("options-selected");
 let perm_bubble = document.getElementById("options_perm");
 let roles = [];
@@ -95,7 +104,7 @@ function limparCampo() {
 }
 
 async function getAllUsuarios() {
-    let response = await axios.get("http://localhost:8080/usuarios");
+    let response = await api.get("/usuarios");
     dados = response.data;
     gerarTabela(dados);
 }
@@ -130,7 +139,7 @@ function gerarTabela(dados) {
 }
 
 async function buscarEmpresas() {
-    let response = await axios.get("http://localhost:8080/empresas");
+    let response = await api.get("/empresas");
     let empresas_json = response.data;
 
     if (response.status == 200) {
@@ -173,7 +182,7 @@ function montarUsuario(roles) {
 }
 async function cadastrarUsuario(dataJson) {
     try {
-        let response = await axios.post("http://localhost:8080/usuarios", dataJson);
+        let response = await api.post("/usuarios", dataJson);
         if (response.status === 201) {
             promptCadastradosucess();
         }
@@ -270,7 +279,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     let empresas_json;
     async function buscarEmpresasEditar() {
-        let response = await axios.get("http://localhost:8080/empresas");
+        let response = await api.get("/empresas");
         empresas_json = response.data;
     
         if (response.status == 200) {
@@ -288,7 +297,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         <div class="conteudoEditar">
         <div class="l0">
             <i class="fa-solid fa-xmark" id="btnfechar" ></i>
-        </div>      
+        </div>
         <div class="l1">
             <p>Nome:</p>
             <input type="text" name="nome" id="nome_edit" value=${nome} class="fields">
@@ -305,7 +314,6 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                     <option value="">Selecione...</option>
                 </select>
                 <div class="options-selected" id="options-selected_edit">
-                    
                 </div>
 
             </div>
@@ -320,7 +328,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                     <option value="ROLE_SILVER">Silver</option>
                 </select>
                 <div class="options-selected" id="options_perm_edit">
-                    
+
                 </div>
             </div>
 
@@ -493,7 +501,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     async function atualizarUsuario(dataJson) {
         try {
-            let response = await axios.put("http://localhost:8080/usuarios", dataJson);
+            let response = await api.put("/usuarios", dataJson);
             if (response.status === 200) {
                 document.getElementById("back_prompt").remove();
                 getAllUsuarios();
@@ -509,7 +517,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         <div class="back_prompt" id="back_prompt">
         </div>
         `;
-    
+
         var editPrompt = `
             <div class="prompt1" id="prompt">
                 <span class="prompt_text">Alteração feita com sucesso!</span>
@@ -518,11 +526,11 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                 </div>
             </div>
         `;
-    
+
         document.body.insertAdjacentHTML("beforeend", back);
         let var_back = document.getElementById("back_prompt");
         var_back.insertAdjacentHTML("beforeend", editPrompt);
-    
+
         document.getElementById("btn_OK").addEventListener("click", () => {
             document.getElementById("back_prompt").remove();
             document.getElementById("prompt").remove();
@@ -533,7 +541,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         let newNomeEdit = document.getElementById("nome_edit").value;
         let newemailEdit = document.getElementById("email_edit").value;
         let newsenhaEdit = document.getElementById("senha_edit").value;
-    
+
         let dataJson = {
             id:parseInt(id),
             nome: newNomeEdit.toUpperCase(),
@@ -546,6 +554,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
     }
 }
 async function excluirEmpresa(id) {
-    let response = await axios.delete(`http://localhost:8080/usuarios/${id}`);
-    promptDeletadosucess();
+    let response = await api.delete(`/usuarios/${id}`);
+    if(response.status == 204) promptDeletadosucess();
+    else alert("Alguma coisa não ocorreu bem!")
 }

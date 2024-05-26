@@ -48,7 +48,7 @@ public class MetadataService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuario = (Usuario) authentication.getPrincipal();
         Metadata metadata = findbyId(id);
-        historicoService.criar(new Historico(metadata, String.format("Metadata %s deletado.", metadata.getNome()),usuario));
+        historicoService.deleteByMetadata(metadata);
         colunaService.deleteByMetadata(metadata);
         metadataRepository.deleteById(id);
 
@@ -63,6 +63,7 @@ public class MetadataService {
         List<Metadata> metadatas = buscarPorEmpresa(empresa.getId());
         for(Metadata metadata : metadatas){
             colunaService.deleteByMetadata(metadata);
+            historicoService.deleteByMetadata(metadata);
             metadataRepository.deleteById(metadata.getId());
         }
     }

@@ -7,7 +7,15 @@ window.onload = function() {
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -31,9 +39,9 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
 }
 let nome_por_role= {
     0: "Adminstrador",
@@ -49,8 +57,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
         console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
@@ -96,7 +102,7 @@ async function sendMetadata(id_empresa){
 
         console.log(newMetadata)
 
-        const res = await axios.post("http://localhost:8080/metadatas",newMetadata,{
+        const res = await api.post("http://localhost:8080/metadatas",newMetadata,{
             headers:{
                 'Content-Type': 'application/json'
             }
@@ -119,7 +125,7 @@ async function sendCSV(file){
         const formData = new FormData();
         formData.append('file',file);
         formData.append('header', cabecalho);
-        const res = await axios.post("http://localhost:8080/api/upload",formData,{
+        const res = await api.post("http://localhost:8080/api/upload",formData,{
             headers:{
                 "Content-Type":"multipart/form-data"
             }
@@ -214,7 +220,7 @@ function botao_fechar(){
 
 async function getEmpresas() {
     try{
-        let response = await axios.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
+        let response = await api.get(`http://localhost:8080/usuarioEmpresa/usuario/${userId}`);
         let empresas = response.data
         console.log(response.data)
 

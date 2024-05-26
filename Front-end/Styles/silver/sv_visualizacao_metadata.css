@@ -104,6 +104,7 @@ display: block;
 
 .line{
   display: flex;
+  width: 250px;
 }
 
 #listMetadatas{

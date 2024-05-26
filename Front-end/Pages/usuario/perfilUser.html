@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +50,7 @@
                             <div class="overlay-text">Foto de Perfil</div>
                         </div>
                     </div>
-                
+
                     <div id="optionsMenu" class="options-menu">
                         <ul>
                             <li><input type="file" accept="image/*" id="uploadInput" onchange="uploadImage(event)"> Upload</li>
@@ -60,35 +59,36 @@
                     </div>
                 </div>
 
-                <div class="lineNomeEmail">
-                    <div class= "nome">
-                        <p>Nome: <p id="nome"></p></p>
+                <div id="dados">
+                    <div class="lineNomeEmail">
+                        <div class= "nome">
+                            <p class="titulos">Nome: <p id="nome"></p></p>
+                        </div>
+                        <div class= "email">
+                            <p class="titulos">E-mail: <p id="email"></p></p>
+                        </div>
                     </div>
-                    <div class= "email">
-                        <p>E-mail: <p id="email"></p></p>
-                    </div>
-                </div>
-                <div class="permissoes">
-                    <div class ="listP">
-                        <p>Minhas Permissões:</p>
-                        <ul class="listaEmLinha" id="listaPermissoes">
-                            
-                        </ul>
-                    </div>
-                </div>
-                <div class="empresas">
-                    <div class="listE">
-                        <p>Minhas Empresas:</p>
-                        <ul class="listaEmp" id="listaEmpresas">
-                            
-                        </ul>
-                    </div>
+                    <div class="permissoes">
+                        <div class ="listP">
+                            <p class="titulos" >Minhas Permissões:</p>
+                            <ul class="listaEmLinha" id="listaPermissoes">
 
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="empresas">
+                        <div class="listE">
+                            <p class="titulos">Minhas Empresas:</p>
+                            <ul class="listaEmp" id="listaEmpresas">
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="alterarSenha">
                     <i class="fa-solid fa-lock" id="cadeado"></i>
                     <button class="trocarSenha" id="changePassword">TROCAR SENHA</button>
-                </div>            
+                </div>
             </div>
         </div>
     </main>

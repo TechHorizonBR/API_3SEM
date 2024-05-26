@@ -5,8 +5,7 @@
   --title-color: #303030;
 }
 
-main{
-  /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
+main {
   height: calc(100vh - 100px);
   margin: 0;
   display: flex;
@@ -14,7 +13,8 @@ main{
   align-content: center;
   flex-wrap: nowrap;
 }
-#messageMet{
+
+#messageMet {
   text-align: center;
   justify-content: center;
 }
@@ -26,7 +26,7 @@ main{
   align-items: center;
 }
 
-#question:hover{
+#question:hover {
   transform: scale(1.2);
   cursor: pointer;
 }
@@ -54,7 +54,7 @@ main{
   display: block;
 }
 
-#filter{
+#filter {
   display: flex;
   justify-content: space-between;
   margin: 5% 10% 3% 10%;
@@ -81,29 +81,17 @@ align-self: flex-end;
   width: 150px;
 }
 
-#user-icon{
+#user-icon {
 margin-right: 4%;
 margin-top: 11%;
 }
 /* FIM DADOS DO USUARIO */
-.menu{
+.menu {
   display: flex;
   gap: 70px;
 }
 
-/* .roles_btn{
-  color: var(--header-color);
-  background-color: var(--text-color);
-  border-color: var(--header-color);
-  width: 250px;
-  height: 100px;
-  font-size: larger;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
-} */
-
-.roles_btn{
+.roles_btn {
   background-color: var(--header-color);
   border-color: var(--header-color);
   color: var(--text-color);
@@ -113,6 +101,7 @@ margin-top: 11%;
   font-weight: bold;
   border-radius: 10px;
   cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 #buttons{

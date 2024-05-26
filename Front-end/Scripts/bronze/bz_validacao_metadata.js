@@ -1,24 +1,24 @@
-bronzeData = "";
-columnsIds = [];
-                                    let user = JSON.parse(localStorage.getItem("usuario"));
-met_selec = localStorage.getItem("metadata");
-
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     opcoes_roles_acoes(userData)
     info_usuario(userData)
     getBronzeData();
-    getMetadata();
 };
-let metadata = JSON.parse(localStorage.getItem("metadata"));
 
-let metadataId = metadata.id;
-let metadataName = metadata.nome;
+bronzeData = "";
+columnsIds = [];
 
-let usuario = localStorage.getItem("usuario");
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let metadata = JSON.parse(localStorage.getItem("metadata"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -42,19 +42,23 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
+
 }
+
 let nome_por_role= {
     0: "Adminstrador",
     1: "Landing Zone",
     2: "Bronze",
     3: "Silver",
 }
+
 function info_usuario(userData){
     namespace = document.getElementById("user_name").textContent = userData.nome
 }
+
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
@@ -79,13 +83,13 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        }  
+        }
     }
 }
 
 function generateTable() {
     let titulo = document.getElementById("title");
-    titulo.innerHTML = "Visualização do metadata " + metadataName;
+    titulo.innerHTML = "Visualização do metadata " + metadata.nome;
 
     let table = document.getElementById("body_dados");
     table.innerHTML = "";
@@ -153,10 +157,6 @@ function generateTable() {
     });
 }
 
-function updateNameUsuario() {
-    document.getElementById("username").innerHTML = user.nome;
-}
-
 document.getElementById("save").addEventListener("click", () => {
     sendData();
 });
@@ -167,10 +167,7 @@ async function deleteColumn(id) {
             id:id,
             ativo:false
         }
-        let response = await axios.patch(
-            `http://localhost:8080/colunas/update/ativo`,
-            col_delete
-        );
+        let response = await api.patch(`/colunas/update/ativo`, col_delete);
         getBronzeData();
     } catch (err) {
         console.error(err);
@@ -179,9 +176,7 @@ async function deleteColumn(id) {
 
 async function getBronzeData() {
     try {
-        let response = await axios.get(
-            `http://localhost:8080/colunas/metadata/${metadataId}`
-        );
+        let response = await api.get(`/colunas/metadata/${metadata.id}`);
         bronzeData = response.data;
         for (let coluna of bronzeData) {
             columnsIds.push(coluna.id);
@@ -192,7 +187,7 @@ async function getBronzeData() {
     }
 }
 
-async function sendData(obj) {
+async function sendData() {
     try {
         let dados = [];
         for (let y = 0; y < bronzeData.length; y++) {
@@ -207,10 +202,7 @@ async function sendData(obj) {
         }
 
         console.log(dados);
-        let response = await axios.put(
-            "http://localhost:8080/colunas/update/bronze",
-            dados
-        );
+        let response = await api.put("/colunas/update/bronze", dados);
 
         if (response.status === 200) {
             newSuccessPrompt();

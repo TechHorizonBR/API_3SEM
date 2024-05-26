@@ -14,7 +14,7 @@ function gerar_botao_por_role() {
 
   let pagina_por_role = {
     "ADMIN": "../admin/homeAdmin.html",
-    "ROLE_LZ": "../landing_zone/homeUser.html",
+    "ROLE_LZ": "../landing_zone/lz_visualizar_metadata.html",
     "ROLE_BRONZE": "../bronze/bz_visualizar_metadata.html",
     "ROLE_SILVER": "../silver/sv_visualizacao_metadata.html",
   };
