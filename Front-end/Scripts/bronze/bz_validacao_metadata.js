@@ -167,7 +167,7 @@ async function deleteColumn(id) {
             id:id,
             ativo:false
         }
-        let response = await api.patch(`/colunas/update/ativo`, col_delete);
+        let response = await api.delete(`/colunas/${id}`);
         getBronzeData();
     } catch (err) {
         console.error(err);

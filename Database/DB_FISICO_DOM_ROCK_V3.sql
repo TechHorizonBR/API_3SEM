@@ -61,4 +61,14 @@ CREATE TABLE coluna (
     REFERENCES metadata(id),
     CONSTRAINT verificar_tipo
     CHECK (tipo IN("string", "int", "float", "boolean", "char"))
-)
+);
+
+
+CREATE TABLE DePara (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sinal VARCHAR(255),
+    valorPadrao VARCHAR(255),
+    valorResultado VARCHAR(255),
+    fk_Coluna_id INT,
+    CONSTRAINT fk_Coluna_id FOREIGN KEY (fk_Coluna_id) REFERENCES Coluna(id) ON DELETE CASCADE
+);

@@ -7,10 +7,9 @@
 
 main{
     height: calc(100vh - 100px);
-    margin: 0% 5%;
+    margin: 5% 5%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-content: center;
     flex-wrap: nowrap;
 }
