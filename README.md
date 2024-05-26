@@ -26,116 +26,18 @@
      
 ## Contribuidores 👨‍💻👩‍💻
 
-  <div align="center">
-    <table >
-      <tr>
-        <th>NOME</th>
-        <th>FUNÇÃO</th>
-        <th>NETWORKING</th>
-        <th>IDENTIFICAÇÃO</th>
-      </tr>
-      <tr>
-        <td align="center">Amanda Vannucci</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/Amandavannuccic"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/amanda-vannucci/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <a href="" ><img src="https://avatars.githubusercontent.com/u/127263243?v=4" width="60"></a>
-        </td>
-      <tr>
-      <tr>
-        <td align="center">André Filipe</td>
-        <td align="center">Product Owner</td>      
-        <td align="center">
-          <a href="https://github.com/AndreMeneses0103"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/andre-meneses-dev/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <a href="" ><img src="https://github.com/TechHorizonBR/API_3SEM/assets/89109574/ca09a732-b248-41dc-ab7c-145822ffd74b" 
-width="60"></a>
-        </td>
-      <tr>
-          <tr>
-        <td align="center">Beatriz Plácido</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/BeatrizPlacido"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/beatrizzpl%C3%A1cido"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <a href="" ><img src="https://avatars.githubusercontent.com/u/127264395?v=4" width="60"></a>
-        </td>
-      <tr>
-      <tr>
-        <td align="center">Gilvane Amaro</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/gilvaneamaro"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white5" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/gilvane-amaro/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/121205315?v=4" width="60">
-        </td>
-      <tr>
-                 <tr>
-        <td align="center">Jhony Santos</td>
-        <td align="center">Scrum Master</td>      
-        <td align="center">
-          <a href="https://github.com/santosjhony12"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/jhony-santos-de-souza-920229238"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/123211025?v=4" width="60">
-        </td>
-      <tr>
-      <tr>
-        <td align="center">Lucas Lima</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/SuieverSide"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/lucas-lima-a20055144/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/31674205?v=4" width="60">
-        </td>
-      <tr>
-      <tr>
-        <td align="center">Luis Guimarães</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/LuisPGuimaraes"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white5" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/luis-guimar%C3%A3es-99865b1b8"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/127263371?v=4" width="60">
-        </td>
-      <tr>
-      <tr>
-        <td align="center">Raul Neto</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/raulnt"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/raul-neto-b51b24157/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/127263427?v=4" width="60">
-        </td>
-      <tr>
-      <tr>
-        <td align="center">Vitória Brancatti</td>
-        <td align="center">Developer</td>      
-        <td align="center">
-          <a href="https://github.com/vitoriabrancatti"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>
-          <a href="https://www.linkedin.com/in/vitoriabrancatti/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-        </td>
-        <td align="center">
-          <img src="https://avatars.githubusercontent.com/u/102263593?v=4" width="60">
-        </td>
-      <tr>
-    </table>
-  </div>
+
+Nome | Função | Networking | Identificação
+--- | --- | --- | --- | 
+Amanda Vannucci | Developer |   <a href="https://github.com/Amandavannuccic"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/amanda-vannucci/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |    <a href="" ><img src="https://avatars.githubusercontent.com/u/127263243?v=4" width="60"></a>
+André Filipe | Product Owner | <a href="https://github.com/AndreMeneses0103"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a><a href="https://www.linkedin.com/in/andre-meneses-dev/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> | <a href="" ><img src="https://github.com/TechHorizonBR/API_3SEM/assets/89109574/ca09a732-b248-41dc-ab7c-145822ffd74b" width="60"></a> |
+Beatriz Plácido | Developer | <a href="https://github.com/BeatrizPlacido"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a><a href="https://www.linkedin.com/in/beatrizzpl%C3%A1cido"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>| <a href="" ><img src="https://avatars.githubusercontent.com/u/127264395?v=4" width="60"></a>
+Gilvane Amaro | Developer| <a href="https://github.com/gilvaneamaro"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white5" alt="GitHub"></a> <a href="https://www.linkedin.com/in/gilvane-amaro/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |<img src="https://avatars.githubusercontent.com/u/121205315?v=4" width="60">|
+Jhony Santos | Scrum Master| <a href="https://github.com/santosjhony12"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a><a href="https://www.linkedin.com/in/jhony-santos-de-souza-920229238"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |<img src="https://avatars.githubusercontent.com/u/123211025?v=4" width="60">|
+Lucas Lima|Developer|<a href="https://github.com/SuieverSide"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/lucas-lima-a20055144/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> | <img src="https://avatars.githubusercontent.com/u/31674205?v=4" width="60"> |
+Luis Guimarães | Developer | <a href="https://github.com/LuisPGuimaraes"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white5" alt="GitHub"></a><a href="https://www.linkedin.com/in/luis-guimar%C3%A3es-99865b1b8"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |<img src="https://avatars.githubusercontent.com/u/127263371?v=4" width="60"> |
+Raul Neto|Developer| <a href="https://github.com/raulnt"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/raul-neto-b51b24157/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |<img src="https://avatars.githubusercontent.com/u/127263427?v=4" width="60">|
+Vitória Brancatti|Developer|<a href="https://github.com/vitoriabrancatti"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a> <a href="https://www.linkedin.com/in/vitoriabrancatti/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a> |<img src="https://avatars.githubusercontent.com/u/102263593?v=4" width="60">|
 
 ## Requisitos Funcionais
 
@@ -179,22 +81,22 @@ O front-end deve ser desenvolvido de forma minimalista. |
 
 
 
-ID da História |Epico | User stories | Prioridade | Status
---- | --- | --- | --- | --- 
-NS-20 | Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1 | ✅
-NS-21 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2 | ✅
-NS-22 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3 | ✅
-NS-23 | Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4 | ✅
-NS-28 | Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5 | ✅
-NS-26 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6 | ✅
-NS-27 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7 | ✅
-NS-24 | Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | ✅
-NS-87 | Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9 | ✅
-NS-29 | Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 10 | ✅
-NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 11 | ✅
-NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 12 | ✅
-NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 13 | ➖
-NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 14 | ➖
+ID da História |Epico | User stories | Prioridade | Sprint | Status
+--- | --- | --- | --- | --- | --- |
+NS-20 | Carregamento do arquivo CSV | Como usuário Landing Zone, desejo realizar o upload de um arquivo CSV para gerar uma configuração de banco de dados. | 1  | 1 | ✅
+NS-21 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo definir os tipos de dados, campos obrigatórios, descrição do campo e regras para personalizar completamente o esquema. | 2  | 1| ✅
+NS-22 | Personalização de esquema de banco de dados | Como usuário Landing Zone, desejo modificar as estruturas dos campos para que eu possa alterar quando necessário no primeiro estágio. | 3  | 1| ✅
+NS-23 | Visualização dos esquemas de banco de dados | Como usuário Landing Zone, desejo visualizar o esquema do 1º estágio com o objetivo de compreender a estrutura e organização do esquema definido. | 4  | 1| ✅
+NS-28 | Gestão de Usuários Administradores e clientes | Como usuário administrador, desejo ter a possibilidade de criar usuários nas categorias Landing Zone, Bronze e Silver, com o objetivo de garantir que estes tenham acesso a diferentes estágios de processamento dos dados.| 5| 2 | ✅
+NS-26 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar de forma técnica o esquema do 1º estágio para garantir a integridade dos dados.| 6  | 2| ✅
+NS-27 | Especificação e Mapeamento de chaves do esquema | Como usuário Bronze, preciso especificar quais serão os campos mapeados como chave de identificação para que sejam destacados nos próximos estágios. | 7  | 2| ✅
+NS-24 | Visualização dos esquemas de banco de dados | Como usuário Bronze, desejo visualizar o esquema do 2º estágio com o objetivo de compreender a estrutura e organização do esquema filtrado. | 8 | 2 | ✅
+NS-87 | Autenticação de Usuário | Como usuário, preciso que o sistema me permita realizar autenticação para acessar o sistema com minhas credênciais válidas, garantindo a segurança dos dados. | 9  | 2| ✅
+NS-29 | Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 10 | 3| ✅ 
+NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 11 | 3| ✅ 
+NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 12  | 3| ✅
+NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 13 | 4 | ➖
+NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 14 | 4 | ➖
 
 <span id="cronograma">
 
@@ -210,6 +112,27 @@ Sprint 4| 27/05/2024| 16/06/2024
 Feira de Soluções| 27/06/2024| 27/06/2024 
 
 
+## Resumo de Sprints
+
+<details>
+     
+<summary>Sprint 1</summary>
+
+> Foi desenvolvido o primeiro estágio do sistema, Landing Zone, sendo entregado as funcionalides de carregamento de arquivos CSV, a personalização de esquemas de banco de dados e a sua visualização, garantindo uma base sólida para a configuração e visualização inicial dos dados. 
+</details>
+
+<details>
+     
+<summary>Sprint 2</summary>
+
+> Foi desenvolvido o segundo estágio do sistema, Bronze, sendo as funcionalidades gestão de usuários administradores e clientes, especificação, validação e mapeamento de chaves do esquema, além da implementação da autenticação de usuários, garantindo a segurança e integridade dos dados. 
+</details>
+<details>
+     
+<summary>Sprint 3</summary>
+
+> Foi desenvolvido o terceiro estágio do sistema, Silver, sendo as funcionalidades de atribuição de significados de cada coluna do Metadata, e registro de histórico de ações no sistema.
+</details>
 
 <span id="burndown">
 
@@ -238,7 +161,8 @@ Feira de Soluções| 27/06/2024| 27/06/2024
      
 <summary>Sprint 3</summary>
 
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/05f3e8a2-9a44-42eb-a34a-98cb45174ec1)
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/e03405b2-0c22-4df4-a35d-4d63b92b45f5)
+
 
 
 </details>
