@@ -1,7 +1,6 @@
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     opcoes_roles_acoes(userData)
-    info_usuario(userData)
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -49,16 +48,11 @@ let nome_por_role = {
     3: "Silver",
 }
 
-function info_usuario(userData){
-    namespace = document.getElementById("user_name").textContent = userData.nome
-}
-
 function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
     let table = document.querySelector(".metadatas");
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -97,8 +91,8 @@ async function dadosDoUsuario(id) {
         let listaPermissoes = document.getElementById('listaPermissoes')
         for(i of lista){
             var bloco = `
-                <li>${i}</li>
-            `
+                <span class="badge">${i}</span>
+            `;
             listaPermissoes.insertAdjacentHTML("beforeend", bloco);
         }
         let listaEmpresas = document.getElementById('listaEmpresas')
@@ -108,8 +102,8 @@ async function dadosDoUsuario(id) {
             let responseEmpresa = await api.get(`/empresas/${idEmpresa}`);
             responseEmpresa = responseEmpresa.data
             var bloco = `
-                <li>${responseEmpresa.nome}</li>
-            `
+                <span class="badge">${responseEmpresa.nome}</span>
+            `;
             listaEmpresas.insertAdjacentHTML("beforeend", bloco);
         }
     } catch (err) {
@@ -117,12 +111,6 @@ async function dadosDoUsuario(id) {
         alert("Erro no sistema.");
     }
 }
-
-async function getEmpresaById(id){
-    let responseEmpresa = await api.get(`/empresas/${id}`);
-    return responseEmpresa;
-}
-
 
 function changePassword() {
     var back = `
@@ -139,14 +127,14 @@ function changePassword() {
                 <div class="l1">
                     <h3>ALTERAR SENHA</h3>
                     <p>Digite a senha atual:</p>
-                    <input type="password" name="senha" id="senha_atual" class="fields">
+                    <input type="password" name="senha" class="input_senha" id="senha_atual" class="fields">
                     <p>Digite a nova senha:</p>
-                    <input type="password" name="novaSenha" id="senha_nova" class="fields">
+                    <input type="password" name="novaSenha" class="input_senha" id="senha_nova" class="fields">
                     <p>Confirme a nova senha:</p>
-                    <input type="password" name="confSenha" id="conf_senha" class="fields">
+                    <input type="password" name="confSenha" class="input_senha" id="conf_senha" class="fields">
                 </div>
                 <div class="l3s">
-                    <button class="salvar" id="btn_salvar">SALVAR</button>
+                    <button class="btn" id="btn_salvar">SALVAR</button>
                 </div>
             </div>
         </div>
@@ -175,7 +163,7 @@ function showValidationPrompt(message) {
                     <p>${message}</p>
                 </div>
                 <div class="l3s">
-                    <button class="ok" id="btn_ok">OK</button>
+                    <button class="btn" id="btn_ok">OK</button>
                 </div>
             </div>
         </div>
@@ -193,36 +181,40 @@ function showValidationPrompt(message) {
     });
 }
 
-async function validatePassword() {
+function validatePassword() {
     const senhaAtual = document.getElementById("senha_atual").value;
     const senhaNova = document.getElementById("senha_nova").value;
     const confSenha = document.getElementById("conf_senha").value;
 
-    if (senhaAtual.length < 5) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A senha atual deve ter no mínimo 5 caracteres.");
-        return;
-    }
-    if (senhaNova.length < 6) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A nova senha deve ter no mínimo 6 caracteres.");
-        return;
-    }
-    if (senhaNova !== confSenha) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("A nova senha e a confirmação de senha devem ser iguais.");
-        return;
+    let validationMessage = '';
+
+    switch (true) {
+        case (senhaAtual.length < 5):
+            validationMessage = "A senha atual deve ter no mínimo 5 caracteres.";
+            break;
+        case (senhaNova.length < 6):
+            validationMessage = "A nova senha deve ter no mínimo 6 caracteres.";
+            break;
+        case (senhaNova !== confSenha):
+            validationMessage = "A nova senha e a confirmação de senha devem ser iguais.";
+            break;
+        default:
+            let dados = {
+                id: usuario.id,
+                senhaAntiga: senhaAtual,
+                novaSenha: senhaNova,
+                novaSenhaConfirma: confSenha
+            };
+            postChangePassword(dados);
+            return;
     }
 
-    let dados = {
-        id: usuario.id,
-        senhaAntiga: senhaAtual,
-        novaSenha: senhaNova,
-        novaSenhaConfirma: confSenha
+    if (validationMessage) {
+        document.getElementById("prompt").remove();
+        showValidationPrompt(validationMessage);
     }
-
-	postChangePassword(dados);
 }
+
 
 async function postChangePassword(dados){
 	try {

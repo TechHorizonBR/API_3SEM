@@ -5,7 +5,7 @@
     --title-color: #303030;
 }
 
-main{
+main {
     height: calc(100vh - 100px);
     margin: 0;
     display: flex;
@@ -14,7 +14,7 @@ main{
     flex-wrap: nowrap;
 }
 
-.conteudo{
+.conteudo {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,23 +26,25 @@ main{
     margin-top: 40px;
 }
 
-.boxPerfil{
+.boxPerfil {
     background-color: #FFF;
     width: 50%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    margin: 0 auto;
-    vertical-align: top;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     height: 425px;
     overflow-y: auto;
+    border-radius: 10px;
 }
 
-.linha1{
+#dados{
+    margin: 10% 10% 0 10%;
+}
+
+.linha1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 35px;
     position: absolute;
-    top: 170px;
+    top: 175px;
     left: 675px;
 }
 
@@ -54,7 +56,7 @@ main{
     border: 5px solid #fff;
     cursor: pointer;
     position: relative;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3)
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .profile-pic {
@@ -104,148 +106,88 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Semitransparente para sobrepor a imagem */
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     font-size: 16px;
     text-align: center;
 }
 
-.lineNomeEmail{
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 95px;
-    margin-bottom: 10px;
-}
-
-.nome p {
-    font-weight: bold;
+.nome p,
+.email p {
     margin-right: 5px;
-
 }
 
-.email p{
-    font-weight: bold;
+.email p {
     margin-top: 10px;
-    margin-right: 5px;
 }
 
-.permissoes{
-    margin-left: 100px;
+.alterarSenha {
+    text-align: center;
+    margin: 4%;
+}
+
+.permissoes {
     margin-top: 15px;
 }
 
-.listP p {
-    font-weight: bold;
-}
-
-.listP ul {
-    list-style-type: disc; /* Adiciona o pontinho de tópico */
-    padding-left: 20px; /* Adiciona um espaçamento antes dos itens */
-}
-
-.listP li {
-    margin-bottom: 5px;
-}
-
-.listaEmLinha {
-    list-style-type: none; /* Remove os pontos de lista padrão */
-    padding: 0;
-    margin: 0;
-}
-
-.listaEmLinha li {
-    display: inline; /* Exibe os itens em linha */
-    margin-right: 5px; /* Espaçamento entre os itens */
-}
-
-.listaEmLinha li::after {
-    content: ";"; /* Adiciona ponto e vírgula após cada item */
-    margin-left: 5px; /* Espaçamento após o ponto e vírgula */
-}
-
-.listaEmLinha li:last-child::after {
-    content: ""; /* Remove o ponto e vírgula do último item */
-}
-
-.listaEmLinha li:first-child::before {
-    content: "• "; /* Adiciona um ponto (disco) antes do primeiro item */
-}
-
-.empresas{
-    margin-left: 100px;
+.empresas {
     margin-top: 25px;
 }
 
-.listE p {
-    font-weight: bold;
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+.badge {
+    background: #535353;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.9em;
+}
+
+.listP ul,
 .listE ul {
-    list-style-type: disc; /* Adiciona o pontinho de tópico */
-    padding-left: 20px; /* Adiciona um espaçamento antes dos itens */
+    list-style-type: disc;
+    padding-left: 20px;
 }
 
+.listP li,
 .listE li {
     margin-bottom: 5px;
 }
 
-.listaEmp {
-    list-style-type: none; /* Remove os pontos de lista padrão */
-    padding: 0;
-    margin: 0;
+.titulos {
+    color: #9c9c9c;
 }
 
-.listaEmp li {
-    display: inline; /* Exibe os itens em linha */
-    margin-right: 5px; /* Espaçamento entre os itens */
-}
-
-.listaEmp li::after {
-    content: ";"; /* Adiciona ponto e vírgula após cada item */
-    margin-left: 5px; /* Espaçamento após o ponto e vírgula */
-}
-
-.listaEmp li:last-child::after {
-    content: ""; /* Remove o ponto e vírgula do último item */
-}
-
-.listaEmp li:first-child::before {
-    content: "• "; /* Adiciona um ponto (disco) antes do primeiro item */
-}
-
-.nome{
+.nome,
+.email {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    
-}
-
-.email{
-    display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
-.alterarSenha{
-    margin-left: 100px;
-    padding-top: 25px;
-}
-
-#cadeado{
+#cadeado {
     cursor: pointer;
 }
 
-.trocarSenha{
+.trocarSenha {
     color: #535353;
     border: none;
-    background-color:#fff;
+    background-color: #fff;
     cursor: pointer;
     font-weight: bold;
     margin-left: 4px;
-} 
+}
 
-/* DEIXAR NO FINAL */
+.input_senha {
+    height: 25px;
+    border-radius: 10%;
+}
+
+/* Popup */
 .back_prompt {
     height: 100vh;
     background: rgba(255, 255, 255, 0.04);
@@ -258,26 +200,25 @@ main{
     inset: 0;
     z-index: 1;
     display: flex;
-    align-content: center;
     justify-content: center;
     align-items: center;
 }
 
 .prompt {
     background-color: #ffffff;
-    width: 50vw;
+    width: 30%;
     height: 50%;
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    flex-direction: column;
     animation: popupAppear 0.5s normal;
-    box-shadow: 0 0px 4px rgba(0,0,0,0.1);
-    padding: 1em 1em 0 1em;
+    box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+    padding: 3%;
 }
 
-.conteudoEditar{
+.conteudoEditar {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -285,7 +226,7 @@ main{
     color: rgb(137, 137, 137);
 }
 
-#btnfechar{
+#btnfechar {
     display: flex;
     justify-content: flex-end;
     width: 105%;
@@ -306,32 +247,37 @@ main{
     border-color: #8080802e;
     border-radius: 2px;
 }
-
-.l1 h3{
+.l1 h3,
+.l1 p {
     color: black;
 }
 
-.l1 p{color: black;}
-
-.l3s{
+.l3s {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    margin-right: 0px;
-    justify-content: flex-end;
-    cursor: pointer;
-    margin-top: 25px;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    margin: 25px 0 20px 0;
+    cursor: pointer;
 }
 
-.salvar{
-    color: #0c4df0;
-    border: none;
-    background-color:#fff;
+.btn {
     cursor: pointer;
+    border: none;
+    background-color: var(--header-color);
+    color: #ffffff;
+    border-radius: 8px;
+    height: 30px;
+    width: 20%;
     font-weight: bold;
-    margin-right: 0px;
+}
+
+#validation_prompt {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 27vh;
+    border-radius: 10px;
     display: flex;
-    
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
 }
