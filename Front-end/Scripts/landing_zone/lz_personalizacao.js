@@ -14,7 +14,15 @@ let id_metadata = parseInt(localStorage.getItem("metadata_id"));
 
 let roles = JSON.parse(localStorage.getItem("roles"))
 let userData = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
 
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+    'Authorization': `Bearer ${token}`
+    }
+
+})
 
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
@@ -38,9 +46,9 @@ function opcoes_roles_acoes(userData){
 
 let pagina_por_role = {
     0: "../admin/homeAdmin.html",
-    1: "../landing_zone/homeUser.html",
+    1: "../landing_zone/lz_visualizar_metadata.html",
     2: "../bronze/bz_visualizar_metadata.html",
-    3: "../silver/",
+    3: "../silver/sv_visualizacao_metadata.html"
 }
 let nome_por_role= {
     0: "Adminstrador",
@@ -78,6 +86,7 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         }
     }
 }
+
 function setCSVSeparator(){
     let dados_string = dados.toString();
 
@@ -116,11 +125,7 @@ function generateTable(){
 }
 
 saveButton.addEventListener("click", function () {
-    saveButton.disabled = true;
     validation();
-    setTimeout(function() {
-        saveButton.disabled = false;
-        }, 5000);
 });
 
 function validation() {
@@ -197,7 +202,7 @@ async function sendData(allData) {
     try{
         console.log(allData);
 
-        let response = await axios.post("http://localhost:8080/colunas", allData);
+        let response = await api.post("/colunas", allData);
         console.log(response);
 
         if(response.status === 201) {
@@ -235,7 +240,7 @@ function newSuccessPrompt(){
         localStorage.removeItem('metadata_id');
         localStorage.removeItem('cabecalho');
         localStorage.removeItem('dados1');
-        window.location.href = "homeUser.html"
+        window.location.href = "lz_visualizar_metadata.html"
     });
 }
 

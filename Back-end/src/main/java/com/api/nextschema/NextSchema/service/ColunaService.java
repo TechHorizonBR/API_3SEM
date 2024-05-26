@@ -1,7 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.exception.EntityNotFoundException;
 import com.api.nextschema.NextSchema.repository.ColunaRepository;
 import com.api.nextschema.NextSchema.web.dto.ColunaResponseDto;
@@ -12,6 +11,8 @@ import com.api.nextschema.NextSchema.web.dto.*;
 import com.api.nextschema.NextSchema.web.dto.mapper.ColunaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +25,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ColunaService {
     private final ColunaRepository colunaRepository;
+    private final HistoricoService historicoService;
+    private final DeParaService deParaService;
 
 
     @Transactional
     public Coluna criarColuna(Coluna coluna){
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        historicoService.criar(new Historico(coluna.getMetadata(), String.format("Coluna %s criada.", coluna.getNome()),usuario));
         return colunaRepository.save(coluna);
     }
     @Transactional
@@ -39,6 +44,13 @@ public class ColunaService {
     @Transactional
     public void deleteporId(Long id){
         Coluna coluna = buscarPorId(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        historicoService.criar(new Historico(coluna.getMetadata(), String.format("Coluna %s deletada.", coluna.getNome()),usuario));
+        List<DePara> deParasEncontrados = deParaService.getByColuna(coluna.getId());
+        for(DePara dePara : deParasEncontrados){
+            deParaService.deleteById(dePara.getId());
+        }
         colunaRepository.deleteById(id);
     }
     @Transactional(readOnly = true)
@@ -59,11 +71,25 @@ public class ColunaService {
     @Transactional
     public Coluna atualizarColuna(ColunaUpdateDto coluna) {
         Coluna colunaEncontrada = buscarPorId(coluna.getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
 
-        colunaEncontrada.setDescricao(coluna.getDescricao());
-        colunaEncontrada.setTipo(coluna.getTipo());
-        colunaEncontrada.setNome(coluna.getNome());
-        colunaEncontrada.setRestricao(coluna.getRestricao());
+        if(coluna.getTipo() != colunaEncontrada.getTipo()){
+            colunaEncontrada.setTipo(coluna.getTipo());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Tipo da Coluna %s editada de %s para %s.", coluna.getNome(), colunaEncontrada.getTipo(), coluna.getTipo()),usuario));
+        }
+        if(coluna.getNome() != colunaEncontrada.getNome()){
+            colunaEncontrada.setNome(coluna.getNome());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Nome da Coluna %s editada de %s para %s.", coluna.getNome(), colunaEncontrada.getNome(), coluna.getNome()),usuario));
+        }
+        if(coluna.getRestricao() != colunaEncontrada.getRestricao()){
+            colunaEncontrada.setRestricao(coluna.getRestricao());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Restrição da Coluna %s editada de %s para %s.", coluna.getNome(), colunaEncontrada.getRestricao(), coluna.getRestricao()),usuario));
+        }
+        if(coluna.getDescricao() != colunaEncontrada.getDescricao()){
+            colunaEncontrada.setDescricao(coluna.getDescricao());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Descrição da Coluna %s editada de %s para %s.", coluna.getNome(), colunaEncontrada.getDescricao(), coluna.getDescricao()),usuario));
+        }
 
         return colunaRepository.save(colunaEncontrada);
     }
@@ -88,14 +114,40 @@ public class ColunaService {
     }
     @Transactional
     public Coluna atualizarColunaBronze(ColunaUpdateBronzeDto coluna) {
+
         Coluna colunaEncontrada = buscarPorId(coluna.getId());
-        colunaEncontrada.setChavePrimaria(coluna.getChavePrimaria());
-        colunaEncontrada.setValidado(coluna.getValidado());
-        colunaEncontrada.setComentario(coluna.getComentario());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
+        if(coluna.getChavePrimaria() != colunaEncontrada.getChavePrimaria()){
+            colunaEncontrada.setChavePrimaria(coluna.getChavePrimaria());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Hash da Coluna %s editada de %s para %s.", colunaEncontrada.getNome(), colunaEncontrada.getChavePrimaria(), coluna.getChavePrimaria()),usuario));
+        }
+
+        if(coluna.getValidado() != colunaEncontrada.getValidado()){
+            colunaEncontrada.setValidado(coluna.getValidado());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Validação da Coluna %s editada de %s para %s.", colunaEncontrada.getNome(), colunaEncontrada.getValidado(), coluna.getValidado()),usuario));
+        }
+
+        if(coluna.getComentario() != colunaEncontrada.getComentario()){
+            colunaEncontrada.setComentario(coluna.getComentario());
+            historicoService.criar(new Historico(colunaEncontrada.getMetadata(), String.format("Validação da Coluna %s editada de %s para %s.", colunaEncontrada.getNome(), colunaEncontrada.getComentario(), coluna.getComentario()),usuario));
+        }
         return colunaRepository.save(colunaEncontrada);
     }
     @Transactional
     public void deleteByMetadata(Metadata metadata){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+        List<Coluna> colunas = buscarPorMetadata(metadata.getId());
+        for(Coluna coluna : colunas){
+            List<DePara> deParasEncontrados = deParaService.getByColuna(coluna.getId());
+            for(DePara dePara : deParasEncontrados){
+                deParaService.deleteById(dePara.getId());
+            }
+            historicoService.criar(new Historico(coluna.getMetadata(), String.format("Coluna %s deletada.", coluna.getNome()),usuario));
+        }
         colunaRepository.deleteByMetadata(metadata);
     }
 

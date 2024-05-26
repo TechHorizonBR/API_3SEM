@@ -1,6 +1,8 @@
 package com.api.nextschema.NextSchema.web.controller;
 
 import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.entity.Usuario;
+import com.api.nextschema.NextSchema.enums.Validado;
 import com.api.nextschema.NextSchema.service.MetadataService;
 import com.api.nextschema.NextSchema.web.dto.MetadataCreateDto;
 import com.api.nextschema.NextSchema.web.dto.MetadataResponseDto;
@@ -14,8 +16,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -114,4 +119,9 @@ public class MetadataController {
         List<MetadataResponseDto> metadatas = MetadataMapper.toListDto(metadataService.buscarPorEmpresa(id));
         return ResponseEntity.ok().body(metadatas);
     }
+    @GetMapping("/validado/empresa/{id}")
+    public ResponseEntity<List<Metadata>> getValidatedMetadata(@PathVariable Long id) {
+        return ResponseEntity.ok().body(metadataService.getValidatedMetadata(id));
+    }
+
 }

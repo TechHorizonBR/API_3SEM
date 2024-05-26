@@ -4,8 +4,16 @@ window.onload = () => {
     info_usuario(usuario);
 };
 
-var jsonusuario = localStorage.getItem("usuario");
-var usuario = JSON.parse(jsonusuario);
+let usuario = JSON.parse(localStorage.getItem("usuario"));
+let token = JSON.parse(localStorage.getItem("token"))
+
+const api = axios.create({
+    baseURL:`http://localhost:8080`,
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+})
+
 let empresas_bubble = document.getElementById("options-selected");
 let perm_bubble = document.getElementById("options_perm");
 let roles = [];
@@ -22,7 +30,6 @@ botaoCadastrar.addEventListener("click", function () {
 
 function info_usuario(usuario) {
     namespace = document.getElementById("user_name").textContent = usuario.nome;
-    rolespace = document.getElementById("user_role").textContent = "Adminstrador";
 }
 
 empresa_selec.addEventListener("change", () => {
@@ -65,16 +72,13 @@ selecao.addEventListener("change", () => {
         if (!roles.includes(newrole)) {
             roles.push(newrole);
             let buttonId = `btn_${newrole}`;
-            let nomeRole= "";
-                if(newrole === "ROLE_LZ"){
-                    nomeRole = "Landing Zone";
-                }else if(newrole === "ROLE_BRONZE"){
-                    nomeRole = "Bronze";
-                }else if(newrole === "ROLE_SILVER"){
-                    nomeRole = "Silver";
-                }else{
-                    nomeRole = "Administrador";
-                }
+            dict = {
+                "ROLE_LZ" : "Landing Zone",
+                "ROLE_BRONZE" : "Bronze",
+                "ROLE_SILVER" : "ROLE_SILVER",
+                "ROLE_ADMIN" : "Administrador"
+            }
+            let nomeRole= dict[newrole];
             let bubble = `
                 <div class="opt_empresa">${nomeRole}<button id="${buttonId}" class="opt_btn">X</button></div>
             `;
@@ -100,7 +104,7 @@ function limparCampo() {
 }
 
 async function getAllUsuarios() {
-    let response = await axios.get("http://localhost:8080/usuarios");
+    let response = await api.get("/usuarios");
     dados = response.data;
     gerarTabela(dados);
 }
@@ -135,15 +139,13 @@ function gerarTabela(dados) {
 }
 
 async function buscarEmpresas() {
-    let response = await axios.get("http://localhost:8080/empresas");
+    let response = await api.get("/empresas");
     let empresas_json = response.data;
 
     if (response.status == 200) {
         listarEmpresas(empresas_json);
     }
 }
-    
-
 
 function listarEmpresas(empresas_json) {
     empresas_json.forEach((empresa_json) => {
@@ -155,29 +157,32 @@ function listarEmpresas(empresas_json) {
     });
 }
 
-
 function montarUsuario(roles) {
     let newNome = document.getElementById("nome").value;
     let newemail = document.getElementById("email").value;
     let newsenha = document.getElementById("senha").value;
+    console.log(roles)
 
     if (newsenha.length < 6) {
         alert("A senha deve ter pelo menos 6 caracteres.");
-        return;
     }
-
-    let dataJson = {
-        nome: newNome.toUpperCase(),
-        email: newemail,
-        senha: newsenha,
-        listEmpresa: all_empresas_id,
-        roleUsuario: roles,
-    };
-    cadastrarUsuario(dataJson);
+    else if (roles.length === 0 ) {
+        alert("Insira pelo menos 1 permissão")
+    }
+    else{
+        let dataJson = {
+            nome: newNome.toUpperCase(),
+            email: newemail,
+            senha: newsenha,
+            listEmpresa: all_empresas_id,
+            roleUsuario: roles,
+        };
+        cadastrarUsuario(dataJson);
+    }
 }
 async function cadastrarUsuario(dataJson) {
     try {
-        let response = await axios.post("http://localhost:8080/usuarios", dataJson);
+        let response = await api.post("/usuarios", dataJson);
         if (response.status === 201) {
             promptCadastradosucess();
         }
@@ -235,13 +240,7 @@ function promptDeletadosucess() {
         getAllUsuarios();
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
-
-        // window.location.href = "cadastroUsuario.html"
     });
-}
-
-function selecionar(id) {
-    console.log(id);
 }
 
 function promptDelete(id) {
@@ -280,7 +279,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     let empresas_json;
     async function buscarEmpresasEditar() {
-        let response = await axios.get("http://localhost:8080/empresas");
+        let response = await api.get("/empresas");
         empresas_json = response.data;
     
         if (response.status == 200) {
@@ -298,7 +297,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         <div class="conteudoEditar">
         <div class="l0">
             <i class="fa-solid fa-xmark" id="btnfechar" ></i>
-        </div>      
+        </div>
         <div class="l1">
             <p>Nome:</p>
             <input type="text" name="nome" id="nome_edit" value=${nome} class="fields">
@@ -315,7 +314,6 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                     <option value="">Selecione...</option>
                 </select>
                 <div class="options-selected" id="options-selected_edit">
-                    
                 </div>
 
             </div>
@@ -330,7 +328,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                     <option value="ROLE_SILVER">Silver</option>
                 </select>
                 <div class="options-selected" id="options_perm_edit">
-                    
+
                 </div>
             </div>
 
@@ -342,12 +340,6 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
     </div>
         </div>
         `;
-
-    let prompt_name = document.getElementById("input_nome");
-    let prompt_email = document.getElementById("input_email");
-    let prompt_empresa = document.getElementById("input_empresa");
-    let prompt_permisao = document.getElementById("input_permissao");
-
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", firstPrompt);
@@ -509,7 +501,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     async function atualizarUsuario(dataJson) {
         try {
-            let response = await axios.put("http://localhost:8080/usuarios", dataJson);
+            let response = await api.put("/usuarios", dataJson);
             if (response.status === 200) {
                 document.getElementById("back_prompt").remove();
                 getAllUsuarios();
@@ -525,7 +517,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         <div class="back_prompt" id="back_prompt">
         </div>
         `;
-    
+
         var editPrompt = `
             <div class="prompt1" id="prompt">
                 <span class="prompt_text">Alteração feita com sucesso!</span>
@@ -534,11 +526,11 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                 </div>
             </div>
         `;
-    
+
         document.body.insertAdjacentHTML("beforeend", back);
         let var_back = document.getElementById("back_prompt");
         var_back.insertAdjacentHTML("beforeend", editPrompt);
-    
+
         document.getElementById("btn_OK").addEventListener("click", () => {
             document.getElementById("back_prompt").remove();
             document.getElementById("prompt").remove();
@@ -549,7 +541,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         let newNomeEdit = document.getElementById("nome_edit").value;
         let newemailEdit = document.getElementById("email_edit").value;
         let newsenhaEdit = document.getElementById("senha_edit").value;
-    
+
         let dataJson = {
             id:parseInt(id),
             nome: newNomeEdit.toUpperCase(),
@@ -561,38 +553,8 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         atualizarUsuario(dataJson);
     }
 }
-
-async function editarUsuario(id, nome, email, empresa, permissao) {
-    try {
-        let data = {
-            nome: nome,
-            email: email,
-            empresa: empresa,
-            permissão: permissao,
-            roleUsuario: ["ROLE_LZ"],
-            id: id,
-        };
-        let response = await axios.put(
-            `http://localhost:8080/usuarios/${id}`,
-            data
-        );
-        if (response.status == 200) {
-            generateTable();
-            alert("Alteração realizada!");
-        } else {
-            alert("ERROR! Atualização não executada.");
-        }
-    } catch (err) {
-        console.error("ERRO:", err);
-        alert("Erro no sistema.");
-    }
-}
-
 async function excluirEmpresa(id) {
-    let response = await axios.delete(`http://localhost:8080/usuarios/${id}`);
-    promptDeletadosucess();
-}
-
-async function buscaPorId(id) {
-    let resposta = await axios.get(`http://localhost:8080/usuarios/${id}`);
+    let response = await api.delete(`/usuarios/${id}`);
+    if(response.status == 204) promptDeletadosucess();
+    else alert("Alguma coisa não ocorreu bem!")
 }

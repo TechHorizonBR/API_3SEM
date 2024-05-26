@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- <br lang="pt-Br"> -->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/Front-end/media/images/logoo.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Front-end/media/images/logoo.ico">
     <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
-    <link rel="stylesheet" type="text/css" href="/Front-end/Styles/landing_zone/homeUser.css">
+    <link rel="stylesheet" href="/Front-end/Styles/silver/sv_visualizacao_metadata.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>NextSchema - Home</title>
+    <title>NextSchema - Visualizar Metadatas</title>
 </head>
 <body>
     <header>
@@ -21,8 +21,8 @@
                     </li>
                     <li><a href="#"><i class="fa-regular fa-clipboard" style="color: #ffffff;"></i> Ações</a>
                         <ul class="upload">
-                            <li><a href="#">Histórico</a></li>
-                            <li><a href="#">Perfil de Usuário</a></li>
+                            
+                            <li><a href="../usuario/perfilUser.html">Perfil de Usuário</a></li>
                         </ul>
                     </li>
                     <li><a href="../index.html"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i> Logout</a></li>
@@ -35,20 +35,19 @@
                 <p id="user_name" class="user_name"></p>
                 <div class="user">
                     <i class="fa-solid fa-user" id="user-icon"></i>
-                    <p id="">Landing Zone</p>
+                    <p id="">Silver</p>
                 </div>
             </div>
         </div>
         <!--DADOS DO USUARIO FIM-->
     </header>
-
     <main>
         <div id="filter">
             <div id="title">
                 Metadatas Disponíveis
                 <div class="icon-container">
                     <i class="fa-regular fa-circle-question" id="question"></i>
-                    <p id="question-input"> Nesta estapa é possível selecionar qual metadata gostaria de visualizar sua estrutura.</p>
+                    <p id="question-input"> Nesta estapa é possível selecionar o metadata que deseja visualizar ou validar.</p>
                 </div>
             </div>
             <div id="select">
@@ -57,7 +56,6 @@
                     <option value="" disabled selected hidden>Selecionar</option>
                     <!-- <option class="option" value="1">Opção 1</option> -->
                 </select>
-                <!-- <button id="btn-search"><i class="fas fa-search" id="search"></i> </button> -->
             </div>
         </div>
         <div id="listMetadatas">
@@ -65,5 +63,5 @@
     </main>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/Front-end/Scripts/landing_zone/homeUser.js"></script>
+<script src="/Front-end/Scripts/silver/sv_visualizacao_metadata.js"></script>
 </html>

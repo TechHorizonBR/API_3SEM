@@ -68,10 +68,10 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json"))
             }
     )
-    @GetMapping(value ="/{email}")
-    public ResponseEntity<UsuarioDTO> getByEmail(@PathVariable String email ){
-        return ResponseEntity.status(HttpStatus.OK).body(
-                UsuarioMapper.toUsuarioDTO(usuarioService.findByEmail(email)));
+    @GetMapping(value ="/email/{email}")
+    public ResponseEntity<UsuarioResponseDTO> getByEmail(@PathVariable String email ){
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findByEmail(email));
+
     }
 
    @Operation(
@@ -106,7 +106,7 @@ public class UsuarioController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id){
         usuarioService.deletarUsuario(id);
-        return  ResponseEntity.status(HttpStatus.OK).build();
+        return  ResponseEntity.noContent().build();
     }
 
     @Operation(
