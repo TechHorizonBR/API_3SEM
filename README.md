@@ -45,16 +45,14 @@ Vitória Brancatti|Developer|<a href="https://github.com/vitoriabrancatti"><img 
      
 <summary>Clique aqui</summary>
 
-Itens
--- |
-Desenvolver uma interface de cadastro do cliente, solução e usuários autorizados a configurar os dados |
-Desenvolver uma interface de upload de dados csv ou Excel e apresentação da estrutura dos dados (campos, tipos, regras – pode ou não conter nulos, descrição do significado do campo na perspectiva do negócio) |
-Desenvolver uma interface que define quais campos serão mapeados como chave de identificação dos dados |
-Desenvolver uma interface que será aplicada uma regra comum aos clientes que chamamos de “de/para” (exemplo: tipo de movimento 802 = transferência de estoque) |
-Desenvolver uma interface que será feito o mapeamento de cruzamento de dados (pode ser 1 ou mais fontes de dados com as respectivas chaves, para cada cruzamento ter o espaço para descrever o significado do negócio) |
-Desenvolver uma interface que será feito o mapeamento de cruzamento de dados (pode ser 1 ou mais fontes de dados com as respectivas chaves, para cada cruzamento ter o espaço para descrever o significado do negócio) |
-Desenvolver um dashboard a respeito dos dados configurados para um perfil administrador para visões quantitativas como clientes, tipos de fontes de dados, quantidade de campos etc. |
-Desenvolver uma interface que mostre a visão analítica completa da configuração. |
+Itens | Identificação Backlog
+-- |-- |
+Desenvolver uma interface de cadastro do cliente, solução e usuários autorizados a configurar os dados | NS-28 
+Desenvolver uma interface de upload de dados csv ou Excel e apresentação da estrutura dos dados (campos, tipos, regras – pode ou não conter nulos, descrição do significado do campo na perspectiva do negócio) | NS-20/21 
+Desenvolver uma interface que define quais campos serão mapeados como chave de identificação dos dados | NS-27
+Desenvolver uma interface que será aplicada uma regra comum aos clientes que chamamos de “de/para” (exemplo: tipo de movimento 802 = transferência de estoque) | NS-29
+Desenvolver um dashboard a respeito dos dados configurados para um perfil administrador para visões quantitativas como clientes, tipos de fontes de dados, quantidade de campos etc. | NS-31 
+Desenvolver uma interface que mostre a visão analítica completa da configuração. | NS-25
 
 </details>
 
@@ -64,12 +62,12 @@ Desenvolver uma interface que mostre a visão analítica completa da configuraç
      
 <summary>Clique aqui</summary>
 
-Itens
--- |
-Login e autenticação e permissão de usuários (por cliente, solução e estágio de configuração). |
-Modelagem de Banco de Dados que será utilizado para gerar arquivos YAML. |
-Log contendo a rastreabilidade das configurações. |
-O front-end deve ser desenvolvido de forma minimalista. |
+Itens | Identificação Backlog
+-- |-- |
+Login e autenticação e permissão de usuários (por cliente, solução e estágio de configuração). | NS-87
+Modelagem de Banco de Dados que será utilizado para gerar arquivos YAML. | NS-32
+Log contendo a rastreabilidade das configurações. | NS-19
+O front-end deve ser desenvolvido de forma minimalista. | NS-25
 
 </details>
 
