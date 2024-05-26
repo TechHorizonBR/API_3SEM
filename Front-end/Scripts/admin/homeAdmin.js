@@ -1,11 +1,9 @@
 window.onload = function(){
     info_usuario(usuario)
     logout()
-
 }
 
-var jsonusuario = localStorage.getItem("usuario");
-var usuario = JSON.parse(jsonusuario);
+let usuario = JSON.parse(localStorage.getItem("usuario"));
 
 function info_usuario(usuario){
     namespace = document.getElementById("user_name").textContent = usuario.nome

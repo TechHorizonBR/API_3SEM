@@ -142,7 +142,7 @@ function generateList(metadatas) {
     listMetadatas.innerHTML = "";
 
     if (metadatas.length === 0) {
-        let metadatasList = `<h3 id="messageMet">Não há metadatas disponíveis para essa empresa</h3>`;
+        let metadatasList = `<h3 id="messageMet">Não há validados disponíveis para essa empresa</h3>`;
         listMetadatas.insertAdjacentHTML("afterbegin", metadatasList);
     } else {
         for (let x = 0; x < metadatas.length; x++) {
