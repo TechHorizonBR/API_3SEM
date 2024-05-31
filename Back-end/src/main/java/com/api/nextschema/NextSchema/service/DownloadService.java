@@ -1,17 +1,16 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,32 +24,25 @@ public class DownloadService {
     public InputStreamResource downloadYamlLZ(Long metadataId){
         List<Coluna> colunaList = colunaService.buscarPorMetadata(metadataId);
 
-        Schema schema = new Schema();
-        schema.setColunaList(colunaList);
-        String yamlContent = colunaList.toString();
+        List<Map<String, Object>> colunasMapList = new ArrayList<>();
 
-
-        Map<String, Object> data = new LinkedHashMap<String, Object>();
-
-        for(Coluna coluna : colunaList){
-            data.put("nome", coluna.getNome());
-            data.put("descricao", coluna.getDescricao());
-            data.put("tipo", coluna.getTipo());
+        for (Coluna coluna : colunaList) {
+            Map<String, Object> colunaMap = new LinkedHashMap<>();
+            colunaMap.put("nome", coluna.getNome());
+            colunaMap.put("descricao", coluna.getDescricao());
+            colunaMap.put("tipo", coluna.getTipo());
+            colunasMapList.add(colunaMap);
         }
+
+        StringWriter stringWriter = new StringWriter();
         Yaml yaml = new Yaml();
-        StringWriter writer = new StringWriter();
-        yaml.dump(data, writer);
+        yaml.dump(colunasMapList, stringWriter);
 
+        byte[] yamlBytes = stringWriter.toString().getBytes();
 
-        byte[] dataBytes = writer.toString().getBytes();
+        InputStream inputStream = new ByteArrayInputStream(yamlBytes);
 
         // Converta o array de bytes em um InputStream
-        InputStream inputStream = new ByteArrayInputStream(dataBytes);
-
-
-        // Crie a resposta com o InputStreamResource
         return new InputStreamResource(inputStream);
-
     }
 }
-
