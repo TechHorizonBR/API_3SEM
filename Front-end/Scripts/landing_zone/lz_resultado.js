@@ -147,7 +147,9 @@ function eventoAtualizar(){
 function popularTabela() {
     let tabela = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
-    btn_atualizar.style = "visibility: hidden;";
+    let btn_yaml = document.getElementById("btn_yalm");
+    btn_atualizar.style = "display:none;";
+    btn_yaml.style = "display:block;"
 
     tabela.innerHTML = "";
 
@@ -221,8 +223,10 @@ function popularTabela() {
 function editData(){
     let tabela_atual = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
+    let btn_yaml = document.getElementById("btn_yalm");
     tabela_atual.innerHTML = "";
-    btn_atualizar.style = "visibility: visible;";
+    btn_yaml.style = "display: none;"
+    btn_atualizar.style = "display: block;";
     for (let x = 0; x < dados_Json.length; x++) {
         let isChecked = "";
         if (dados_Json[x].restricao === "true") {
@@ -232,7 +236,6 @@ function editData(){
         }
 
         let selectedOption = [];
-        console.log(dados_Json[x].tipo);
         switch (dados_Json[x].tipo) {
             case "string":
                 selectedOption[0] = "selected";
