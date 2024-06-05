@@ -4,6 +4,7 @@ import com.api.nextschema.NextSchema.service.DownloadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,14 @@ public class DownloadController {
     @Autowired
     private DownloadService downloadService;
 
-    @GetMapping("/yaml/{metadataId}")
-    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long metadataId) throws IOException {
+    @GetMapping("/yaml/{estagio}/{metadataId}")
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long estagio, @PathVariable Long metadataId) throws IOException {
         // Defina os headers da resposta
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=schemaLandingZone.yaml");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=config.yaml");
         headers.add(HttpHeaders.CONTENT_TYPE, "application/x-yaml");
 
-        return new ResponseEntity<>(downloadService.downloadYamlLZ(metadataId), headers, HttpStatus.OK);
+        return new ResponseEntity<>(downloadService.download(metadataId, estagio), headers, HttpStatus.OK);
     }
+
 }
