@@ -3,7 +3,8 @@ window.onload = () => {
     opcoes_roles_acoes(userData)
     info_usuario(userData)
     getAllData();
-    updateNameUsuario()
+    // updateNameUsuario();
+    addYamlAction();
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -18,6 +19,12 @@ const api = axios.create({
 
 })
 
+function addYamlAction(){
+    document.getElementById("btn_yalm").addEventListener("click", ()=>{
+        generateYaml();
+    })
+}
+
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
     for (let i in userData.roleUsuario){
@@ -25,14 +32,12 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
         else if(userData.roleUsuario[i] === "ROLE_SILVER"){
             var listar_metadata = `
             <li><a href="#">Relacionamentos</a></li>
         `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -60,7 +65,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -142,6 +146,25 @@ function eventoAtualizar(){
         todosDados.push(newColuna);
     }
     validation(todosDados);
+}
+
+async function generateYaml(){
+    try{
+        let res = await api.get(`/download/yaml/1/${metadataId}`, {
+            responseType:'blob'
+        });
+
+        if(res){
+            let url = window.URL.createObjectURL(res.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "config_lz.yaml";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    }catch(err){
+        console.error(err);
+    }
 }
 
 function popularTabela() {
@@ -367,6 +390,6 @@ function newFailedPrompt(errors){
     });
 }
 
-function updateNameUsuario(){
-    document.getElementById("username").innerHTML = userName
-}
+// function updateNameUsuario(){
+//     document.getElementById("username").innerHTML = userName
+// }
