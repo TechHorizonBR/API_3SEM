@@ -1,11 +1,9 @@
 package com.api.nextschema.NextSchema.service;
 
 import com.api.nextschema.NextSchema.entity.*;
-import com.api.nextschema.NextSchema.repository.EmpresaRepository;
 import com.api.nextschema.NextSchema.repository.UsuarioEmpresaRepository;
 import com.api.nextschema.NextSchema.web.dto.EmpresaResponseDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
