@@ -20,7 +20,7 @@ const api = axios.create({
 })
 
 function addYamlAction(){
-    document.getElementById("btn_yalm").addEventListener("click", ()=>{
+    document.getElementById("btn_yaml").addEventListener("click", ()=>{
         generateYaml();
     })
 }
@@ -154,23 +154,25 @@ async function generateYaml(){
             responseType:'blob'
         });
 
-        if(res){
+        if(res && res.data){
             let url = window.URL.createObjectURL(res.data);
             let a = document.createElement("a");
             a.href = url;
             a.download = "config_lz.yaml";
             a.click();
             window.URL.revokeObjectURL(url);
+        }else{
+            console.error("A resposta da api não contém dados válidos.")
         }
     }catch(err){
-        console.error(err);
+        console.error("Erro ao baixar o arquivo YAML:",err);
     }
 }
 
 function popularTabela() {
     let tabela = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
-    let btn_yaml = document.getElementById("btn_yalm");
+    let btn_yaml = document.getElementById("btn_yaml");
     btn_atualizar.style = "display:none;";
     btn_yaml.style = "display:block;"
 
@@ -246,7 +248,7 @@ function popularTabela() {
 function editData(){
     let tabela_atual = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
-    let btn_yaml = document.getElementById("btn_yalm");
+    let btn_yaml = document.getElementById("btn_yaml");
     tabela_atual.innerHTML = "";
     btn_yaml.style = "display: none;"
     btn_atualizar.style = "display: block;";
