@@ -139,7 +139,7 @@ tbody tr:hover {
     justify-content: space-around;
 }
 
-#save:hover {
+.button:hover {
     transform: scale(1.05);
 }
 
