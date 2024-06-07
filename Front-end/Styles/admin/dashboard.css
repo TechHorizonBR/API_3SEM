@@ -1,0 +1,103 @@
+:root {
+  --bg-color: #F8F8F8;
+  --header-color: #001233;
+  --text-color: #FFF;
+  --title-color: #303030;
+}
+
+main{
+  /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
+  height: calc(100vh - 100px);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: nowrap;
+}
+#messageMet{
+  text-align: center;
+  justify-content: center;
+}
+#title {
+  color: var(--title-color);
+  font-weight: bold;
+  font-size: larger;
+  display: flex;
+  align-items: center;
+}
+
+#question:hover{
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.icon-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#question-input {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 30px;
+  font-size: medium;
+  background-color: #ffffff;
+  padding: 100%;
+  width: 500px;
+  border: #001233;
+  border-radius: 10px;
+}
+
+.icon-container:hover #question-input {
+display: block;
+}
+
+#select {
+  display: flex;
+  color: var(--title-color);
+  font-weight: bold;
+  align-items: center;
+}
+
+.select-custom{
+  border-radius: 15px;
+  width: 300px;
+  height: 50px;
+  border: none;
+  font-size: medium;
+  margin-left: 10px;
+}
+
+#filter{
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 10% 3% 10%;
+}
+
+/* DADOS DO USUARIO */
+.info_user {
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15%;
+}
+
+.user_name {
+margin: 0;
+align-self: flex-end;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  width: 150px;
+}
+#user-icon{
+margin-right: 4%;
+margin-top: 11%;
+}
+/* FIM DADOS DO USUARIO */
