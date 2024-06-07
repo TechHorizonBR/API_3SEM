@@ -39,7 +39,21 @@ public class DashService {
                         case "string" :
                             quantityTypedata.put("String", quantityTypedata.get("String") +1);
                             break;
-
+                        case "int" :
+                            quantityTypedata.put("Int", quantityTypedata.get("Int") +1);
+                            break;
+                        case "float" :
+                            quantityTypedata.put("Float", quantityTypedata.get("Float") +1);
+                            break;
+                        case "boolean" :
+                            quantityTypedata.put("Boolean", quantityTypedata.get("Boolean") +1);
+                            break;
+                        case "char" :
+                            quantityTypedata.put("Char", quantityTypedata.get("Char") +1);
+                            break;
+                        case "date" :
+                            quantityTypedata.put("Date", quantityTypedata.get("Date") +1);
+                            break;
                     }
                 }
             }
