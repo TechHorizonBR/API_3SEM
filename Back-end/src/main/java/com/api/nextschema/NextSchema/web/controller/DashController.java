@@ -30,4 +30,9 @@ public class DashController {
         return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas));
 
     }
+
+    @GetMapping("/quantityEmpresas")
+    public ResponseEntity<Integer> getQuantityEmpresas(){
+        return ResponseEntity.ok().body(dashService.getQuantityEmpresas());
+    }
 }

@@ -110,4 +110,9 @@ public class DashService {
 
     }
 
+    @Transactional(readOnly = true)
+    public Integer getQuantityEmpresas(){
+        return empresaService.buscarTodos().size();
+    }
+
 }
