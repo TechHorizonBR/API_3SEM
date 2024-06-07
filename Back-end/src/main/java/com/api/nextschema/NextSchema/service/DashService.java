@@ -3,6 +3,7 @@ package com.api.nextschema.NextSchema.service;
 import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.entity.DePara;
 import com.api.nextschema.NextSchema.entity.Metadata;
+import com.api.nextschema.NextSchema.entity.UsuarioEmpresa;
 import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -115,4 +116,13 @@ public class DashService {
         return empresaService.buscarTodos().size();
     }
 
+    @Transactional(readOnly = true)
+    public Integer getQuantityUsersByEmpresas(List<Long> idEmpresas){
+        Integer quantity = 0;
+        for(Long id : idEmpresas){
+            List<Long> usuarioEmpresas = usuarioEmpresaService.buscarUsuariosPorEmpresa(id);
+            quantity += usuarioEmpresas.size();
+        }
+        return quantity;
+    }
 }
