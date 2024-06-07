@@ -125,4 +125,21 @@ public class DashService {
         }
         return quantity;
     }
+
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas){
+        Map<String, Integer> quantityByStage = new HashMap<>();
+        quantityByStage.put("LZ", 0);
+        quantityByStage.put("BRONZE", 0);
+        quantityByStage.put("SILVER", 0);
+
+        for(Long id : idEmpresas){
+
+            
+        };
+
+
+        return quantityByStage;
+    }
+
 }
