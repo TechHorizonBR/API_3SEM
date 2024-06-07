@@ -5,6 +5,7 @@ import com.api.nextschema.NextSchema.entity.DePara;
 import com.api.nextschema.NextSchema.entity.Metadata;
 import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,4 +68,46 @@ public class DashService {
         return quantityStatus;
 
     }
+
+    @Transactional(readOnly = true)  
+    public Map<String, Integer> getQuantityTypeData(List <Long> ids){
+        Map<String, Integer> quantityTypedata = new HashMap<>();
+        quantityTypedata.put("String", 0);
+        quantityTypedata.put("Int", 0);
+        quantityTypedata.put("Float", 0);
+        quantityTypedata.put("Boolean", 0);
+        quantityTypedata.put("Char", 0);
+        quantityTypedata.put("Date", 0);
+        for(Long id : ids){
+            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            for(Metadata metadata : metadatas){
+                List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
+                for (Coluna coluna : colunas){
+                    switch (coluna.getTipo()){
+                        case "string" :
+                            quantityTypedata.put("String", quantityTypedata.get("String") +1);
+                            break;
+                        case "int" :
+                            quantityTypedata.put("Int", quantityTypedata.get("Int") +1);
+                            break;
+                        case "float" :
+                            quantityTypedata.put("Float", quantityTypedata.get("Float") +1);
+                            break;
+                        case "boolean" :
+                            quantityTypedata.put("Boolean", quantityTypedata.get("Boolean") +1);
+                            break;
+                        case "char" :
+                            quantityTypedata.put("Char", quantityTypedata.get("Char") +1);
+                            break;
+                        case "date" :
+                            quantityTypedata.put("Date", quantityTypedata.get("Date") +1);
+                            break;
+                    }
+                }
+            }
+        }
+        return quantityTypedata;
+
+    }
+
 }

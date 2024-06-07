@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -22,5 +23,11 @@ public class DashController {
     @GetMapping("/quantityStatus")
     public ResponseEntity<Map<Validado, Integer>> getQuantityStatus(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.status(HttpStatus.OK).body(dashService.getQuantityStatus(idEmpresas));
+    }
+  
+    @GetMapping("/quantityTypeData")
+    public ResponseEntity<Map<String, Integer>> getQuantityTypeData(@RequestBody List<Long> idEmpresas){
+        return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas));
+
     }
 }
