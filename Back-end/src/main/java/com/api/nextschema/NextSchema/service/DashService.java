@@ -5,6 +5,7 @@ import com.api.nextschema.NextSchema.entity.Metadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,8 @@ public class DashService {
     private final UsuarioRoleAssociationService usuarioRoleAssociationService;
     private final UsuarioEmpresaService usuarioEmpresaService;
 
-    public List<Double>getQuantityTypeData(List <Long> ids){
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityTypeData(List <Long> ids){
         Map<String, Integer> quantityTypedata = new HashMap<>();
         quantityTypedata.put("String", 0);
         quantityTypedata.put("Int", 0);
@@ -58,9 +60,7 @@ public class DashService {
                 }
             }
         }
-
-
-
+        return quantityTypedata;
 
     }
 
