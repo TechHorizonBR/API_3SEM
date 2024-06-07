@@ -14,5 +14,10 @@ public class UsuarioEmpresaServiceTest {
 
         this.usuarioEmpresaService.criarRegistro(usuarioEmpresa);
 
+        int size = this.UsuarioEmpresaService.findAll()size();
+
+
+
+
     }
 }
