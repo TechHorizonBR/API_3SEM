@@ -319,9 +319,15 @@ async function viewMetadata(data) {
                             </p>
                         </div>
                     </div>
-                    <span style="font-size: 25px; margin: 40px 0 0 60px"
-                        >Criar De/Para</span
-                    >
+                    <div class="sec_title">
+                        <span style="font-size: 25px;"
+                        >Criar De/Para</span>
+                        <div class="container_btn">
+                            <button id="btn_upload" onclick="document.getElementById('file-upload').click();">Upload</button>
+                            <input type="file" id="file-upload" class="file-upload-input" name="file-upload">
+                            <i class="fa-solid fa-check" style="color:green; font-size:1.5em;"></i>
+                        </div>
+                    </div>
                     <div class="create_sig">
                         Se <b>${data.nome}</b> for
                         <span class="sig_inputs">
@@ -370,9 +376,6 @@ async function viewMetadata(data) {
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
 
-    console.log(sigValues);
-    console.log(data);
-
     refreshDeleteButtons(sigValues, data);
 
     document.getElementById("btn_create_sig").addEventListener("click", async() => {
@@ -402,6 +405,10 @@ async function viewMetadata(data) {
 
         await sendDePara(significado, data);
     });
+
+    document.getElementById("btn_upload").addEventListener("click", ()=>{
+        
+    })
 
     document.getElementById("exit_btn").addEventListener("click", () => {
         document.getElementById("prompt").remove();

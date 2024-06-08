@@ -419,3 +419,51 @@ select:disabled {
   font-weight: bold;
   margin: 3%;
 }
+
+.sec_title{
+  /* background-color: #007bff; */
+  width: 90%;
+  margin: 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.container_btn{
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container_btn button{
+  cursor: pointer;
+  border: none;
+  background-color: var(--header-color);
+  color: #ffffff;
+  border-radius: 8px;
+  /* height: 30px;  */
+  padding: 10px;
+  font-size: medium;
+  text-align: center;
+  font-weight: 600;
+  transition: transform 0.1s;
+}
+
+@keyframes growButton {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.container_btn button:hover {
+  animation: growButton 0.1s forwards;
+}
+
+.file-upload-input {
+  display: none;
+}
