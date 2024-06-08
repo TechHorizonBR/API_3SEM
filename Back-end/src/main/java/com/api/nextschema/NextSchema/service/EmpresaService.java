@@ -29,6 +29,8 @@ public class EmpresaService {
 
     public List <Empresa> buscarTodos() {return empresaRepository.findAll();}
 
+    public List <Long> buscarTodosId() {return empresaRepository.findAllId();}
+
     public Empresa buscarCNPJ(String cnpj) {return empresaRepository.findbyCNPJ(cnpj);}
     @Transactional
     public void deleteId(Long id){
