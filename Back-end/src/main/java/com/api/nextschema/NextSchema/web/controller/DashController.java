@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +40,9 @@ public class DashController {
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
     }
 
-    @GetMapping("/quantityBytag")
-    public ResponseEntity<Integer> getQuantityUsersByEmpresa(@RequestBody List<Long> idEmpresas){
-        return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
+    @GetMapping("/quantityByStage")
+    public ResponseEntity<Map<String, Integer>> getQuantityByStage(@RequestBody List<Long> idEmpresas){
+        return ResponseEntity.ok().body(dashService.getQuantityByStage(idEmpresas));
     }
+
 }
