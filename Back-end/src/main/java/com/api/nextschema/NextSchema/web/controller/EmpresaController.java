@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class EmpresaController {
             }
     )
     @PostMapping
-    public ResponseEntity<EmpresaResponseDTO> create (@RequestBody EmpresaCreateDTO empresaCreateDTO){
+    public ResponseEntity<EmpresaResponseDTO> create (@Valid @RequestBody EmpresaCreateDTO empresaCreateDTO){
         Empresa newEmpresa = empresaService.criar(EmpresaMapper.toEmpresa(empresaCreateDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(EmpresaMapper.toDto(newEmpresa));
     }

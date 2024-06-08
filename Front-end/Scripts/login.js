@@ -13,20 +13,21 @@ function capturar_dados() {
 
 function verificar_campos(textoEmail, textoSenha){
     validado = false
+    let pathImg = '../media/images/error-img.gif'
     switch (true) {
         case textoEmail.trim() === "" && textoSenha.trim() === "":
-            message = "Por favor, preencha os campos"
-            prompt_login(message)
+            message = "Atenção, o preenchimento de todos os campos é obrigatório."
+            prompt_login(message, pathImg)
             break
 
         case textoEmail.trim() === "":
-            message = "Por favor, insira o Email"
-            prompt_login(message)
+            message = "O campo de e-mail não pode estar vazio."
+            prompt_login(message, pathImg)
             break
 
         case textoSenha.trim() === "":
-            message = "Por favor, insira a Senha"
-            prompt_login(message)
+            message = "O campo de senha não pode estar vazio."
+            prompt_login(message, pathImg)
             break
 
        default:
@@ -72,8 +73,8 @@ async function validar_dados(textoEmail,textoSenha){
     }
 
     }catch(error){
-        if (error.response.data.message === "Credenciais inválidas." || error.response.data.message === "Campos inválidos."){
-            prompt_login("Credenciais inválidas")
+        if (error.response.data.message === "Credenciais inválidas." || error.response.data.message === "Campos inválidos." || error.response.status == 403){
+            prompt_login("Credênciais inválidas.", "../media/images/error-img.gif")
             console.log(error.response.data.message)
         }
         else{
@@ -82,17 +83,17 @@ async function validar_dados(textoEmail,textoSenha){
     }
 }
 
-function prompt_login(message){
+function prompt_login(messagem, pathImg){
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `
-
     var firstPrompt = `
     <div class="prompt" id="prompt">
-        <span class="prompt_text">${message}</span>
+        <img src="${pathImg}" style="width: 30%">
+        <span class="prompt_text">${messagem}</span>
         <div class="btns">
-            <button class="btn_p" id="btn_cont">Ok</button>
+            <button class="btn_p" id="btn_cont">OK</button>
         </div>
     </div>
     `

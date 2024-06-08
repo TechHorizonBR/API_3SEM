@@ -6,19 +6,24 @@ html{
 }
 
 .conteudo{
-    width: 100%;
-    height: 200px;
+    align-items: center;
     margin-left: 5%;
     margin-right: 5%;
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-bottom: 5%;
+
+}
+.cadastroUsuarios{
+    text-align: center;
+    justify-content: center;
 }
 
 .conteudoCadastro{
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 80vh;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     color: rgb(137, 137, 137);
@@ -118,15 +123,17 @@ justify-content:space-between;
     align-items: center;
     color: #0c4df0;
 }
+
+
+
+
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
@@ -135,18 +142,46 @@ justify-content:space-between;
     align-items: center;
 }
 
-.prompt {
+.promptEdit{
     background-color: #ffffff;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1em;
     width: 60vw;
-    height: 40%;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
     flex-direction: column;
-    animation: popupAppear 0.5s normal;
-    box-shadow: 0 0px 4px rgba(0,0,0,0.1);
-    padding: 1em 1em 0 1em;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.edit_prompt{
+    height: 40vh;
+    width: 120vh;
+    background-color: #ffffff;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 2%
+}
+h2{
+    color: #000
+}
+
+.prompt {
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 .buttonEdit {
@@ -194,7 +229,7 @@ justify-content:space-between;
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
 }
 
 .input_data{
@@ -263,7 +298,7 @@ justify-content:space-between;
 .prompt1 {
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
