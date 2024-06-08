@@ -1,8 +1,8 @@
 window.onload = () => {
-  opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
-  opcoes_roles_acoes(userData);
-  info_usuario(userData);
-  getEmpresas();
+    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
+    opcoes_roles_acoes(userData);
+    info_usuario(userData);
+    getEmpresas();
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -81,34 +81,34 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 }
 
 async function getEmpresas() {
-  try{
-      let response = await api.get(`/empresas`);
-      let empresas = response.data;
+    try{
+        let response = await api.get(`/empresas`);
+        let empresas = response.data;
 
-      if(response.status === 200) {
-          generateOptions(empresas)
-      }else{
-          alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
-  }
-  }
-  catch(error){
-      console.error(error);
-  }
+        if(response.status === 200) {
+            generateOptions(empresas)
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+        }
+        catch(error){
+        console.error(error);
+        }
 }
 
 function generateOptions(empresas){
-  let select = document.getElementById("select-filter");
+let select = document.getElementById("select-filter");
 
-  for(let i = 0; i < empresas.length; i++){
-      let selectOptions = `
-          <option class="option" onchange="" id="select${i}" value="${empresas[i].id}">${empresas[i].nome}</option>
-      `
-      select.insertAdjacentHTML("afterbegin", selectOptions);
-  }
-
-  select.addEventListener("change", function () {
-      let selectValue = select.value;
-      getMetadata(selectValue, empresas);
-  });
+for(let i = 0; i < empresas.length; i++){
+    let selectOptions = `
+    <option class="option" onchange="" id="select${i}" value="${empresas[i].id}">${empresas[i].nome}</option>
+    `
+    select.insertAdjacentHTML("afterbegin", selectOptions);
 }
 
+    select.addEventListener("change", function () {
+        let selectValue = select.value;
+        getMetadata(selectValue, empresas);
+    });
+
+}

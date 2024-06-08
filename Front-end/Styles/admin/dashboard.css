@@ -73,7 +73,7 @@ display: block;
 #filter{
   display: flex;
   justify-content: space-between;
-  margin: 5% 10% 3% 10%;
+  margin: 2% 45% 1% 7%;
 }
 
 /* DADOS DO USUARIO */
@@ -101,3 +101,190 @@ margin-right: 4%;
 margin-top: 11%;
 }
 /* FIM DADOS DO USUARIO */
+
+#dashboard{
+  height: 495px;
+}
+
+/* PRIMEIRA LINHA DASHBOARD */
+.l1{
+  margin-left: 15px;
+  width: 1390px;
+  height: 232px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card_1 {
+  background-color: #1f7ed5;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 220px;
+  height: 115px;
+}
+
+.card_1 h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #000000;
+}
+
+.card_1 .count {
+  font-size: 2em;
+  color: #000;
+  margin: 10px 0 0;
+}
+
+.card_2 {
+  background-color: #20a6d8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 220px;
+  height: 115px;
+}
+
+.card_2 h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #000000;
+}
+
+.card_2 .count {
+  font-size: 2em;
+  color: #000;
+  margin: 10px 0 0;
+}
+
+.card_3 {
+  background-color: #20cdd8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 220px;
+  height: 115px;
+}
+
+.card_3 h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #000000;
+}
+
+.card_3 .count {
+  font-size: 2em;
+  color: #000;
+  margin: 10px 0 0;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 200px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.card .count {
+    font-size: 2em;
+    color: #000;
+    margin: 10px 0 0;
+}
+
+.donut {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  width: 250px;
+  height: 190px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* SEGUNDA LINHA DASHBOARD */
+.l2{
+  width: 1260px;
+  height: 295px;
+  margin-left: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 1em;
+  min-width: 400px;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead tr {
+  background-color: #001d2e;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+  border-bottom: 2px solid #001233;
+}
+
+.arco {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 445px;
+  height: 250px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
