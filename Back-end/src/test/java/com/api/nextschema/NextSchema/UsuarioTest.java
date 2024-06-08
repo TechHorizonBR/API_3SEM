@@ -17,7 +17,7 @@ import java.util.List;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/usuario/usuario-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/usuario/usuario-delete.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class UsuarioIT {
+public class UsuarioTest {
 
     @Autowired
     WebTestClient testClient;

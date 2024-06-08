@@ -40,6 +40,6 @@ public class UsuarioEmpresaTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
     }
 
-    // Test other methods similarly
-}
 
+
+}
