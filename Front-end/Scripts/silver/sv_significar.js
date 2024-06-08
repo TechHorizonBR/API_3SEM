@@ -164,6 +164,27 @@ function updateAllSig(sigValues, data) {
     }
 }
 
+async function uploadDePara(file, data){
+    let correct = document.getElementById("correct");
+    let wrong = document.getElementById("wrong");
+    try{
+        let res = await api.post(`/dePara/upload`, file);
+        if(res){
+            correct.style.display = "block";
+            setTimeout(()=>{
+                correct.style.display = "none";
+            },5000);
+            let updateSigValues = await getDePara(data.id);
+            updateAllSig(updateSigValues, data);
+        }else{
+            wrong.style.display = "block";
+        }
+    }catch(err){
+        wrong.style.display = "block";
+        console.error(err.message);
+    }
+}
+
 function generateList(metadatas) {
     let listMetadatas = document.getElementById("listMetadatas");
 
@@ -325,7 +346,8 @@ async function viewMetadata(data) {
                         <div class="container_btn">
                             <button id="btn_upload" onclick="document.getElementById('file-upload').click();">Upload</button>
                             <input type="file" id="file-upload" class="file-upload-input" name="file-upload">
-                            <i class="fa-solid fa-check" style="color:green; font-size:1.5em;"></i>
+                            <i id="correct" class="fa-solid fa-check" style="display:none; color:green; font-size:1.5em;"></i>
+                            <i id="wrong" class="fa-solid fa-xmark" style="display:none; color:red; font-size:1.5em;"></i>
                         </div>
                     </div>
                     <div class="create_sig">
@@ -406,12 +428,17 @@ async function viewMetadata(data) {
         await sendDePara(significado, data);
     });
 
-    document.getElementById("btn_upload").addEventListener("click", ()=>{
-        
-    })
-
     document.getElementById("exit_btn").addEventListener("click", () => {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+
+    let arquivo = document.getElementById("file-upload");
+    arquivo.addEventListener("change", () => {
+        arquivoSelec = arquivo.files[0];
+        arquivo.value = "";
+        uploadDePara(arquivoSelec, data);
+    });
 }
+
+
