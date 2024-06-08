@@ -40,4 +40,8 @@ public class DashController {
     public ResponseEntity<Integer> getQuantityUsersByEmpresa(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
     }
+    @GetMapping("/quantityEmpresasPorMetadata")
+    public ResponseEntity<Integer> getQuantityEmpresasbyMetadata(@RequestBody List<Long> idMetadata){
+        return ResponseEntity.ok().body(dashService.getQuantityEmpresasByMetadata(IdMetadata));
+    }
 }
