@@ -1,9 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.DePara;
-import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.entity.UsuarioEmpresa;
+import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -34,6 +31,13 @@ public class DashService {
         quantityStatus.put(Validado.PENDENTE, 0);
 
         int[] aux = {0,0,0};
+        if(idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for(Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+        }
 
         for(Long id : idEmpresas){
             List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
