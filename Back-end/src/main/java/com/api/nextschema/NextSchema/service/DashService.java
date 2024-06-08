@@ -7,6 +7,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,5 +129,22 @@ public class DashService {
             quantity += usuarioEmpresas.size();
         }
         return quantity;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Coluna> getColunaByEmpresas(List<Long> idEmpresa){
+        List<Long> empresaid = new ArrayList<Long>();
+        if (idEmpresa.get(0) == 0){
+            empresaid.addAll(empresaService.buscarTodosId());
+        }
+        List<Coluna> colunalist = new ArrayList<Coluna>();
+        for(Long id : idEmpresa){
+            for (Metadata metadata : metadataService.buscarPorEmpresa(id)){
+                for (Coluna coluna : colunaService.buscarPorMetadata(metadata.getId())){
+                    colunalist.add(coluna);
+                }
+            }
+        }
+        return colunalist;
     }
 }
