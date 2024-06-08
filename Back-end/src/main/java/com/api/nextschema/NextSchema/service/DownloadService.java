@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -28,67 +29,38 @@ public class DownloadService {
     private final MetadataService metadataService;
     private final DeParaService deParaService;
 
-    public InputStreamResource downloadYamlLZ(Long metadataId){
-        List<Coluna> colunaList = colunaService.buscarPorMetadata(metadataId);
-
-        // Crie uma lista de mapas para manter as informações de cada coluna
-        List<Map<String, Object>> colunasMapList = new ArrayList<>();
-
-        for (Coluna coluna : colunaList) {
-            Map<String, Object> colunaMap = new LinkedHashMap<>();
-            colunaMap.put("nome", coluna.getNome());
-            colunaMap.put("descricao", coluna.getDescricao());
-            colunaMap.put("tipo", coluna.getTipo());
-            colunasMapList.add(colunaMap);
-        }
-
-        // Configure as opções de formatação do YAML
-        DumperOptions options = new DumperOptions();
-        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-        options.setPrettyFlow(true); // Isso mantém o YAML identado
-
-        // Use o SnakeYAML com as opções configuradas
-        StringWriter stringWriter = new StringWriter();
-        Yaml yaml = new Yaml(options);
-        yaml.dump(colunasMapList, stringWriter);
-
-        // Converta a string YAML em bytes
-        byte[] yamlBytes = stringWriter.toString().getBytes();
-
-        // Converta os bytes em um InputStream
-        InputStream inputStream = new ByteArrayInputStream(yamlBytes);
-
-        // Retorne um InputStreamResource para que possa ser usada na resposta HTTP
-        return new InputStreamResource(inputStream);
-    }
-
-    private InputStreamResource generateYaml(Long metadataId, boolean includeDePara) {
+    @Transactional(readOnly = true)
+    public InputStreamResource generateYaml(Long metadataId, int estagio) {
         List<Coluna> colunas = colunaService.buscarPorMetadata(metadataId);
         Metadata metadata = metadataService.findbyId(metadataId);
-
         Map<String, Object> yamlData = new LinkedHashMap<>();
         Map<String, Object> metadataMap = new LinkedHashMap<>();
         metadataMap.put("nomeMetadata", metadata.getNome());
-        metadataMap.put("cnpjempresa", metadata.getEmpresa().getCnpj());
+        metadataMap.put("cnpjEmpresa", metadata.getEmpresa().getCnpj());
+        metadataMap.put("nomeEmpresa", metadata.getEmpresa().getNome());
         yamlData.put("metadata", metadataMap);
 
         List<Map<String, Object>> colunasYaml = new ArrayList<>();
+
         for (Coluna coluna : colunas) {
             Map<String, Object> colunaMap = new LinkedHashMap<>();
-            colunaMap.put("chave", coluna.getChavePrimaria());
             colunaMap.put("nome", coluna.getNome());
             colunaMap.put("descricao", coluna.getDescricao());
             colunaMap.put("tipo", coluna.getTipo());
             colunaMap.put("obrigatorio", coluna.getRestricao());
 
-            String status = switch (coluna.getValidado()) {
-                case VALIDADO -> "VALIDADO";
-                case INVALIDADO -> "INVALIDADO";
-                case PENDENTE -> "PENDENTE";
-            };
-            colunaMap.put("status", status);
+            if(estagio == 2) {
+                colunaMap.put("chave", coluna.getChavePrimaria());
 
-            if (includeDePara) {
+                String status = switch (coluna.getValidado()) {
+                    case VALIDADO -> "VALIDADO";
+                    case INVALIDADO -> "INVALIDADO";
+                    case PENDENTE -> "PENDENTE";
+                };
+                colunaMap.put("status", status);
+            }
+
+            if (estagio == 3) {
                 List<Map<String, Object>> deParaList = new ArrayList<>();
                 List<DePara> deParas = deParaService.getByColuna(coluna.getId());
                 for (DePara dePara : deParas) {
@@ -103,6 +75,7 @@ public class DownloadService {
 
             colunasYaml.add(colunaMap);
         }
+
         yamlData.put("colunas", colunasYaml);
 
         DumperOptions options = new DumperOptions();
@@ -118,21 +91,13 @@ public class DownloadService {
         return new InputStreamResource(inputStream);
     }
 
-    public InputStreamResource dowloadYAMLBronze(Long metadataId) {
-        return generateYaml(metadataId, false);
-    }
-
-    public InputStreamResource dowloadYAMLSilver(Long metadataId) {
-        return generateYaml(metadataId, true);
-    }
-
     public InputStreamResource download(Long metadata, Long estagio) {
         if (estagio == 1) {
-            return downloadYamlLZ(metadata);
+            return generateYaml(metadata,1);
         } else if (estagio == 2){
-            return dowloadYAMLBronze(metadata);
+            return generateYaml(metadata,2);
         } else {
-            return dowloadYAMLSilver(metadata);
+            return generateYaml(metadata,3);
         }
     }
 }
