@@ -139,14 +139,11 @@ public class DashService {
             idEmpresas.clear();
             idEmpresas.addAll(empresaService.buscarTodosId());
         }
-
         for (Long id : idEmpresas) {
             List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
             for (Metadata metadata : metadataList) {
-                int columnCount = colunaService.buscarPorMetadata(metadata.getId()).size();
-                quantityColunas.put(metadata.getNome(), columnCount);
+                quantityColunas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
             }
         }
-
         return quantityColunas;}
 }
