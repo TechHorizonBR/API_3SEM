@@ -132,8 +132,8 @@ public class DashService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, Integer> getColunaByEmpresas(List<Long> idEmpresas) {
-        Map<String, Integer> quantityColunas = new HashMap<>();
+    public Map<String, Integer> ColunaPorEmpresas(List<Long> idEmpresas) {
+        Map<String, Integer> colunaPorEmpresas = new HashMap<>();
 
         if (idEmpresas.get(0) == 0) {
             idEmpresas.clear();
@@ -142,8 +142,8 @@ public class DashService {
         for (Long id : idEmpresas) {
             List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
             for (Metadata metadata : metadataList) {
-                quantityColunas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
+                colunaPorEmpresas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
             }
         }
-        return quantityColunas;}
+        return colunaPorEmpresas;}
 }

@@ -41,8 +41,8 @@ public class DashController {
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
     }
     @GetMapping("/ColunaPorEmpresas")
-    public ResponseEntity<Map<String, Integer>> getQuantityEmpresas(@RequestBody List<Long> idEmpresa) {
-        Map<String, Integer> result = dashService.getColunaByEmpresas(idEmpresa);
+    public ResponseEntity<Map<String, Integer>> ColunaPorEmpresas(@RequestBody List<Long> idEmpresa) {
+        Map<String, Integer> result = dashService.ColunaPorEmpresas(idEmpresa);
         return ResponseEntity.ok().body(result);
     }
 }
