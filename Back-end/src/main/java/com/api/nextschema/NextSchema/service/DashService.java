@@ -132,19 +132,21 @@ public class DashService {
     }
 
     @Transactional(readOnly = true)
-    public List<Coluna> getColunaByEmpresas(List<Long> idEmpresa){
-        List<Long> empresaid = new ArrayList<Long>();
-        if (idEmpresa.get(0) == 0){
-            empresaid.addAll(empresaService.buscarTodosId());
+    public Map<String, Integer> getColunaByEmpresas(List<Long> idEmpresas) {
+        Map<String, Integer> quantityColunas = new HashMap<>();
+
+        if (idEmpresas.get(0) == 0) {
+            idEmpresas.clear();
+            idEmpresas.addAll(empresaService.buscarTodosId());
         }
-        List<Coluna> colunalist = new ArrayList<Coluna>();
-        for(Long id : idEmpresa){
-            for (Metadata metadata : metadataService.buscarPorEmpresa(id)){
-                for (Coluna coluna : colunaService.buscarPorMetadata(metadata.getId())){
-                    colunalist.add(coluna);
-                }
+
+        for (Long id : idEmpresas) {
+            List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadataList) {
+                int columnCount = colunaService.buscarPorMetadata(metadata.getId()).size();
+                quantityColunas.put(metadata.getNome(), columnCount);
             }
         }
-        return colunalist;
-    }
+
+        return quantityColunas;}
 }
