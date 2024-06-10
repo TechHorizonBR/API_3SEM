@@ -49,76 +49,93 @@
         <!--DADOS DO USUARIO FIM-->
     </header>
     <main>
-    <div id="filter">
-        <div id="title">
-            Dashboard
+        <div id="filter">
+            <div id="title">
+                Dashboard
+            </div>
+            <div id="select">
+                <div>Empresa</div>
+                <select class="select-custom" id="select-filter">
+                    <option value="" disabled selected hidden>Selecionar</option>
+                    <!-- <option class="option" value="1">Opção 1</option> -->
+                </select>
+            </div>
         </div>
-        <div id="select">
-            <div>Empresa</div>
-            <select class="select-custom" id="select-filter">
-                <option value="" disabled selected hidden>Selecionar</option>
-                <!-- <option class="option" value="1">Opção 1</option> -->
-            </select>
-        </div>
-    </div>
-    <div id="dashboard">
-        <div class="l1">
-            <div class="card_1">
-                <h3>Número de Metadatas</h3>
-                <p class="count" id="numMetadatas">0</p>
-            </div>
-            <div class="card_2">
-                <h3>Número de Usuários</h3>
-                <p class="count" id="numUsuarios">0</p>
-            </div>
-            <div class="card_3">
-                <h3>Número de Empresas</h3>
-                <p class="count" id="numEmpresas">0</p>
-            </div>
-            <div class="donut">
-                
+            <div class="l1">
+                <div class="card_1">
+                    <h3>Número de Metadatas</h3>
+                    <p class="count" id="numMetadatas">0</p>
+                </div>
+                <div class="card_2">
+                    <h3>Número de Usuários</h3>
+                    <p class="count" id="numUsuarios">0</p>
+                </div>
+                <div class="card_3">
+                    <h3>Número de Empresas</h3>
+                    <p class="count" id="numEmpresas">0</p>
+                </div>
 
-                
+                <div class="donut">
+                    <div id="select">
+                        <div>Status das Colunas</div>
+                        <select class="metadataFilter" id="select-filter-metadata">
+                            <option value="" disabled selected hidden>Selecionar</option>
+                            <!-- <option class="option" value="1">Opção 1</option> -->
+                        </select>
+                    </div>
+                    <canvas id="statusMetadata"></canvas>
+                </div>
+
             </div>
-        </div>
-        <div class="l2">
-            <table class="table">
-                <thead>
-                    <tr>
+            <div class="l2">
+                <div class="table-container">
+                    <table class="table">
+                    <thead>
+                        <tr>
                         <th>Metadatas</th>
                         <th>N° Colunas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Id_Nome</td>
-                        <td>5.841</td>
-                    </tr>
-                    <tr>
-                        <td>Id_CNPJ</td>
-                        <td>5.885</td>
-                    </tr>
-                    <tr>
-                        <td>Id_User</td>
-                        <td>74</td>
-                    </tr>
-                    <tr>
-                        <td>Loja 13</td>
-                        <td>74.744,00</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="arco">
-                
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Id_Nome</td>
+                            <td>5.841</td>
+                        </tr>
+                        <tr>
+                            <td>Id_CNPJ</td>
+                            <td>5.885</td>
+                        </tr>
+                        <tr>
+                            <td>Id_User</td>
+                            <td>74</td>
+                        </tr>
+                        <tr>
+                            <td>Loja 13</td>
+                            <td>74.744,00</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
 
+                <div class="donut">
+                    <div id="select">
+                        <div>Status do Metadata</div>
+                    </div>
+                    <canvas id="statusColuna"></canvas>
+                </div>
 
-            </div>
-            <div class="box">
-                    
-            </div>
+                <div class="box">
+                    <div id="select">
+                        <div>Tipos de Dado</div>
+                        <select class="metadataFilter" id="select-filter-metadata">
+                            <option value="" disabled selected hidden>Selecionar</option>
+                            <!-- <option class="option" value="1">Opção 1</option> -->
+                        </select>
+                    </div>
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         </div>
-    </div>
     </main>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

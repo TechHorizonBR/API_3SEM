@@ -14,44 +14,13 @@ main{
   align-content: center;
   flex-wrap: nowrap;
 }
-#messageMet{
-  text-align: center;
-  justify-content: center;
-}
+
 #title {
   color: var(--title-color);
   font-weight: bold;
   font-size: larger;
   display: flex;
   align-items: center;
-}
-
-#question:hover{
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-.icon-container {
-  position: relative;
-  display: inline-block;
-  margin-left: 20px;
-}
-
-#question-input {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 30px;
-  font-size: medium;
-  background-color: #ffffff;
-  padding: 100%;
-  width: 500px;
-  border: #001233;
-  border-radius: 10px;
-}
-
-.icon-container:hover #question-input {
-display: block;
 }
 
 #select {
@@ -96,31 +65,20 @@ align-self: flex-end;
   padding-bottom: 15px;
   width: 150px;
 }
+
 #user-icon{
-margin-right: 4%;
-margin-top: 11%;
+  margin-right: 4%;
+  margin-top: 11%;
 }
 /* FIM DADOS DO USUARIO */
 
-#dashboard{
-  height: 495px;
-}
-
 /* PRIMEIRA LINHA DASHBOARD */
-.l1{
-  margin-left: 15px;
-  width: 1390px;
-  height: 232px;
+.l1, .l2 {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.dashboard {
-  display: flex;
-  flex-wrap: wrap;
   gap: 20px;
+  justify-content: space-around;
+  margin: 1%;
+  align-items: center;
 }
 
 .card_1 {
@@ -190,24 +148,24 @@ margin-top: 11%;
 }
 
 .card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    width: 200px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 200px;
 }
 
 .card h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
 }
 
 .card .count {
-    font-size: 2em;
-    color: #000;
-    margin: 10px 0 0;
+  font-size: 2em;
+  color: #000;
+  margin: 10px 0 0;
 }
 
 .donut {
@@ -216,29 +174,18 @@ margin-top: 11%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
   text-align: center;
-  width: 250px;
-  height: 190px;
-  display: flex;
+  height: 250px;
   justify-content: center;
   align-items: center;
+  padding: 2%;
 }
 
 /* SEGUNDA LINHA DASHBOARD */
-.l2{
-  width: 1260px;
-  height: 295px;
-  margin-left: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .table {
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 1em;
-  min-width: 400px;
+  width: 400px;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -268,23 +215,20 @@ margin-top: 11%;
   border-bottom: 2px solid #001233;
 }
 
-.arco {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .box {
   width: 445px;
   height: 250px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2%;
+}
+
+.metadataFilter {
+  border-radius: 15px;
+  width: 200px;
+  height: 25px;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 20px;
 }
