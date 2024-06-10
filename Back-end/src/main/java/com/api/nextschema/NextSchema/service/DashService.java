@@ -1,9 +1,6 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.DePara;
-import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.entity.UsuarioEmpresa;
+import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -14,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.api.nextschema.NextSchema.enums.Validado.VALIDADO;
+import static com.api.nextschema.NextSchema.enums.Validado.*;
 
 @Service
 @RequiredArgsConstructor
@@ -135,6 +132,14 @@ public class DashService {
         quantityByStage.put("BRONZE", 0);
         quantityByStage.put("SILVER", 0);
 
+        if (idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for (Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+
+        }
         for(Long id : idEmpresas){
             List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
             for (Metadata metadata : metadatas ){
@@ -145,15 +150,15 @@ public class DashService {
                     if (coluna.getValidado() == VALIDADO) {
                         validado ++;
                     }
-                    else {
+                    else if (coluna.getValidado() == PENDENTE){
                         pendente ++;
                     }
                 };
-                if (validado == 0){
+                if (pendente == colunas.size()){
                     quantityByStage.put("LZ", quantityByStage.get("LZ") +1);
 
 
-                } else if (pendente == 0){
+                } else if (validado == colunas.size()){
                     quantityByStage.put("SILVER", quantityByStage.get("SILVER") +1);
                 } else {
                     quantityByStage.put("BRONZE", quantityByStage.get("BRONZE") +1);
