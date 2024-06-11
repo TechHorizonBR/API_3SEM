@@ -147,7 +147,7 @@ align-self: flex-end;
   gap: 70px;
 }
 
-.back_prompt {
+.back_prompt, .back_prompt_ins {
   height: 100vh;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 16px;
@@ -171,6 +171,35 @@ align-self: flex-end;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+}
+
+.prompt_ins {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  width: 50vw;
+  height: 55vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt_title{
+  font-size: larger;
+}
+
+.prompt_text{
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+#ins_img{
+  margin-bottom: 5px;
+}
+
+.prompt_content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .contSig{
@@ -216,7 +245,7 @@ align-self: flex-end;
 
 
 .btn_p {
-  min-width: 72px;
+  width: 100px;
   height: 40px;
   font-size: larger;
   border-radius: 5px;
@@ -226,7 +255,7 @@ align-self: flex-end;
   background-color: #006a8f;
 }
 
-.prompt {
+.prompt, .prompt_ins {
   animation: popupAppear 0.5s normal;
 }
 

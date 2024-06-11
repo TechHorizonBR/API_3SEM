@@ -355,7 +355,7 @@ async function viewMetadata(data) {
                         <span style="font-size: 25px;"
                         >Criar De/Para</span>
                         <div class="container_btn">
-                            <button id="btn_upload" onclick="document.getElementById('file-upload').click();">Upload</button>
+                            <button id="btn_upload" onclick="instructionPrompt()">Upload</button>
                             <input type="file" id="file-upload" class="file-upload-input" name="file-upload" accept=".csv">
                             <i id="correct" class="fa-solid fa-check" style="display:none; color:green; font-size:1.5em;"></i>
                             <i id="wrong" class="fa-solid fa-xmark" style="display:none; color:red; font-size:1.5em;"></i>
@@ -443,6 +443,37 @@ async function viewMetadata(data) {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+
+    window.instructionPrompt = function(){
+        var instructionPrompt = `
+        <div class="back_prompt_ins" id="back_prompt_ins">
+            <div class="prompt_ins" id="prompt_ins">
+                <span class="exit_btn" id="exit_btn_ins">X</span>
+                <div class="prompt_content">
+                    <span class="prompt_title"><b>Atenção</b></span>
+                    <span class="prompt_text">As linhas do seu arquivo CSV devem seguir o seguinte padrão:</span>
+                    <img id="ins_img" src="/Front-end/media/images/instrucaoDePara.png" alt="Instrução Significado" width="250">
+                    <button class="btn_p" id="btn_OK">Continuar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML("beforeend", instructionPrompt);
+        document.getElementById("exit_btn_ins").addEventListener("click", () => {
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+        });
+
+        document.getElementById("btn_OK").addEventListener("click", ()=>{
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+            document.getElementById('file-upload').click();
+        })
+        
+        //document.getElementById('file-upload').click();
+    };
 
     let arquivo = document.getElementById("file-upload");
     arquivo.addEventListener("change", () => {
