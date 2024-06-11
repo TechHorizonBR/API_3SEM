@@ -142,7 +142,16 @@ function validation() {
     if (errors.length === 0){
         getData(dados)
     }else{
-        newFailedPrompt(errors)
+
+        
+        let message = `
+            <div id="text_validation" style="text-align: center">
+            <span style="font-weight: bold;">Valor inválido na(s) coluna(s): ${errors}</span><br>
+            O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+        `;
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+        
     }
 
 }
@@ -172,6 +181,31 @@ function getData(dados) {
     sendData(allData);
 }
 
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
+}
 function InvalidDescription(){
     var back = `
     <div class="back_prompt" id="back_prompt">

@@ -141,6 +141,7 @@ html{
 }
 
 .prompt {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
     height: 40vh;
@@ -150,6 +151,7 @@ html{
 }
 
 .promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
     height: 40vh;
@@ -161,6 +163,7 @@ html{
 }
 
 .prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
     height: 40vh;

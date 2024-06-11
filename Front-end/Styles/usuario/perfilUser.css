@@ -25,6 +25,15 @@ main {
     margin-bottom: 82px;
     margin-top: 40px;
 }
+.fields{
+    box-shadow: 0 0px 4px rgba(0,0,0,0.1);
+    color: #000;
+    margin: 20px;
+    border: 0;
+    width: 400px;
+    height: 35px;
+    outline: none;
+}
 
 .boxPerfil {
     background-color: #FFF;

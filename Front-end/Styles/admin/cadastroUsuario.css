@@ -168,6 +168,7 @@ justify-content:space-between;
     align-items: center;
     padding: 2%
 }
+
 h2{
     color: #000
 }
@@ -182,6 +183,8 @@ h2{
     justify-content: center;
     text-align: center;
     align-items: center;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
 }
 
 .buttonEdit {
@@ -230,6 +233,7 @@ h2{
     color: #fff;
     cursor: pointer;
     background-color: #001230;
+    margin-top: 1em
 }
 
 .input_data{
