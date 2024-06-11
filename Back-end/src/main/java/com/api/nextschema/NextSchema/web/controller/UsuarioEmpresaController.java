@@ -46,6 +46,7 @@ public class UsuarioEmpresaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "UsuárioEmpresa deletado com sucesso.",
                             content = @Content(mediaType = "application/json"))
+
             }
     )
 
@@ -54,6 +55,7 @@ public class UsuarioEmpresaController {
         usuarioEmpresaService.deleteRegistroPorId(id);
         return ResponseEntity.noContent().build();
     }
+
     @Operation(
             summary = "Buscar usuárioEmpresa pelo id de Empresa.",
             description = "Recebe um id pelo path e retorna um objeto UsuarioEmpresa",
@@ -64,6 +66,7 @@ public class UsuarioEmpresaController {
                             content = @Content(mediaType = "application/json"))
             }
     )
+
     @GetMapping("/empresa/{id}")
     public ResponseEntity<List<Long>> buscarUsuariosPorEmpresa(@PathVariable Long id) {
         List<Long> usuarios = usuarioEmpresaService.buscarUsuariosPorEmpresa(id);
@@ -80,6 +83,7 @@ public class UsuarioEmpresaController {
                             content = @Content(mediaType = "application/json"))
             }
     )
+
     @GetMapping("/usuario/{id}")
     public ResponseEntity<List<EmpresaResponseDTO>> buscarEmpresaPorUsuario(@PathVariable Long id) {
         List<EmpresaResponseDTO> empresasDTO = usuarioEmpresaService.buscarEmpresasPorUsuario(id);
