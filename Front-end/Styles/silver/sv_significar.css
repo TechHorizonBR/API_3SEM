@@ -176,11 +176,12 @@ align-self: flex-end;
 .prompt_ins {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
-  width: 50vw;
-  height: 55vh;
+  /* width: 50vw; */
+  /* height: 55vh; */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .prompt_title{
@@ -200,6 +201,7 @@ align-self: flex-end;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: auto 0;
 }
 
 .contSig{
