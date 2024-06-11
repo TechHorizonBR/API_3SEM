@@ -168,7 +168,13 @@ async function uploadDePara(file, data){
     let correct = document.getElementById("correct");
     let wrong = document.getElementById("wrong");
     try{
-        let res = await api.post(`/dePara/upload`, file);
+        const formData = new FormData();
+        formData.append('file',file);
+        let res = await api.post(`/api/upload/dePara/${data.id}`, formData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        });
         if(res){
             correct.style.display = "block";
             setTimeout(()=>{
@@ -181,7 +187,7 @@ async function uploadDePara(file, data){
         }
     }catch(err){
         wrong.style.display = "block";
-        console.error(err.message);
+        console.error(err);
     }
 }
 
@@ -248,6 +254,12 @@ function generateAllSigHTML(sigValues, data) {
                 case "!=":
                     sinal = "diferente de";
                     break;
+                case "<=":
+                    sinal = "menor ou igual a";
+                    break;
+                case ">=":
+                    sinal = "maior ou igual a";
+                    break;
                 case "true":
                     sinal = "verdade";
                     break;
@@ -255,7 +267,6 @@ function generateAllSigHTML(sigValues, data) {
                     sinal = "falso";
                     break;
                 default:
-                    alert("Sinal errado")
                     continue;
             }
             resultHTML += `
@@ -277,7 +288,6 @@ function generateAllSigHTML(sigValues, data) {
 
 function refreshDeleteButtons(sigValues, data){
     for(let y = 0; y < sigValues.length; y++){
-        console.log(`Y: ${y}`);
         document.getElementById(`btn_remove_sig${y}`).addEventListener("click", async()=>{
             await deleteDePara(sigValues[y].id, data);
         })
@@ -287,6 +297,7 @@ function refreshDeleteButtons(sigValues, data){
 async function viewMetadata(data) {
     data = JSON.parse(data);
     let sigValues = await getDePara(data.id);
+    console.log(sigValues);
 
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -345,7 +356,7 @@ async function viewMetadata(data) {
                         >Criar De/Para</span>
                         <div class="container_btn">
                             <button id="btn_upload" onclick="document.getElementById('file-upload').click();">Upload</button>
-                            <input type="file" id="file-upload" class="file-upload-input" name="file-upload">
+                            <input type="file" id="file-upload" class="file-upload-input" name="file-upload" accept=".csv">
                             <i id="correct" class="fa-solid fa-check" style="display:none; color:green; font-size:1.5em;"></i>
                             <i id="wrong" class="fa-solid fa-xmark" style="display:none; color:red; font-size:1.5em;"></i>
                         </div>
