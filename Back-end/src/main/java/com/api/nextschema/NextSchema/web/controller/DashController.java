@@ -40,9 +40,9 @@ public class DashController {
     public ResponseEntity<Integer> getQuantityUsersByEmpresa(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
     }
-    @GetMapping("/ColunaPorEmpresas")
-    public ResponseEntity<Map<String, Integer>> ColunaPorEmpresas(@RequestBody List<Long> idEmpresa) {
-        Map<String, Integer> result = dashService.ColunaPorEmpresas(idEmpresa);
+    @GetMapping("/quantityColunas")
+    public ResponseEntity<Map<String, Integer>> getQuantityColunasByEmpresa(@RequestBody List<Long> idEmpresa) {
+        Map<String, Integer> result = dashService.getQuantityColunasByEmpresa(idEmpresa);
         return ResponseEntity.ok().body(result);
     }
 }
