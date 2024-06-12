@@ -87,7 +87,6 @@ async function getEmpresas() {
     try{
         let response = await api.get(`/empresas`);
         let empresas = response.data;
-
         if(response.status === 200) {
             generateOptions(empresas)
         }else{

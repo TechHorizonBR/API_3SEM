@@ -73,6 +73,7 @@ align-self: flex-end;
 /* FIM DADOS DO USUARIO */
 
 /* PRIMEIRA LINHA DASHBOARD */
+
 .l1, .l2 {
   display: flex;
   gap: 20px;
@@ -82,7 +83,7 @@ align-self: flex-end;
 }
 
 .card_1 {
-  background-color: #1f7ed5;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -104,7 +105,7 @@ align-self: flex-end;
 }
 
 .card_2 {
-  background-color: #20a6d8;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -126,7 +127,7 @@ align-self: flex-end;
 }
 
 .card_3 {
-  background-color: #20cdd8;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -231,4 +232,8 @@ align-self: flex-end;
   border: none;
   padding: 5px 10px;
   margin-left: 20px;
+}
+
+#colunas{
+  margin-left: 40px;
 }
