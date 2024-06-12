@@ -7,6 +7,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,23 @@ public class DashService {
         return quantity;
     }
 
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityColunasByEmpresa(List<Long> idEmpresas) {
+        Map<String, Integer> quantityColunas = new HashMap<>();
+
+        if (idEmpresas.get(0) == 0) {
+            idEmpresas.clear();
+            idEmpresas.addAll(empresaService.buscarTodosId());
+        }
+        for (Long id : idEmpresas) {
+            List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadataList) {
+                quantityColunas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
+            }
+        }
+        return quantityColunas;
+    }
+  
     @Transactional(readOnly = true)
     public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas){
         Map<String, Integer> quantityByStage = new HashMap<>();

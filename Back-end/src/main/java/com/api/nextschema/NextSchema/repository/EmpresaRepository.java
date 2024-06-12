@@ -6,8 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     @Query("select e from Empresa e where e.cnpj = :cnpj")
     Empresa findbyCNPJ(@Param("cnpj") String cnpj);
+
+    @Query("select i.id from Empresa i")
+    List<Long> findAllId();
 }
