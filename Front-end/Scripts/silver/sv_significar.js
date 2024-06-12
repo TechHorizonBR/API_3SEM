@@ -471,8 +471,6 @@ async function viewMetadata(data) {
             document.getElementById("back_prompt_ins").remove();
             document.getElementById('file-upload').click();
         })
-        
-        //document.getElementById('file-upload').click();
     };
 
     let arquivo = document.getElementById("file-upload");
