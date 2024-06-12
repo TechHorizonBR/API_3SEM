@@ -2,6 +2,9 @@ window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
     getEmpresas();
     getMetadatas();
+    getTiposDeDados(0);
+    getStatusColuna(0);
+    getStatusMetadata(0);
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -117,13 +120,13 @@ function generateOptions(empresas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        tipos_de_dados(selectValue)
+        getMetadatas(selectValue)
     });
 }
 
-async function getMetadatas() {
+async function getMetadatas(idEmpresa) {
     try{
-        let response = await api.get(`/metadatas`);
+        let response = await api.get(`/metadatas/empresa/${idEmpresa}`);
         let metadatas = response.data;
 
         if(response.status === 200) {
@@ -139,11 +142,14 @@ async function getMetadatas() {
 
 function generateOptionsMetadatas(metadatas){
     let select = document.getElementById("select-filter-metadata");
+    let select_ = document.getElementById("filter-metadata");
 
-    let selectOptions = `
-        <option class="option" id="all" value="0">Todos</option>
-    `
+    select.innerHTML = "";
+    select_.innerHTML = "";
+
+    let selectOptions = `<option class="option" id="all" value="0">Todos</option>`;
     select.insertAdjacentHTML("afterbegin", selectOptions);
+    select_.insertAdjacentHTML("afterbegin", selectOptions);
 
     for(let i = 0; i < metadatas.length; i++){
         let selectOptions = `
@@ -151,36 +157,41 @@ function generateOptionsMetadatas(metadatas){
         `
 
         select.insertAdjacentHTML("afterbegin", selectOptions);
+        select_.insertAdjacentHTML("afterbegin", selectOptions);
     }
-}
 
-function tipos_de_dados() {
-    let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
-    let yValues = [55, 49, 44, 40, 70, 50, 0];
-    let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
-
-    new Chart("myChart", {
-    type: "bar",
-    data: {
-        labels: xValues,
-        datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-        }]
-    },
-    options: {
-        legend: {display: false},
-        title: {
-            display: false,
-            text: "TIPOS DE DADO POR METADATA"
-        }
-    }
+    select.addEventListener("change", function () {
+        let selectValue = select.value;
+        getTiposDeDados(selectValue);
+    });
+    select_.addEventListener("change", function () {
+        let selectValue = select_.value;
+        getStatusColuna(selectValue);
     });
 }
 
-function statusMetadata() {
+async function getStatusMetadata(idEmpresa) {
+    try{
+        let body = [idEmpresa]
+
+        let response = await api.get(`/dash/quantityByStage}`, body);
+        let metadatas = response.data;
+
+        if(response.status === 200) {
+            console.log(metadatas)
+            statusColuna(metadatas)
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+function statusMetadata(metadatas) {
     var xValues = ["Pendente", "Invalidado", "Validado"];
-    var yValues = [10, 24, 15];
+    var yValues = metadatas;
     var barColors = ["#2b5797", "#e8c3b9", "#1e7145"];
 
     new Chart("statusMetadata", {
@@ -205,6 +216,64 @@ function statusMetadata() {
             }
         }
     });
+}
+
+async function getTiposDeDados(idEmpresa) {
+    try{
+        let body = [idEmpresa]
+
+        let response = await api.get(`/metadatas/empresa/${idEmpresa}`, body);
+        let dadosEmpresa = response.data;
+
+        if(response.status === 200) {
+            tipos_de_dados(dadosEmpresa)
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+function tipos_de_dados(dadosEmpresa) {
+    let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
+    let yValues = dadosEmpresa;
+    let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
+
+    new Chart("myChart", {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        legend: {display: false},
+        title: {
+            display: false,
+            text: "TIPOS DE DADO POR METADATA"
+        }
+    }
+    });
+}
+
+async function getStatusColuna(idEmpresa) {
+    try{
+        let response = await api.get(`/metadatas/empresa/${idEmpresa}`);
+        let metadatas = response.data;
+
+        if(response.status === 200) {
+            statusColuna(metadatas)
+        }else{
+            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+        }
+    }
+    catch(error){
+        console.error(error);
+    }
 }
 
 function statusColuna() {
