@@ -79,6 +79,14 @@ public class DashService {
 
     @Transactional(readOnly = true)  
     public Map<String, Integer> getQuantityTypeData(List <Long> ids){
+
+        if(ids.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            ids.clear();
+            for(Empresa empresa : empresas){
+                ids.add(empresa.getId());
+            }
+        }
         Map<String, Integer> quantityTypedata = new HashMap<>();
         quantityTypedata.put("String", 0);
         quantityTypedata.put("Int", 0);
