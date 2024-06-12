@@ -181,16 +181,13 @@ h2,p{
     display: flex;
     gap: 70px;
 }
-
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
@@ -198,16 +195,55 @@ h2,p{
     justify-content: center;
     align-items: center;
 }
+#prompt{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+
+
 
 .prompt {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+}
+
+#fechar{
+    display: flex;
+    justify-content: flex-end;
+    width: 97%;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .btns {
@@ -221,6 +257,7 @@ h2,p{
 
 
 .btn_p {
+    margin-top: 5%;
     min-width: 72px;
     height: 40px;
     font-size: larger;
@@ -228,7 +265,7 @@ h2,p{
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
 }
 
 .prompt {

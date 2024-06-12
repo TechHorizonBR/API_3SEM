@@ -75,7 +75,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
 let usuario = JSON.parse(localStorage.getItem("usuario"));
 dadosDoUsuario(usuario.id);
-console.log(usuario.id)
 
 async function dadosDoUsuario(id) {
     try {
@@ -90,8 +89,20 @@ async function dadosDoUsuario(id) {
         let lista = response.roleUsuario
         let listaPermissoes = document.getElementById('listaPermissoes')
         for(i of lista){
+            let nomeRole = ''
+            if(i === "ROLE_LZ"){
+                nomeRole = "Landing Zone";
+            }else if(i === "ROLE_BRONZE"){
+                nomeRole = "Bronze";
+            }else if(i === "ROLE_SILVER"){
+                nomeRole = "Silver";
+            }else{
+                nomeRole = "Administrador";
+            }
+
+
             var bloco = `
-                <span class="badge">${i}</span>
+                <span class="badge">${nomeRole}</span>
             `;
             listaPermissoes.insertAdjacentHTML("beforeend", bloco);
         }
@@ -107,10 +118,39 @@ async function dadosDoUsuario(id) {
             listaEmpresas.insertAdjacentHTML("beforeend", bloco);
         }
     } catch (err) {
-        console.error("ERRO:", err);
-        alert("Erro no sistema.");
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
+
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
+}
+
+
 
 function changePassword() {
     var back = `
@@ -119,8 +159,8 @@ function changePassword() {
         `;
 
     var firstPrompt = `
-        <div class="prompt" id="prompt">
-            <div class="conteudoEditar">
+        <div class="promptEx" id="prompt">
+            
                 <div class="l0">
                     <i class="fa-solid fa-xmark" id="btnfechar"></i>
                 </div>
@@ -136,7 +176,7 @@ function changePassword() {
                 <div class="l3s">
                     <button class="btn" id="btn_salvar">SALVAR</button>
                 </div>
-            </div>
+            
         </div>
         `;
 
@@ -211,7 +251,8 @@ function validatePassword() {
 
     if (validationMessage) {
         document.getElementById("prompt").remove();
-        showValidationPrompt(validationMessage);
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(validationMessage, path)
     }
 }
 

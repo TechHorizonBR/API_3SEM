@@ -128,6 +128,7 @@ async function deleteDePara(id, data){
     }
 }
 
+
 function updateAllSig(sigValues, data) {
     let allSigElement = document.getElementById("all_sig");
     if (allSigElement) {

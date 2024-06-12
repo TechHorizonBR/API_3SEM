@@ -41,24 +41,14 @@
         <!--DADOS DO USUARIO FIM-->
     </header>
     <main>
-        <div class="upload-class">
-            <label for="arquivo" class="botao-upload">
-                <span class="texto-botao">Faça upload de um arquivo</span>
-                <input type="file" id="arquivo" class="input-arquivo" style="display: none;" accept=".csv">
-                <br>
-                <img src="/Front-end/media/images/csv.png" alt="icone" class="icone-botao">
-            </label>
-        </div>
+
+        <i class="fa-solid fa-cloud-arrow-up" id="icone-botao"></i>
+        <p>Clique no botão abaixo para fazer o upload do seu arquivo CSV.</p>
+        <input type="file" id="arquivo" class="input-arquivo" style="display: none;" accept=".csv">
+        <button id="botao" onclick="chamarUpload()">UPLOAD</button>
+
+        
     </main>
-    <!-- <div class="back_prompt" id="back_prompt">
-        <div class="prompt">
-            <span class="prompt_text">O CSV contém cabeçalho?</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_yes">Sim</button>
-                <button class="btn_p" id="btn_no">Não</button>
-            </div>
-        </div>
-    </div> -->
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/Front-end/Scripts/landing_zone/upload.js"></script>

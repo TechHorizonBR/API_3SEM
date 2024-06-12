@@ -2,7 +2,6 @@ window.onload = function() {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
     opcoes_roles_acoes(userData)
     info_usuario(userData)
-    getEmpresas();
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -112,11 +111,16 @@ async function sendMetadata(id_empresa){
         if(res.status === 200){
             reqSuccess.mdReq = true;
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
         sendCSV(arquivoSelec);
     }catch(err){
-        console.error(err);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+        
     }
 }
 
@@ -139,16 +143,50 @@ async function sendCSV(file){
         if(res.status === 200){
             reqSuccess.csvReq = true;
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+
         }
 
         if(reqSuccess.csvReq && reqSuccess.mdReq){
             window.location.href = "lz_personalizacao.html";
         }
     }catch(err){
-        console.error(err);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
     }
 }
+
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
+}
+
+
 
 let arquivo = document.getElementById("arquivo");
 arquivo.addEventListener("change", () => {
@@ -156,6 +194,9 @@ arquivo.addEventListener("change", () => {
     arquivo.value = "";
     firstPrompt();
 });
+function chamarUpload(){
+    document.getElementById("arquivo").click()
+}
 
 function firstPrompt(){
     getEmpresas();
@@ -195,9 +236,14 @@ function firstPrompt(){
         let id_empresa = input_companyname.value;
         nomeData = prompt_name.value;
         if(nomeData === ""){
-            alert("Digite um nome.");
+            let message = "O nome do metadata não pode ser vazio.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+
         }else if(id_empresa === ""){
-            alert("Selecione uma Empresa");
+            let message = "Empresa não pode ser vazia.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }else{
             document.getElementById("back_prompt").remove();
             validation(nomeData, id_empresa);
@@ -227,11 +273,17 @@ async function getEmpresas() {
         if(response.status === 200) {
             listEmpresas(empresas);
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+
         }
     }
     catch{
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
     }
 };
 
@@ -252,7 +304,10 @@ function validation(nomeData, id_empresa) {
     if (regex.test(nomeData)) {
         secondPrompt(id_empresa)
     }else{
-        newFailedPrompt()
+        let message = "O nome do metadata não pode conter espaços e nem caracteres especiais.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
     }
 }
 
@@ -298,31 +353,6 @@ function secondPrompt(id_empresa){
         })
         botao_fechar();
     }
-
-function newFailedPrompt(){
-    var back = `
-    <div class="back_prompt" id="back_prompt"></div>
-    `
-
-    var failedPrompt = `
-    <div class="prompt" id="prompt">
-        <span class="prompt_text" id="validate_identification">Nome inserido é inválido!</span>
-        <div id="text_validation">Os valores dos campos não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-        <div class="btns">
-            <button class="btn_p" id="btn_ok">OK</button>
-        </div>
-    </div>
-    `
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', failedPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        document.getElementById("back_prompt").remove();
-    });
-}
 
 function updateNameUsuario(){
     document.getElementById("username").innerHTML = userName
