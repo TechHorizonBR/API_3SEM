@@ -7,9 +7,12 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.api.nextschema.NextSchema.enums.Validado.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class DashService {
     @Transactional(readOnly = true)
     public Map<Validado, Integer> getQuantityStatus(List<Long> idEmpresas){
         Map<Validado, Integer> quantityStatus = new HashMap<>();
-        quantityStatus.put(Validado.VALIDADO, 0);
+        quantityStatus.put(VALIDADO, 0);
         quantityStatus.put(Validado.INVALIDADO, 0);
         quantityStatus.put(Validado.PENDENTE, 0);
 
@@ -47,7 +50,7 @@ public class DashService {
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
                 int size = colunas.size();
                 for(Coluna coluna : colunas){
-                    if(coluna.getValidado() == Validado.VALIDADO){
+                    if(coluna.getValidado() == VALIDADO){
                         aux[0] +=1;
                     }else if (coluna.getValidado() == Validado.INVALIDADO){
                         aux[1] +=1;
@@ -57,7 +60,7 @@ public class DashService {
                 }
 
                 if(aux[0] == size){
-                    quantityStatus.put(Validado.VALIDADO, quantityStatus.get(Validado.VALIDADO) + 1);
+                    quantityStatus.put(VALIDADO, quantityStatus.get(VALIDADO) + 1);
                 }else if(aux[1] > 0){
                     quantityStatus.put(Validado.INVALIDADO, quantityStatus.get(Validado.INVALIDADO) + 1);
                 }else{
@@ -129,4 +132,68 @@ public class DashService {
         }
         return quantity;
     }
+
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityColunasByEmpresa(List<Long> idEmpresas) {
+        Map<String, Integer> quantityColunas = new HashMap<>();
+
+        if (idEmpresas.get(0) == 0) {
+            idEmpresas.clear();
+            idEmpresas.addAll(empresaService.buscarTodosId());
+        }
+        for (Long id : idEmpresas) {
+            List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadataList) {
+                quantityColunas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
+            }
+        }
+        return quantityColunas;
+    }
+  
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas){
+        Map<String, Integer> quantityByStage = new HashMap<>();
+        quantityByStage.put("LZ", 0);
+        quantityByStage.put("BRONZE", 0);
+        quantityByStage.put("SILVER", 0);
+
+        if (idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for (Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+
+        }
+        for(Long id : idEmpresas){
+            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadatas ){
+                List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
+                int validado = 0;
+                int pendente = 0;
+                for (Coluna coluna : colunas){
+                    if (coluna.getValidado() == VALIDADO) {
+                        validado ++;
+                    }
+                    else if (coluna.getValidado() == PENDENTE){
+                        pendente ++;
+                    }
+                };
+                if (pendente == colunas.size()){
+                    quantityByStage.put("LZ", quantityByStage.get("LZ") +1);
+
+
+                } else if (validado == colunas.size()){
+                    quantityByStage.put("SILVER", quantityByStage.get("SILVER") +1);
+                } else {
+                    quantityByStage.put("BRONZE", quantityByStage.get("BRONZE") +1);
+                }
+            }
+
+        };
+
+
+        return quantityByStage;
+    }
+
 }
