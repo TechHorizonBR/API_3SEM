@@ -1,5 +1,6 @@
 package com.api.nextschema.NextSchema.web.controller;
 
+import com.api.nextschema.NextSchema.entity.Coluna;
 import com.api.nextschema.NextSchema.enums.Validado;
 import com.api.nextschema.NextSchema.service.DashService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +39,16 @@ public class DashController {
     @GetMapping("/quantityUsers")
     public ResponseEntity<Integer> getQuantityUsersByEmpresa(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
+    }
+  
+    @GetMapping("/quantityColunas")
+    public ResponseEntity<Map<String, Integer>> getQuantityColunasByEmpresa(@RequestBody List<Long> idEmpresa) {
+        Map<String, Integer> result = dashService.getQuantityColunasByEmpresa(idEmpresa);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/quantityByStage")
+    public ResponseEntity<Map<String, Integer>> getQuantityByStage(@RequestBody List<Long> idEmpresas){
+        return ResponseEntity.ok().body(dashService.getQuantityByStage(idEmpresas));
     }
 }
