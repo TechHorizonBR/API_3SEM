@@ -1,18 +1,18 @@
 package com.api.nextschema.NextSchema.service;
 
-import com.api.nextschema.NextSchema.entity.Coluna;
-import com.api.nextschema.NextSchema.entity.DePara;
-import com.api.nextschema.NextSchema.entity.Metadata;
-import com.api.nextschema.NextSchema.entity.UsuarioEmpresa;
+import com.api.nextschema.NextSchema.entity.*;
 import com.api.nextschema.NextSchema.enums.Validado;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.api.nextschema.NextSchema.enums.Validado.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,51 +27,60 @@ public class DashService {
     private final UsuarioEmpresaService usuarioEmpresaService;
 
     @Transactional(readOnly = true)
-    public Map<Validado, Integer> getQuantityStatus(List<Long> idEmpresas){
+    public Map<Validado, Integer> getQuantityStatus(List<Long> idEmpresas, Long idMetadata){
         Map<Validado, Integer> quantityStatus = new HashMap<>();
-        quantityStatus.put(Validado.VALIDADO, 0);
+        quantityStatus.put(VALIDADO, 0);
         quantityStatus.put(Validado.INVALIDADO, 0);
         quantityStatus.put(Validado.PENDENTE, 0);
 
-        int[] aux = {0,0,0};
+        if(idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for(Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+        }
 
         for(Long id : idEmpresas){
-            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            List<Metadata> metadatas = new ArrayList<>();
+
+            if(idMetadata == 0){
+                metadatas.addAll(metadataService.buscarPorEmpresa(id));
+
+            }else{
+                metadatas.add(metadataService.findbyId(idMetadata));
+            }
 
 
             for(Metadata metadata : metadatas){
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
-                int size = colunas.size();
-                for(Coluna coluna : colunas){
-                    if(coluna.getValidado() == Validado.VALIDADO){
-                        aux[0] +=1;
-                    }else if (coluna.getValidado() == Validado.INVALIDADO){
-                        aux[1] +=1;
-                    }else if(coluna.getValidado() == Validado.PENDENTE) {
-                        aux[2] += 1;
+
+                for(Coluna coluna : colunas) {
+                    if (coluna.getValidado() == VALIDADO) {
+                        quantityStatus.put(VALIDADO, quantityStatus.get(VALIDADO) + 1);
+                    } else if (coluna.getValidado() == Validado.INVALIDADO) {
+                        quantityStatus.put(Validado.INVALIDADO, quantityStatus.get(Validado.INVALIDADO) + 1);
+                    } else if (coluna.getValidado() == Validado.PENDENTE) {
+                        quantityStatus.put(Validado.PENDENTE, quantityStatus.get(Validado.PENDENTE) + 1);
                     }
                 }
-
-                if(aux[0] == size){
-                    quantityStatus.put(Validado.VALIDADO, quantityStatus.get(Validado.VALIDADO) + 1);
-                }else if(aux[1] > 0){
-                    quantityStatus.put(Validado.INVALIDADO, quantityStatus.get(Validado.INVALIDADO) + 1);
-                }else{
-                    quantityStatus.put(Validado.PENDENTE, quantityStatus.get(Validado.PENDENTE) + 1);
-                }
-
-                aux[0] = 0;
-                aux[1] = 0;
-                aux[2] = 0;
-
             }
+            if (idMetadata == 0) break;
         }
         return quantityStatus;
-
     }
 
     @Transactional(readOnly = true)  
-    public Map<String, Integer> getQuantityTypeData(List <Long> ids){
+    public Map<String, Integer> getQuantityTypeData(List <Long> ids, Long idMetadata){
+
+        if(ids.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            ids.clear();
+            for(Empresa empresa : empresas){
+                ids.add(empresa.getId());
+            }
+        }
+
         Map<String, Integer> quantityTypedata = new HashMap<>();
         quantityTypedata.put("String", 0);
         quantityTypedata.put("Int", 0);
@@ -81,6 +90,14 @@ public class DashService {
         quantityTypedata.put("Date", 0);
         for(Long id : ids){
             List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+
+            if(idMetadata == 0){
+                metadatas.addAll(metadataService.buscarPorEmpresa(id));
+
+            }else{
+                metadatas.add(metadataService.findbyId(idMetadata));
+            }
+
             for(Metadata metadata : metadatas){
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
                 for (Coluna coluna : colunas){
@@ -106,6 +123,7 @@ public class DashService {
                     }
                 }
             }
+            if(idMetadata == 0) break;
         }
         return quantityTypedata;
 
@@ -125,4 +143,68 @@ public class DashService {
         }
         return quantity;
     }
+
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityColunasByEmpresa(List<Long> idEmpresas) {
+        Map<String, Integer> quantityColunas = new HashMap<>();
+
+        if (idEmpresas.get(0) == 0) {
+            idEmpresas.clear();
+            idEmpresas.addAll(empresaService.buscarTodosId());
+        }
+        for (Long id : idEmpresas) {
+            List<Metadata> metadataList = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadataList) {
+                quantityColunas.put(metadata.getNome(), colunaService.buscarPorMetadata(metadata.getId()).size());
+            }
+        }
+        return quantityColunas;
+    }
+  
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas){
+        Map<String, Integer> quantityByStage = new HashMap<>();
+        quantityByStage.put("LZ", 0);
+        quantityByStage.put("BRONZE", 0);
+        quantityByStage.put("SILVER", 0);
+
+        if (idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for (Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+
+        }
+        for(Long id : idEmpresas){
+            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            for (Metadata metadata : metadatas ){
+                List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
+                int validado = 0;
+                int pendente = 0;
+                for (Coluna coluna : colunas){
+                    if (coluna.getValidado() == VALIDADO) {
+                        validado ++;
+                    }
+                    else if (coluna.getValidado() == PENDENTE){
+                        pendente ++;
+                    }
+                };
+                if (pendente == colunas.size()){
+                    quantityByStage.put("LZ", quantityByStage.get("LZ") +1);
+
+
+                } else if (validado == colunas.size()){
+                    quantityByStage.put("SILVER", quantityByStage.get("SILVER") +1);
+                } else {
+                    quantityByStage.put("BRONZE", quantityByStage.get("BRONZE") +1);
+                }
+            }
+
+        };
+
+
+        return quantityByStage;
+    }
+
 }

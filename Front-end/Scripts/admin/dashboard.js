@@ -2,9 +2,9 @@ window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
     getEmpresas();
     getMetadatas();
-    getTiposDeDados(0);
-    getStatusColuna(0);
-    getStatusMetadata(0);
+    getTiposDeDados(0, 0);
+    getStatusColuna(0, 0);
+    getestagioMetadatas(0);
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -41,17 +41,17 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
-            var listar_metadata = `
+            let listar_metadata = `
             <li><a href="${pagina_por_role[1]}">${nome_por_role[1]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }else if(roles[chave] == "ROLE_BRONZE"){
-            var listar_metadata = `
+            let listar_metadata = `
             <li><a href="${pagina_por_role[2]}">${nome_por_role[2]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }else if(roles[chave] == "ROLE_SILVER"){
-            var listar_metadata = `
+            let listar_metadata = `
             <li><a href="${pagina_por_role[3]}">${nome_por_role[3]}</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
@@ -66,14 +66,14 @@ function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
     for (let i in userData.roleUsuario){
         if (userData.roleUsuario[i] === "ROLE_LZ"){
-            var listar_metadata = `
+            let listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
         console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
         else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            var listar_metadata = `
+            let listar_metadata = `
             <li><a href="#">Relacionamentos</a></li>
         `;
         console.log(userData.roleUsuario)
@@ -119,7 +119,10 @@ function generateOptions(empresas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        getMetadatas(selectValue)
+        getMetadatas(selectValue);
+        getTiposDeDados(0, selectValue);
+        getestagioMetadatas(selectValue);
+        getStatusColuna(0, selectValue);
     });
 }
 
@@ -129,7 +132,7 @@ async function getMetadatas(idEmpresa) {
         let metadatas = response.data;
 
         if(response.status === 200) {
-            generateOptionsMetadatas(metadatas)
+            generateOptionsMetadatas(metadatas, idEmpresa)
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
         }
@@ -139,7 +142,7 @@ async function getMetadatas(idEmpresa) {
     }
 }
 
-function generateOptionsMetadatas(metadatas){
+function generateOptionsMetadatas(metadatas, idEmpresa){
     let select = document.getElementById("select-filter-metadata");
     let select_ = document.getElementById("filter-metadata");
 
@@ -161,24 +164,23 @@ function generateOptionsMetadatas(metadatas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        getTiposDeDados(selectValue);
+        getTiposDeDados(selectValue, idEmpresa);
     });
     select_.addEventListener("change", function () {
         let selectValue = select_.value;
-        getStatusColuna(selectValue);
+        getStatusColuna(selectValue, idEmpresa);
     });
 }
 
-async function getStatusMetadata(idEmpresa) {
+async function getestagioMetadatas(idEmpresa) {
     try{
         let body = [idEmpresa]
 
-        let response = await api.get(`/dash/quantityByStage}`, body);
+        let response = await api.post(`/dash/quantityByStage`, body);
         let metadatas = response.data;
 
         if(response.status === 200) {
-            console.log(metadatas)
-            statusColuna(metadatas)
+            estagioMetadatas(metadatas)
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
         }
@@ -188,12 +190,18 @@ async function getStatusMetadata(idEmpresa) {
     }
 }
 
-function statusMetadata(metadatas) {
-    var xValues = ["Pendente", "Invalidado", "Validado"];
-    var yValues = metadatas;
-    var barColors = ["#2b5797", "#e8c3b9", "#1e7145"];
+function estagioMetadatas(metadatas) {
+    const idCanva = Chart.getChart("estagioMetadatas")
 
-    new Chart("statusMetadata", {
+    if (idCanva) {
+        idCanva.destroy();
+    }
+
+    let xValues = ["LandingZone", "Bronze", "Silver"];
+    let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER];
+    let barColors = ["#2b5797", "#e8c3b9", "#1e7145"];
+
+    new Chart("estagioMetadatas", {
         type: "doughnut",
         data: {
             labels: xValues,
@@ -217,11 +225,11 @@ function statusMetadata(metadatas) {
     });
 }
 
-async function getTiposDeDados(idEmpresa) {
+async function getTiposDeDados(idMetadata, idEmpresa) {
     try{
         let body = [idEmpresa]
 
-        let response = await api.get(`/metadatas/empresa/${idEmpresa}`, body);
+        let response = await api.post(`/dash/quantityTypeData/${idMetadata}`, body);
         let dadosEmpresa = response.data;
 
         if(response.status === 200) {
@@ -236,8 +244,14 @@ async function getTiposDeDados(idEmpresa) {
 }
 
 function tipos_de_dados(dadosEmpresa) {
+    const idCanva = Chart.getChart("myChart")
+
+    if (idCanva) {
+        idCanva.destroy();
+    }
+
     let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
-    let yValues = dadosEmpresa;
+    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Integer, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date]
     let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
 
     new Chart("myChart", {
@@ -259,9 +273,13 @@ function tipos_de_dados(dadosEmpresa) {
     });
 }
 
-async function getStatusColuna(idEmpresa) {
+async function getStatusColuna(idMetadata, idEmpresa) {
     try{
-        let response = await api.get(`/metadatas/empresa/${idEmpresa}`);
+        let body = [
+            idEmpresa
+        ]
+
+        let response = await api.post(`/dash/quantityStatus/${idMetadata}`, body);
         let metadatas = response.data;
 
         if(response.status === 200) {
@@ -275,12 +293,20 @@ async function getStatusColuna(idEmpresa) {
     }
 }
 
-function statusColuna() {
-    var xValues = ["Pendente", "Invalidado", "Validado"];
-    var yValues = [25, 35, 40];
-    var barColors = ["#b91d47", "#00aba9", "#2b5797"];
+function statusColuna(metadatas) {
+    const idCanva = Chart.getChart("statusColuna")
 
-    new Chart("statusColuna", {
+    if (idCanva) {
+        idCanva.destroy();
+    }
+
+    let xValues = ["Pendente", "Invalidado", "Validado"];
+    let yValues = [metadatas.PENDENTE, metadatas.INVALIDADO, metadatas.VALIDADO];
+    let barColors = ["#b91d47", "#00aba9", "#2b5797"];
+
+    let canva = document.getElementById("statusColuna").getContext("2d")
+
+    const myChart = new Chart(canva, {
     type: "doughnut",
     data: {
         labels: xValues,
