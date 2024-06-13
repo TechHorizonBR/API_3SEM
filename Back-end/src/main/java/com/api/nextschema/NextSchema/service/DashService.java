@@ -71,7 +71,7 @@ public class DashService {
     }
 
     @Transactional(readOnly = true)  
-    public Map<String, Integer> getQuantityTypeData(List <Long> ids){
+    public Map<String, Integer> getQuantityTypeData(List <Long> ids, Long idMetadata){
 
         if(ids.get(0) == 0){
             List<Empresa> empresas = empresaService.buscarTodos();
@@ -80,6 +80,7 @@ public class DashService {
                 ids.add(empresa.getId());
             }
         }
+
         Map<String, Integer> quantityTypedata = new HashMap<>();
         quantityTypedata.put("String", 0);
         quantityTypedata.put("Int", 0);
@@ -89,6 +90,14 @@ public class DashService {
         quantityTypedata.put("Date", 0);
         for(Long id : ids){
             List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+
+            if(idMetadata == 0){
+                metadatas.addAll(metadataService.buscarPorEmpresa(id));
+
+            }else{
+                metadatas.add(metadataService.findbyId(idMetadata));
+            }
+
             for(Metadata metadata : metadatas){
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
                 for (Coluna coluna : colunas){
@@ -114,6 +123,7 @@ public class DashService {
                     }
                 }
             }
+            if(idMetadata == 0) break;
         }
         return quantityTypedata;
 
