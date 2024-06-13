@@ -20,7 +20,7 @@ import java.util.Map;
 public class DashController {
     private final DashService dashService;
 
-    @PostMapping("/quantityStatus")
+    @PostMapping("/quantityStatus/{idMetadata}")
     public ResponseEntity<Map<Validado, Integer>> getQuantityStatus(@RequestBody List<Long> idEmpresas, @PathVariable Long idMetadata){
         return ResponseEntity.status(HttpStatus.OK).body(dashService.getQuantityStatus(idEmpresas, idMetadata));
     }
