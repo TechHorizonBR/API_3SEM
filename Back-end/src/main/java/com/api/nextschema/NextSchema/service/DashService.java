@@ -27,13 +27,12 @@ public class DashService {
     private final UsuarioEmpresaService usuarioEmpresaService;
 
     @Transactional(readOnly = true)
-    public Map<Validado, Integer> getQuantityStatus(List<Long> idEmpresas){
+    public Map<Validado, Integer> getQuantityStatus(List<Long> idEmpresas, Long idMetadata){
         Map<Validado, Integer> quantityStatus = new HashMap<>();
         quantityStatus.put(VALIDADO, 0);
         quantityStatus.put(Validado.INVALIDADO, 0);
         quantityStatus.put(Validado.PENDENTE, 0);
 
-        int[] aux = {0,0,0};
         if(idEmpresas.get(0) == 0){
             List<Empresa> empresas = empresaService.buscarTodos();
             idEmpresas.clear();
@@ -43,38 +42,32 @@ public class DashService {
         }
 
         for(Long id : idEmpresas){
-            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            List<Metadata> metadatas = new ArrayList<>();
+
+            if(idMetadata == 0){
+                metadatas.addAll(metadataService.buscarPorEmpresa(id));
+
+            }else{
+                metadatas.add(metadataService.findbyId(idMetadata));
+            }
 
 
             for(Metadata metadata : metadatas){
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
-                int size = colunas.size();
-                for(Coluna coluna : colunas){
-                    if(coluna.getValidado() == VALIDADO){
-                        aux[0] +=1;
-                    }else if (coluna.getValidado() == Validado.INVALIDADO){
-                        aux[1] +=1;
-                    }else if(coluna.getValidado() == Validado.PENDENTE) {
-                        aux[2] += 1;
+
+                for(Coluna coluna : colunas) {
+                    if (coluna.getValidado() == VALIDADO) {
+                        quantityStatus.put(VALIDADO, quantityStatus.get(VALIDADO) + 1);
+                    } else if (coluna.getValidado() == Validado.INVALIDADO) {
+                        quantityStatus.put(Validado.INVALIDADO, quantityStatus.get(Validado.INVALIDADO) + 1);
+                    } else if (coluna.getValidado() == Validado.PENDENTE) {
+                        quantityStatus.put(Validado.PENDENTE, quantityStatus.get(Validado.PENDENTE) + 1);
                     }
                 }
-
-                if(aux[0] == size){
-                    quantityStatus.put(VALIDADO, quantityStatus.get(VALIDADO) + 1);
-                }else if(aux[1] > 0){
-                    quantityStatus.put(Validado.INVALIDADO, quantityStatus.get(Validado.INVALIDADO) + 1);
-                }else{
-                    quantityStatus.put(Validado.PENDENTE, quantityStatus.get(Validado.PENDENTE) + 1);
-                }
-
-                aux[0] = 0;
-                aux[1] = 0;
-                aux[2] = 0;
-
             }
+            if (idMetadata == 0) break;
         }
         return quantityStatus;
-
     }
 
     @Transactional(readOnly = true)  
