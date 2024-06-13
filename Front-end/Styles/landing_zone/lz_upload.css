@@ -5,17 +5,32 @@ body {
     margin: 0;
     position: relative;
 }
-
-/* .header {
-    background-color: #006a8f;
-    width: 100%;
-    height: 6vh;
-    display: flex;
-    position: absolute;
-    justify-content: space-between;
-    z-index: 3;
-} */
-
+main{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 10%;
+}
+#icone-botao{
+    font-size: 6vw;
+    color: #001230
+}
+#botao{
+    background-color: #001230;
+    font-size: 1.5vw;
+    color: white;
+    border: none;
+    padding: 0.9em 8em 0.8em 9em;   
+}
+#botao:hover{
+    border: #001230 1px solid;
+    background-color: white;
+    color: #001230;
+    cursor: pointer
+}
 #DRLogo {
     margin: 0 1vw;
     max-width: 100%;
@@ -35,14 +50,6 @@ body {
     margin-right: 20px;
     margin-top: 20px;
     font-family: "Inter", sans-serif;
-}
-
-.upload-class {
-    text-align: center;
-    height: calc(100vh - 100px);
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
 }
 
 .botao-upload {
@@ -81,24 +88,66 @@ body {
     vertical-align: middle;
     font-family: "Inter", sans-serif;
 }
-
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
     align-content: center;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
+.prompt {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+#fechar{
+    display: flex;
+    justify-content: flex-end;
+    width: 97%;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
 .btns {
     display: flex;
@@ -107,17 +156,10 @@ body {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    padding-top: 10%;
 }
 
-.prompt_text {
-    font-family: "Inter", sans-serif;
-    padding: 5%;
-    padding-top: 13%;
-}
 
 .btn_p {
-    /* width: 72px; */
     min-width: 72px;
     height: 40px;
     font-size: larger;
@@ -125,20 +167,20 @@ body {
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
+    margin-top: 2%
 }
 
-/* #btn_yes {
-    background-color: #46fd18;
+.prompt {
+    animation: popupAppear 0.5s normal;
+    
 }
 
-#btn_no {
-    background-color: #ff1c1c;
+.prompt_text {
+    font-family: "Inter", sans-serif;
+    margin: 3%
 }
 
-#btn_cont{
-    background-color: #006a8f;
-} */
 
 @keyframes popupAppear {
     from {
@@ -167,24 +209,10 @@ body {
     position: absolute; /* Define a posição absoluta */
     right: 8px; /* Define a distância do lado direito */
     top: 8px; /* Define a distância do topo */
-    color: #df0202;
+    color: gray;
     font-size: 125%;
     
 }
-
-.prompt {
-    background-color: white;
-    padding: 1% 8%;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    width: 300px;
-    position: relative; /* Define a posição relativa */
-    animation: popupAppear 0.5s normal;
-}
-
 
 /* DADOS DO USUARIO */
 .info_user {
