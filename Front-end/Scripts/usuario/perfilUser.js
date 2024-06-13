@@ -250,7 +250,7 @@ function validatePassword() {
     }
 
     if (validationMessage) {
-        document.getElementById("prompt").remove();
+        document.getElementById("back_prompt").remove();
         let path = '/Front-end/media/images/error-img.gif'
         prompt_function(validationMessage, path)
     }
@@ -261,12 +261,16 @@ async function postChangePassword(dados){
 	try {
         let responseSenha = await api.patch(`/usuarios`, dados);
         if (responseSenha.status === 200) {
-            document.getElementById("prompt").remove();
-            showValidationPrompt("Senha alterada com sucesso!");
+            document.getElementById("back_prompt").remove();
+            let message = "Senha alterada com sucesso.";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path)
         }
     } catch (error) {
-        document.getElementById("prompt").remove();
-        showValidationPrompt("Erro ao alterar a senha. Tente novamente.");
+        document.getElementById("back_prompt").remove();
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 
 }
