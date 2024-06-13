@@ -119,9 +119,11 @@ display: block;
 
 .all_buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 80%;
     margin: 0 auto;
+    margin-top: 20px;
+    /* margin-bottom: 20px; */
 }
 
 table {

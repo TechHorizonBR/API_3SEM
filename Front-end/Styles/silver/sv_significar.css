@@ -398,3 +398,26 @@ select:disabled {
 .exit_btn:hover{
   font-size: large;
 }
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  background-color: var(--header-color);
+  color: #ffffff;
+  border-radius: 15px;
+  height: 50px;
+  width: 12%;
+  font-size: large;
+  text-align: center;
+  font-weight: bold;
+  margin: 3%;
+}

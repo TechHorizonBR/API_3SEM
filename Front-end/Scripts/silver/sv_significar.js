@@ -3,6 +3,7 @@ window.onload = () => {
     opcoes_roles_acoes(userData);
     info_usuario(userData);
     showMetadata(metadataName);
+    addYamlAction();
     getSilverData();
 };
 
@@ -86,6 +87,33 @@ function opcoes_roles_metadata(roles, pagina_por_role, nome_por_role) {
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }
+    }
+}
+
+function addYamlAction(){
+    document.getElementById("btn_yaml").addEventListener("click", ()=>{
+        generateYaml();
+    })
+}
+
+async function generateYaml(){
+    try{
+        let res = await api.get(`/download/yaml/3/${metadata.id}`, {
+            responseType:'blob'
+        });
+
+        if(res && res.data){
+            let url = window.URL.createObjectURL(res.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "config_sv.yaml";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }else{
+            console.error("A resposta da api não contém dados válidos.")
+        }
+    }catch(err){
+        console.error("Erro ao baixar o arquivo YAML:",err);
     }
 }
 
