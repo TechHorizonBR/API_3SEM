@@ -3,7 +3,8 @@ window.onload = () => {
     opcoes_roles_acoes(userData)
     info_usuario(userData)
     getAllData();
-    updateNameUsuario()
+    // updateNameUsuario();
+    addYamlAction();
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -18,6 +19,12 @@ const api = axios.create({
 
 })
 
+function addYamlAction(){
+    document.getElementById("btn_yaml").addEventListener("click", ()=>{
+        generateYaml();
+    })
+}
+
 function opcoes_roles_acoes(userData){
     let table = document.querySelector(".upload");
     for (let i in userData.roleUsuario){
@@ -25,14 +32,12 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
         else if(userData.roleUsuario[i] === "ROLE_SILVER"){
             var listar_metadata = `
             <li><a href="#">Relacionamentos</a></li>
         `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -60,7 +65,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         enum_role = roles[chave]
         let rota = pagina_por_role[enum_role];
         let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -109,17 +113,23 @@ async function updateData(newData) {
             newData
         );
         if(response.status === 200){
-            newPrompt();
+            let message = "Dados atualizados com sucesso.";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path)
             document.getElementById("btn_pen").className = "fa-solid fa-pen";
             document.getElementById("btn_atualizar").removeEventListener("click", eventoAtualizar)
             getAllData();
             isEdit =  false;
         }else{
-            console.log("Um erro aconteceu no sistema.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
         popularTabela();
     } catch (error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -144,10 +154,33 @@ function eventoAtualizar(){
     validation(todosDados);
 }
 
+async function generateYaml(){
+    try{
+        let res = await api.get(`/download/yaml/1/${metadataId}`, {
+            responseType:'blob'
+        });
+
+        if(res && res.data){
+            let url = window.URL.createObjectURL(res.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "config_lz.yaml";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }else{
+            console.error("A resposta da api não contém dados válidos.")
+        }
+    }catch(err){
+        console.error("Erro ao baixar o arquivo YAML:",err);
+    }
+}
+
 function popularTabela() {
     let tabela = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
-    btn_atualizar.style = "visibility: hidden;";
+    let btn_yaml = document.getElementById("btn_yaml");
+    btn_atualizar.style = "display:none;";
+    btn_yaml.style = "display:block;"
 
     tabela.innerHTML = "";
 
@@ -221,8 +254,10 @@ function popularTabela() {
 function editData(){
     let tabela_atual = document.getElementById("body_dados");
     let btn_atualizar = document.getElementById("btn_atualizar");
+    let btn_yaml = document.getElementById("btn_yaml");
     tabela_atual.innerHTML = "";
-    btn_atualizar.style = "visibility: visible;";
+    btn_yaml.style = "display: none;"
+    btn_atualizar.style = "display: block;";
     for (let x = 0; x < dados_Json.length; x++) {
         let isChecked = "";
         if (dados_Json[x].restricao === "true") {
@@ -232,7 +267,6 @@ function editData(){
         }
 
         let selectedOption = [];
-        console.log(dados_Json[x].tipo);
         switch (dados_Json[x].tipo) {
             case "string":
                 selectedOption[0] = "selected";
@@ -295,29 +329,32 @@ document.getElementById("btn_pen").addEventListener("click", () => {
     }
 });
 
-function newPrompt(){
+function prompt_function(message, path) {
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
-    `
+    `;
 
-    var successPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text">Sucesso! Seu esquema foi atualizado.</span>
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
             <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
+                <button class="btn_p" id="btn_OK">OK</button>
             </div>
         </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', back);
+    document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', successPrompt);
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
 
-    document.getElementById("btn_ok").addEventListener("click", () => {
+    document.getElementById("btn_OK").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
     });
 }
+
 
 function validation(todosDados) {
     const regex = /^[a-zA-Z0-9_]*$/;
@@ -364,6 +401,6 @@ function newFailedPrompt(errors){
     });
 }
 
-function updateNameUsuario(){
-    document.getElementById("username").innerHTML = userName
-}
+// function updateNameUsuario(){
+//     document.getElementById("username").innerHTML = userName
+// }

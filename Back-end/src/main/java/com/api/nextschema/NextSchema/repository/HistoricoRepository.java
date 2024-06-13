@@ -19,8 +19,8 @@ public interface HistoricoRepository extends JpaRepository<Historico, Long> {
     List<Historico> findByMetadata(@Param("metadata_id") Long metadataid);
 
     @Modifying
-    @Query("DELETE FROM Historico h WHERE h.metadata = :metadata")
-    void deleteByMetadata(@Param("metadata") Metadata metadata);
+    @Query("DELETE FROM Historico h WHERE h.metadata.id = :id")
+    void deleteByMetadata(@Param("id") Long id);
 
     @Modifying
     @Query("DELETE FROM Historico h WHERE h.usuario = :usuario")

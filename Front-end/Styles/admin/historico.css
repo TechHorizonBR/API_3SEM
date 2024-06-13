@@ -8,32 +8,25 @@
 
 main{
     /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
-    height: calc(100vh - 100px);
-    margin: 0% 5%;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    flex-wrap: nowrap;
-}
-
-#title {
-    color: var(--title-color);
-    font-weight: bold;
-    font-size: larger;
-    display: flex;
     align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+.titles{
+    justify-content: center;
+    text-align: center;
+}
+.table-background{
+    margin-bottom: 5%;
 }
 
-.top_itens{
+.filters{
     display: flex;
-    justify-content: space-between;
-    margin: 5% 3% 0 5%;
-}
-
-.all_selects{
-    display: flex;
-    width: 800px;
-    justify-content: space-between;
+    justify-content: end;
 }
 
 #select {
@@ -41,7 +34,7 @@ main{
     color: var(--title-color);
     font-weight: bold;
     align-items: center;
-  }
+}
   
   .select-custom{
     border-radius: 15px;
@@ -79,9 +72,12 @@ main{
 .icon-container:hover #question-input {
 display: block;
 }
+.top_itens{
+    margin: 2% 0 2% 0;
+}
 
 table {
-    margin: 5% 0 0 0;
+    margin: 0% 0 0 0;
     width: 100%;
     border-collapse: collapse;
     border-radius: 8px;

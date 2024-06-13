@@ -6,23 +6,25 @@
 }
 
 main{
-  /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
-  height: calc(100vh - 100px);
-  margin: 0;
+  margin-left: 5%;
+  margin-right: 5%;
   display: flex;
+
   flex-direction: column;
-  align-content: center;
-  flex-wrap: nowrap;
+  margin-bottom: 5%;
+
+}
+h2,p{
+  text-align: center;
 }
 #messageMet{
   text-align: center;
   justify-content: center;
 }
 #title {
-  color: var(--title-color);
-  font-weight: bold;
-  font-size: larger;
-  display: flex;
+  color: #000;
+  text-align: center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -395,4 +397,27 @@ select:disabled {
 
 .exit_btn:hover{
   font-size: large;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  background-color: var(--header-color);
+  color: #ffffff;
+  border-radius: 15px;
+  height: 50px;
+  width: 12%;
+  font-size: large;
+  text-align: center;
+  font-weight: bold;
+  margin: 3%;
 }

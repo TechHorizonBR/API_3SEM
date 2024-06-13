@@ -6,12 +6,17 @@ html{
 }
 
 .conteudo{
-    width: 95%;
-    height: calc(100vh - 100px);
+    align-items: center;
     margin-left: 5%;
     margin-right: 5%;
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-bottom: 5%;
+}
+.cadastroEmpresas{
+    justify-content: center;
+    text-align: center;
 }
 
 .boxEmpresa{
@@ -58,14 +63,14 @@ html{
 .boxList{
     color: rgb(137, 137, 137);
     width: 95%;
-    max-height:20em;
     margin-top: 30px;
+    margin-bottom: 5%;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
     position: static;
-    overflow-y: auto;
+    overflow-y: none;
 }
 
 .boxList p {
@@ -118,14 +123,12 @@ html{
     margin-left: 10px;
 }
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
@@ -133,20 +136,25 @@ html{
     justify-content: center;
     align-items: center;
 }
+.no-scroll {
+    overflow: hidden;
+}
 
 .prompt {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
 }
 
 .promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -155,9 +163,10 @@ html{
 }
 
 .prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
@@ -191,7 +200,7 @@ html{
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
 }
 
 .prompt {

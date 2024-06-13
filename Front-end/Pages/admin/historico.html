@@ -16,17 +16,18 @@
             <nav>
                 <ul class="menu">
                     <li><a href="homeAdmin.html">Home</a></li>
-                    
+
                     <li><a href="#">Cadastros</a>
                         <ul>
                             <li><a href="cadastroEmpresa.html">Empresa</a></li>
                             <li><a href="cadastroUsuario.html">Usuário</a></li>
                         </ul>
                     </li>
-                    
+
                     <li><a href="#">Ações</a>
                         <ul>
                             <li><a href="historico.html">Histórico</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
                         </ul>
                     </li>
                     <li><a href="../index.html">Logout</a></li>
@@ -46,28 +47,34 @@
         <!--DADOS DO USUARIO FIM-->
     </header>
     <main>
-        <div class="top_itens">
-            <div id="title">
-                Histórico de Ações 
-            </div>
-            <div class="all_selects">
-                <div id="select">
-                    <div>Empresa</div>
-                    <select class="select-custom" id="select-filter1">
-                        <option value="" disabled selected hidden>Selecionar</option>
-                        <!-- <option class="option" value="1">Opção 1</option> -->
-                    </select>
-                </div>
-                <div id="select">
-                    <div>Metadata</div>
-                    <select class="select-custom" id="select-filter2" disabled>
-                        <option value="" disabled selected hidden>Selecionar</option>
-                        <!-- <option class="option" value="1">Opção 1</option> -->
-                    </select>
-                </div>
-            </div>
+        <div class="titles">
+            <h2 id="title">Histórico de Ações</h2>
+            <p>Acompanhe e analise o histórico completo de ações realizadas no sistema, facilitando o monitoramento e a auditoria das atividades.</p>    
         </div>
         
+        <div class="top_itens">
+            
+            <div class="all_selects">
+                <div class="filters">
+                    <div id="select">
+                        <div>Empresa</div>
+                        <select class="select-custom" id="select-filter1">
+                            <option value="" disabled selected hidden>Selecionar</option>
+                            <!-- <option class="option" value="1">Opção 1</option> -->
+                        </select>
+                    </div>
+                    <div id="select">
+                        <div>Metadata</div>
+                        <select class="select-custom" id="select-filter2" disabled>
+                            <option value="" disabled selected hidden>Selecionar</option>
+                            <!-- <option class="option" value="1">Opção 1</option> -->
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
         <div id="table-background">
             <table>
                 <thead>
