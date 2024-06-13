@@ -38,7 +38,7 @@ public class HistoricoService {
     }
 
     public void deleteByMetadata(Metadata metadata) {
-        historicoRepository.deleteByMetadata(metadata);
+        historicoRepository.deleteByMetadata(metadata.getId());
     }
 
     public void deleteByUsuario(Usuario usuario) {

@@ -25,9 +25,9 @@ public class DashController {
         return ResponseEntity.status(HttpStatus.OK).body(dashService.getQuantityStatus(idEmpresas, idMetadata));
     }
   
-    @PostMapping("/quantityTypeData")
-    public ResponseEntity<Map<String, Integer>> getQuantityTypeData(@RequestBody List<Long> idEmpresas){
-        return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas));
+    @PostMapping("/quantityTypeData/{idMetadata}")
+    public ResponseEntity<Map<String, Integer>> getQuantityTypeData(@RequestBody List<Long> idEmpresas, Long idMetadata){
+        return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas, idMetadata));
 
     }
 

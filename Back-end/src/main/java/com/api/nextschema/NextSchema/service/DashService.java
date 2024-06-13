@@ -137,6 +137,10 @@ public class DashService {
     @Transactional(readOnly = true)
     public Integer getQuantityUsersByEmpresas(List<Long> idEmpresas){
         Integer quantity = 0;
+        if (idEmpresas.get(0) == 0) {
+            idEmpresas.clear();
+            idEmpresas.addAll(empresaService.buscarTodosId());
+        }
         for(Long id : idEmpresas){
             List<Long> usuarioEmpresas = usuarioEmpresaService.buscarUsuariosPorEmpresa(id);
             quantity += usuarioEmpresas.size();
