@@ -120,7 +120,10 @@ function generateOptions(empresas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        getMetadatas(selectValue)
+        getMetadatas(selectValue);
+        getTiposDeDados(0, selectValue);
+        getestagioMetadatas(selectValue);
+        getStatusColuna(0, selectValue);
     });
 }
 
@@ -223,15 +226,14 @@ function estagioMetadatas(metadatas) {
     });
 }
 
-async function getTiposDeDados(idEmpresa) {
+async function getTiposDeDados(idMetadata, idEmpresa) {
     try{
         let body = [idEmpresa]
 
-        let response = await api.post(`/dash/quantityTypeData`, body);
+        let response = await api.post(`/dash/quantityTypeData/${idMetadata}`, body);
         let dadosEmpresa = response.data;
 
         if(response.status === 200) {
-            console.log(dadosEmpresa)
             tipos_de_dados(dadosEmpresa)
         }else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
@@ -250,7 +252,7 @@ function tipos_de_dados(dadosEmpresa) {
     }
 
     let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
-    let yValues = dadosEmpresa;
+    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Integer, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date]
     let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
 
     new Chart("myChart", {
