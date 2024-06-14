@@ -129,6 +129,7 @@ function generateOptions(empresas){
         getStatusColuna(0, selectValue);
         countUsuarios(selectValue);
         countMetadatas(selectValue);
+        generateTable(selectValue);
     });
 }
 
@@ -385,7 +386,9 @@ async function listColunas(idEmpresa){
 
 function generateTable(valores){
     let tabela = document.getElementById("valuesTable")
+    tabela.innerHTML = ''
     let chaves = Object.keys(valores);
+    console.log(chaves)
     for (let chave of chaves){
         let celula = `
             <tr>

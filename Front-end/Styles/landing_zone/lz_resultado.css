@@ -6,12 +6,21 @@
 }
 
 main{
-    height: calc(100vh - 100px);
-    margin: 5% 5%;
+    margin-left: 5%;
+    margin-right: 5%;
     display: flex;
+
     flex-direction: column;
-    align-content: center;
-    flex-wrap: nowrap;
+    margin-bottom: 5%;
+}
+
+h2,p{
+    text-align: center;
+}
+.title{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .btn_table{
@@ -79,13 +88,6 @@ nav ul.menu ul li:hover {
     background-color: #555;
 }
 
-#title {
-    color: var(--title-color);
-    font-weight: bold;
-    font-size: larger;
-    display: flex;
-    align-items: center;
-}
 
 #question:hover{
     transform: scale(1.2);
@@ -117,9 +119,11 @@ display: block;
 
 .all_buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 80%;
     margin: 0 auto;
+    margin-top: 20px;
+    /* margin-bottom: 20px; */
 }
 
 table {
@@ -233,14 +237,12 @@ tbody tr:hover {
 }
 
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
@@ -249,17 +251,50 @@ tbody tr:hover {
     align-items: center;
 }
 
+
+
+
+
 .prompt {
-    background-color: white;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
-    /* border: 2px; */
-    /* border-color: black; */
+    display: flex;
+    flex-direction: column;
+}
+
+.promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+}
+
+#fechar{
+    display: flex;
+    justify-content: flex-end;
+    width: 97%;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .btns {
@@ -280,12 +315,13 @@ tbody tr:hover {
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
 }
 
 .prompt {
     animation: popupAppear 0.5s normal;
-}
+}    
+
 
 @keyframes popupAppear {
     from {

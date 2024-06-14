@@ -41,10 +41,6 @@ public class DeParaService {
 
     @Transactional
     public void deleteById(Long id){
-        DePara dePara = getById(id);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario usuario = (Usuario) authentication.getPrincipal();
-        historicoService.criar(new Historico(dePara.getColuna().getMetadata(), String.format("De Para da Coluna %s excluido.", dePara.getColuna().getNome()),usuario));
         deParaRepository.deleteById(id);
     }
     @Transactional(readOnly = true)

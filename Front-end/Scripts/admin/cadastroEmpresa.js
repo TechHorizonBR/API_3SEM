@@ -109,7 +109,9 @@ async function excluirEmpresa(id){
     if(response.status == 204){
         document.getElementById("back_prompt").remove();
         generateTable()
-        promptDeleteEmp()
+        let message = "Empresa deletada com sucesso.";
+        let path = '/Front-end/media/images/success-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -139,30 +141,6 @@ function promptDelete(id){
 
     document.getElementById("btn_sim").addEventListener("click", () => {
         excluirEmpresa(id)
-    });
-}
-
-function promptDeleteEmp(){
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `
-
-    var promptDeleteEmp = `
-        <div class="promptEx" id="prompt">
-            <span class="prompt_text">Empresa excluida com sucesso.</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_OK" onclick="promptDeleteEmp">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', promptDeleteEmp);
-
-    document.getElementById("btn_OK").addEventListener("click", () => {
-        document.getElementById("back_prompt").remove();
     });
 }
 
@@ -202,56 +180,42 @@ async function editarEmpresa(id, new_nome){
         console.log(response)
         if(response.status == 200){
             generateTable();
-            editPrompt();
+            let message = "Alteração feita com sucesso!";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path)
         } else {
-            alert("ERROR! Atuaçização não executada.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }catch(err){
-        console.error("ERRO:", err)
-        alert("Erro no sistema.")
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
-}
-
-function editPrompt() {
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `;
-
-    var editPrompt = `
-        <div class="prompt1" id="prompt">
-            <span class="prompt_text">Alteração feita com sucesso!</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_OK">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", editPrompt);
-
-    document.getElementById("btn_OK").addEventListener("click", () => {
-        document.getElementById("back_prompt").remove();
-        document.getElementById("prompt").remove();
-    });
 }
 
 function validar_cnpj_e_nome(){
     let new_nome = document.getElementById('nome').value.toUpperCase();
     let new_cnpj = document.getElementById('cnpj').value.replace(/[.\-\/\s]/g, '');
-    switch (new_cnpj,new_nome){
 
-        case new_cnpj.length < 14:
-            alert("Digite CNPJ corretamente.")
-            break;
-
-        case new_nome.length < 2:
-            alert("Digite um NOME válido.")
-            break;
-
-        default:
-            cadastrarEmpresa(new_nome, new_cnpj);
+    if(new_cnpj.length < 14 && new_nome.length < 2 ){
+        let message = "O campos não podem estar vazios ou incompletos.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    }
+    else if (new_cnpj.length < 14) {
+        let message = "O campo de CNPJ não pode estar vazio ou incompleto.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    } else if (new_nome.length < 2) {
+        let message = "O campo de nome empresa não pode estar vazio ou incompleto.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    } else {
+        document.getElementById('nome').value = ''
+        document.getElementById('cnpj').value = ''
+        cadastrarEmpresa(new_nome, new_cnpj);
     }
 }
 async function cadastrarEmpresa(new_nome, new_cnpj){
@@ -263,26 +227,32 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
         let response = await api.post(`/empresas`, data)
         if(response.status == 201){
             generateTable();
-            promptSuccess();
+            let message = "Cadastro feito com sucesso!";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path);
         }else{
-            alert("Erro no cadastro.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
         console.log(response)
     }catch(err){
-        console.error(err)
-        alert("Erro no cadastro.")
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
-function promptSuccess() {
+function prompt_function(message, path) {
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
     `;
 
-    var promptSuccess= `
+    var prompt_function= `
         <div class="prompt1" id="prompt">
-            <span class="prompt_text">Cadastro feito com sucesso!</span>
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
             <div class="btns">
                 <button class="btn_p" id="btn_OK">OK</button>
             </div>
@@ -291,7 +261,7 @@ function promptSuccess() {
 
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", promptSuccess);
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
 
     document.getElementById("btn_OK").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();

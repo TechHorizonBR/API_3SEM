@@ -109,7 +109,7 @@ body{
 .prompt {
     background-color: #ffffff;
     width: 38vw;
-    height: 27vh;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
@@ -135,7 +135,7 @@ body{
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001233;
 }
 
 .prompt {
