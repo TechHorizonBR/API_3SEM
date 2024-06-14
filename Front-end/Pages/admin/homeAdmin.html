@@ -29,7 +29,6 @@
                     <li><a href="#">Ações</a>
                         <ul>
                             <li><a href="historico.html">Histórico</a></li>
-                            <li><a href="dashboard.html">Dashboards</a></li>
                         </ul>
                     </li>
                     <li><a href="../index.html">Logout</a></li>
@@ -54,7 +53,7 @@
                 Dashboards
             </div>
             <div class="text">
-            <p>Texto de explicação Sobre a Tela de dashboard, sobre a tela...</p>
+            <p>Uma análise rápida de dados com visualizações intuitivas.</p>
             </div>
             <div id="select">
                 <div>Empresa</div>
@@ -69,23 +68,24 @@
                 <div class="cards">
                     <div class="card_1">
                         <h3>Número de Metadatas</h3>
-                        <p class="count" id="numMetadatas">0</p>
+                        <p class="count" id="numMetadatas"></p>
                     </div>
                     <div class="card_2">
                         <h3>Número de Usuários</h3>
-                        <p class="count" id="numUsuarios">0</p>
+                        <p class="count" id="numUsuarios"></p>
                     </div>
                     <div class="card_3">
                         <h3>Número de Empresas</h3>
-                        <p class="count" id="numEmpresas">0</p>
+                        <p class="count" id="numEmpresas"></p>
                     </div>
                 </div>
                 <div class="graficos">
                     <div class="box">
                         <div id="select">
-                            <div>Tipos de Dados</div>
+                            <div>Tipos de Dado</div>
                             <select class="metadataFilter" id="select-filter-metadata">
                                 <option value="" disabled selected hidden>Selecionar</option>
+                                <option class="option" id="all" value="0">Todos</option>
                                 <!-- <option class="option" value="1">Opção 1</option> -->
                             </select>
                         </div>
@@ -94,12 +94,13 @@
                     <div class="donut">
                         <div id="select">
                             <div>Status das Colunas</div>
-                            <select class="metadataFilter" id="select-filter-metadata">
+                            <select class="metadataFilter" id="filter-metadata">
                                 <option value="" disabled selected hidden>Selecionar</option>
+                                <option class="option" id="all" value="0">Todos</option>
                                 <!-- <option class="option" value="1">Opção 1</option> -->
                             </select>
                         </div>
-                        <canvas id="statusMetadata"></canvas>
+                        <canvas id="statusColuna"></canvas>
                     </div>
                 </div>
                 </div>
@@ -108,7 +109,7 @@
                         <div id="select">
                             <div>Status do Metadata</div>
                         </div>
-                        <canvas id="statusColuna"></canvas>
+                        <canvas id="estagioMetadatas"></canvas>
                     </div>
                     <div class="table-container">
                         <table class="table">
@@ -139,6 +140,10 @@
                                 <td>Id_Metadata</td>
                                 <td>7.359</td>
                             </tr>
+                            <tr>
+                                <td>Id_Metadata</td>
+                                <td>7.359</td>
+                            </tr>
                         </tbody>
                         </table>
                     </div>
@@ -150,5 +155,5 @@
     </main>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/Front-end/Scripts/admin/dashboard.js"></script>
+<script src="/Front-end/Scripts/admin/homeAdmin.js"></script>
 </html>

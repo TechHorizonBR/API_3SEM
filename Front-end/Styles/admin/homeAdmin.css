@@ -1,3 +1,5 @@
+CSS
+
 :root {
   --bg-color: #F8F8F8;
   --header-color: #001233;
@@ -223,6 +225,10 @@ canvas {
   flex-direction: column;
 }
 
+.table-container {
+  max-height: calc(5 * 40px + 1em);
+}
+
 .table {
   border-collapse: collapse;
   margin: 20px 0;
@@ -236,13 +242,34 @@ canvas {
 .table thead tr {
   background-color: #001d2e;
   color: #ffffff;
-  text-align: left;
-  font-weight: bold;
 }
 
-.table th,
+.table th {
+  padding: 8px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
 .table td {
-  padding: 12px 15px;
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+}
+
+table tbody {
+  display: block;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+table thead, table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .table tbody tr {
