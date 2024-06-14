@@ -8,6 +8,7 @@ window.onload = () => {
     countEmpresas();
     countUsuarios(0);
     countMetadatas(0);
+    listColunas(0);
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -370,12 +371,29 @@ async function countEmpresas(){
     }
 } 
 
-async function listColunas(){
+async function listColunas(idEmpresa){
     try{
-        let response = await api.post(`/dash/quantityColunas`, [0])
-        console.log(response)
+        let body = [idEmpresa]
+        let response = await api.post(`/dash/quantityColunas`, body)
+        generateTable(response.data)
+        console.log(response.data)
     }
     catch(error){
-        console.error(error)
+        console.log("deu erro")
+    }
+}
+
+function generateTable(valores){
+    let tabela = document.getElementById("valuesTable")
+    let chaves = Object.keys(valores);
+    for (let chave of chaves){
+        let celula = `
+            <tr>
+                <td>${chave}</td>
+                <td>${valores[chave]}</td>
+            </tr>
+        `
+        console.log(valores)
+        tabela.insertAdjacentHTML("afterend", celula)
     }
 }
