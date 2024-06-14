@@ -26,13 +26,6 @@ function opcoes_roles_acoes(userData){
       console.log(userData.roleUsuario)
       table.insertAdjacentHTML("beforeend", listar_metadata);
       }
-      else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-          var listar_metadata = `
-          <li><a href="#">Relacionamentos</a></li>
-      `;
-      console.log(userData.roleUsuario)
-      table.insertAdjacentHTML("beforeend", listar_metadata);
-      }
   }
 }
 
