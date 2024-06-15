@@ -17,25 +17,26 @@
             <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NS-logo" id="NS-logo">
             <nav>
                 <ul class="menu">
-                    <li><a href="homeAdmin.html">Home</a></li>
-                    
-                    <li><a href="#">Cadastros</a>
+                    <li><a href="homeAdmin.html"><i class="fa-solid fa-house" style="margin-right: 0.3em;"></i>Home</a></li>
+
+                    <li><a href="#"><i class="fa-solid fa-user-plus" style="margin-right: 0.3em;"></i>Cadastros</a>
                         <ul>
                             <li><a href="cadastroEmpresa.html">Empresa</a></li>
                             <li><a href="cadastroUsuario.html">Usuário</a></li>
                         </ul>
                     </li>
-                    
-                    <li><a href="#">Ações</a>
+
+                    <li><a href="#"><i class="fa-solid fa-gear" style="margin-right: 0.3em;"></i>Ações</a>
                         <ul>
                             <li><a href="historico.html">Histórico</a></li>
+                            <li><a href="homeAdmin.html">Dashboards</a></li>
+                            <li><a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/Manuais/Admin.md" target="_blank">Manual de uso</a></li>
                         </ul>
                     </li>
-                    <li><a href="../index.html">Logout</a></li>
+                    <li><a href="../index.html"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;margin-right: 0.3em;"></i>Logout</a></li>
                 </ul>
             </nav>
         </div>
-        <!--DADOS DO USUARIO-->
         <div id="user-identification">
             <div class="info_user">
                 <p id="user_name" class="user_name"></p>
@@ -45,12 +46,12 @@
                 </div>
             </div>
         </div>
-        <!--DADOS DO USUARIO FIM-->
     </header>
     <main>
         <div class="conteudo">
             <div class="cadastroEmpresas">
                 <h2>Cadastro de Empresa</h2>
+                <p>Cadastre e gerencie empresas para desenvolver metadatas.</p>
             </div>
             <div class="boxEmpresa">
                 <div class="conteudoTexto">
@@ -70,6 +71,7 @@
             </div>
         </div>
     </main>
+
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/Front-end/Scripts/admin/cadastroEmpresa.js"></script>

@@ -31,14 +31,6 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -64,9 +56,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -142,7 +131,16 @@ function validation() {
     if (errors.length === 0){
         getData(dados)
     }else{
-        newFailedPrompt(errors)
+
+        
+        let message = `
+            <div id="text_validation" style="text-align: center">
+            <span style="font-weight: bold;">Valor inválido na(s) coluna(s): ${errors}</span><br>
+            O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
+        `;
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path, 0)
+        
     }
 
 }
@@ -154,7 +152,9 @@ function getData(dados) {
         let descricaoValue = document.getElementById(`desc${y}`).value;
 
         if (descricaoValue.trim() === "") {
-            InvalidDescription();
+            let message = "Preencha todas as descrições antes de enviar os dados.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path, 0)
             return;
         }
 
@@ -172,100 +172,46 @@ function getData(dados) {
     sendData(allData);
 }
 
-function InvalidDescription(){
+function prompt_function(message, path, check) {
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
-    `
+    `;
 
-    var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Descrição inválida!</span>
-            <div id="text_validation">Preencha todas as descrições antes de enviar os dados.</div>
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
             <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
+                <button class="btn_p" id="btn_OK">OK</button>
             </div>
         </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', back);
+    document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', failedPrompt);
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
 
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
+    document.getElementById("btn_OK").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
+
+        if (check == 1) {
+            location.href = '/Front-end/Pages/landing_zone/lz_visualizar_metadata.html';
+        }
     });
 }
-
 async function sendData(allData) {
     try{
-        console.log(allData);
-
         let response = await api.post("/colunas", allData);
-        console.log(response);
 
         if(response.status === 201) {
-            newSuccessPrompt();
-        }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
-            }
-
+            let message = "Campos registrados com sucesso.";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path, 1)
+        }
     }catch(error){
-        console.log(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path, 0)
     }
-}
-
-function newSuccessPrompt(){
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `
-
-    var successPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text">Sucesso! Seu esquema foi criado.</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', successPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        localStorage.removeItem('metadata_id');
-        localStorage.removeItem('cabecalho');
-        localStorage.removeItem('dados1');
-        window.location.href = "lz_visualizar_metadata.html"
-    });
-}
-
-function newFailedPrompt(errors){
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `
-
-    var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Valor inválido na(s) coluna(s): ${errors}</span>
-            <div id="text_validation">O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML('beforeend', back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML('beforeend', failedPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        document.getElementById("back_prompt").remove();
-    });
 }

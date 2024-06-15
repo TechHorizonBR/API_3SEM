@@ -8,32 +8,25 @@
 
 main{
     /* 100vh = tela inteira, 100px = altura header, entao para ocupar o resto -> Tela inteira - header */
-    height: calc(100vh - 100px);
-    margin: 0% 5%;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    flex-wrap: nowrap;
-}
-
-#title {
-    color: var(--title-color);
-    font-weight: bold;
-    font-size: larger;
-    display: flex;
     align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+.titles{
+    justify-content: center;
+    text-align: center;
+}
+.table-background{
+    margin-bottom: 5%;
 }
 
-.top_itens{
+.filters{
     display: flex;
-    justify-content: space-between;
-    margin: 5% 3% 0 5%;
-}
-
-.all_selects{
-    display: flex;
-    width: 800px;
-    justify-content: space-between;
+    justify-content: end;
 }
 
 #select {
@@ -41,7 +34,7 @@ main{
     color: var(--title-color);
     font-weight: bold;
     align-items: center;
-  }
+}
   
   .select-custom{
     border-radius: 15px;
@@ -79,9 +72,12 @@ main{
 .icon-container:hover #question-input {
 display: block;
 }
+.top_itens{
+    margin: 2% 0 2% 0;
+}
 
 table {
-    margin: 5% 0 0 0;
+    margin: 0% 0 0 0;
     width: 100%;
     border-collapse: collapse;
     border-radius: 8px;
@@ -183,16 +179,13 @@ table {
     padding: auto;
 }
 
-
 .back_prompt {
-    height: 100vh;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2.9px);
     -webkit-backdrop-filter: blur(2.9px);
-    position: absolute;
-    width: 100%;
+    position: fixed;
     inset: 0;
     z-index: 1;
     display: flex;
@@ -201,9 +194,37 @@ table {
     align-items: center;
 }
 
+
+
+
+
 .prompt {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.promptEx {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.prompt1 {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    width: 38vw;
+    height: 40vh;
     border-radius: 10px;
     display: flex;
     justify-content: space-evenly;
@@ -211,11 +232,12 @@ table {
     flex-direction: column;
 }
 
-.prompt_text{
-    margin: auto 0;
-    height: 130px;
+#fechar{
     display: flex;
-    align-items: center;
+    justify-content: flex-end;
+    width: 97%;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .btns {
@@ -225,7 +247,6 @@ table {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    margin: 20px 0;
 }
 
 
@@ -237,13 +258,13 @@ table {
     border: none;
     color: #fff;
     cursor: pointer;
-    background-color: #006a8f;
+    background-color: #001230;
 }
 
 .prompt {
     animation: popupAppear 0.5s normal;
+    
 }
-
 @keyframes popupAppear {
     from {
         opacity: 0;

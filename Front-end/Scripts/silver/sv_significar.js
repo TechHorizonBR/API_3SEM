@@ -3,6 +3,7 @@ window.onload = () => {
     opcoes_roles_acoes(userData);
     info_usuario(userData);
     showMetadata(metadataName);
+    addYamlAction();
     getSilverData();
 };
 
@@ -30,11 +31,6 @@ function opcoes_roles_acoes(userData) {
         if (userData.roleUsuario[i] === "ROLE_LZ") {
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
-        `;
-            table.insertAdjacentHTML("beforeend", listar_metadata);
-        } else if (userData.roleUsuario[i] === "ROLE_SILVER") {
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }
@@ -89,6 +85,33 @@ function opcoes_roles_metadata(roles, pagina_por_role, nome_por_role) {
     }
 }
 
+function addYamlAction(){
+    document.getElementById("btn_yaml").addEventListener("click", ()=>{
+        generateYaml();
+    })
+}
+
+async function generateYaml(){
+    try{
+        let res = await api.get(`/download/yaml/3/${metadata.id}`, {
+            responseType:'blob'
+        });
+
+        if(res && res.data){
+            let url = window.URL.createObjectURL(res.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "config_sv.yaml";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }else{
+            console.error("A resposta da api não contém dados válidos.")
+        }
+    }catch(err){
+        console.error("Erro ao baixar o arquivo YAML:",err);
+    }
+}
+
 async function getSilverData() {
     try {
         let response = await api.get(`/colunas/metadata/${metadataId}`);
@@ -128,11 +151,39 @@ async function deleteDePara(id, data){
     }
 }
 
+
 function updateAllSig(sigValues, data) {
     let allSigElement = document.getElementById("all_sig");
     if (allSigElement) {
         allSigElement.innerHTML = generateAllSigHTML(sigValues, data);
         refreshDeleteButtons(sigValues, data);
+    }
+}
+
+async function uploadDePara(file, data){
+    let correct = document.getElementById("correct");
+    let wrong = document.getElementById("wrong");
+    try{
+        const formData = new FormData();
+        formData.append('file',file);
+        let res = await api.post(`/api/upload/dePara/${data.id}`, formData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        });
+        if(res){
+            correct.style.display = "block";
+            setTimeout(()=>{
+                correct.style.display = "none";
+            },5000);
+            let updateSigValues = await getDePara(data.id);
+            updateAllSig(updateSigValues, data);
+        }else{
+            wrong.style.display = "block";
+        }
+    }catch(err){
+        wrong.style.display = "block";
+        console.error(err);
     }
 }
 
@@ -199,6 +250,12 @@ function generateAllSigHTML(sigValues, data) {
                 case "!=":
                     sinal = "diferente de";
                     break;
+                case "<=":
+                    sinal = "menor ou igual a";
+                    break;
+                case ">=":
+                    sinal = "maior ou igual a";
+                    break;
                 case "true":
                     sinal = "verdade";
                     break;
@@ -206,7 +263,6 @@ function generateAllSigHTML(sigValues, data) {
                     sinal = "falso";
                     break;
                 default:
-                    alert("Sinal errado")
                     continue;
             }
             resultHTML += `
@@ -228,7 +284,6 @@ function generateAllSigHTML(sigValues, data) {
 
 function refreshDeleteButtons(sigValues, data){
     for(let y = 0; y < sigValues.length; y++){
-        console.log(`Y: ${y}`);
         document.getElementById(`btn_remove_sig${y}`).addEventListener("click", async()=>{
             await deleteDePara(sigValues[y].id, data);
         })
@@ -238,6 +293,7 @@ function refreshDeleteButtons(sigValues, data){
 async function viewMetadata(data) {
     data = JSON.parse(data);
     let sigValues = await getDePara(data.id);
+    console.log(sigValues);
 
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -291,9 +347,16 @@ async function viewMetadata(data) {
                             </p>
                         </div>
                     </div>
-                    <span style="font-size: 25px; margin: 40px 0 0 60px"
-                        >Criar De/Para</span
-                    >
+                    <div class="sec_title">
+                        <span style="font-size: 25px;"
+                        >Criar De/Para</span>
+                        <div class="container_btn">
+                            <button id="btn_upload" onclick="instructionPrompt()">Upload</button>
+                            <input type="file" id="file-upload" class="file-upload-input" name="file-upload" accept=".csv">
+                            <i id="correct" class="fa-solid fa-check" style="display:none; color:green; font-size:1.5em;"></i>
+                            <i id="wrong" class="fa-solid fa-xmark" style="display:none; color:red; font-size:1.5em;"></i>
+                        </div>
+                    </div>
                     <div class="create_sig">
                         Se <b>${data.nome}</b> for
                         <span class="sig_inputs">
@@ -342,9 +405,6 @@ async function viewMetadata(data) {
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
 
-    console.log(sigValues);
-    console.log(data);
-
     refreshDeleteButtons(sigValues, data);
 
     document.getElementById("btn_create_sig").addEventListener("click", async() => {
@@ -379,4 +439,42 @@ async function viewMetadata(data) {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+
+    window.instructionPrompt = function(){
+        var instructionPrompt = `
+        <div class="back_prompt_ins" id="back_prompt_ins">
+            <div class="prompt_ins" id="prompt_ins">
+                <span class="exit_btn" id="exit_btn_ins">X</span>
+                <div class="prompt_content">
+                    <span class="prompt_title"><b>Atenção</b></span>
+                    <span class="prompt_text">As linhas do seu arquivo CSV devem seguir o seguinte padrão:</span>
+                    <img id="ins_img" src="/Front-end/media/images/instrucaoDePara.png" alt="Instrução Significado" width="250">
+                    <button class="btn_p" id="btn_OK">Continuar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML("beforeend", instructionPrompt);
+        document.getElementById("exit_btn_ins").addEventListener("click", () => {
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+        });
+
+        document.getElementById("btn_OK").addEventListener("click", ()=>{
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+            document.getElementById('file-upload').click();
+        })
+    };
+
+    let arquivo = document.getElementById("file-upload");
+    arquivo.addEventListener("change", () => {
+        arquivoSelec = arquivo.files[0];
+        arquivo.value = "";
+        uploadDePara(arquivoSelec, data);
+    });
 }
+
+

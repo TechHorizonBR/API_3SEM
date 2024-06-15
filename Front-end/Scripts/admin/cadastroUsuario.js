@@ -119,7 +119,7 @@ function limparTabela() {
 function gerarTabela(dados) {
     limparTabela();
     let table = document.getElementById("body_dados");
-    console.log(dados);
+
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <div class="line">
@@ -161,13 +161,26 @@ function montarUsuario(roles) {
     let newNome = document.getElementById("nome").value;
     let newemail = document.getElementById("email").value;
     let newsenha = document.getElementById("senha").value;
-    console.log(roles)
-
-    if (newsenha.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres.");
+    
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(newNome.length < 5){
+        let message = "O nome não pode estar com menos de 5 caracteres.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    }else if(!regex.test(newemail)){
+        let message = "O e-mail não está no formato correto de e-mail.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    }
+    else if (newsenha.length < 6) {
+        let message = "Senha não pode estar com menos de 6 caracteres.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
     else if (roles.length === 0 ) {
-        alert("Insira pelo menos 1 permissão")
+        let message = "O usuário precisa ter pelo menos uma permissão.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
     else{
         let dataJson = {
@@ -184,14 +197,17 @@ async function cadastrarUsuario(dataJson) {
     try {
         let response = await api.post("/usuarios", dataJson);
         if (response.status === 201) {
-            promptCadastradosucess();
+            let message = "Cadastro feito com sucesso!";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path);
+            
         }
     } catch (err) {
         console.error(err);
     }
 }
 
-function promptCadastradosucess() {
+function prompt_function(message, path) {
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -199,7 +215,8 @@ function promptCadastradosucess() {
 
     var successPrompt = `
         <div class="prompt" id="prompt">
-            <span class="prompt_text">Usuário cadastrado com Sucesso!</span>
+        <img src="${path}" style="width: 35%" >
+            <span class="prompt_text">${message}</span>
             <div class="btns">
                 <button class="btn_p" id="btn_ok">OK</button>
             </div>
@@ -213,7 +230,6 @@ function promptCadastradosucess() {
     document.getElementById("btn_ok").addEventListener("click", () => {
         getAllUsuarios();
         limparCampo();
-        document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
 }
@@ -288,16 +304,18 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
     }
 
     var back = `
-        <div class="back_prompt" id="back_prompt">
+        <div class="back_prompt" id="edit_prompt">
         </div>
         `;
 
     var firstPrompt = `
-        <div class="prompt" id="prompt">
+        <div class="edit_prompt" id="prompt">
         <div class="conteudoEditar">
         <div class="l0">
             <i class="fa-solid fa-xmark" id="btnfechar" ></i>
         </div>
+
+        <h2>EDITE O USUÁRIO ${nome}</h2>
         <div class="l1">
             <p>Nome:</p>
             <input type="text" name="nome" id="nome_edit" value=${nome} class="fields">
@@ -305,8 +323,8 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
             <input type="text" name="email" id="email_edit" value=${email} class="fields">
         </div>
         <div class="l2">
-            <p>Senha:</p>
-            <input type="password" name="senha" id="senha_edit" value=${senha} class="fields" disabled>
+            <p style="display: none">Senha:</p>
+            <input type="password" name="senha" id="senha_edit" value=${senha} class="fields" disabled style="display: none" >
             <br>
             <p>Empresa:</p>
             <div class="all-select">
@@ -335,17 +353,17 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         </div>
         <div class="l3s">
             <i class="fa-solid fa-floppy-disk id="plusCad" style="color: #0c4df0;"></i>
-            <button class="salvar" id="btn_salvar" onclick="editPrompt">SALVAR</button>
+            <button class="salvar" id="btn_salvar">SALVAR</button>
         </div>
     </div>
         </div>
         `;
     document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
+    let var_back = document.getElementById("edit_prompt");
     var_back.insertAdjacentHTML("beforeend", firstPrompt);
 
     document.getElementById("btnfechar").addEventListener("click", () => {
-        document.getElementById("back_prompt").remove();
+        document.getElementById("edit_prompt").remove();
     });
 
 
@@ -508,7 +526,9 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
                 editPrompt();
             }
         } catch (err) {
-            console.error(err);
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
 
@@ -520,6 +540,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
         var editPrompt = `
             <div class="prompt1" id="prompt">
+                <img src="/Front-end/media/images/success-img.gif" style="width: 35%">
                 <span class="prompt_text">Alteração feita com sucesso!</span>
                 <div class="btns">
                     <button class="btn_p" id="btn_OK">OK</button>
@@ -542,19 +563,53 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         let newemailEdit = document.getElementById("email_edit").value;
         let newsenhaEdit = document.getElementById("senha_edit").value;
 
-        let dataJson = {
-            id:parseInt(id),
-            nome: newNomeEdit.toUpperCase(),
-            email: newemailEdit,
-            senha: newsenhaEdit,
-            roleUsuario: roles_edit,
-            listEmpresa: all_empresas_id_edit
-        };
-        atualizarUsuario(dataJson);
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(newNomeEdit.length < 5){
+            let message = "O nome não pode estar com menos de 5 caracteres.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+        }else if(!regex.test(newemailEdit)){
+            let message = "O e-mail não está no formato correto de e-mail.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+        }else if(roles_edit.length == 0){
+            let message = "Não é possível salvar um usuário sem pelo menos uma permissão.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+        }
+        
+        else{
+            let dataJson = {
+                id:parseInt(id),
+                nome: newNomeEdit.toUpperCase(),
+                email: newemailEdit,
+                senha: newsenhaEdit,
+                roleUsuario: roles_edit,
+                listEmpresa: all_empresas_id_edit
+            };
+            atualizarUsuario(dataJson);
+        }
+
+        
     }
 }
 async function excluirEmpresa(id) {
-    let response = await api.delete(`/usuarios/${id}`);
-    if(response.status == 204) promptDeletadosucess();
-    else alert("Alguma coisa não ocorreu bem!")
+    try{
+        let response = await api.delete(`/usuarios/${id}`);
+        if(response.status == 204){
+            let message = "Usuário deletado com sucesso.";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path);
+        } 
+        else{
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
+        }
+    }catch(error){
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    }
+    
 }

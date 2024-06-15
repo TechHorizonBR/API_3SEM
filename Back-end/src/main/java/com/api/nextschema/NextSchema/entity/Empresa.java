@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column(name = "nome")
     private String nome;

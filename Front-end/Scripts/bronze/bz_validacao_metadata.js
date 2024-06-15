@@ -1,7 +1,8 @@
 window.onload = () => {
-    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role)
-    opcoes_roles_acoes(userData)
-    info_usuario(userData)
+    opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
+    opcoes_roles_acoes(userData);
+    info_usuario(userData);
+    addYamlAction();
     getBronzeData();
 };
 
@@ -27,14 +28,6 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -64,9 +57,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -84,6 +74,33 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
         }
+    }
+}
+
+function addYamlAction(){
+    document.getElementById("btn_yaml").addEventListener("click", ()=>{
+        generateYaml();
+    })
+}
+
+async function generateYaml(){
+    try{
+        let res = await api.get(`/download/yaml/2/${metadata.id}`, {
+            responseType:'blob'
+        });
+
+        if(res && res.data){
+            let url = window.URL.createObjectURL(res.data);
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "config_bz.yaml";
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }else{
+            console.error("A resposta da api não contém dados válidos.")
+        }
+    }catch(err){
+        console.error("Erro ao baixar o arquivo YAML:",err);
     }
 }
 
@@ -168,12 +185,42 @@ async function deleteColumn(id) {
             ativo:false
         }
         let response = await api.delete(`/colunas/${id}`);
+        let message = "Campo deletado com sucesso.";
+        let path = '/Front-end/media/images/success-img.gif'
+        prompt_function(message, path)
         getBronzeData();
     } catch (err) {
-        console.error(err);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
+}
 async function getBronzeData() {
     try {
         let response = await api.get(`/colunas/metadata/${metadata.id}`);
@@ -183,7 +230,9 @@ async function getBronzeData() {
         }
         generateTable();
     } catch (error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -200,69 +249,22 @@ async function sendData() {
                 });
             }
         }
-
-        console.log(dados);
         let response = await api.put("/colunas/update/bronze", dados);
 
         if (response.status === 200) {
-            newSuccessPrompt();
+            let message = "Dados atualizados com sucesso.";
+            let path = '/Front-end/media/images/success-img.gif'
+            prompt_function(message, path)
         } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     } catch (error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
-}
-
-function newSuccessPrompt() {
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `;
-
-    var successPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text">Sucesso! Seu esquema foi Atualizado.</span>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", successPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        window.location.href = "bz_visualizar_metadata.html";
-    });
-}
-
-function newFailedPrompt(errors) {
-    var back = `
-    <div class="back_prompt" id="back_prompt">
-    </div>
-    `;
-
-    var failedPrompt = `
-        <div class="prompt" id="prompt">
-            <span class="prompt_text" id="validate_identification">Valor inválido na(s) coluna(s): ${errors}</span>
-            <div id="text_validation">O nome das colunas não podem conter espaços ou caracteres especiais, exceto o caractere de sublinhado (_).</div>
-            <div class="btns">
-                <button class="btn_p" id="btn_ok">OK</button>
-            </div>
-        </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", back);
-    let var_back = document.getElementById("back_prompt");
-    var_back.insertAdjacentHTML("beforeend", failedPrompt);
-
-    document.getElementById("btn_ok").addEventListener("click", () => {
-        document.getElementById("prompt").remove();
-        document.getElementById("back_prompt").remove();
-    });
 }
 
 function confirmPrompt(id) {
@@ -299,6 +301,7 @@ function confirmPrompt(id) {
         deleteColumn(id);
         prompt.remove();
         var_back.remove();
+
     });
 
     document.getElementById("btn_no").addEventListener("click", () => {
