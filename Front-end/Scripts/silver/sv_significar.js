@@ -160,6 +160,33 @@ function updateAllSig(sigValues, data) {
     }
 }
 
+async function uploadDePara(file, data){
+    let correct = document.getElementById("correct");
+    let wrong = document.getElementById("wrong");
+    try{
+        const formData = new FormData();
+        formData.append('file',file);
+        let res = await api.post(`/api/upload/dePara/${data.id}`, formData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        });
+        if(res){
+            correct.style.display = "block";
+            setTimeout(()=>{
+                correct.style.display = "none";
+            },5000);
+            let updateSigValues = await getDePara(data.id);
+            updateAllSig(updateSigValues, data);
+        }else{
+            wrong.style.display = "block";
+        }
+    }catch(err){
+        wrong.style.display = "block";
+        console.error(err);
+    }
+}
+
 function generateList(metadatas) {
     let listMetadatas = document.getElementById("listMetadatas");
 
@@ -223,6 +250,12 @@ function generateAllSigHTML(sigValues, data) {
                 case "!=":
                     sinal = "diferente de";
                     break;
+                case "<=":
+                    sinal = "menor ou igual a";
+                    break;
+                case ">=":
+                    sinal = "maior ou igual a";
+                    break;
                 case "true":
                     sinal = "verdade";
                     break;
@@ -230,7 +263,6 @@ function generateAllSigHTML(sigValues, data) {
                     sinal = "falso";
                     break;
                 default:
-                    alert("Sinal errado")
                     continue;
             }
             resultHTML += `
@@ -261,6 +293,7 @@ function refreshDeleteButtons(sigValues, data){
 async function viewMetadata(data) {
     data = JSON.parse(data);
     let sigValues = await getDePara(data.id);
+    console.log(sigValues);
 
     var back = `
     <div class="back_prompt" id="back_prompt">
@@ -314,9 +347,16 @@ async function viewMetadata(data) {
                             </p>
                         </div>
                     </div>
-                    <span style="font-size: 25px; margin: 40px 0 0 60px"
-                        >Criar De/Para</span
-                    >
+                    <div class="sec_title">
+                        <span style="font-size: 25px;"
+                        >Criar De/Para</span>
+                        <div class="container_btn">
+                            <button id="btn_upload" onclick="instructionPrompt()">Upload</button>
+                            <input type="file" id="file-upload" class="file-upload-input" name="file-upload" accept=".csv">
+                            <i id="correct" class="fa-solid fa-check" style="display:none; color:green; font-size:1.5em;"></i>
+                            <i id="wrong" class="fa-solid fa-xmark" style="display:none; color:red; font-size:1.5em;"></i>
+                        </div>
+                    </div>
                     <div class="create_sig">
                         Se <b>${data.nome}</b> for
                         <span class="sig_inputs">
@@ -399,4 +439,42 @@ async function viewMetadata(data) {
         document.getElementById("prompt").remove();
         document.getElementById("back_prompt").remove();
     });
+
+    window.instructionPrompt = function(){
+        var instructionPrompt = `
+        <div class="back_prompt_ins" id="back_prompt_ins">
+            <div class="prompt_ins" id="prompt_ins">
+                <span class="exit_btn" id="exit_btn_ins">X</span>
+                <div class="prompt_content">
+                    <span class="prompt_title"><b>Atenção</b></span>
+                    <span class="prompt_text">As linhas do seu arquivo CSV devem seguir o seguinte padrão:</span>
+                    <img id="ins_img" src="/Front-end/media/images/instrucaoDePara.png" alt="Instrução Significado" width="250">
+                    <button class="btn_p" id="btn_OK">Continuar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML("beforeend", instructionPrompt);
+        document.getElementById("exit_btn_ins").addEventListener("click", () => {
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+        });
+
+        document.getElementById("btn_OK").addEventListener("click", ()=>{
+            document.getElementById("prompt_ins").remove();
+            document.getElementById("back_prompt_ins").remove();
+            document.getElementById('file-upload').click();
+        })
+    };
+
+    let arquivo = document.getElementById("file-upload");
+    arquivo.addEventListener("change", () => {
+        arquivoSelec = arquivo.files[0];
+        arquivo.value = "";
+        uploadDePara(arquivoSelec, data);
+    });
 }
+
+
