@@ -68,4 +68,4 @@
 
 > Clique em "YALM" para gerar o arquivo.
 
-![download (8).gif](..%2F..%2Fdownload%20%288%29.gif)
+![download (8)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/6194b9e3-38f4-471d-b5a0-818f0a98dd66)
