@@ -5,24 +5,25 @@
   --title-color: #303030;
 }
 
-main {
-  height: calc(100vh - 100px);
-  margin: 0;
+main{
+  margin-left: 5%;
+  margin-right: 5%;
   display: flex;
   flex-direction: column;
-  align-content: center;
-  flex-wrap: nowrap;
-}
+  margin-bottom: 5%;
+  justify-content: center;
+  text-align: center;
 
+}
 #messageMet {
   text-align: center;
   justify-content: center;
 }
 #title {
-  color: var(--title-color);
-  font-weight: bold;
-  font-size: larger;
-  display: flex;
+  margin-top: 3%;
+  color: #000;
+  text-align: center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -105,9 +106,9 @@ margin-top: 11%;
 }
 
 #buttons{
+  margin-top: 4%;
   display: flex;
   justify-content: space-around;
-  margin: 8% 10%;
 }
 
 #landingZone-btn:hover{

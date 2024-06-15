@@ -55,11 +55,9 @@ function formatar_campo_cnpj(){
 function info_usuario(usuario){
     namespace = document.getElementById("user_name").textContent = usuario.nome
     rolespace = document.getElementById("user_role").textContent = "Adminstrador"
-    console.log(usuario)
 }
 
 function firstPrompt(id, nome){
-    console.log(nome)
     var back = `
     <div class="back_prompt" id="back_prompt">
     </div>
@@ -105,7 +103,6 @@ function firstPrompt(id, nome){
 
 async function excluirEmpresa(id){
     let response = await api.delete(`/empresas/${id}`)
-    console.log(response)
     if(response.status == 204){
         document.getElementById("back_prompt").remove();
         generateTable()
@@ -147,7 +144,6 @@ function promptDelete(id){
 async function generateTable(){
     let response = await api.get("/empresas");
     dados = response.data;
-    console.log(response);
 
     let table = document.getElementById("body_dados");
     table.innerHTML=''
@@ -171,13 +167,12 @@ async function generateTable(){
 
 async function editarEmpresa(id, new_nome){
     try{
-        console.log(`Id: ${id} NOVO NOME: ${new_nome}`);
         let data={
             nome:new_nome.toUpperCase(),
             id:id
         }
         let response = await api.put(`/empresas`, data)
-        console.log(response)
+
         if(response.status == 200){
             generateTable();
             let message = "Alteração feita com sucesso!";
@@ -235,8 +230,8 @@ async function cadastrarEmpresa(new_nome, new_cnpj){
             let path = '/Front-end/media/images/error-img.gif'
             prompt_function(message, path)
         }
-        console.log(response)
-    }catch(err){
+    }
+    catch(err){
         let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
         let path = '/Front-end/media/images/error-img.gif'
         prompt_function(message, path)

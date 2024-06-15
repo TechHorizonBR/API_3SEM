@@ -119,7 +119,7 @@ function limparTabela() {
 function gerarTabela(dados) {
     limparTabela();
     let table = document.getElementById("body_dados");
-    console.log(dados);
+
     for (let x = 0; x < dados.length; x++) {
         let dadosTable = `
         <div class="line">

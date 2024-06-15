@@ -324,3 +324,95 @@ table thead, table tbody tr {
 .table tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
 }
+
+.table tbody tr:last-of-type {
+  border-bottom: 2px solid #001233;
+}
+
+
+.back_prompt {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.9px);
+  -webkit-backdrop-filter: blur(2.9px);
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+.prompt {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  width: 38vw;
+  height: 40vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.promptEx {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  width: 38vw;
+  height: 40vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.prompt1 {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  width: 38vw;
+  height: 40vh;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+#fechar{
+  display: flex;
+  justify-content: flex-end;
+  width: 97%;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btns {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+
+.btn_p {
+  min-width: 72px;
+  height: 40px;
+  font-size: larger;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  background-color: #001230;
+}
+
+.prompt {
+  animation: popupAppear 0.5s normal;
+  
+}

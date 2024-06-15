@@ -1,14 +1,13 @@
 window.onload = () => {
     opcoes_roles_metadata(roles,pagina_por_role,nome_por_role);
     getEmpresas();
-    getMetadatas();
     getTiposDeDados(0, 0);
     getStatusColuna(0, 0);
     getestagioMetadatas(0);
     countEmpresas();
     countUsuarios(0);
-    countMetadatas(0);
     listColunas(0);
+    getQuantityMetadatas(0);
 };
 
 let roles = JSON.parse(localStorage.getItem("roles"))
@@ -42,7 +41,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             let listar_metadata = `
@@ -73,14 +71,6 @@ function opcoes_roles_acoes(userData){
             let listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            let listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -97,11 +87,15 @@ async function getEmpresas() {
         if(response.status === 200) {
             generateOptions(empresas)
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
     catch(error){
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -123,13 +117,15 @@ function generateOptions(empresas){
 
     select.addEventListener("change", function () {
         let selectValue = select.value;
-        getMetadatas(selectValue);
+        if(selectValue != 0){
+            getMetadatas(selectValue);
+        }
         getTiposDeDados(0, selectValue);
         getestagioMetadatas(selectValue);
         getStatusColuna(0, selectValue);
         countUsuarios(selectValue);
-        countMetadatas(selectValue);
-        generateTable(selectValue);
+        generateTable(selectValue, 0);
+        getQuantityMetadatas(selectValue);
     });
 }
 
@@ -141,11 +137,15 @@ async function getMetadatas(idEmpresa) {
         if(response.status === 200) {
             generateOptionsMetadatas(metadatas, idEmpresa)
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
     catch(error){
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -189,11 +189,15 @@ async function getestagioMetadatas(idEmpresa) {
         if(response.status === 200) {
             estagioMetadatas(metadatas)
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
     catch(error){
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -206,7 +210,7 @@ function estagioMetadatas(metadatas) {
 
     let xValues = ["LandingZone", "Bronze", "Silver"];
     let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER];
-    let barColors = ["#2b5797", "#e8c3b9", "#1e7145"];
+    let barColors = ["#2585D9", "#52C5F2", "#5EE3F2"];
 
     new Chart("estagioMetadatas", {
         type: "doughnut",
@@ -251,11 +255,15 @@ async function getTiposDeDados(idMetadata, idEmpresa) {
         if(response.status === 200) {
             tipos_de_dados(dadosEmpresa)
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
     catch(error){
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -267,27 +275,42 @@ function tipos_de_dados(dadosEmpresa) {
     }
 
     let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
-    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Integer, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date]
-    let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
+    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Int, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date];
+    let barColors = ["#08115E", "#B6CAF8", "#6188DE", "#94C2FF", "#65A2FF"];
 
     new Chart("myChart", {
-    type: "bar",
-    data: {
-        labels: xValues,
-        datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-        }]
-    },
-    options: {
-        legend: {display: false},
-        title: {
-            display: false,
-            text: "TIPOS DE DADO POR METADATA"
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            title: {
+                display: false,
+                text: "TIPOS DE DADO POR METADATA"
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
         }
-    }
     });
 }
+
 
 async function getStatusColuna(idMetadata, idEmpresa) {
     try{
@@ -301,11 +324,15 @@ async function getStatusColuna(idMetadata, idEmpresa) {
         if(response.status === 200) {
             statusColuna(metadatas)
         }else{
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.")
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
         }
     }
     catch(error){
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -318,7 +345,7 @@ function statusColuna(metadatas) {
 
     let xValues = ["Pendente", "Invalidado", "Validado"];
     let yValues = [metadatas.PENDENTE, metadatas.INVALIDADO, metadatas.VALIDADO];
-    let barColors = ["#b91d47", "#00aba9", "#2b5797"];
+    let barColors = ["#004080", "#2b5797", "#52C5F2"];
 
     let canva = document.getElementById("statusColuna").getContext("2d")
 
@@ -346,18 +373,6 @@ function statusColuna(metadatas) {
     });
 }
 
-async function countMetadatas(idMetadata){
-    try {
-        let body = [idMetadata]
-        let response = await api.post(`/dash/quantityTypeData/{idMetadata}`, body)
-        let numMetadatas = document.getElementById("numMetadatas")
-        numMetadatas.textContent = response.data;
-    }
-    catch(error) {
-        console.log(error)
-    }
-} 
-
 async function countUsuarios(idEmpresa){
     try{
         let body = [idEmpresa]
@@ -366,7 +381,9 @@ async function countUsuarios(idEmpresa){
         numUsuarios.textContent = response.data;
     }
     catch(error) {
-        console.log(error)
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -377,19 +394,22 @@ async function countEmpresas(){
         numEmpresas.textContent = response.data;
     }
     catch(error) {
-        console.log(error)
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
-} 
+}
 
 async function listColunas(idEmpresa){
     try{
         let body = [idEmpresa]
         let response = await api.post(`/dash/quantityColunas`, body)
         generateTable(response.data)
-        console.log(response.data)
-    }
+            }
     catch(error){
-        console.log("deu erro")
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
     }
 }
 
@@ -397,15 +417,58 @@ function generateTable(valores){
     let tabela = document.getElementById("valuesTable")
     tabela.innerHTML = ''
     let chaves = Object.keys(valores);
-    console.log(chaves)
-    for (let chave of chaves){
+        for (let chave of chaves){
         let celula = `
             <tr>
                 <td>${chave}</td>
                 <td>${valores[chave]}</td>
             </tr>
         `
-        console.log(valores)
-        tabela.insertAdjacentHTML("afterend", celula)
+                tabela.insertAdjacentHTML("afterend", celula)
     }
+}
+
+async function getQuantityMetadatas(idEmpresa){
+    try{
+        let body = [idEmpresa]
+        let response = await api.post("/dash/quantityMetadatas", body)
+        setQuantityMetadatas(response.data)
+
+    }catch(error){
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+    }
+}
+
+function setQuantityMetadatas(value){
+    let box = document.getElementById("numMetadatas")
+    box.innerHTML = value;
+}
+
+
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
 }

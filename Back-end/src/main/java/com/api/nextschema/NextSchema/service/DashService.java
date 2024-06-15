@@ -211,4 +211,22 @@ public class DashService {
         return quantityByStage;
     }
 
+    public Integer getQuantityMetadata(List<Long> idEmpresas){
+        Integer quantity = 0;
+
+        if (idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for (Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+        }
+
+        for(Long id : idEmpresas){
+            quantity+= metadataService.buscarPorEmpresa(id).size();
+        }
+
+        return quantity;
+    }
+
 }

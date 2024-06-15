@@ -33,11 +33,6 @@ function opcoes_roles_acoes(userData) {
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
             table.insertAdjacentHTML("beforeend", listar_metadata);
-        } else if (userData.roleUsuario[i] === "ROLE_SILVER") {
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-            table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
 }
@@ -257,7 +252,6 @@ function generateAllSigHTML(sigValues, data) {
 
 function refreshDeleteButtons(sigValues, data){
     for(let y = 0; y < sigValues.length; y++){
-        console.log(`Y: ${y}`);
         document.getElementById(`btn_remove_sig${y}`).addEventListener("click", async()=>{
             await deleteDePara(sigValues[y].id, data);
         })
@@ -370,9 +364,6 @@ async function viewMetadata(data) {
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
-
-    console.log(sigValues);
-    console.log(data);
 
     refreshDeleteButtons(sigValues, data);
 
