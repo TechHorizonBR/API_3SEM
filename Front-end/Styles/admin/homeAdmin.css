@@ -280,9 +280,8 @@ align-self: flex-end;
 .table {
   border-collapse: collapse;
   font-size: 1em;
-  width: 100%;
+  width: 98%;
   border-radius: 8px 8px 0 0;
-  overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

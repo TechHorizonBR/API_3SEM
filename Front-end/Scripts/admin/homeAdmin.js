@@ -124,7 +124,7 @@ function generateOptions(empresas){
         getestagioMetadatas(selectValue);
         getStatusColuna(0, selectValue);
         countUsuarios(selectValue);
-        generateTable(selectValue, 0);
+        listColunas(selectValue, 0);
         getQuantityMetadatas(selectValue);
     });
 }
@@ -404,8 +404,9 @@ async function listColunas(idEmpresa){
     try{
         let body = [idEmpresa]
         let response = await api.post(`/dash/quantityColunas`, body)
+        console.log(response.data)
         generateTable(response.data)
-            }
+    }
     catch(error){
         let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
         let path = '/Front-end/media/images/error-img.gif'
@@ -413,20 +414,22 @@ async function listColunas(idEmpresa){
     }
 }
 
-function generateTable(valores){
-    let tabela = document.getElementById("valuesTable")
-    tabela.innerHTML = ''
+function generateTable(valores) {
+    let tabela = document.getElementById("valuesTable");
+    tabela.innerHTML = ''; // Limpa o conteúdo existente da tabela
+    
     let chaves = Object.keys(valores);
-        for (let chave of chaves){
+    for (let chave of chaves) {
         let celula = `
             <tr>
                 <td>${chave}</td>
                 <td>${valores[chave]}</td>
             </tr>
-        `
-                tabela.insertAdjacentHTML("afterend", celula)
+        `;
+        tabela.insertAdjacentHTML("beforeend", celula); // Insere a célula dentro da tabela
     }
 }
+
 
 async function getQuantityMetadatas(idEmpresa){
     try{
