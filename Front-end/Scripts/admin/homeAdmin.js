@@ -6,7 +6,6 @@ window.onload = () => {
     getestagioMetadatas(0);
     countEmpresas();
     countUsuarios(0);
-
     listColunas(0);
     getQuantityMetadatas(0);
 };
@@ -211,7 +210,7 @@ function estagioMetadatas(metadatas) {
 
     let xValues = ["LandingZone", "Bronze", "Silver"];
     let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER];
-    let barColors = ["#2b5797", "#e8c3b9", "#1e7145"];
+    let barColors = ["#2585D9", "#52C5F2", "#5EE3F2"];
 
     new Chart("estagioMetadatas", {
         type: "doughnut",
@@ -267,27 +266,42 @@ function tipos_de_dados(dadosEmpresa) {
     }
 
     let xValues = ["Float", "String", "Integer", "Boolean", "Char", "Date"];
-    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Integer, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date]
-    let barColors = ["#94C2FF", "#67FECB", "#8FE3FD", "#FECD00", "#A273FF", "#0299FE"];
+    let yValues = [dadosEmpresa.Float, dadosEmpresa.String, dadosEmpresa.Int, dadosEmpresa.Boolean, dadosEmpresa.Char, dadosEmpresa.Date];
+    let barColors = ["#08115E", "#B6CAF8", "#6188DE", "#94C2FF", "#65A2FF"];
 
     new Chart("myChart", {
-    type: "bar",
-    data: {
-        labels: xValues,
-        datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-        }]
-    },
-    options: {
-        legend: {display: false},
-        title: {
-            display: false,
-            text: "TIPOS DE DADO POR METADATA"
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            title: {
+                display: false,
+                text: "TIPOS DE DADO POR METADATA"
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
         }
-    }
     });
 }
+
 
 async function getStatusColuna(idMetadata, idEmpresa) {
     try{
@@ -322,7 +336,7 @@ function statusColuna(metadatas) {
 
     let xValues = ["Pendente", "Invalidado", "Validado"];
     let yValues = [metadatas.PENDENTE, metadatas.INVALIDADO, metadatas.VALIDADO];
-    let barColors = ["#b91d47", "#00aba9", "#2b5797"];
+    let barColors = ["#004080", "#2b5797", "#52C5F2"];
 
     let canva = document.getElementById("statusColuna").getContext("2d")
 
@@ -375,14 +389,14 @@ async function countEmpresas(){
         let path = '/Front-end/media/images/error-img.gif'
         prompt_function(message, path)
     }
-} 
+}
 
 async function listColunas(idEmpresa){
     try{
         let body = [idEmpresa]
         let response = await api.post(`/dash/quantityColunas`, body)
         generateTable(response.data)
-    }
+            }
     catch(error){
         let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
         let path = '/Front-end/media/images/error-img.gif'
@@ -394,14 +408,14 @@ function generateTable(valores){
     let tabela = document.getElementById("valuesTable")
     tabela.innerHTML = ''
     let chaves = Object.keys(valores);
-    for (let chave of chaves){
+        for (let chave of chaves){
         let celula = `
             <tr>
                 <td>${chave}</td>
                 <td>${valores[chave]}</td>
             </tr>
         `
-        tabela.insertAdjacentHTML("afterend", celula)
+                tabela.insertAdjacentHTML("afterend", celula)
     }
 }
 
@@ -449,4 +463,3 @@ function prompt_function(message, path) {
         document.getElementById("prompt").remove();
     });
 }
-
