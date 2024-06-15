@@ -86,7 +86,10 @@ async function initialize() {
             generateEmpresas(empresas);
         }
     } catch (error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
     }
 }
 
@@ -96,11 +99,15 @@ async function getEmpresas() {
         if(response.status === 200) {
             return response.data;
         } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
             return null;
         }
     } catch(error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
         return null;
     }
 }
@@ -111,11 +118,16 @@ async function getMetadata(id) {
         if(response.status === 200) {
             return response.data;
         } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
             return null;
         }
     } catch(error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
         return null;
     }
 }
@@ -125,14 +137,18 @@ async function getHistorico(id){
         let response = await api.get(`/historicos/metadata/${id}`);
 
         if(response.status === 200) {
-
             generateTable(response.data);
         } else {
-            alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
+            let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+            let path = '/Front-end/media/images/error-img.gif'
+            prompt_function(message, path)
             return null;
         }
     } catch(error) {
-        console.error(error);
+        let message = "Alguma coisa deu errado. Tente novamente mais tarde.";
+        let path = '/Front-end/media/images/error-img.gif'
+        prompt_function(message, path)
+
         return null;
     }
 }
@@ -206,4 +222,30 @@ function formatDateNative(dateString) {
     const cleanDateString = dateString.substring(0, 23) + 'Z';
     const date = new Date(cleanDateString);
     return date.toLocaleString('pt-BR', { timeZone: 'UTC' });
+}
+
+function prompt_function(message, path) {
+    var back = `
+    <div class="back_prompt" id="back_prompt">
+    </div>
+    `;
+
+    var prompt_function= `
+        <div class="prompt1" id="prompt">
+            <img src="${path}" style="width: 35%">
+            <span class="prompt_text">${message}</span>
+            <div class="btns">
+                <button class="btn_p" id="btn_OK">OK</button>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", back);
+    let var_back = document.getElementById("back_prompt");
+    var_back.insertAdjacentHTML("beforeend", prompt_function);
+
+    document.getElementById("btn_OK").addEventListener("click", () => {
+        document.getElementById("back_prompt").remove();
+        document.getElementById("prompt").remove();
+    });
 }
