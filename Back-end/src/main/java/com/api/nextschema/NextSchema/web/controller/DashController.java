@@ -20,35 +20,39 @@ import java.util.Map;
 public class DashController {
     private final DashService dashService;
 
-    @GetMapping("/quantityStatus")
-    public ResponseEntity<Map<Validado, Integer>> getQuantityStatus(@RequestBody List<Long> idEmpresas){
-        return ResponseEntity.status(HttpStatus.OK).body(dashService.getQuantityStatus(idEmpresas));
+    @PostMapping("/quantityStatus/{idMetadata}")
+    public ResponseEntity<Map<Validado, Integer>> getQuantityStatus(@RequestBody List<Long> idEmpresas, @PathVariable Long idMetadata){
+        return ResponseEntity.status(HttpStatus.OK).body(dashService.getQuantityStatus(idEmpresas, idMetadata));
     }
   
-    @GetMapping("/quantityTypeData")
-    public ResponseEntity<Map<String, Integer>> getQuantityTypeData(@RequestBody List<Long> idEmpresas){
-        return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas));
+    @PostMapping("/quantityTypeData/{idMetadata}")
+    public ResponseEntity<Map<String, Integer>> getQuantityTypeData(@RequestBody List<Long> idEmpresas, @PathVariable Long idMetadata){
+        return ResponseEntity.ok().body(dashService.getQuantityTypeData(idEmpresas, idMetadata));
 
     }
 
-    @GetMapping("/quantityEmpresas")
+    @PostMapping("/quantityEmpresas")
     public ResponseEntity<Integer> getQuantityEmpresas(){
         return ResponseEntity.ok().body(dashService.getQuantityEmpresas());
     }
 
-    @GetMapping("/quantityUsers")
+    @PostMapping("/quantityUsers")
     public ResponseEntity<Integer> getQuantityUsersByEmpresa(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.ok().body(dashService.getQuantityUsersByEmpresas(idEmpresas));
     }
   
-    @GetMapping("/quantityColunas")
+    @PostMapping("/quantityColunas")
     public ResponseEntity<Map<String, Integer>> getQuantityColunasByEmpresa(@RequestBody List<Long> idEmpresa) {
         Map<String, Integer> result = dashService.getQuantityColunasByEmpresa(idEmpresa);
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/quantityByStage")
+    @PostMapping("/quantityByStage")
     public ResponseEntity<Map<String, Integer>> getQuantityByStage(@RequestBody List<Long> idEmpresas){
         return ResponseEntity.ok().body(dashService.getQuantityByStage(idEmpresas));
+    }
+    @PostMapping("/quantityMetadatas")
+    public ResponseEntity<Integer> getQuantityMetadatasByEmpresa(@RequestBody List<Long> idEmpresas){
+        return ResponseEntity.ok().body(dashService.getQuantityMetadata(idEmpresas));
     }
 }

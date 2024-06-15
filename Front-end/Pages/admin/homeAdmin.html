@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Incluir CSS do Head na pagina -->
     <link rel="icon" type="image/png" sizes="32x32" href="/Front-end/media/images/logoo.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/Front-end/Pages/head/head.css">
-    <link rel="stylesheet" type="text/css" href="/Front-end/Styles/admin/homeAdmin.css">
-    <title>NextSchema - Home ADM</title>
+    <link rel="stylesheet" href="/Front-end/Styles/admin/homeAdmin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-gauge@0.3.0/dist/chartjs-gauge.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>NextSchema - Home</title>
 </head>
 <body>
-    <!-- Incluir a Header no Inicio de cada pagina -->
     <header>
         <div id="left">
             <img src="/Front-end/media/images/logo_nextschema_branco.png" alt="NS-logo" id="NS-logo">
             <nav>
                 <ul class="menu">
-                    <li><a href="homeAdmin.html">Home</a></li>
+                    <li><a href="homeAdmin.html"><i class="fa-solid fa-house" style="margin-right: 0.3em;"></i>Home</a></li>
 
-                    <li><a href="#">Cadastros</a>
+                    <li><a href="#"><i class="fa-solid fa-user-plus" style="margin-right: 0.3em;"></i>Cadastros</a>
                         <ul>
                             <li><a href="cadastroEmpresa.html">Empresa</a></li>
                             <li><a href="cadastroUsuario.html">Usuário</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="#">Ações</a>
+                    <li><a href="#"><i class="fa-solid fa-gear" style="margin-right: 0.3em;"></i>Ações</a>
                         <ul>
                             <li><a href="historico.html">Histórico</a></li>
-                            <li><a href="dashboard.html">Dashboard</a></li>
+                            <li><a href="homeAdmin.html">Dashboards</a></li>
+                            <li><a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/Manuais/Admin.md" target="_blank">Manual de uso</a></li>
                         </ul>
                     </li>
-                    <li><a href="../index.html">Logout</a></li>
+                    <li><a href="../index.html"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;margin-right: 0.3em;"></i>Logout</a></li>
                 </ul>
             </nav>
         </div>
-        <!--DADOS DO USUARIO-->
         <div id="user-identification">
             <div class="info_user">
                 <p id="user_name" class="user_name"></p>
@@ -46,13 +46,95 @@
                 </div>
             </div>
         </div>
-        <!--DADOS DO USUARIO FIM-->
     </header>
-    <!--PEGAR ATÉ AQUI-->
     <main>
-    <div class="conteudo">
-    <h1>Bem vindo, Administrador!</h1>
-    </div>
+        <div id="filter">
+            <div id="title">
+                Dashboards
+            </div>
+            <div class="text">
+            </div>
+
+            <div id="select">
+                <div>Empresa</div>
+                <select class="select-custom" id="select-filter">
+                    <option value="" disabled selected hidden>Todas</option>
+                    <!-- <option class="option" value="1">Opção 1</option> -->
+                </select>
+            </div>
+        </div>
+        <div class="campoDash">
+            <div class="maior">
+                <div class="cards">
+                    <div class="card_1">
+                        <h3>Número de Metadatas</h3>
+                        <p class="count" id="numMetadatas"></p>
+                    </div>
+                    <div class="card_2">
+                        <h3>Número de Usuários</h3>
+                        <p class="count" id="numUsuarios"></p>
+                    </div>
+                    <div class="card_3">
+                        <h3>Número de Empresas</h3>
+                        <p class="count" id="numEmpresas"></p>
+                    </div>
+                </div>
+                <div class="graficos">
+                    <div class="box">
+                        <div id="select">
+                            <div>Tipos de Dado</div>
+                            <select class="metadataFilter" id="select-filter-metadata">
+                                <option value="" disabled selected hidden>Selecionar</option>
+                                <option class="option" id="all" value="0">Todos</option>
+                                <!-- <option class="option" value="1">Opção 1</option> -->
+                            </select>
+                        </div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div class="statusDasColunas">
+                        <div id="select">
+                            <div>Status das Colunas</div>
+                            <select class="metadataFilter" id="filter-metadata">
+                                <option value="" disabled selected hidden>Selecionar</option>
+                                <option class="option" id="all" value="0">Todos</option>
+                                <!-- <option class="option" value="1">Opção 1</option> -->
+                            </select>
+                        </div>
+                        <canvas id="statusColuna"></canvas>
+                    </div>
+                </div>
+                </div>
+                <div class="menor">
+                    <div class="donut2">
+                        
+                        <h3>Status do Metadata</h3>
+                        
+                        <canvas id="estagioMetadatas"></canvas>
+
+                        
+                        
+                        
+                    </div>
+                    <div class="donut3">
+                        <div class="table-container">
+                            <table class="table">
+                            <thead>
+                                <tr>
+                                <th>Metadatas</th>
+                                <th>N° Colunas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="valuesTable">
+                                
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+        </div>
+        </div>
     </main>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

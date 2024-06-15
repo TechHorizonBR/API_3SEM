@@ -45,8 +45,6 @@ public class MetadataService {
     }
     @Transactional
     public void deletebyId(Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Usuario usuario = (Usuario) authentication.getPrincipal();
         Metadata metadata = findbyId(id);
         historicoService.deleteByMetadata(metadata);
         colunaService.deleteByMetadata(metadata);
