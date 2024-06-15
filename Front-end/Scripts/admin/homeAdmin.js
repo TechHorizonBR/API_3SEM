@@ -219,9 +219,18 @@ function estagioMetadatas(metadatas) {
         },
         options: {
             responsive: true,
+            
+            maintainAspectRatio: false,
+
             plugins: {
                 legend: {
-                    position: 'right'
+                    position: 'right',
+                    labels: {
+                        font:{
+                            size: 16
+                        }
+                    }
+                    
                 },
                 title: {
                     display: false,

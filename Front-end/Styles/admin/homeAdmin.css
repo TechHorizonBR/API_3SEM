@@ -35,7 +35,7 @@ main{
 .select-custom{
   border-radius: 15px;
   width: 300px;
-  height: 50px;
+  height: 45px;
   border: none;
   font-size: medium;
   margin-left: 10px;
@@ -44,7 +44,7 @@ main{
 #filter{
   display: flex;
   justify-content: space-between;
-  margin: 2% 5% 1% 5%;
+  margin: 1% 5% 0% 5%;
 }
 
 /* DADOS DO USUARIO */
@@ -89,11 +89,16 @@ align-self: flex-end;
   width: 975px;
   height: 540px;
   margin-left: 25px;
+  gap: 2%
 }
 
 .cards{
   display: flex;
   flex-direction: row;
+  height: 42%;
+  width: 100%;
+  gap: 2%;
+  margin-left: 1%;
 }
 
 .card_1 {
@@ -102,9 +107,11 @@ align-self: flex-end;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  width: 220px;
-  height: 115px;
-  margin-left: 10px;
+  width: 30%;
+  height: 77%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card_1 h3 {
@@ -125,10 +132,11 @@ align-self: flex-end;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  width: 220px;
-  height: 115px;
-  margin-left: 84px;
-
+  width: 30%;
+  height: 77%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card_2 h3 {
@@ -149,9 +157,11 @@ align-self: flex-end;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  width: 220px;
-  height: 115px;
-  margin-left: 84px;
+  width: 30%; 
+  height: 77%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card_3 h3 {
@@ -167,8 +177,8 @@ align-self: flex-end;
 }
 
 .box {
-  width: 445px;
-  height: 250px;
+  width: 55%;
+  height: 92%;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -191,35 +201,71 @@ align-self: flex-end;
   margin-left: 20px;
 }
 
-.donut {
+.statusDasColunas {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 15px;
+  padding: 2%;
   text-align: center;
-  height: 250px;
+  height: 92%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2%;
 }
 
-canvas {
-  overflow-clip-margin: content-box;
-  overflow: clip;
+
+.donut2 {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Ajuste conforme necessário */
+  height: 250px; /* Ajuste conforme necessário */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+}
+#select {
+  margin-bottom: 10px;
+}
+
+
+#estagioMetadatas {
+  display: block;
+  width: 75% !important;
+  height: 75% !important;
+}
+
+.donut3 {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 94%;
+  margin-top: 3%;
+  overflow-y: scroll;
 }
 
 .graficos {
   display: flex;
   flex-direction: row;
-  gap: 90px;
+  gap: 2%;
   justify-content: space-around;
-  margin: 1%;
+  margin-left: 1%;
   align-items: center;
+  height: 56%;  
+  width: 100%;
 }
 
 .menor{
   width: 495px;
-  height: 540px;
+  height: 546px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -227,13 +273,14 @@ canvas {
 
 .table-container {
   max-height: calc(5 * 40px + 1em);
+  width: 100%;
+  height: 171%;
 }
 
 .table {
   border-collapse: collapse;
-  margin: 20px 0;
   font-size: 1em;
-  width: 320px;
+  width: 100%;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -262,8 +309,6 @@ canvas {
 table tbody {
   display: block;
   max-height: 200px;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 
 table thead, table tbody tr {
@@ -278,8 +323,4 @@ table thead, table tbody tr {
 
 .table tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
-}
-
-.table tbody tr:last-of-type {
-  border-bottom: 2px solid #001233;
 }
