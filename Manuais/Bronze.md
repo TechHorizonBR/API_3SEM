@@ -69,4 +69,4 @@
 
 > No menu inicial do usuário Bronze, clique em "Logout".
 
-![download (7)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/c8d8eb5c-9870-43f2-94a6-f0561aa8e5f3)
+![Design sem nome (2)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/366b1b7e-9d9a-4f64-a40d-d274f2b096b1)
