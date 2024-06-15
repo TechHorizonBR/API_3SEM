@@ -68,4 +68,4 @@
 
 > Clique em "YALM" para gerar o arquivo.
 
-[Design sem nome (1).mp4](...)
+![download (8).gif](..%2F..%2Fdownload%20%288%29.gif)
