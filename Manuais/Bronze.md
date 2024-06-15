@@ -68,4 +68,4 @@
 
 > Clique em "YALM" para gerar o arquivo.
 
-[Design sem nome (1).mp4](..%2F..%2FDesign%20sem%20nome%20%281%29.mp4)
+[Design sem nome (1).mp4](...)
