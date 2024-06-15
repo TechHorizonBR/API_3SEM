@@ -93,8 +93,8 @@ NS-87 | Autenticação de Usuário | Como usuário, preciso que o sistema me per
 NS-29 | Análise e Definição de Relacionamentos | Como usuário Silver, desejo aplicar significado às informações fornecidas nos estágios anteriores, com a finalidade de aprimorar a análise dos dados. | 10 | 3| ✅ 
 NS-25 | Visualização dos esquemas de banco de dados | Como usuário Silver, desejo visualizar o esquema do 3º estágio com o objetivo de compreender a estrutura e organização do esquema final. | 11 | 3| ✅ 
 NS-19 | Histórico de Auditorias | Como usuário, preciso que o sistema grave quem realizou as devidas modificações e ações em campos com finalidade de auditorias. | 12  | 3| ✅
-NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 13 | 4 | ➖
-NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 14 | 4 | ➖
+NS-31 | Geração de Dashboards quantitativos | Como usuário administrador, preciso que o sistema gere dashbords quantativos a respeito do plano de negócios e processos de cada cliente para analisar os resultados obtidos. | 13 | 4 | ✅
+NS-32 | Exportação de Configuração YAML | Como usuário, preciso que o sistema possa exportar um arquivo de configuração YAML para cada estágio, com a finalidade de processamento em sistemas externos. | 14 | 4 | ✅
 
 <span id="cronograma">
 
@@ -125,6 +125,7 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 
 > Foi desenvolvido o segundo estágio do sistema, Bronze, sendo as funcionalidades gestão de usuários administradores e clientes, especificação, validação e mapeamento de chaves do esquema, além da implementação da autenticação de usuários, garantindo a segurança e integridade dos dados. 
 </details>
+
 <details>
      
 <summary>Sprint 3</summary>
@@ -132,6 +133,13 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 > Foi desenvolvido o terceiro estágio do sistema, Silver, sendo as funcionalidades de atribuição de significados de cada coluna do Metadata, e registro de histórico de ações no sistema.
 </details>
 
+
+<details>
+     
+<summary>Sprint 4</summary>
+
+> Foi desenvolvido a finalização das funcionalidades do sistema, como os dashboards gerenciais do perfil de administrador. Recurso de upload para De/Para adicionado e geração de YAMLs em cada etapa implementado.
+</details>
 <span id="burndown">
 
 ## Burndown 🔥
@@ -165,12 +173,22 @@ Feira de Soluções| 27/06/2024| 27/06/2024
 
 </details>
 
+<details>
+     
+<summary>Sprint 4</summary>
+
+![image](https://github.com/TechHorizonBR/API_3SEM/assets/123211025/6006fbf2-541a-45d3-bbea-e7f3b4f587d1)
+
+</details>
+
+
+
   
 <span id="docs">
 
 ## Documentação 📜
 
-- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V3_NEXTSCHEMA.pdf">Clique aqui</a>
+- Documentação completa do sistema: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/DOCUMENTACAO_V4_NEXTSCHEMA.pdf">Clique aqui</a>
 - Como executar: <a href="https://github.com/TechHorizonBR/API_3SEM/blob/main/EXECUTAR.md">Clique aqui</a>
 - Gerenciador de Tasks(Jira): <a href="https://techhorizon.atlassian.net/jira/software/projects/NS/boards/1/backlog?atlOrigin=eyJpIjoiZTk0MmM0N2UyMDM1NGZkNThiYTA5YzM0NGU0MTRiNGQiLCJwIjoiaiJ9">Clique aqui</a>
 
