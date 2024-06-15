@@ -32,12 +32,6 @@ function opcoes_roles_acoes(userData){
         `;
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
     }
 }
 
@@ -129,9 +123,9 @@ async function getMetadata(id) {
 async function getHistorico(id){
     try {
         let response = await api.get(`/historicos/metadata/${id}`);
-        console.log(response)
+
         if(response.status === 200) {
-            console.log(response.data)
+
             generateTable(response.data);
         } else {
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
@@ -139,7 +133,6 @@ async function getHistorico(id){
         }
     } catch(error) {
         console.error(error);
-        console.log("Disparou erro")
         return null;
     }
 }
