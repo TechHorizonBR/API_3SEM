@@ -208,9 +208,9 @@ function estagioMetadatas(metadatas) {
         idCanva.destroy();
     }
 
-    let xValues = ["LandingZone", "Bronze", "Silver"];
-    let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER];
-    let barColors = ["#2585D9", "#52C5F2", "#5EE3F2"];
+    let xValues = ["LandingZone", "Bronze", "Silver", "Finalizado"];
+    let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER, metadatas.FINALIZADO];
+    let barColors = ["#2585D9", "#52C5F2", "#5EE3F2", "#1B4F72" ];
 
     new Chart("estagioMetadatas", {
         type: "doughnut",
@@ -345,7 +345,7 @@ function statusColuna(metadatas) {
 
     let xValues = ["Pendente", "Invalidado", "Validado"];
     let yValues = [metadatas.PENDENTE, metadatas.INVALIDADO, metadatas.VALIDADO];
-    let barColors = ["#004080", "#2b5797", "#52C5F2"];
+    let barColors = ["#004080", "#94C2FF", "#52C5F2"];
 
     let canva = document.getElementById("statusColuna").getContext("2d")
 
@@ -360,6 +360,7 @@ function statusColuna(metadatas) {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'right'
@@ -404,7 +405,6 @@ async function listColunas(idEmpresa){
     try{
         let body = [idEmpresa]
         let response = await api.post(`/dash/quantityColunas`, body)
-        console.log(response.data)
         generateTable(response.data)
     }
     catch(error){

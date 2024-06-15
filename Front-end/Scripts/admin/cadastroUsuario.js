@@ -75,7 +75,7 @@ selecao.addEventListener("change", () => {
             dict = {
                 "ROLE_LZ" : "Landing Zone",
                 "ROLE_BRONZE" : "Bronze",
-                "ROLE_SILVER" : "ROLE_SILVER",
+                "ROLE_SILVER" : "Silver",
                 "ROLE_ADMIN" : "Administrador"
             }
             let nomeRole= dict[newrole];
@@ -377,6 +377,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
 
     async function addEmpresasExistentes(listaEmp){
         await buscarEmpresasEditar();
+        listaEmp = listaEmp.split(',')
         for(let x = 0; x < listaEmp.length; x++){
             let id = listaEmp[x];
             let empresa = empresas_json.find(emp=>emp.id == id);
@@ -521,7 +522,7 @@ function firstPrompt(id, nome, email, senha, listaRole, listaEmp) {
         try {
             let response = await api.put("/usuarios", dataJson);
             if (response.status === 200) {
-                document.getElementById("back_prompt").remove();
+                document.getElementById("edit_prompt").remove();
                 getAllUsuarios();
                 editPrompt();
             }

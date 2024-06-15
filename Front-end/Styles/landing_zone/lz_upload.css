@@ -206,11 +206,13 @@ main{
     background: none;
     border: none;
     cursor: pointer;
-    position: absolute; /* Define a posição absoluta */
+/* Define a posição absoluta */
     right: 8px; /* Define a distância do lado direito */
     top: 8px; /* Define a distância do topo */
     color: gray;
     font-size: 125%;
+    width: 100%;
+    text-align: right
     
 }
 

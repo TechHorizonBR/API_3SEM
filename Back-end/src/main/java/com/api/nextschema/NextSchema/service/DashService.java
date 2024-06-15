@@ -169,6 +169,7 @@ public class DashService {
         quantityByStage.put("LZ", 0);
         quantityByStage.put("BRONZE", 0);
         quantityByStage.put("SILVER", 0);
+        quantityByStage.put("FINALIZADO", 0);
 
         if (idEmpresas.get(0) == 0){
             List<Empresa> empresas = empresaService.buscarTodos();
@@ -197,7 +198,20 @@ public class DashService {
 
 
                 } else if (validado == colunas.size()){
-                    quantityByStage.put("SILVER", quantityByStage.get("SILVER") +1);
+                    int check = 0;
+                    for(Coluna coluna : colunas){
+                        List<DePara> deParas = deParaService.getByColuna(coluna.getId());
+                        if(deParas.isEmpty()){
+                            check = 1;
+                        }
+                    }
+                    if (check == 1){
+                        quantityByStage.put("SILVER", quantityByStage.get("SILVER") +1);
+
+                    }else{
+                        quantityByStage.put("FINALIZADO", quantityByStage.get("FINALIZADO") +1);
+                    }
+
                 } else {
                     quantityByStage.put("BRONZE", quantityByStage.get("BRONZE") +1);
                 }

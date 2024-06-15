@@ -1,6 +1,10 @@
 
 # Guia do usuário Silver
 
+## O que é?
+
+o usuário Silver é o terceiro estágio da aplicação. Sendo possível aplicar significados em cada coluna dos metadatas. Além de gerar YAML dos esquemas.
+
 ## Após o login, clique no botão "Silver" para iniciar.
 ![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/68210df8-6dfe-408e-9152-ba027187a858)
 

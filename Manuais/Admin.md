@@ -4,6 +4,15 @@
   > Ao fazer login com usuário e senha de um usuário adminstrador, terá acesso ao Dashboard
   > 
   > Nele está contido informações sobre estágios, status e quantidade de metadatas
+  >
+  > Gráfico de Tipos de Dados: Esse chart é possível visualizar a quantidade de cada tipo de dado de cada metadata (FILTRO POR EMPRESA/METADATA). 
+  > Gráfico de Status das Colunas: Esse chart é possível visualizar a quantidade de colunas divididas de acordo com o status de validação (FILTRO POR EMPRESA/METADATA)
+  > Gráfico de Estágio de Metadatas: Esse chart é possível visualiza a quantidade de metadatas em cada estágio (FILTRO POR EMPRESA).
+  > Tabela: É possível visualizar a quantidade de colunas de cada metadata (FILTRO POR EMPRESA).
+  > CARDS:
+    > - Números de Metadatas (FILTRO POR EMPRESA);
+    > - Número de Usuários (FILTRO POR EMPRESA);
+    > - Número de Empresas (TOTAL / SEM FILTRO).
   
   ![gif 3](https://github.com/TechHorizonBR/API_3SEM/assets/127263371/2fdaafbb-1096-41c5-82db-deb9c548bd6c)
   

@@ -1,5 +1,9 @@
 ## Manual de uso - Nível Bronze
 
+## O que é?
+
+O usuário Bronze é o segundo estágio da aplicação. Sendo possível validar e invalidar as colunas enviadas pelo usuário Landing Zone, além de comentar a coluna e definir HASHS. Também é possível gerar YAML dos metadatas.
+
 - Realizar Login.
 
 > Para logar é necessário inserir e-mail e senha correta.
