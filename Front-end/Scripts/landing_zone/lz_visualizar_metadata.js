@@ -40,14 +40,6 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
-        table.insertAdjacentHTML("beforeend", listar_metadata);
-        }
-        else if(userData.roleUsuario[i] === "ROLE_SILVER"){
-            var listar_metadata = `
-            <li><a href="#">Relacionamentos</a></li>
-        `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -62,7 +54,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -90,7 +81,6 @@ async function getEmpresas() {
 
         if(response.status === 200) {
             generateOptions(empresas)
-            console.log(empresas)
         }
         else{
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.")

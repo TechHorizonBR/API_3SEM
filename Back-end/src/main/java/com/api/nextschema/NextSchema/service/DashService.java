@@ -7,10 +7,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.api.nextschema.NextSchema.enums.Validado.*;
 
@@ -70,13 +67,12 @@ public class DashService {
         return quantityStatus;
     }
 
-    @Transactional(readOnly = true)  
-    public Map<String, Integer> getQuantityTypeData(List <Long> ids, Long idMetadata){
-
-        if(ids.get(0) == 0){
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getQuantityTypeData(List<Long> ids, Long idMetadata) {
+        if (ids.get(0) == 0 && idMetadata == 0) {
             List<Empresa> empresas = empresaService.buscarTodos();
             ids.clear();
-            for(Empresa empresa : empresas){
+            for (Empresa empresa : empresas) {
                 ids.add(empresa.getId());
             }
         }
@@ -88,46 +84,48 @@ public class DashService {
         quantityTypedata.put("Boolean", 0);
         quantityTypedata.put("Char", 0);
         quantityTypedata.put("Date", 0);
-        for(Long id : ids){
-            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
 
-            if(idMetadata == 0){
-                metadatas.addAll(metadataService.buscarPorEmpresa(id));
+        for (Long id : ids) {
+            List<Metadata> metadatas;
 
-            }else{
-                metadatas.add(metadataService.findbyId(idMetadata));
+            if (idMetadata == 0) {
+                metadatas = metadataService.buscarPorEmpresa(id);
+            } else {
+                metadatas = Collections.singletonList(metadataService.findbyId(idMetadata));
             }
 
-            for(Metadata metadata : metadatas){
+            for (Metadata metadata : metadatas) {
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
-                for (Coluna coluna : colunas){
-                    switch (coluna.getTipo()){
-                        case "string" :
-                            quantityTypedata.put("String", quantityTypedata.get("String") +1);
+                for (Coluna coluna : colunas) {
+                    String tipo = coluna.getTipo().toLowerCase();
+                    switch (tipo) {
+                        case "string":
+                            quantityTypedata.put("String", quantityTypedata.get("String") + 1);
                             break;
-                        case "int" :
-                            quantityTypedata.put("Int", quantityTypedata.get("Int") +1);
+                        case "int":
+                            quantityTypedata.put("Int", quantityTypedata.get("Int") + 1);
                             break;
-                        case "float" :
-                            quantityTypedata.put("Float", quantityTypedata.get("Float") +1);
+                        case "float":
+                            quantityTypedata.put("Float", quantityTypedata.get("Float") + 1);
                             break;
-                        case "boolean" :
-                            quantityTypedata.put("Boolean", quantityTypedata.get("Boolean") +1);
+                        case "boolean":
+                            quantityTypedata.put("Boolean", quantityTypedata.get("Boolean") + 1);
                             break;
-                        case "char" :
-                            quantityTypedata.put("Char", quantityTypedata.get("Char") +1);
+                        case "char":
+                            quantityTypedata.put("Char", quantityTypedata.get("Char") + 1);
                             break;
-                        case "date" :
-                            quantityTypedata.put("Date", quantityTypedata.get("Date") +1);
+                        case "date":
+                            quantityTypedata.put("Date", quantityTypedata.get("Date") + 1);
                             break;
                     }
                 }
             }
-            if(idMetadata == 0) break;
+
+            if (idMetadata != 0) break;
         }
         return quantityTypedata;
-
     }
+
 
     @Transactional(readOnly = true)
     public Integer getQuantityEmpresas(){
@@ -209,6 +207,24 @@ public class DashService {
 
 
         return quantityByStage;
+    }
+
+    public Integer getQuantityMetadata(List<Long> idEmpresas){
+        Integer quantity = 0;
+
+        if (idEmpresas.get(0) == 0){
+            List<Empresa> empresas = empresaService.buscarTodos();
+            idEmpresas.clear();
+            for (Empresa empresa : empresas){
+                idEmpresas.add(empresa.getId());
+            }
+        }
+
+        for(Long id : idEmpresas){
+            quantity+= metadataService.buscarPorEmpresa(id).size();
+        }
+
+        return quantity;
     }
 
 }
