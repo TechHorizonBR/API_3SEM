@@ -1,20 +1,20 @@
 ## Manual de uso - Nível Bronze
 
-- Realizar Login
+- Realizar Login.
 
 > Para logar é necessário inserir e-mail e senha correta.
 
 ![download](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/3a809a52-1ba1-4b8b-975b-3d5731427894)
 
 
-- Selecionar Metadata
+- Selecionar Metadata.
 
 > Selecione o nível Bronze, escolha a empresa e escolha o metadata.
 
 ![download (1)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/cb305da3-f21f-407d-badf-77fe45b7370c)
 
 
-- Validar Metadata
+- Validar Metadata.
 
 > Na coluna "CHAVE" indique a chave.
 
@@ -25,7 +25,7 @@
 ![download (2)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/823ee810-9dac-485e-9a36-51ec1afad07b)
 
 
-- Salvar Alterações
+- Salvar Alterações.
 
 > Após terminar a validação, clique em "SALVAR".
 
