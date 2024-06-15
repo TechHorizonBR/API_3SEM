@@ -252,7 +252,6 @@ function generateAllSigHTML(sigValues, data) {
 
 function refreshDeleteButtons(sigValues, data){
     for(let y = 0; y < sigValues.length; y++){
-        console.log(`Y: ${y}`);
         document.getElementById(`btn_remove_sig${y}`).addEventListener("click", async()=>{
             await deleteDePara(sigValues[y].id, data);
         })
@@ -365,9 +364,6 @@ async function viewMetadata(data) {
     document.body.insertAdjacentHTML("beforeend", back);
     let var_back = document.getElementById("back_prompt");
     var_back.insertAdjacentHTML("beforeend", popup_sig);
-
-    console.log(sigValues);
-    console.log(data);
 
     refreshDeleteButtons(sigValues, data);
 

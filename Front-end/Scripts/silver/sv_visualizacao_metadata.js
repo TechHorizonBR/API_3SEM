@@ -23,7 +23,6 @@ function opcoes_roles_acoes(userData){
           var listar_metadata = `
           <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
       `;
-      console.log(userData.roleUsuario)
       table.insertAdjacentHTML("beforeend", listar_metadata);
       }
   }
@@ -52,9 +51,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
   for (let chave in roles) {
       enum_role = roles[chave]
-      let rota = pagina_por_role[enum_role];
-      let nome = nome_por_role[enum_role];
-      console.log("CHAVE:",pagina_por_role[1])
 
       if(roles[chave] == "ROLE_LZ"){
           var listar_metadata = `

@@ -123,9 +123,9 @@ async function getMetadata(id) {
 async function getHistorico(id){
     try {
         let response = await api.get(`/historicos/metadata/${id}`);
-        console.log(response)
+
         if(response.status === 200) {
-            console.log(response.data)
+
             generateTable(response.data);
         } else {
             alert("Um erro ocorreu no sistema, tente novamente mais tarde.");
@@ -133,7 +133,6 @@ async function getHistorico(id){
         }
     } catch(error) {
         console.error(error);
-        console.log("Disparou erro")
         return null;
     }
 }

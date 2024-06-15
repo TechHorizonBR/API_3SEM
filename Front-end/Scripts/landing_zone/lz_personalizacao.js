@@ -31,7 +31,6 @@ function opcoes_roles_acoes(userData){
             var listar_metadata = `
             <li><a href="../landing_zone/lz_upload.html">Upload CSV</a></li>
         `;
-        console.log(userData.roleUsuario)
         table.insertAdjacentHTML("beforeend", listar_metadata);
         }
     }
@@ -57,9 +56,6 @@ function opcoes_roles_metadata(roles,pagina_por_role,nome_por_role) {
 
     for (let chave in roles) {
         enum_role = roles[chave]
-        let rota = pagina_por_role[enum_role];
-        let nome = nome_por_role[enum_role];
-        console.log("CHAVE:",pagina_por_role[1])
 
         if(roles[chave] == "ROLE_LZ"){
             var listar_metadata = `
@@ -199,20 +195,14 @@ function prompt_function(message, path, check) {
     document.getElementById("btn_OK").addEventListener("click", () => {
         document.getElementById("back_prompt").remove();
 
-        console.log(check)
         if (check == 1) {
             location.href = '/Front-end/Pages/landing_zone/lz_visualizar_metadata.html';
         }
-        
     });
-    
 }
 async function sendData(allData) {
     try{
-        console.log(allData);
-
         let response = await api.post("/colunas", allData);
-        console.log(response);
 
         if(response.status === 201) {
             let message = "Campos registrados com sucesso.";
