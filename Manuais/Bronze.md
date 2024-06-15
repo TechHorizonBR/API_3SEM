@@ -58,14 +58,15 @@
 ![download (5)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/6ffe7926-256a-4a13-95d8-3ceba59e8b03)
 
 
-- Sair do Sistema.
-
-> No menu inicial do usuário Bronze, clique em "Logout".
-
-![download (7)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/c8d8eb5c-9870-43f2-94a6-f0561aa8e5f3)
-
 - Gerar Yalm.
 
 > Clique em "YALM" para gerar o arquivo.
 
 ![download (8)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/6194b9e3-38f4-471d-b5a0-818f0a98dd66)
+
+
+- Sair do Sistema.
+
+> No menu inicial do usuário Bronze, clique em "Logout".
+
+![download (7)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/c8d8eb5c-9870-43f2-94a6-f0561aa8e5f3)
