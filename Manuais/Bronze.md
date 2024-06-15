@@ -1,18 +1,18 @@
-![download (5)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/51cb0ffc-5bf1-4798-84d3-04c83149cdbf)##  Manual de uso - Nível Bronze
+## Manual de uso - Nível Bronze
 
 - Realizar Login
 
 > Para logar é necessário inserir e-mail e senha correta.
 
-
 ![download](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/3a809a52-1ba1-4b8b-975b-3d5731427894)
+
 
 - Selecionar Metadata
 
 > Selecione o nível Bronze, escolha a empresa e escolha o metadata.
 
-
 ![download (1)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/cb305da3-f21f-407d-badf-77fe45b7370c)
+
 
 - Validar Metadata
 
