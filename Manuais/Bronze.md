@@ -60,7 +60,12 @@
 
 - Sair do Sistema.
 
-  > No menu inicial do usuário Bronze, clique em "Logout".
+> No menu inicial do usuário Bronze, clique em "Logout".
 
 ![download (7)](https://github.com/TechHorizonBR/API_3SEM/assets/127263243/c8d8eb5c-9870-43f2-94a6-f0561aa8e5f3)
 
+- Gerar Yalm
+
+> Clique em "YALM" para gerar o arquivo
+
+[Design sem nome (1).mp4](..%2F..%2FDesign%20sem%20nome%20%281%29.mp4)
