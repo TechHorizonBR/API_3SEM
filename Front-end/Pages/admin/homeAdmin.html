@@ -83,7 +83,7 @@
                     <div class="box">
                         <div id="select">
                             <div>Tipos de Dado</div>
-                            <select class="metadataFilter" id="select-filter-metadata">
+                            <select class="metadataFilter" id="filter-metadata-tipos">
                                 <option value="" disabled selected hidden>Selecionar</option>
                                 <option class="option" id="all" value="0">Todos</option>
                                 <!-- <option class="option" value="1">Opção 1</option> -->
@@ -94,7 +94,7 @@
                     <div class="statusDasColunas">
                         <div id="select">
                             <div>Status das Colunas</div>
-                            <select class="metadataFilter" id="filter-metadata">
+                            <select class="metadataFilter" id="filter-metadata-colunas">
                                 <option value="" disabled selected hidden>Selecionar</option>
                                 <option class="option" id="all" value="0">Todos</option>
                                 <!-- <option class="option" value="1">Opção 1</option> -->
@@ -106,7 +106,14 @@
                 </div>
                 <div class="menor">
                     <div class="donut2">
-                        <h3>Estágio dos Metadatas</h3>
+                        <div id="select">
+                            <div>Estágio dos Metadatas</div>
+                            <select class="metadataFilter" id="filter-metadata-estagio">
+                                <option value="" disabled selected hidden>Selecionar</option>
+                                <option class="option" id="all" value="0">Todos</option>
+                                <!-- <option class="option" value="1">Opção 1</option> -->
+                            </select>
+                        </div>
                         <canvas id="estagioMetadatas"></canvas>
                     </div>
                     <div class="donut3">

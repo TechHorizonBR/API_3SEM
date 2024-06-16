@@ -3,7 +3,7 @@ window.onload = () => {
     getEmpresas();
     getTiposDeDados(0, 0);
     getStatusColuna(0, 0);
-    getestagioMetadatas(0);
+    getestagioMetadatas(0, 0);
     countEmpresas();
     countUsuarios(0);
     listColunas(0);
@@ -121,7 +121,7 @@ function generateOptions(empresas){
             getMetadatas(selectValue);
         }
         getTiposDeDados(0, selectValue);
-        getestagioMetadatas(selectValue);
+        getestagioMetadatas(0, selectValue);
         getStatusColuna(0, selectValue);
         countUsuarios(selectValue);
         listColunas(selectValue, 0);
@@ -150,40 +150,48 @@ async function getMetadatas(idEmpresa) {
 }
 
 function generateOptionsMetadatas(metadatas, idEmpresa){
-    let select = document.getElementById("select-filter-metadata");
-    let select_ = document.getElementById("filter-metadata");
+    let select_tipos = document.getElementById("filter-metadata-tipos");
+    let select_colunas = document.getElementById("filter-metadata-colunas");
+    let select_estagio = document.getElementById("filter-metadata-estagio");
 
-    select.innerHTML = "";
-    select_.innerHTML = "";
+    select_tipos.innerHTML = "";
+    select_colunas.innerHTML = "";
+    select_estagio.innerHTML = "";
 
     let selectOptions = `<option class="option" id="all" value="0">Todos</option>`;
-    select.insertAdjacentHTML("afterbegin", selectOptions);
-    select_.insertAdjacentHTML("afterbegin", selectOptions);
+    select_tipos.insertAdjacentHTML("afterbegin", selectOptions);
+    select_colunas.insertAdjacentHTML("afterbegin", selectOptions);
+    select_estagio.insertAdjacentHTML("afterbegin", selectOptions);
 
     for(let i = 0; i < metadatas.length; i++){
         let selectOptions = `
             <option class="option" id="select${i}" value="${metadatas[i].id}">${metadatas[i].nome}</option>
         `
 
-        select.insertAdjacentHTML("afterbegin", selectOptions);
-        select_.insertAdjacentHTML("afterbegin", selectOptions);
+        select_tipos.insertAdjacentHTML("afterbegin", selectOptions);
+        select_colunas.insertAdjacentHTML("afterbegin", selectOptions);
+        select_estagio.insertAdjacentHTML("afterbegin", selectOptions);
     }
 
-    select.addEventListener("change", function () {
-        let selectValue = select.value;
+    select_tipos.addEventListener("change", function () {
+        let selectValue = select_tipos.value;
         getTiposDeDados(selectValue, idEmpresa);
     });
-    select_.addEventListener("change", function () {
-        let selectValue = select_.value;
+    select_colunas.addEventListener("change", function () {
+        let selectValue = select_colunas.value;
         getStatusColuna(selectValue, idEmpresa);
+    });
+    select_estagio.addEventListener("change", function () {
+        let selectValue = select_estagio.value;
+        getestagioMetadatas(selectValue, idEmpresa);
     });
 }
 
-async function getestagioMetadatas(idEmpresa) {
+async function getestagioMetadatas(idMetadata, idEmpresa) {
     try{
         let body = [idEmpresa]
 
-        let response = await api.post(`/dash/quantityByStage`, body);
+        let response = await api.post(`/dash/quantityByStage/${idMetadata}`, body);
         let metadatas = response.data;
 
         if(response.status === 200) {
@@ -223,7 +231,6 @@ function estagioMetadatas(metadatas) {
         },
         options: {
             responsive: true,
-            
             maintainAspectRatio: false,
 
             plugins: {
@@ -234,7 +241,6 @@ function estagioMetadatas(metadatas) {
                             size: 16
                         }
                     }
-                    
                 },
                 title: {
                     display: false,

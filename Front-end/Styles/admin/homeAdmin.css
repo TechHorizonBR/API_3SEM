@@ -223,7 +223,7 @@ align-self: flex-end;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 90%; /* Ajuste conforme necessário */
-  height: 250px; /* Ajuste conforme necessário */
+  height: 450px; /* Ajuste conforme necessário */
   text-align: center;
   display: flex;
   flex-direction: column;
