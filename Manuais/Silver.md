@@ -3,28 +3,21 @@
 
 ## O que é?
 
-o usuário Silver é o terceiro estágio da aplicação. Sendo possível aplicar significados em cada coluna dos metadatas. Além de gerar YAML dos esquemas.
+O usuário Silver é o terceiro estágio da aplicação, sendo possível aplicar significados em cada coluna dos metadatas, além de gerar YAML dos esquemas.
 
 ## Após o login, clique no botão "Silver" para iniciar.
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/68210df8-6dfe-408e-9152-ba027187a858)
+![Entrar no sistema](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/657a34e2-91fa-44a7-983a-8c8e9d5da161)
 
-## Selecione a empresa desejada.
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/feb0b8dc-5a67-47ac-8793-8c6b9cf58c91)
 
-## Escolha a metadata e pressione o botão "SIGNIFICAR".
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/39772c2b-69f4-4960-a42d-362bf80ace7d)
+## Selecione a empresa desejada, escolha a metadata e pressione o botão "SIGNIFICAR".
+![acessar metadata](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/f84fe66b-750d-4694-9c9c-acbc9096aef7)
 
-## Nesta tela é possível aplicar significados à colunas através do botão "VISUALIZAR".
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/00fc6008-7de7-4795-a4ad-54a8bd53ecb5)
+## Para este exemplo, foi atribuído o significado "APTO" para funcionários que ultrapassem 20 metas atingidas.
+![significando metadado](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/0187aa8d-bcde-442c-b138-c8f0de655a0d)
 
-## Para este exemplo, foi atribuído o significado "INAPTO" para salários maiorres do que 5000.
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/d1ca915c-0612-4cab-a930-32717ff5fbf0)
-
-## Note que é possível atribuir mais de um significado para uma única coluna.
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/b12a3953-bd85-4f83-a12b-15f5c38fab2e)
-
-## Caso seja necessário, é possível apagar um significado através do botão "REMOVER".
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/916df67a-8456-4ea7-81c5-7d893593cece)
+## Note que é possível atribuir mais de um significado para uma única coluna. Caso seja necessário, é possível apagar um significado através do botão "REMOVER".
+![dois ou mais significados](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/978cf9ad-f590-4521-882f-3c1af7aee4b9)
 
 ## Por fim clique no botão YAML para baixar o arquivo de configuração yaml da etapa Silver.
-![image](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/54f87b45-bcc7-4acc-8b05-211300b7f171)
+![salvar yaml](https://github.com/TechHorizonBR/API_3SEM/assets/121205315/68157713-dcbb-434b-a312-316a752c73b3)
+
