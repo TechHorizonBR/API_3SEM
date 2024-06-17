@@ -210,7 +210,7 @@ async function getestagioMetadatas(idMetadata, idEmpresa) {
 }
 
 function estagioMetadatas(metadatas) {
-    const idCanva = Chart.getChart("estagioMetadatas")
+    let idCanva = Chart.getChart("estagioMetadatas")
 
     if (idCanva) {
         idCanva.destroy();
@@ -220,7 +220,9 @@ function estagioMetadatas(metadatas) {
     let yValues = [metadatas.LZ, metadatas.BRONZE, metadatas.SILVER, metadatas.FINALIZADO];
     let barColors = ["#2585D9", "#52C5F2", "#5EE3F2", "#1B4F72" ];
 
-    new Chart("estagioMetadatas", {
+    let canva = document.getElementById("estagioMetadatas").getContext("2d")
+
+    new Chart(canva, {
         type: "doughnut",
         data: {
             labels: xValues,
@@ -232,13 +234,12 @@ function estagioMetadatas(metadatas) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-
             plugins: {
                 legend: {
                     position: 'right',
                     labels: {
                         font:{
-                            size: 16
+                            size: 10
                         }
                     }
                 },

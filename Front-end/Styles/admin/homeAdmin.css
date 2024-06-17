@@ -234,9 +234,10 @@ align-self: flex-end;
 }
 
 #estagioMetadatas {
-  display: block;
-  width: 75% !important;
-  height: 75% !important;
+  width: 100% !important; /* Use 100% do contêiner pai */
+  height: 100% !important; /* Use 100% do contêiner pai */
+  max-width: 300px; /* Garante que não exceda a largura do contêiner */
+  max-height: 200px; /* Garante que não exceda a altura do contêiner */
 }
 
 .donut3 {
@@ -249,7 +250,7 @@ align-self: flex-end;
   height: 100%;
   width: 94%;
   margin-top: 3%;
-  overflow-y: scroll;
+  overflow-y:auto;
 }
 
 .graficos {

@@ -47,9 +47,9 @@ public class DashController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/quantityByStage")
-    public ResponseEntity<Map<String, Integer>> getQuantityByStage(@RequestBody List<Long> idEmpresas){
-        return ResponseEntity.ok().body(dashService.getQuantityByStage(idEmpresas));
+    @PostMapping("/quantityByStage/{idMetadata}")
+    public ResponseEntity<Map<String, Integer>> getQuantityByStage(@RequestBody List<Long> idEmpresas, @PathVariable Long idMetadata){
+        return ResponseEntity.ok().body(dashService.getQuantityByStage(idEmpresas, idMetadata));
     }
     @PostMapping("/quantityMetadatas")
     public ResponseEntity<Integer> getQuantityMetadatasByEmpresa(@RequestBody List<Long> idEmpresas){

@@ -164,23 +164,30 @@ public class DashService {
     }
   
     @Transactional(readOnly = true)
-    public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas){
+    public Map<String, Integer> getQuantityByStage(List<Long> idEmpresas, Long idMetadata){
         Map<String, Integer> quantityByStage = new HashMap<>();
         quantityByStage.put("LZ", 0);
         quantityByStage.put("BRONZE", 0);
         quantityByStage.put("SILVER", 0);
         quantityByStage.put("FINALIZADO", 0);
 
-        if (idEmpresas.get(0) == 0){
+        if (idEmpresas.get(0) == 0 && idMetadata == 0){
             List<Empresa> empresas = empresaService.buscarTodos();
             idEmpresas.clear();
             for (Empresa empresa : empresas){
                 idEmpresas.add(empresa.getId());
             }
-
         }
         for(Long id : idEmpresas){
-            List<Metadata> metadatas = metadataService.buscarPorEmpresa(id);
+            List<Metadata> metadatas;
+
+            if (idMetadata == 0) {
+                metadatas = metadataService.buscarPorEmpresa(id);
+            } else {
+                metadatas = Collections.singletonList(metadataService.findbyId(idMetadata));
+            }
+
+
             for (Metadata metadata : metadatas ){
                 List<Coluna> colunas = colunaService.buscarPorMetadata(metadata.getId());
                 int validado = 0;
@@ -216,6 +223,8 @@ public class DashService {
                     quantityByStage.put("BRONZE", quantityByStage.get("BRONZE") +1);
                 }
             }
+
+            if (idMetadata != 0) break;
 
         };
 
