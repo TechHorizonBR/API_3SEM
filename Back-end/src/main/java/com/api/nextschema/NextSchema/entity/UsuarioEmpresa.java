@@ -20,5 +20,8 @@ public class UsuarioEmpresa {
     private Usuario usuario;
     @ManyToOne
     private Empresa empresa;
+
+
+
 }
 

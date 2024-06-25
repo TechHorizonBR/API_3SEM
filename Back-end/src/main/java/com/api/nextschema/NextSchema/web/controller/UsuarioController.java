@@ -99,7 +99,7 @@ public class UsuarioController {
             summary = "Deletar usuário.",
             description = "Recebe um id pelo Path e deleta o usuário com este ID.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário cadastrado com sucesso.",
+                    @ApiResponse(responseCode = "200", description = "Usuário deletado com sucesso.",
                             content = @Content(mediaType = "application/json"))
             }
     )
